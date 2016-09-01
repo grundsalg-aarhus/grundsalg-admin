@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Salgsomraade list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Createdby</th>
+                <th>Createddate</th>
+                <th>Modifiedby</th>
+                <th>Modifieddate</th>
+                <th>Nr</th>
+                <th>Titel</th>
+                <th>Type</th>
+                <th>Matrikkel1</th>
+                <th>Matrikkel2</th>
+                <th>Ejerlav</th>
+                <th>Vej</th>
+                <th>Gisurl</th>
+                <th>Tilsluttet</th>
+                <th>Sagsnr</th>
+                <th>Lploebenummer</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for salgsomraade in salgsomraades %}
+            <tr>
+                <td><a href="{{ path('admin_salgsomraade_show', { 'id': salgsomraade.id }) }}">{{ salgsomraade.id }}</a></td>
+                <td>{{ salgsomraade.createdby }}</td>
+                <td>{% if salgsomraade.createddate %}{{ salgsomraade.createddate|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ salgsomraade.modifiedby }}</td>
+                <td>{% if salgsomraade.modifieddate %}{{ salgsomraade.modifieddate|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ salgsomraade.nr }}</td>
+                <td>{{ salgsomraade.titel }}</td>
+                <td>{{ salgsomraade.type }}</td>
+                <td>{{ salgsomraade.matrikkel1 }}</td>
+                <td>{{ salgsomraade.matrikkel2 }}</td>
+                <td>{{ salgsomraade.ejerlav }}</td>
+                <td>{{ salgsomraade.vej }}</td>
+                <td>{{ salgsomraade.gisurl }}</td>
+                <td>{{ salgsomraade.tilsluttet }}</td>
+                <td>{{ salgsomraade.sagsnr }}</td>
+                <td>{{ salgsomraade.lploebenummer }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('admin_salgsomraade_show', { 'id': salgsomraade.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_salgsomraade_edit', { 'id': salgsomraade.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_salgsomraade_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

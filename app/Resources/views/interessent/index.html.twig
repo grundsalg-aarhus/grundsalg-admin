@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Interessent list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Createdby</th>
+                <th>Createddate</th>
+                <th>Modifiedby</th>
+                <th>Modifieddate</th>
+                <th>Navn</th>
+                <th>Adresse</th>
+                <th>Land</th>
+                <th>Telefon</th>
+                <th>Mobil</th>
+                <th>Koeberemail</th>
+                <th>Navn1</th>
+                <th>Adresse1</th>
+                <th>Land1</th>
+                <th>Telefon1</th>
+                <th>Mobil1</th>
+                <th>Medkoeberemail</th>
+                <th>Notat</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for interessent in interessents %}
+            <tr>
+                <td><a href="{{ path('admin_interessent_show', { 'id': interessent.id }) }}">{{ interessent.id }}</a></td>
+                <td>{{ interessent.createdby }}</td>
+                <td>{% if interessent.createddate %}{{ interessent.createddate|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ interessent.modifiedby }}</td>
+                <td>{% if interessent.modifieddate %}{{ interessent.modifieddate|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ interessent.navn }}</td>
+                <td>{{ interessent.adresse }}</td>
+                <td>{{ interessent.land }}</td>
+                <td>{{ interessent.telefon }}</td>
+                <td>{{ interessent.mobil }}</td>
+                <td>{{ interessent.koeberemail }}</td>
+                <td>{{ interessent.navn1 }}</td>
+                <td>{{ interessent.adresse1 }}</td>
+                <td>{{ interessent.land1 }}</td>
+                <td>{{ interessent.telefon1 }}</td>
+                <td>{{ interessent.mobil1 }}</td>
+                <td>{{ interessent.medkoeberemail }}</td>
+                <td>{{ interessent.notat }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('admin_interessent_show', { 'id': interessent.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_interessent_edit', { 'id': interessent.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_interessent_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

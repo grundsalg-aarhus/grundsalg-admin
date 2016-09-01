@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Lokalplan list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nr</th>
+                <th>Lsnr</th>
+                <th>Titel</th>
+                <th>Projektleder</th>
+                <th>Telefon</th>
+                <th>Lokalplanlink</th>
+                <th>Samletareal</th>
+                <th>Salgbartareal</th>
+                <th>Forbrugsandel</th>
+                <th>Createdby</th>
+                <th>Createddate</th>
+                <th>Modifiedby</th>
+                <th>Modifieddate</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for lokalplan in lokalplans %}
+            <tr>
+                <td><a href="{{ path('admin_lokalplan_show', { 'id': lokalplan.id }) }}">{{ lokalplan.id }}</a></td>
+                <td>{{ lokalplan.nr }}</td>
+                <td>{{ lokalplan.lsnr }}</td>
+                <td>{{ lokalplan.titel }}</td>
+                <td>{{ lokalplan.projektleder }}</td>
+                <td>{{ lokalplan.telefon }}</td>
+                <td>{{ lokalplan.lokalplanlink }}</td>
+                <td>{{ lokalplan.samletareal }}</td>
+                <td>{{ lokalplan.salgbartareal }}</td>
+                <td>{{ lokalplan.forbrugsandel }}</td>
+                <td>{{ lokalplan.createdby }}</td>
+                <td>{% if lokalplan.createddate %}{{ lokalplan.createddate|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ lokalplan.modifiedby }}</td>
+                <td>{% if lokalplan.modifieddate %}{{ lokalplan.modifieddate|date('Y-m-d') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('admin_lokalplan_show', { 'id': lokalplan.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_lokalplan_edit', { 'id': lokalplan.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_lokalplan_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

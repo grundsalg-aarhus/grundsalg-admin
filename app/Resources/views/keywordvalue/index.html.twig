@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Keywordvalue list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Display</th>
+                <th>Value</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for keywordvalue in keywordvalues %}
+            <tr>
+                <td><a href="{{ path('admin_keywordvalue_show', { 'id': keywordvalue.id }) }}">{{ keywordvalue.id }}</a></td>
+                <td>{{ keywordvalue.display }}</td>
+                <td>{{ keywordvalue.value }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('admin_keywordvalue_show', { 'id': keywordvalue.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_keywordvalue_edit', { 'id': keywordvalue.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_keywordvalue_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}
