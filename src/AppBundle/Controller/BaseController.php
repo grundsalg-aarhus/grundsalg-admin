@@ -18,10 +18,8 @@ abstract class BaseController extends Controller implements InitControllerInterf
   protected $breadcrumbs;
   protected $flash;
 
-  public function init(Request $request)
-  {
+  public function init(Request $request) {
     $this->breadcrumbs = $this->get('white_october_breadcrumbs');
-    //$this->breadcrumbs->addItem('common.forside', $this->get('router')->generate('dashboard'));
     $this->flash = $this->get('braincrafted_bootstrap.flash');
   }
 
@@ -65,10 +63,12 @@ abstract class BaseController extends Controller implements InitControllerInterf
   }
 
   protected function addCreate(Form $form, $cancelUrl = NULL) {
+    return true;
     return $this->addSubmit($form, 'Create', $cancelUrl, 'Cancel');
   }
 
   protected function addUpdate(Form $form, $cancelUrl = NULL, $label = 'Update') {
+    return true;
     return $this->addSubmit($form, $label, $cancelUrl, 'Cancel');
   }
 

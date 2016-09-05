@@ -1,0 +1,73 @@
+  {% extends 'AppBundle::base.html.twig' %}
+
+
+  {% block body -%}
+
+  <div class="row heading">
+    <div class="col-md-9">
+        <h1>{{ 'landinspektoer.labels.plural' | trans }}</h1>
+    </div>
+    <div class="col-md-3 text-right">
+              <a class="btn btn-default" href="{{ path('landinspektoer_new') }}">
+          {{ icon('plus') }} {{ 'landinspektoer.actions.add' | trans }}
+        </a>
+          </div>
+
+  </div>
+
+
+  <table class="table table-condensed table-header-rotated">
+    <thead>
+    <tr>
+        {{ helper.header('appbundle.landinspektoer.adresse') }}
+        {{ helper.header('appbundle.landinspektoer.email') }}
+        {{ helper.header('appbundle.landinspektoer.mobil') }}
+        {{ helper.header('appbundle.landinspektoer.navn') }}
+        {{ helper.header('appbundle.landinspektoer.notat') }}
+        {{ helper.header('appbundle.landinspektoer.telefon') }}
+        {{ helper.header('appbundle.landinspektoer.postnrid') }}
+        {{ helper.header('appbundle.landinspektoer.createdby') }}
+        {{ helper.header('appbundle.landinspektoer.createddate') }}
+        {{ helper.header('appbundle.landinspektoer.modifiedby') }}
+        {{ helper.header('appbundle.landinspektoer.modifieddate') }}
+        {{ helper.header('appbundle.landinspektoer.active') }}
+      {{ helper.header() }}
+    </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+    <tr>
+                  <td>{{ entity.adresse }}</td>
+        
+                  <td>{{ entity.email }}</td>
+        
+                  <td>{{ entity.mobil }}</td>
+        
+                  <td>{{ entity.navn }}</td>
+        
+                  <td>{{ entity.notat }}</td>
+        
+                  <td>{{ entity.telefon }}</td>
+        
+                  <td>{{ entity.postnrid }}</td>
+        
+                  <td>{{ entity.createdby }}</td>
+        
+                  <td>{{ entity.createddate | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.modifiedby }}</td>
+        
+                  <td>{{ entity.modifieddate | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.active }}</td>
+        
+      <td class="text-right">    <a class="btn btn-default btn-xs" href="{{ path('landinspektoer_edit', { 'id': entity.id }) }}">{{ 'common.edit' | trans }}</a>
+
+      </td>
+
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  {% endblock %}

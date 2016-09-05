@@ -1,0 +1,88 @@
+  {% extends 'AppBundle::base.html.twig' %}
+
+
+  {% block body -%}
+
+  <div class="row heading">
+    <div class="col-md-9">
+        <h1>{{ 'interessent.labels.plural' | trans }}</h1>
+    </div>
+    <div class="col-md-3 text-right">
+              <a class="btn btn-default" href="{{ path('interessent_new') }}">
+          {{ icon('plus') }} {{ 'interessent.actions.add' | trans }}
+        </a>
+          </div>
+
+  </div>
+
+
+  <table class="table table-condensed table-header-rotated">
+    <thead>
+    <tr>
+        {{ helper.header('appbundle.interessent.createdby') }}
+        {{ helper.header('appbundle.interessent.createddate') }}
+        {{ helper.header('appbundle.interessent.modifiedby') }}
+        {{ helper.header('appbundle.interessent.modifieddate') }}
+        {{ helper.header('appbundle.interessent.navn') }}
+        {{ helper.header('appbundle.interessent.adresse') }}
+        {{ helper.header('appbundle.interessent.land') }}
+        {{ helper.header('appbundle.interessent.telefon') }}
+        {{ helper.header('appbundle.interessent.mobil') }}
+        {{ helper.header('appbundle.interessent.koeberemail') }}
+        {{ helper.header('appbundle.interessent.navn1') }}
+        {{ helper.header('appbundle.interessent.adresse1') }}
+        {{ helper.header('appbundle.interessent.land1') }}
+        {{ helper.header('appbundle.interessent.telefon1') }}
+        {{ helper.header('appbundle.interessent.mobil1') }}
+        {{ helper.header('appbundle.interessent.medkoeberemail') }}
+        {{ helper.header('appbundle.interessent.notat') }}
+      {{ helper.header() }}
+    </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+    <tr>
+                  <td>{{ entity.createdby }}</td>
+        
+                  <td>{{ entity.createddate | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.modifiedby }}</td>
+        
+                  <td>{{ entity.modifieddate | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.navn }}</td>
+        
+                  <td>{{ entity.adresse }}</td>
+        
+                  <td>{{ entity.land }}</td>
+        
+                  <td>{{ entity.telefon }}</td>
+        
+                  <td>{{ entity.mobil }}</td>
+        
+                  <td>{{ entity.koeberemail }}</td>
+        
+                  <td>{{ entity.navn1 }}</td>
+        
+                  <td>{{ entity.adresse1 }}</td>
+        
+                  <td>{{ entity.land1 }}</td>
+        
+                  <td>{{ entity.telefon1 }}</td>
+        
+                  <td>{{ entity.mobil1 }}</td>
+        
+                  <td>{{ entity.medkoeberemail }}</td>
+        
+                  <td>{{ entity.notat }}</td>
+        
+      <td class="text-right">    <a class="btn btn-default btn-xs" href="{{ path('interessent_edit', { 'id': entity.id }) }}">{{ 'common.edit' | trans }}</a>
+
+      </td>
+
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  {% endblock %}

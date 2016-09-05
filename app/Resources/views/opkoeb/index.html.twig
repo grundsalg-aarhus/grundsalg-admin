@@ -1,0 +1,73 @@
+  {% extends 'AppBundle::base.html.twig' %}
+
+
+  {% block body -%}
+
+  <div class="row heading">
+    <div class="col-md-9">
+        <h1>{{ 'opkoeb.labels.plural' | trans }}</h1>
+    </div>
+    <div class="col-md-3 text-right">
+              <a class="btn btn-default" href="{{ path('opkoeb_new') }}">
+          {{ icon('plus') }} {{ 'opkoeb.actions.add' | trans }}
+        </a>
+          </div>
+
+  </div>
+
+
+  <table class="table table-condensed table-header-rotated">
+    <thead>
+    <tr>
+        {{ helper.header('appbundle.opkoeb.matrik1') }}
+        {{ helper.header('appbundle.opkoeb.matrik2') }}
+        {{ helper.header('appbundle.opkoeb.ejerlav') }}
+        {{ helper.header('appbundle.opkoeb.m2') }}
+        {{ helper.header('appbundle.opkoeb.bemaerkning') }}
+        {{ helper.header('appbundle.opkoeb.opkoebdato') }}
+        {{ helper.header('appbundle.opkoeb.pris') }}
+        {{ helper.header('appbundle.opkoeb.procentaflp') }}
+        {{ helper.header('appbundle.opkoeb.createdby') }}
+        {{ helper.header('appbundle.opkoeb.createddate') }}
+        {{ helper.header('appbundle.opkoeb.modifiedby') }}
+        {{ helper.header('appbundle.opkoeb.modifieddate') }}
+      {{ helper.header() }}
+    </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+    <tr>
+                  <td>{{ entity.matrik1 }}</td>
+        
+                  <td>{{ entity.matrik2 }}</td>
+        
+                  <td>{{ entity.ejerlav }}</td>
+        
+                  <td>{{ entity.m2 }}</td>
+        
+                  <td>{{ entity.bemaerkning }}</td>
+        
+                  <td>{{ entity.opkoebdato | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.pris }}</td>
+        
+                  <td>{{ entity.procentaflp }}</td>
+        
+                  <td>{{ entity.createdby }}</td>
+        
+                  <td>{{ entity.createddate | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.modifiedby }}</td>
+        
+                  <td>{{ entity.modifieddate | date("d/m Y") }}</td>
+        
+      <td class="text-right">    <a class="btn btn-default btn-xs" href="{{ path('opkoeb_edit', { 'id': entity.id }) }}">{{ 'common.edit' | trans }}</a>
+
+      </td>
+
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  {% endblock %}

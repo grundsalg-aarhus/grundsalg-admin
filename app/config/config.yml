@@ -73,4 +73,21 @@ fos_user:
     firewall_name: main
     user_class: AppBundle\Entity\User
 
-white_october_breadcrumbs: ~
+white_october_breadcrumbs:
+  separator:
+
+braincrafted_bootstrap:
+    icon_prefix: fa
+    output_dir:
+    assets_dir: %kernel.root_dir%/../vendor/twbs/bootstrap
+    jquery_path: %kernel.root_dir%/../vendor/components/jquery/jquery.min.js
+    fonts_dir: %kernel.root_dir%/../web/fonts
+    auto_configure:
+        assetic: false
+        twig: false
+        knp_menu: true
+        knp_paginator: true
+    customize:
+        variables_file: ~
+        bootstrap_output: %kernel.root_dir%/Resources/less/bootstrap.less
+        bootstrap_template: BraincraftedBootstrapBundle:Bootstrap:bootstrap.less.twig

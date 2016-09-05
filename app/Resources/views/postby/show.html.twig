@@ -1,0 +1,49 @@
+  {% extends 'AppBundle::base.html.twig' %}
+
+
+{% block body -%}
+  <div class="row heading">
+    <div class="col-md-9">
+      <h1>{{ entity }}</h1>
+    </div>
+    <div class="col-md-3 text-right">    <a class="btn btn-default btn-default" href="{{ path('postby_edit', { 'id': entity.id }) }}">{{ 'common.edit' | trans }}</a>
+
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">{{ icon('chevron-right') }} {{ 'postby.labels.singular' | trans }}</div>
+        <table class="table table-condensed">
+          <tbody>
+            <tr>
+              <th>{{ 'appbundle.postby.postalcode' | trans }}</th>
+                <td>{{ entity.postalcode }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.postby.city' | trans }}</th>
+                <td>{{ entity.city }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.postby.createdby' | trans }}</th>
+                <td>{{ entity.createdby }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.postby.createddate' | trans }}</th>
+                <td>{{ entity.createddate|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.postby.modifiedby' | trans }}</th>
+                <td>{{ entity.modifiedby }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.postby.modifieddate' | trans }}</th>
+                <td>{{ entity.modifieddate|date('Y-m-d H:i:s') }}</td>
+            </tr>          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}
