@@ -1,0 +1,35 @@
+  {% extends 'AppBundle::base.html.twig' %}
+
+
+  {% block body -%}
+  <div class="row heading">
+    <div class="col-md-9">
+      <h1>{{ 'delomraade.actions.edit' | trans }}</h1>
+    </div>
+    <div class="col-md-3 text-right">
+       {{ form(delete_form) }} 
+    </div>
+
+  </div>
+
+  {{ form_start(edit_form) }}    
+    {{ form_row(edit_form.id)}}    
+    {{ form_row(edit_form.kpl1)}}    
+    {{ form_row(edit_form.kpl2)}}    
+    {{ form_row(edit_form.kpl3)}}    
+    {{ form_row(edit_form.kpl4)}}    
+    {{ form_row(edit_form.o1)}}    
+    {{ form_row(edit_form.o2)}}    
+    {{ form_row(edit_form.o3)}}    
+    {{ form_row(edit_form.anvendelse)}}    
+    {{ form_row(edit_form.mulighedfor)}}    
+    {{ form_row(edit_form.createdby)}}    
+    {{ form_row(edit_form.createddate)}}    
+    {{ form_row(edit_form.modifiedby)}}    
+    {{ form_row(edit_form.modifieddate)}}  
+
+    {{ form_rest(edit_form) }}
+  
+  {{ form_end(edit_form) }}
+
+    {% endblock %}

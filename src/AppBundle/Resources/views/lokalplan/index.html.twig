@@ -1,0 +1,76 @@
+  {% extends 'AppBundle::base.html.twig' %}
+
+
+  {% block body -%}
+
+  <div class="row heading">
+    <div class="col-md-9">
+        <h1>{{ 'lokalplan.labels.plural' | trans }}</h1>
+    </div>
+    <div class="col-md-3 text-right">
+              <a class="btn btn-default" href="{{ path('lokalplan_new') }}">
+          {{ icon('plus') }} {{ 'lokalplan.actions.add' | trans }}
+        </a>
+          </div>
+
+  </div>
+
+
+  <table class="table table-condensed table-header-rotated">
+    <thead>
+    <tr>
+        {{ helper.header('appbundle.lokalplan.nr') }}
+        {{ helper.header('appbundle.lokalplan.lsnr') }}
+        {{ helper.header('appbundle.lokalplan.titel') }}
+        {{ helper.header('appbundle.lokalplan.projektleder') }}
+        {{ helper.header('appbundle.lokalplan.telefon') }}
+        {{ helper.header('appbundle.lokalplan.lokalplanlink') }}
+        {{ helper.header('appbundle.lokalplan.samletareal') }}
+        {{ helper.header('appbundle.lokalplan.salgbartareal') }}
+        {{ helper.header('appbundle.lokalplan.forbrugsandel') }}
+        {{ helper.header('appbundle.lokalplan.createdby') }}
+        {{ helper.header('appbundle.lokalplan.createddate') }}
+        {{ helper.header('appbundle.lokalplan.modifiedby') }}
+        {{ helper.header('appbundle.lokalplan.modifieddate') }}
+      {{ helper.header() }}
+    </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+    <tr>
+                  <td>{{ entity.nr }}</td>
+        
+                  <td>{{ entity.lsnr }}</td>
+        
+                  <td>{{ entity.titel }}</td>
+        
+                  <td>{{ entity.projektleder }}</td>
+        
+                  <td>{{ entity.telefon }}</td>
+        
+                  <td>{{ entity.lokalplanlink }}</td>
+        
+                  <td>{{ entity.samletareal }}</td>
+        
+                  <td>{{ entity.salgbartareal }}</td>
+        
+                  <td>{{ entity.forbrugsandel }}</td>
+        
+                  <td>{{ entity.createdby }}</td>
+        
+                  <td>{{ entity.createddate | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.modifiedby }}</td>
+        
+                  <td>{{ entity.modifieddate | date("d/m Y") }}</td>
+        
+      <td class="text-right">    <a class="btn btn-default btn-xs" href="{{ path('lokalplan_edit', { 'id': entity.id }) }}">{{ 'common.edit' | trans }}</a>
+
+      </td>
+
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  {% endblock %}

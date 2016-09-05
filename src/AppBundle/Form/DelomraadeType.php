@@ -4,7 +4,7 @@ namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class DelomraadeType extends AbstractType
 {
@@ -25,20 +25,28 @@ class DelomraadeType extends AbstractType
             ->add('anvendelse')
             ->add('mulighedfor')
             ->add('createdby')
-            ->add('createddate', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('createddate')
             ->add('modifiedby')
-            ->add('modifieddate', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('modifieddate')
             ->add('lokalplanid')
         ;
     }
     
     /**
-     * @param OptionsResolver $resolver
+     * @param OptionsResolverInterface $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Delomraade'
         ));
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'appbundle_delomraade';
     }
 }

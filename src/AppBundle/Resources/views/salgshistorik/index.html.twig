@@ -1,0 +1,133 @@
+  {% extends 'AppBundle::base.html.twig' %}
+
+
+  {% block body -%}
+
+  <div class="row heading">
+    <div class="col-md-9">
+        <h1>{{ 'salgshistorik.labels.plural' | trans }}</h1>
+    </div>
+    <div class="col-md-3 text-right">
+              <a class="btn btn-default" href="{{ path('salgshistorik_new') }}">
+          {{ icon('plus') }} {{ 'salgshistorik.actions.add' | trans }}
+        </a>
+          </div>
+
+  </div>
+
+
+  <table class="table table-condensed table-header-rotated">
+    <thead>
+    <tr>
+        {{ helper.header('appbundle.salgshistorik.createdby') }}
+        {{ helper.header('appbundle.salgshistorik.createddate') }}
+        {{ helper.header('appbundle.salgshistorik.modifiedby') }}
+        {{ helper.header('appbundle.salgshistorik.modifieddate') }}
+        {{ helper.header('appbundle.salgshistorik.aarsag') }}
+        {{ helper.header('appbundle.salgshistorik.salgstype') }}
+        {{ helper.header('appbundle.salgshistorik.status') }}
+        {{ helper.header('appbundle.salgshistorik.resstart') }}
+        {{ helper.header('appbundle.salgshistorik.resslut') }}
+        {{ helper.header('appbundle.salgshistorik.tilbudstart') }}
+        {{ helper.header('appbundle.salgshistorik.tilbudslut') }}
+        {{ helper.header('appbundle.salgshistorik.accept') }}
+        {{ helper.header('appbundle.salgshistorik.overtagelse') }}
+        {{ helper.header('appbundle.salgshistorik.skoederekv') }}
+        {{ helper.header('appbundle.salgshistorik.beloebanvist') }}
+        {{ helper.header('appbundle.salgshistorik.auktionstartdato') }}
+        {{ helper.header('appbundle.salgshistorik.auktionslutdato') }}
+        {{ helper.header('appbundle.salgshistorik.minbud') }}
+        {{ helper.header('appbundle.salgshistorik.antagetbud') }}
+        {{ helper.header('appbundle.salgshistorik.navn') }}
+        {{ helper.header('appbundle.salgshistorik.adresse') }}
+        {{ helper.header('appbundle.salgshistorik.land') }}
+        {{ helper.header('appbundle.salgshistorik.telefon') }}
+        {{ helper.header('appbundle.salgshistorik.mobil') }}
+        {{ helper.header('appbundle.salgshistorik.koeberemail') }}
+        {{ helper.header('appbundle.salgshistorik.navn1') }}
+        {{ helper.header('appbundle.salgshistorik.adresse1') }}
+        {{ helper.header('appbundle.salgshistorik.land1') }}
+        {{ helper.header('appbundle.salgshistorik.telefon1') }}
+        {{ helper.header('appbundle.salgshistorik.mobil1') }}
+        {{ helper.header('appbundle.salgshistorik.medkoeberemail') }}
+        {{ helper.header('appbundle.salgshistorik.notat') }}
+      {{ helper.header() }}
+    </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+    <tr>
+                  <td>{{ entity.createdby }}</td>
+        
+                  <td>{{ entity.createddate | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.modifiedby }}</td>
+        
+                  <td>{{ entity.modifieddate | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.aarsag }}</td>
+        
+                  <td>{{ entity.salgstype }}</td>
+        
+                  <td>{{ entity.status }}</td>
+        
+                  <td>{{ entity.resstart | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.resslut | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.tilbudstart | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.tilbudslut | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.accept | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.overtagelse | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.skoederekv | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.beloebanvist | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.auktionstartdato | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.auktionslutdato | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.minbud }}</td>
+        
+                  <td>{{ entity.antagetbud }}</td>
+        
+                  <td>{{ entity.navn }}</td>
+        
+                  <td>{{ entity.adresse }}</td>
+        
+                  <td>{{ entity.land }}</td>
+        
+                  <td>{{ entity.telefon }}</td>
+        
+                  <td>{{ entity.mobil }}</td>
+        
+                  <td>{{ entity.koeberemail }}</td>
+        
+                  <td>{{ entity.navn1 }}</td>
+        
+                  <td>{{ entity.adresse1 }}</td>
+        
+                  <td>{{ entity.land1 }}</td>
+        
+                  <td>{{ entity.telefon1 }}</td>
+        
+                  <td>{{ entity.mobil1 }}</td>
+        
+                  <td>{{ entity.medkoeberemail }}</td>
+        
+                  <td>{{ entity.notat }}</td>
+        
+      <td class="text-right">    <a class="btn btn-default btn-xs" href="{{ path('salgshistorik_edit', { 'id': entity.id }) }}">{{ 'common.edit' | trans }}</a>
+
+      </td>
+
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  {% endblock %}

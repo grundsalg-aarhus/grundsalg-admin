@@ -4,7 +4,7 @@ namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class LokalplanType extends AbstractType
 {
@@ -25,19 +25,27 @@ class LokalplanType extends AbstractType
             ->add('salgbartareal')
             ->add('forbrugsandel')
             ->add('createdby')
-            ->add('createddate', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('createddate')
             ->add('modifiedby')
-            ->add('modifieddate', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('modifieddate')
         ;
     }
     
     /**
-     * @param OptionsResolver $resolver
+     * @param OptionsResolverInterface $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Lokalplan'
         ));
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'appbundle_lokalplan';
     }
 }

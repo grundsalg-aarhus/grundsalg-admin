@@ -1,0 +1,309 @@
+  {% extends 'AppBundle::base.html.twig' %}
+
+
+{% block body -%}
+  <div class="row heading">
+    <div class="col-md-9">
+      <h1>{{ entity }}</h1>
+    </div>
+    <div class="col-md-3 text-right">    <a class="btn btn-default btn-default" href="{{ path('grund_edit', { 'id': entity.id }) }}">{{ 'common.edit' | trans }}</a>
+
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">{{ icon('chevron-right') }} {{ 'grund.labels.singular' | trans }}</div>
+        <table class="table table-condensed">
+          <tbody>
+            <tr>
+              <th>{{ 'appbundle.grund.createdby' | trans }}</th>
+                <td>{{ entity.createdby }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.createddate' | trans }}</th>
+                <td>{{ entity.createddate|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.modifiedby' | trans }}</th>
+                <td>{{ entity.modifiedby }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.modifieddate' | trans }}</th>
+                <td>{{ entity.modifieddate|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.status' | trans }}</th>
+                <td>{{ entity.status }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.salgstatus' | trans }}</th>
+                <td>{{ entity.salgstatus }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.gid' | trans }}</th>
+                <td>{{ entity.gid }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.grundtype' | trans }}</th>
+                <td>{{ entity.grundtype }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.mnr' | trans }}</th>
+                <td>{{ entity.mnr }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.mnr2' | trans }}</th>
+                <td>{{ entity.mnr2 }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.delareal' | trans }}</th>
+                <td>{{ entity.delareal }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.ejerlav' | trans }}</th>
+                <td>{{ entity.ejerlav }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.vej' | trans }}</th>
+                <td>{{ entity.vej }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.husnummer' | trans }}</th>
+                <td>{{ entity.husnummer }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.bogstav' | trans }}</th>
+                <td>{{ entity.bogstav }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.postbyid' | trans }}</th>
+                <td>{{ entity.postbyid }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.urlgis' | trans }}</th>
+                <td>{{ entity.urlgis }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.salgstype' | trans }}</th>
+                <td>{{ entity.salgstype }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.auktionstartdato' | trans }}</th>
+                <td>{{ entity.auktionstartdato|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.auktionslutdato' | trans }}</th>
+                <td>{{ entity.auktionslutdato|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.annonceresej' | trans }}</th>
+                <td>{{ entity.annonceresej }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.datoannonce' | trans }}</th>
+                <td>{{ entity.datoannonce|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.datoannonce1' | trans }}</th>
+                <td>{{ entity.datoannonce1|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.tilsluttet' | trans }}</th>
+                <td>{{ entity.tilsluttet }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.maxetagem2' | trans }}</th>
+                <td>{{ entity.maxetagem2 }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.areal' | trans }}</th>
+                <td>{{ entity.areal }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.arealvej' | trans }}</th>
+                <td>{{ entity.arealvej }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.arealkotelet' | trans }}</th>
+                <td>{{ entity.arealkotelet }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.bruttoareal' | trans }}</th>
+                <td>{{ entity.bruttoareal }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.prism2' | trans }}</th>
+                <td>{{ entity.prism2 }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.prisfoerkorrektion' | trans }}</th>
+                <td>{{ entity.prisfoerkorrektion }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.priskorrektion1' | trans }}</th>
+                <td>{{ entity.priskorrektion1 }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.antalkorr1' | trans }}</th>
+                <td>{{ entity.antalkorr1 }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.akrkorr1' | trans }}</th>
+                <td>{{ entity.akrkorr1 }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.priskoor1' | trans }}</th>
+                <td>{{ entity.priskoor1 }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.priskorrektion2' | trans }}</th>
+                <td>{{ entity.priskorrektion2 }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.antalkorr2' | trans }}</th>
+                <td>{{ entity.antalkorr2 }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.akrkorr2' | trans }}</th>
+                <td>{{ entity.akrkorr2 }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.priskoor2' | trans }}</th>
+                <td>{{ entity.priskoor2 }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.priskorrektion3' | trans }}</th>
+                <td>{{ entity.priskorrektion3 }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.antalkorr3' | trans }}</th>
+                <td>{{ entity.antalkorr3 }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.akrkorr3' | trans }}</th>
+                <td>{{ entity.akrkorr3 }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.priskoor3' | trans }}</th>
+                <td>{{ entity.priskoor3 }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.pris' | trans }}</th>
+                <td>{{ entity.pris }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.fastpris' | trans }}</th>
+                <td>{{ entity.fastpris }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.minbud' | trans }}</th>
+                <td>{{ entity.minbud }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.note' | trans }}</th>
+                <td>{{ entity.note }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.landinspektoerid' | trans }}</th>
+                <td>{{ entity.landinspektoerid }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.resstart' | trans }}</th>
+                <td>{{ entity.resstart|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.tilbudstart' | trans }}</th>
+                <td>{{ entity.tilbudstart|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.accept' | trans }}</th>
+                <td>{{ entity.accept|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.skoederekv' | trans }}</th>
+                <td>{{ entity.skoederekv|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.beloebanvist' | trans }}</th>
+                <td>{{ entity.beloebanvist|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.resslut' | trans }}</th>
+                <td>{{ entity.resslut|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.tilbudslut' | trans }}</th>
+                <td>{{ entity.tilbudslut|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.overtagelse' | trans }}</th>
+                <td>{{ entity.overtagelse|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.antagetbud' | trans }}</th>
+                <td>{{ entity.antagetbud }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.salgsprisumoms' | trans }}</th>
+                <td>{{ entity.salgsprisumoms }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.navn' | trans }}</th>
+                <td>{{ entity.navn }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.adresse' | trans }}</th>
+                <td>{{ entity.adresse }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.land' | trans }}</th>
+                <td>{{ entity.land }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.telefon' | trans }}</th>
+                <td>{{ entity.telefon }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.mobil' | trans }}</th>
+                <td>{{ entity.mobil }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.koeberemail' | trans }}</th>
+                <td>{{ entity.koeberemail }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.navn1' | trans }}</th>
+                <td>{{ entity.navn1 }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.adresse1' | trans }}</th>
+                <td>{{ entity.adresse1 }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.land1' | trans }}</th>
+                <td>{{ entity.land1 }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.telefon1' | trans }}</th>
+                <td>{{ entity.telefon1 }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.mobil1' | trans }}</th>
+                <td>{{ entity.mobil1 }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.medkoeberemail' | trans }}</th>
+                <td>{{ entity.medkoeberemail }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.grund.notat' | trans }}</th>
+                <td>{{ entity.notat }}</td>
+            </tr>          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -6,134 +6,254 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Interessent;
 use AppBundle\Form\InteressentType;
+use AppBundle\Controller\BaseController;
 
 /**
  * Interessent controller.
  *
- * @Route("/admin/interessent")
+ * @Route("/interessent")
+ * @Security("has_role('ROLE_SUPER_ADMIN')")
  */
-class InteressentController extends Controller
+class InteressentController extends BaseController
 {
+
+  public function init(Request $request) {
+    parent::init($request);
+    $this->breadcrumbs->addItem('interessent.labels.singular', $this->generateUrl('interessent'));
+}
+
+
     /**
      * Lists all Interessent entities.
      *
-     * @Route("/", name="admin_interessent_index")
+     * @Route("/", name="interessent")
      * @Method("GET")
+     * @Template()
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $interessents = $em->getRepository('AppBundle:Interessent')->findAll();
+        $entities = $em->getRepository('AppBundle:Interessent')->findAll();
 
-        return $this->render('interessent/index.html.twig', array(
-            'interessents' => $interessents,
-        ));
+        return array(
+            'entities' => $entities,
+        );
     }
-
     /**
      * Creates a new Interessent entity.
      *
-     * @Route("/new", name="admin_interessent_new")
-     * @Method({"GET", "POST"})
+     * @Route("/", name="interessent_create")
+     * @Method("POST")
+     * @Template("AppBundle:Interessent:new.html.twig")
      */
-    public function newAction(Request $request)
+    public function createAction(Request $request)
     {
-        $interessent = new Interessent();
-        $form = $this->createForm('AppBundle\Form\InteressentType', $interessent);
+        $entity = new Interessent();
+        $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($interessent);
+            $em->persist($entity);
             $em->flush();
 
-            return $this->redirectToRoute('admin_interessent_show', array('id' => $interessent->getId()));
+            return $this->redirect($this->generateUrl('interessent'));
+
         }
 
-        return $this->render('interessent/new.html.twig', array(
-            'interessent' => $interessent,
-            'form' => $form->createView(),
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        );
+    }
+
+    /**
+     * Creates a form to create a Interessent entity.
+     *
+     * @param Interessent $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createCreateForm(Interessent $entity)
+    {
+        $form = $this->createForm('AppBundle\Form\InteressentType', $entity, array(
+            'action' => $this->generateUrl('interessent_create'),
+            'method' => 'POST',
         ));
+
+        $this->addUpdate($form, $this->generateUrl('interessent'));
+
+        return $form;
+    }
+
+    /**
+     * Displays a form to create a new Interessent entity.
+     *
+     * @Route("/new", name="interessent_new")
+     * @Method("GET")
+     * @Template()
+     */
+    public function newAction()
+    {
+        $this->breadcrumbs->addItem('common.add', $this->generateUrl('interessent'));
+
+        $entity = new Interessent();
+        $form   = $this->createCreateForm($entity);
+
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        );
     }
 
     /**
      * Finds and displays a Interessent entity.
      *
-     * @Route("/{id}", name="admin_interessent_show")
+     * @Route("/{id}", name="interessent_show")
      * @Method("GET")
+     * @Template()
      */
-    public function showAction(Interessent $interessent)
+    public function showAction($id)
     {
-        $deleteForm = $this->createDeleteForm($interessent);
 
-        return $this->render('interessent/show.html.twig', array(
-            'interessent' => $interessent,
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('AppBundle:Interessent')->find($id);
+        $this->breadcrumbs->addItem($entity, $this->generateUrl('interessent_show', array('id' => $entity->getId())));
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Interessent entity.');
+        }
+
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
-        ));
+        );
     }
 
     /**
      * Displays a form to edit an existing Interessent entity.
      *
-     * @Route("/{id}/edit", name="admin_interessent_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="interessent_edit")
+     * @Method("GET")
+     * @Template()
      */
-    public function editAction(Request $request, Interessent $interessent)
+    public function editAction(Interessent $entity)
     {
-        $deleteForm = $this->createDeleteForm($interessent);
-        $editForm = $this->createForm('AppBundle\Form\InteressentType', $interessent);
-        $editForm->handleRequest($request);
+        $this->breadcrumbs->addItem($entity, $this->generateUrl('interessent_show', array('id' => $entity->getId())));
+        $this->breadcrumbs->addItem('common.edit', $this->generateUrl('interessent_show', array('id' => $entity->getId())));
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($interessent);
-            $em->flush();
-
-            return $this->redirectToRoute('admin_interessent_edit', array('id' => $interessent->getId()));
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Interessent entity.');
         }
 
-        return $this->render('interessent/edit.html.twig', array(
-            'interessent' => $interessent,
-            'edit_form' => $editForm->createView(),
+        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($entity->getId());
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        ));
+        );
     }
 
+    /**
+    * Creates a form to edit a Interessent entity.
+    *
+    * @param Interessent $entity The entity
+    *
+    * @return \Symfony\Component\Form\Form The form
+    */
+    private function createEditForm(Interessent $entity)
+    {
+        $form = $this->createForm('AppBundle\Form\InteressentType', $entity, array(
+            'action' => $this->generateUrl('interessent_update', array('id' => $entity->getId())),
+            'method' => 'PUT',
+        ));
+
+        $this->addUpdate($form, $this->generateUrl('interessent_show', array('id' => $entity->getId())));
+
+        return $form;
+    }
+    /**
+     * Edits an existing Interessent entity.
+     *
+     * @Route("/{id}", name="interessent_update")
+     * @Method("PUT")
+     * @Template("AppBundle:Interessent:edit.html.twig")
+     */
+    public function updateAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('AppBundle:Interessent')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Interessent entity.');
+        }
+
+        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createEditForm($entity);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isValid()) {
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('interessent'));
+        }
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
     /**
      * Deletes a Interessent entity.
      *
-     * @Route("/{id}", name="admin_interessent_delete")
+     * @Route("/{id}", name="interessent_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, Interessent $interessent)
+    public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm($interessent);
+        $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->remove($interessent);
+            $entity = $em->getRepository('AppBundle:Interessent')->find($id);
+
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find Interessent entity.');
+            }
+
+            $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirectToRoute('admin_interessent_index');
+        return $this->redirect($this->generateUrl('interessent'));
     }
 
     /**
-     * Creates a form to delete a Interessent entity.
+     * Creates a form to delete a Interessent entity by id.
      *
-     * @param Interessent $interessent The Interessent entity
+     * @param mixed $id The entity id
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Interessent $interessent)
+    private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_interessent_delete', array('id' => $interessent->getId())))
+            ->setAction($this->generateUrl('interessent_delete', array('id' => $id)))
             ->setMethod('DELETE')
+            ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
     }

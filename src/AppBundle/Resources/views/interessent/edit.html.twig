@@ -1,0 +1,39 @@
+  {% extends 'AppBundle::base.html.twig' %}
+
+
+  {% block body -%}
+  <div class="row heading">
+    <div class="col-md-9">
+      <h1>{{ 'interessent.actions.edit' | trans }}</h1>
+    </div>
+    <div class="col-md-3 text-right">
+       {{ form(delete_form) }} 
+    </div>
+
+  </div>
+
+  {{ form_start(edit_form) }}    
+    {{ form_row(edit_form.id)}}    
+    {{ form_row(edit_form.createdby)}}    
+    {{ form_row(edit_form.createddate)}}    
+    {{ form_row(edit_form.modifiedby)}}    
+    {{ form_row(edit_form.modifieddate)}}    
+    {{ form_row(edit_form.navn)}}    
+    {{ form_row(edit_form.adresse)}}    
+    {{ form_row(edit_form.land)}}    
+    {{ form_row(edit_form.telefon)}}    
+    {{ form_row(edit_form.mobil)}}    
+    {{ form_row(edit_form.koeberemail)}}    
+    {{ form_row(edit_form.navn1)}}    
+    {{ form_row(edit_form.adresse1)}}    
+    {{ form_row(edit_form.land1)}}    
+    {{ form_row(edit_form.telefon1)}}    
+    {{ form_row(edit_form.mobil1)}}    
+    {{ form_row(edit_form.medkoeberemail)}}    
+    {{ form_row(edit_form.notat)}}  
+
+    {{ form_rest(edit_form) }}
+  
+  {{ form_end(edit_form) }}
+
+    {% endblock %}

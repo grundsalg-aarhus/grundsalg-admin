@@ -1,0 +1,24 @@
+  {% extends 'AppBundle::base.html.twig' %}
+
+
+  {% block body -%}
+  <div class="row heading">
+    <div class="col-md-9">
+      <h1>{{ 'keywordvalue.actions.edit' | trans }}</h1>
+    </div>
+    <div class="col-md-3 text-right">
+       {{ form(delete_form) }} 
+    </div>
+
+  </div>
+
+  {{ form_start(edit_form) }}    
+    {{ form_row(edit_form.id)}}    
+    {{ form_row(edit_form.display)}}    
+    {{ form_row(edit_form.value)}}  
+
+    {{ form_rest(edit_form) }}
+  
+  {{ form_end(edit_form) }}
+
+    {% endblock %}

@@ -1,0 +1,61 @@
+  {% extends 'AppBundle::base.html.twig' %}
+
+
+  {% block body -%}
+
+  <div class="row heading">
+    <div class="col-md-9">
+        <h1>{{ 'users.labels.plural' | trans }}</h1>
+    </div>
+    <div class="col-md-3 text-right">
+              <a class="btn btn-default" href="{{ path('users_new') }}">
+          {{ icon('plus') }} {{ 'users.actions.add' | trans }}
+        </a>
+          </div>
+
+  </div>
+
+
+  <table class="table table-condensed table-header-rotated">
+    <thead>
+    <tr>
+        {{ helper.header('appbundle.users.name') }}
+        {{ helper.header('appbundle.users.username') }}
+        {{ helper.header('appbundle.users.password') }}
+        {{ helper.header('appbundle.users.roles') }}
+        {{ helper.header('appbundle.users.createdby') }}
+        {{ helper.header('appbundle.users.createddate') }}
+        {{ helper.header('appbundle.users.modifiedby') }}
+        {{ helper.header('appbundle.users.modifieddate') }}
+      {{ helper.header() }}
+    </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+    <tr>
+                  <td>{{ entity.name }}</td>
+        
+                  <td>{{ entity.username }}</td>
+        
+                  <td>{{ entity.password }}</td>
+        
+                  <td>{{ entity.roles }}</td>
+        
+                  <td>{{ entity.createdby }}</td>
+        
+                  <td>{{ entity.createddate | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.modifiedby }}</td>
+        
+                  <td>{{ entity.modifieddate | date("d/m Y") }}</td>
+        
+      <td class="text-right">    <a class="btn btn-default btn-xs" href="{{ path('users_edit', { 'id': entity.id }) }}">{{ 'common.edit' | trans }}</a>
+
+      </td>
+
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  {% endblock %}

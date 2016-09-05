@@ -1,0 +1,250 @@
+  {% extends 'AppBundle::base.html.twig' %}
+
+
+  {% block body -%}
+
+  <div class="row heading">
+    <div class="col-md-9">
+        <h1>{{ 'grund.labels.plural' | trans }}</h1>
+    </div>
+    <div class="col-md-3 text-right">
+              <a class="btn btn-default" href="{{ path('grund_new') }}">
+          {{ icon('plus') }} {{ 'grund.actions.add' | trans }}
+        </a>
+          </div>
+
+  </div>
+
+
+  <table class="table table-condensed table-header-rotated">
+    <thead>
+    <tr>
+        {{ helper.header('appbundle.grund.createdby') }}
+        {{ helper.header('appbundle.grund.createddate') }}
+        {{ helper.header('appbundle.grund.modifiedby') }}
+        {{ helper.header('appbundle.grund.modifieddate') }}
+        {{ helper.header('appbundle.grund.status') }}
+        {{ helper.header('appbundle.grund.salgstatus') }}
+        {{ helper.header('appbundle.grund.gid') }}
+        {{ helper.header('appbundle.grund.grundtype') }}
+        {{ helper.header('appbundle.grund.mnr') }}
+        {{ helper.header('appbundle.grund.mnr2') }}
+        {{ helper.header('appbundle.grund.delareal') }}
+        {{ helper.header('appbundle.grund.ejerlav') }}
+        {{ helper.header('appbundle.grund.vej') }}
+        {{ helper.header('appbundle.grund.husnummer') }}
+        {{ helper.header('appbundle.grund.bogstav') }}
+        {{ helper.header('appbundle.grund.postbyid') }}
+        {{ helper.header('appbundle.grund.urlgis') }}
+        {{ helper.header('appbundle.grund.salgstype') }}
+        {{ helper.header('appbundle.grund.auktionstartdato') }}
+        {{ helper.header('appbundle.grund.auktionslutdato') }}
+        {{ helper.header('appbundle.grund.annonceresej') }}
+        {{ helper.header('appbundle.grund.datoannonce') }}
+        {{ helper.header('appbundle.grund.datoannonce1') }}
+        {{ helper.header('appbundle.grund.tilsluttet') }}
+        {{ helper.header('appbundle.grund.maxetagem2') }}
+        {{ helper.header('appbundle.grund.areal') }}
+        {{ helper.header('appbundle.grund.arealvej') }}
+        {{ helper.header('appbundle.grund.arealkotelet') }}
+        {{ helper.header('appbundle.grund.bruttoareal') }}
+        {{ helper.header('appbundle.grund.prism2') }}
+        {{ helper.header('appbundle.grund.prisfoerkorrektion') }}
+        {{ helper.header('appbundle.grund.priskorrektion1') }}
+        {{ helper.header('appbundle.grund.antalkorr1') }}
+        {{ helper.header('appbundle.grund.akrkorr1') }}
+        {{ helper.header('appbundle.grund.priskoor1') }}
+        {{ helper.header('appbundle.grund.priskorrektion2') }}
+        {{ helper.header('appbundle.grund.antalkorr2') }}
+        {{ helper.header('appbundle.grund.akrkorr2') }}
+        {{ helper.header('appbundle.grund.priskoor2') }}
+        {{ helper.header('appbundle.grund.priskorrektion3') }}
+        {{ helper.header('appbundle.grund.antalkorr3') }}
+        {{ helper.header('appbundle.grund.akrkorr3') }}
+        {{ helper.header('appbundle.grund.priskoor3') }}
+        {{ helper.header('appbundle.grund.pris') }}
+        {{ helper.header('appbundle.grund.fastpris') }}
+        {{ helper.header('appbundle.grund.minbud') }}
+        {{ helper.header('appbundle.grund.note') }}
+        {{ helper.header('appbundle.grund.landinspektoerid') }}
+        {{ helper.header('appbundle.grund.resstart') }}
+        {{ helper.header('appbundle.grund.tilbudstart') }}
+        {{ helper.header('appbundle.grund.accept') }}
+        {{ helper.header('appbundle.grund.skoederekv') }}
+        {{ helper.header('appbundle.grund.beloebanvist') }}
+        {{ helper.header('appbundle.grund.resslut') }}
+        {{ helper.header('appbundle.grund.tilbudslut') }}
+        {{ helper.header('appbundle.grund.overtagelse') }}
+        {{ helper.header('appbundle.grund.antagetbud') }}
+        {{ helper.header('appbundle.grund.salgsprisumoms') }}
+        {{ helper.header('appbundle.grund.navn') }}
+        {{ helper.header('appbundle.grund.adresse') }}
+        {{ helper.header('appbundle.grund.land') }}
+        {{ helper.header('appbundle.grund.telefon') }}
+        {{ helper.header('appbundle.grund.mobil') }}
+        {{ helper.header('appbundle.grund.koeberemail') }}
+        {{ helper.header('appbundle.grund.navn1') }}
+        {{ helper.header('appbundle.grund.adresse1') }}
+        {{ helper.header('appbundle.grund.land1') }}
+        {{ helper.header('appbundle.grund.telefon1') }}
+        {{ helper.header('appbundle.grund.mobil1') }}
+        {{ helper.header('appbundle.grund.medkoeberemail') }}
+        {{ helper.header('appbundle.grund.notat') }}
+      {{ helper.header() }}
+    </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+    <tr>
+                  <td>{{ entity.createdby }}</td>
+        
+                  <td>{{ entity.createddate | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.modifiedby }}</td>
+        
+                  <td>{{ entity.modifieddate | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.status }}</td>
+        
+                  <td>{{ entity.salgstatus }}</td>
+        
+                  <td>{{ entity.gid }}</td>
+        
+                  <td>{{ entity.grundtype }}</td>
+        
+                  <td>{{ entity.mnr }}</td>
+        
+                  <td>{{ entity.mnr2 }}</td>
+        
+                  <td>{{ entity.delareal }}</td>
+        
+                  <td>{{ entity.ejerlav }}</td>
+        
+                  <td>{{ entity.vej }}</td>
+        
+                  <td>{{ entity.husnummer }}</td>
+        
+                  <td>{{ entity.bogstav }}</td>
+        
+                  <td>{{ entity.postbyid }}</td>
+        
+                  <td>{{ entity.urlgis }}</td>
+        
+                  <td>{{ entity.salgstype }}</td>
+        
+                  <td>{{ entity.auktionstartdato | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.auktionslutdato | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.annonceresej }}</td>
+        
+                  <td>{{ entity.datoannonce | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.datoannonce1 | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.tilsluttet }}</td>
+        
+                  <td>{{ entity.maxetagem2 }}</td>
+        
+                  <td>{{ entity.areal }}</td>
+        
+                  <td>{{ entity.arealvej }}</td>
+        
+                  <td>{{ entity.arealkotelet }}</td>
+        
+                  <td>{{ entity.bruttoareal }}</td>
+        
+                  <td>{{ entity.prism2 }}</td>
+        
+                  <td>{{ entity.prisfoerkorrektion }}</td>
+        
+                  <td>{{ entity.priskorrektion1 }}</td>
+        
+                  <td>{{ entity.antalkorr1 }}</td>
+        
+                  <td>{{ entity.akrkorr1 }}</td>
+        
+                  <td>{{ entity.priskoor1 }}</td>
+        
+                  <td>{{ entity.priskorrektion2 }}</td>
+        
+                  <td>{{ entity.antalkorr2 }}</td>
+        
+                  <td>{{ entity.akrkorr2 }}</td>
+        
+                  <td>{{ entity.priskoor2 }}</td>
+        
+                  <td>{{ entity.priskorrektion3 }}</td>
+        
+                  <td>{{ entity.antalkorr3 }}</td>
+        
+                  <td>{{ entity.akrkorr3 }}</td>
+        
+                  <td>{{ entity.priskoor3 }}</td>
+        
+                  <td>{{ entity.pris }}</td>
+        
+                  <td>{{ entity.fastpris }}</td>
+        
+                  <td>{{ entity.minbud }}</td>
+        
+                  <td>{{ entity.note }}</td>
+        
+                  <td>{{ entity.landinspektoerid }}</td>
+        
+                  <td>{{ entity.resstart | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.tilbudstart | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.accept | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.skoederekv | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.beloebanvist | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.resslut | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.tilbudslut | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.overtagelse | date("d/m Y") }}</td>
+        
+                  <td>{{ entity.antagetbud }}</td>
+        
+                  <td>{{ entity.salgsprisumoms }}</td>
+        
+                  <td>{{ entity.navn }}</td>
+        
+                  <td>{{ entity.adresse }}</td>
+        
+                  <td>{{ entity.land }}</td>
+        
+                  <td>{{ entity.telefon }}</td>
+        
+                  <td>{{ entity.mobil }}</td>
+        
+                  <td>{{ entity.koeberemail }}</td>
+        
+                  <td>{{ entity.navn1 }}</td>
+        
+                  <td>{{ entity.adresse1 }}</td>
+        
+                  <td>{{ entity.land1 }}</td>
+        
+                  <td>{{ entity.telefon1 }}</td>
+        
+                  <td>{{ entity.mobil1 }}</td>
+        
+                  <td>{{ entity.medkoeberemail }}</td>
+        
+                  <td>{{ entity.notat }}</td>
+        
+      <td class="text-right">    <a class="btn btn-default btn-xs" href="{{ path('grund_edit', { 'id': entity.id }) }}">{{ 'common.edit' | trans }}</a>
+
+      </td>
+
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  {% endblock %}

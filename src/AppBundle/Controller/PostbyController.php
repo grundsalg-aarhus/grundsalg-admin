@@ -6,134 +6,254 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Postby;
 use AppBundle\Form\PostbyType;
+use AppBundle\Controller\BaseController;
 
 /**
  * Postby controller.
  *
- * @Route("/admin/postby")
+ * @Route("/postby")
+ * @Security("has_role('ROLE_SUPER_ADMIN')")
  */
-class PostbyController extends Controller
+class PostbyController extends BaseController
 {
+
+  public function init(Request $request) {
+    parent::init($request);
+    $this->breadcrumbs->addItem('postby.labels.singular', $this->generateUrl('postby'));
+}
+
+
     /**
      * Lists all Postby entities.
      *
-     * @Route("/", name="admin_postby_index")
+     * @Route("/", name="postby")
      * @Method("GET")
+     * @Template()
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $postbies = $em->getRepository('AppBundle:Postby')->findAll();
+        $entities = $em->getRepository('AppBundle:Postby')->findAll();
 
-        return $this->render('postby/index.html.twig', array(
-            'postbies' => $postbies,
-        ));
+        return array(
+            'entities' => $entities,
+        );
     }
-
     /**
      * Creates a new Postby entity.
      *
-     * @Route("/new", name="admin_postby_new")
-     * @Method({"GET", "POST"})
+     * @Route("/", name="postby_create")
+     * @Method("POST")
+     * @Template("AppBundle:Postby:new.html.twig")
      */
-    public function newAction(Request $request)
+    public function createAction(Request $request)
     {
-        $postby = new Postby();
-        $form = $this->createForm('AppBundle\Form\PostbyType', $postby);
+        $entity = new Postby();
+        $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($postby);
+            $em->persist($entity);
             $em->flush();
 
-            return $this->redirectToRoute('admin_postby_show', array('id' => $postby->getId()));
+            return $this->redirect($this->generateUrl('postby'));
+
         }
 
-        return $this->render('postby/new.html.twig', array(
-            'postby' => $postby,
-            'form' => $form->createView(),
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        );
+    }
+
+    /**
+     * Creates a form to create a Postby entity.
+     *
+     * @param Postby $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createCreateForm(Postby $entity)
+    {
+        $form = $this->createForm('AppBundle\Form\PostbyType', $entity, array(
+            'action' => $this->generateUrl('postby_create'),
+            'method' => 'POST',
         ));
+
+        $this->addUpdate($form, $this->generateUrl('postby'));
+
+        return $form;
+    }
+
+    /**
+     * Displays a form to create a new Postby entity.
+     *
+     * @Route("/new", name="postby_new")
+     * @Method("GET")
+     * @Template()
+     */
+    public function newAction()
+    {
+        $this->breadcrumbs->addItem('common.add', $this->generateUrl('postby'));
+
+        $entity = new Postby();
+        $form   = $this->createCreateForm($entity);
+
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        );
     }
 
     /**
      * Finds and displays a Postby entity.
      *
-     * @Route("/{id}", name="admin_postby_show")
+     * @Route("/{id}", name="postby_show")
      * @Method("GET")
+     * @Template()
      */
-    public function showAction(Postby $postby)
+    public function showAction($id)
     {
-        $deleteForm = $this->createDeleteForm($postby);
 
-        return $this->render('postby/show.html.twig', array(
-            'postby' => $postby,
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('AppBundle:Postby')->find($id);
+        $this->breadcrumbs->addItem($entity, $this->generateUrl('postby_show', array('id' => $entity->getId())));
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Postby entity.');
+        }
+
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
-        ));
+        );
     }
 
     /**
      * Displays a form to edit an existing Postby entity.
      *
-     * @Route("/{id}/edit", name="admin_postby_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="postby_edit")
+     * @Method("GET")
+     * @Template()
      */
-    public function editAction(Request $request, Postby $postby)
+    public function editAction(Postby $entity)
     {
-        $deleteForm = $this->createDeleteForm($postby);
-        $editForm = $this->createForm('AppBundle\Form\PostbyType', $postby);
-        $editForm->handleRequest($request);
+        $this->breadcrumbs->addItem($entity, $this->generateUrl('postby_show', array('id' => $entity->getId())));
+        $this->breadcrumbs->addItem('common.edit', $this->generateUrl('postby_show', array('id' => $entity->getId())));
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($postby);
-            $em->flush();
-
-            return $this->redirectToRoute('admin_postby_edit', array('id' => $postby->getId()));
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Postby entity.');
         }
 
-        return $this->render('postby/edit.html.twig', array(
-            'postby' => $postby,
-            'edit_form' => $editForm->createView(),
+        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($entity->getId());
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        ));
+        );
     }
 
+    /**
+    * Creates a form to edit a Postby entity.
+    *
+    * @param Postby $entity The entity
+    *
+    * @return \Symfony\Component\Form\Form The form
+    */
+    private function createEditForm(Postby $entity)
+    {
+        $form = $this->createForm('AppBundle\Form\PostbyType', $entity, array(
+            'action' => $this->generateUrl('postby_update', array('id' => $entity->getId())),
+            'method' => 'PUT',
+        ));
+
+        $this->addUpdate($form, $this->generateUrl('postby_show', array('id' => $entity->getId())));
+
+        return $form;
+    }
+    /**
+     * Edits an existing Postby entity.
+     *
+     * @Route("/{id}", name="postby_update")
+     * @Method("PUT")
+     * @Template("AppBundle:Postby:edit.html.twig")
+     */
+    public function updateAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('AppBundle:Postby')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Postby entity.');
+        }
+
+        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createEditForm($entity);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isValid()) {
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('postby'));
+        }
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
     /**
      * Deletes a Postby entity.
      *
-     * @Route("/{id}", name="admin_postby_delete")
+     * @Route("/{id}", name="postby_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, Postby $postby)
+    public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm($postby);
+        $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->remove($postby);
+            $entity = $em->getRepository('AppBundle:Postby')->find($id);
+
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find Postby entity.');
+            }
+
+            $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirectToRoute('admin_postby_index');
+        return $this->redirect($this->generateUrl('postby'));
     }
 
     /**
-     * Creates a form to delete a Postby entity.
+     * Creates a form to delete a Postby entity by id.
      *
-     * @param Postby $postby The Postby entity
+     * @param mixed $id The entity id
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Postby $postby)
+    private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_postby_delete', array('id' => $postby->getId())))
+            ->setAction($this->generateUrl('postby_delete', array('id' => $id)))
             ->setMethod('DELETE')
+            ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
     }

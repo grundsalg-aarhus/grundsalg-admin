@@ -1,0 +1,53 @@
+  {% extends 'AppBundle::base.html.twig' %}
+
+
+{% block body -%}
+  <div class="row heading">
+    <div class="col-md-9">
+      <h1>{{ entity }}</h1>
+    </div>
+    <div class="col-md-3 text-right">    <a class="btn btn-default btn-default" href="{{ path('lokalsamfund_edit', { 'id': entity.id }) }}">{{ 'common.edit' | trans }}</a>
+
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">{{ icon('chevron-right') }} {{ 'lokalsamfund.labels.singular' | trans }}</div>
+        <table class="table table-condensed">
+          <tbody>
+            <tr>
+              <th>{{ 'appbundle.lokalsamfund.number' | trans }}</th>
+                <td>{{ entity.number }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.lokalsamfund.name' | trans }}</th>
+                <td>{{ entity.name }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.lokalsamfund.createdby' | trans }}</th>
+                <td>{{ entity.createdby }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.lokalsamfund.createddate' | trans }}</th>
+                <td>{{ entity.createddate|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.lokalsamfund.modifiedby' | trans }}</th>
+                <td>{{ entity.modifiedby }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.lokalsamfund.modifieddate' | trans }}</th>
+                <td>{{ entity.modifieddate|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'appbundle.lokalsamfund.active' | trans }}</th>
+                <td>{{ entity.active }}</td>
+            </tr>          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}
