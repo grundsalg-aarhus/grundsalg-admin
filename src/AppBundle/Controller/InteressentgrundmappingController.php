@@ -30,16 +30,25 @@ class InteressentgrundmappingController extends BaseController
      * @Route("/", name="interessentgrundmapping_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $interessentgrundmappings = $em->getRepository('AppBundle:Interessentgrundmapping')->findAll();
+        $sort = $request->query->get('sort');
+        $direction = $request->query->get('direction');
 
-        return $this->render('interessentgrundmapping/index.html.twig', array(
-            'interessentgrundmappings' => $interessentgrundmappings,
-        ));
-    }
+        $query = $em->getRepository('AppBundle:Interessentgrundmapping')->findBy([], [$sort => $direction]);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->get('page', 1),
+            20
+        );
+
+
+    return $this->render('interessentgrundmapping/index.html.twig', array('pagination' => $pagination));
+        }
 
     /**
      * Creates a new Interessentgrundmapping entity.

@@ -12,33 +12,36 @@
                     {{ icon('plus') }} {{ 'salgsomraade.actions.new' | trans }}
                 </a>
                     </div>
+        <div class="col-md-3 text-right">
+            <h2><small>{% include 'AppBundle:_includes:pagination_count.html.twig' %}</small></h2>
+        </div>
 
     </div>
 
     <table class="table table-condensed table-header-rotated">
         <thead>
-        <tr>
-                {{ helper.header('salgsomraade.id') }}
-                {{ helper.header('salgsomraade.createdby') }}
-                {{ helper.header('salgsomraade.createddate') }}
-                {{ helper.header('salgsomraade.modifiedby') }}
-                {{ helper.header('salgsomraade.modifieddate') }}
-                {{ helper.header('salgsomraade.nr') }}
-                {{ helper.header('salgsomraade.titel') }}
-                {{ helper.header('salgsomraade.type') }}
-                {{ helper.header('salgsomraade.matrikkel1') }}
-                {{ helper.header('salgsomraade.matrikkel2') }}
-                {{ helper.header('salgsomraade.ejerlav') }}
-                {{ helper.header('salgsomraade.vej') }}
-                {{ helper.header('salgsomraade.gisurl') }}
-                {{ helper.header('salgsomraade.tilsluttet') }}
-                {{ helper.header('salgsomraade.sagsnr') }}
-                {{ helper.header('salgsomraade.lploebenummer') }}
+        <tr>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgsomraade.id'|trans, 'id') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgsomraade.createdby'|trans, 'createdby') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgsomraade.createddate'|trans, 'createddate') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgsomraade.modifiedby'|trans, 'modifiedby') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgsomraade.modifieddate'|trans, 'modifieddate') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgsomraade.nr'|trans, 'nr') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgsomraade.titel'|trans, 'titel') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgsomraade.type'|trans, 'type') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgsomraade.matrikkel1'|trans, 'matrikkel1') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgsomraade.matrikkel2'|trans, 'matrikkel2') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgsomraade.ejerlav'|trans, 'ejerlav') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgsomraade.vej'|trans, 'vej') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgsomraade.gisurl'|trans, 'gisurl') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgsomraade.tilsluttet'|trans, 'tilsluttet') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgsomraade.sagsnr'|trans, 'sagsnr') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgsomraade.lploebenummer'|trans, 'lploebenummer') }}</th>
             {{ helper.header() }}
         </tr>
         </thead>
         <tbody>
-        {% for salgsomraade in salgsomraades %}
+        {% for salgsomraade in pagination %}
         <tr>
                     <td><a href="{{ path('salgsomraade_show', { 'id': salgsomraade.id }) }}">{{ salgsomraade.id }}</a></td>
                     <td>{{ salgsomraade.createdby }}</td>
@@ -63,4 +66,10 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <div class="row">
+        <div class="col text-center">
+            {{ knp_pagination_render(pagination, "", {}, { "prev_label": "«", "next_label": "»", "first_label": "««", "last_label": "»»"}) }}
+        </div>
+    </div>
     {% endblock %}

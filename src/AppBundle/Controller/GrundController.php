@@ -30,16 +30,25 @@ class GrundController extends BaseController
      * @Route("/", name="grund_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $grunds = $em->getRepository('AppBundle:Grund')->findAll();
+        $sort = $request->query->get('sort');
+        $direction = $request->query->get('direction');
 
-        return $this->render('grund/index.html.twig', array(
-            'grunds' => $grunds,
-        ));
-    }
+        $query = $em->getRepository('AppBundle:Grund')->findBy([], [$sort => $direction]);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->get('page', 1),
+            20
+        );
+
+
+    return $this->render('grund/index.html.twig', array('pagination' => $pagination));
+        }
 
     /**
      * Creates a new Grund entity.

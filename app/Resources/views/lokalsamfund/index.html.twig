@@ -12,25 +12,28 @@
                     {{ icon('plus') }} {{ 'lokalsamfund.actions.new' | trans }}
                 </a>
                     </div>
+        <div class="col-md-3 text-right">
+            <h2><small>{% include 'AppBundle:_includes:pagination_count.html.twig' %}</small></h2>
+        </div>
 
     </div>
 
     <table class="table table-condensed table-header-rotated">
         <thead>
-        <tr>
-                {{ helper.header('lokalsamfund.id') }}
-                {{ helper.header('lokalsamfund.number') }}
-                {{ helper.header('lokalsamfund.name') }}
-                {{ helper.header('lokalsamfund.createdby') }}
-                {{ helper.header('lokalsamfund.createddate') }}
-                {{ helper.header('lokalsamfund.modifiedby') }}
-                {{ helper.header('lokalsamfund.modifieddate') }}
-                {{ helper.header('lokalsamfund.active') }}
+        <tr>                
+                <th>{{ knp_pagination_sortable(pagination, 'lokalsamfund.id'|trans, 'id') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'lokalsamfund.number'|trans, 'number') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'lokalsamfund.name'|trans, 'name') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'lokalsamfund.createdby'|trans, 'createdby') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'lokalsamfund.createddate'|trans, 'createddate') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'lokalsamfund.modifiedby'|trans, 'modifiedby') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'lokalsamfund.modifieddate'|trans, 'modifieddate') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'lokalsamfund.active'|trans, 'active') }}</th>
             {{ helper.header() }}
         </tr>
         </thead>
         <tbody>
-        {% for lokalsamfund in lokalsamfunds %}
+        {% for lokalsamfund in pagination %}
         <tr>
                     <td><a href="{{ path('lokalsamfund_show', { 'id': lokalsamfund.id }) }}">{{ lokalsamfund.id }}</a></td>
                     <td>{{ lokalsamfund.number }}</td>
@@ -47,4 +50,10 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <div class="row">
+        <div class="col text-center">
+            {{ knp_pagination_render(pagination, "", {}, { "prev_label": "«", "next_label": "»", "first_label": "««", "last_label": "»»"}) }}
+        </div>
+    </div>
     {% endblock %}

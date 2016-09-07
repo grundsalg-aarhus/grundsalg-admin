@@ -30,16 +30,25 @@ class LokalplanController extends BaseController
      * @Route("/", name="lokalplan_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $lokalplans = $em->getRepository('AppBundle:Lokalplan')->findAll();
+        $sort = $request->query->get('sort');
+        $direction = $request->query->get('direction');
 
-        return $this->render('lokalplan/index.html.twig', array(
-            'lokalplans' => $lokalplans,
-        ));
-    }
+        $query = $em->getRepository('AppBundle:Lokalplan')->findBy([], [$sort => $direction]);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->get('page', 1),
+            20
+        );
+
+
+    return $this->render('lokalplan/index.html.twig', array('pagination' => $pagination));
+        }
 
     /**
      * Creates a new Lokalplan entity.

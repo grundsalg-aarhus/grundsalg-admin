@@ -12,30 +12,33 @@
                     {{ icon('plus') }} {{ 'opkoeb.actions.new' | trans }}
                 </a>
                     </div>
+        <div class="col-md-3 text-right">
+            <h2><small>{% include 'AppBundle:_includes:pagination_count.html.twig' %}</small></h2>
+        </div>
 
     </div>
 
     <table class="table table-condensed table-header-rotated">
         <thead>
-        <tr>
-                {{ helper.header('opkoeb.id') }}
-                {{ helper.header('opkoeb.matrik1') }}
-                {{ helper.header('opkoeb.matrik2') }}
-                {{ helper.header('opkoeb.ejerlav') }}
-                {{ helper.header('opkoeb.m2') }}
-                {{ helper.header('opkoeb.bemaerkning') }}
-                {{ helper.header('opkoeb.opkoebdato') }}
-                {{ helper.header('opkoeb.pris') }}
-                {{ helper.header('opkoeb.procentaflp') }}
-                {{ helper.header('opkoeb.createdby') }}
-                {{ helper.header('opkoeb.createddate') }}
-                {{ helper.header('opkoeb.modifiedby') }}
-                {{ helper.header('opkoeb.modifieddate') }}
+        <tr>                
+                <th>{{ knp_pagination_sortable(pagination, 'opkoeb.id'|trans, 'id') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'opkoeb.matrik1'|trans, 'matrik1') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'opkoeb.matrik2'|trans, 'matrik2') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'opkoeb.ejerlav'|trans, 'ejerlav') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'opkoeb.m2'|trans, 'm2') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'opkoeb.bemaerkning'|trans, 'bemaerkning') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'opkoeb.opkoebdato'|trans, 'opkoebdato') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'opkoeb.pris'|trans, 'pris') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'opkoeb.procentaflp'|trans, 'procentaflp') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'opkoeb.createdby'|trans, 'createdby') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'opkoeb.createddate'|trans, 'createddate') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'opkoeb.modifiedby'|trans, 'modifiedby') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'opkoeb.modifieddate'|trans, 'modifieddate') }}</th>
             {{ helper.header() }}
         </tr>
         </thead>
         <tbody>
-        {% for opkoeb in opkoebs %}
+        {% for opkoeb in pagination %}
         <tr>
                     <td><a href="{{ path('opkoeb_show', { 'id': opkoeb.id }) }}">{{ opkoeb.id }}</a></td>
                     <td>{{ opkoeb.matrik1 }}</td>
@@ -57,4 +60,10 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <div class="row">
+        <div class="col text-center">
+            {{ knp_pagination_render(pagination, "", {}, { "prev_label": "«", "next_label": "»", "first_label": "««", "last_label": "»»"}) }}
+        </div>
+    </div>
     {% endblock %}

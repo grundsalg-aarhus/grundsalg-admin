@@ -12,24 +12,27 @@
                     {{ icon('plus') }} {{ 'postby.actions.new' | trans }}
                 </a>
                     </div>
+        <div class="col-md-3 text-right">
+            <h2><small>{% include 'AppBundle:_includes:pagination_count.html.twig' %}</small></h2>
+        </div>
 
     </div>
 
     <table class="table table-condensed table-header-rotated">
         <thead>
-        <tr>
-                {{ helper.header('postby.id') }}
-                {{ helper.header('postby.postalcode') }}
-                {{ helper.header('postby.city') }}
-                {{ helper.header('postby.createdby') }}
-                {{ helper.header('postby.createddate') }}
-                {{ helper.header('postby.modifiedby') }}
-                {{ helper.header('postby.modifieddate') }}
+        <tr>                
+                <th>{{ knp_pagination_sortable(pagination, 'postby.id'|trans, 'id') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'postby.postalcode'|trans, 'postalcode') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'postby.city'|trans, 'city') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'postby.createdby'|trans, 'createdby') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'postby.createddate'|trans, 'createddate') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'postby.modifiedby'|trans, 'modifiedby') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'postby.modifieddate'|trans, 'modifieddate') }}</th>
             {{ helper.header() }}
         </tr>
         </thead>
         <tbody>
-        {% for postby in postbies %}
+        {% for postby in pagination %}
         <tr>
                     <td><a href="{{ path('postby_show', { 'id': postby.id }) }}">{{ postby.id }}</a></td>
                     <td>{{ postby.postalcode }}</td>
@@ -45,4 +48,10 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <div class="row">
+        <div class="col text-center">
+            {{ knp_pagination_render(pagination, "", {}, { "prev_label": "«", "next_label": "»", "first_label": "««", "last_label": "»»"}) }}
+        </div>
+    </div>
     {% endblock %}

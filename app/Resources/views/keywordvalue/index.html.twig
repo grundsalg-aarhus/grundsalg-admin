@@ -12,20 +12,23 @@
                     {{ icon('plus') }} {{ 'keywordvalue.actions.new' | trans }}
                 </a>
                     </div>
+        <div class="col-md-3 text-right">
+            <h2><small>{% include 'AppBundle:_includes:pagination_count.html.twig' %}</small></h2>
+        </div>
 
     </div>
 
     <table class="table table-condensed table-header-rotated">
         <thead>
-        <tr>
-                {{ helper.header('keywordvalue.id') }}
-                {{ helper.header('keywordvalue.display') }}
-                {{ helper.header('keywordvalue.value') }}
+        <tr>                
+                <th>{{ knp_pagination_sortable(pagination, 'keywordvalue.id'|trans, 'id') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'keywordvalue.display'|trans, 'display') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'keywordvalue.value'|trans, 'value') }}</th>
             {{ helper.header() }}
         </tr>
         </thead>
         <tbody>
-        {% for keywordvalue in keywordvalues %}
+        {% for keywordvalue in pagination %}
         <tr>
                     <td><a href="{{ path('keywordvalue_show', { 'id': keywordvalue.id }) }}">{{ keywordvalue.id }}</a></td>
                     <td>{{ keywordvalue.display }}</td>
@@ -37,4 +40,10 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <div class="row">
+        <div class="col text-center">
+            {{ knp_pagination_render(pagination, "", {}, { "prev_label": "«", "next_label": "»", "first_label": "««", "last_label": "»»"}) }}
+        </div>
+    </div>
     {% endblock %}

@@ -30,16 +30,25 @@ class InteressentController extends BaseController
      * @Route("/", name="interessent_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $interessents = $em->getRepository('AppBundle:Interessent')->findAll();
+        $sort = $request->query->get('sort');
+        $direction = $request->query->get('direction');
 
-        return $this->render('interessent/index.html.twig', array(
-            'interessents' => $interessents,
-        ));
-    }
+        $query = $em->getRepository('AppBundle:Interessent')->findBy([], [$sort => $direction]);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->get('page', 1),
+            20
+        );
+
+
+    return $this->render('interessent/index.html.twig', array('pagination' => $pagination));
+        }
 
     /**
      * Creates a new Interessent entity.

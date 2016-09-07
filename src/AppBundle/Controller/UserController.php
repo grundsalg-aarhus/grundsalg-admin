@@ -30,16 +30,25 @@ class UserController extends BaseController
      * @Route("/", name="user_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $users = $em->getRepository('AppBundle:User')->findAll();
+        $sort = $request->query->get('sort');
+        $direction = $request->query->get('direction');
 
-        return $this->render('user/index.html.twig', array(
-            'users' => $users,
-        ));
-    }
+        $query = $em->getRepository('AppBundle:User')->findBy([], [$sort => $direction]);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->get('page', 1),
+            20
+        );
+
+
+    return $this->render('user/index.html.twig', array('pagination' => $pagination));
+        }
 
     /**
      * Creates a new User entity.

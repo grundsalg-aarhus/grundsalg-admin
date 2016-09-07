@@ -12,19 +12,22 @@
                     {{ icon('plus') }} {{ 'interessentgrundmapping.actions.new' | trans }}
                 </a>
                     </div>
+        <div class="col-md-3 text-right">
+            <h2><small>{% include 'AppBundle:_includes:pagination_count.html.twig' %}</small></h2>
+        </div>
 
     </div>
 
     <table class="table table-condensed table-header-rotated">
         <thead>
-        <tr>
-                {{ helper.header('interessentgrundmapping.id') }}
-                {{ helper.header('interessentgrundmapping.annulleret') }}
+        <tr>                
+                <th>{{ knp_pagination_sortable(pagination, 'interessentgrundmapping.id'|trans, 'id') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'interessentgrundmapping.annulleret'|trans, 'annulleret') }}</th>
             {{ helper.header() }}
         </tr>
         </thead>
         <tbody>
-        {% for interessentgrundmapping in interessentgrundmappings %}
+        {% for interessentgrundmapping in pagination %}
         <tr>
                     <td><a href="{{ path('interessentgrundmapping_show', { 'id': interessentgrundmapping.id }) }}">{{ interessentgrundmapping.id }}</a></td>
                     <td>{{ interessentgrundmapping.annulleret }}</td>
@@ -35,4 +38,10 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <div class="row">
+        <div class="col text-center">
+            {{ knp_pagination_render(pagination, "", {}, { "prev_label": "«", "next_label": "»", "first_label": "««", "last_label": "»»"}) }}
+        </div>
+    </div>
     {% endblock %}

@@ -18,6 +18,9 @@
                 </a>
             {% endif %}
         </div>
+        <div class="col-md-3 text-right">
+            <h2><small>{{ '{% include \'AppBundle:_includes:pagination_count.html.twig\' %}' }}</small></h2>
+        </div>
 
     </div>
 
@@ -25,8 +28,9 @@
         <thead>
         <tr>
             {%- for field, metadata in fields %}
+                {% set class_field = entity_singularized ~ '.' ~ field %}
 
-                {{ "{{ helper.header('" }}{{ class }}{{ "." }}{{ field }}{{ "') }}" }}
+                <th>{{ '{{ knp_pagination_sortable(pagination, '}}{{ "'" }}{{ class_field }}{{ "'" }}{{ '|trans, ' }}{{ "'" }}{{ field }}{{ "'" }}{{ ') }}' }}</th>
 
             {%- endfor %}
 
@@ -34,7 +38,7 @@
         </tr>
         </thead>
         <tbody>
-        {{ '{% for ' ~ entity_singularized ~ ' in ' ~ entity_pluralized ~ ' %}' }}
+        {{ '{% for ' ~ entity_singularized ~ ' in pagination %}' }}
         <tr>
 
             {%- for field, metadata in fields %}
@@ -81,5 +85,11 @@
         {{ '{% endfor %}' }}
         </tbody>
     </table>
+
+    <div class="row">
+        <div class="col text-center">
+            {{ '{{ knp_pagination_render(pagination, "", {}, { "prev_label": "«", "next_label": "»", "first_label": "««", "last_label": "»»"}) }}' }}
+        </div>
+    </div>
     {{ "{% endblock %}" }}
 {% endblock body %}

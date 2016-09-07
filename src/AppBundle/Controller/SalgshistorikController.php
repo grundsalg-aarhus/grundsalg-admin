@@ -30,16 +30,25 @@ class SalgshistorikController extends BaseController
      * @Route("/", name="salgshistorik_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $salgshistoriks = $em->getRepository('AppBundle:Salgshistorik')->findAll();
+        $sort = $request->query->get('sort');
+        $direction = $request->query->get('direction');
 
-        return $this->render('salgshistorik/index.html.twig', array(
-            'salgshistoriks' => $salgshistoriks,
-        ));
-    }
+        $query = $em->getRepository('AppBundle:Salgshistorik')->findBy([], [$sort => $direction]);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->get('page', 1),
+            20
+        );
+
+
+    return $this->render('salgshistorik/index.html.twig', array('pagination' => $pagination));
+        }
 
     /**
      * Creates a new Salgshistorik entity.

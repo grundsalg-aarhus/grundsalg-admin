@@ -12,31 +12,34 @@
                     {{ icon('plus') }} {{ 'lokalplan.actions.new' | trans }}
                 </a>
                     </div>
+        <div class="col-md-3 text-right">
+            <h2><small>{% include 'AppBundle:_includes:pagination_count.html.twig' %}</small></h2>
+        </div>
 
     </div>
 
     <table class="table table-condensed table-header-rotated">
         <thead>
-        <tr>
-                {{ helper.header('lokalplan.id') }}
-                {{ helper.header('lokalplan.nr') }}
-                {{ helper.header('lokalplan.lsnr') }}
-                {{ helper.header('lokalplan.titel') }}
-                {{ helper.header('lokalplan.projektleder') }}
-                {{ helper.header('lokalplan.telefon') }}
-                {{ helper.header('lokalplan.lokalplanlink') }}
-                {{ helper.header('lokalplan.samletareal') }}
-                {{ helper.header('lokalplan.salgbartareal') }}
-                {{ helper.header('lokalplan.forbrugsandel') }}
-                {{ helper.header('lokalplan.createdby') }}
-                {{ helper.header('lokalplan.createddate') }}
-                {{ helper.header('lokalplan.modifiedby') }}
-                {{ helper.header('lokalplan.modifieddate') }}
+        <tr>                
+                <th>{{ knp_pagination_sortable(pagination, 'lokalplan.id'|trans, 'id') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'lokalplan.nr'|trans, 'nr') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'lokalplan.lsnr'|trans, 'lsnr') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'lokalplan.titel'|trans, 'titel') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'lokalplan.projektleder'|trans, 'projektleder') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'lokalplan.telefon'|trans, 'telefon') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'lokalplan.lokalplanlink'|trans, 'lokalplanlink') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'lokalplan.samletareal'|trans, 'samletareal') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'lokalplan.salgbartareal'|trans, 'salgbartareal') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'lokalplan.forbrugsandel'|trans, 'forbrugsandel') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'lokalplan.createdby'|trans, 'createdby') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'lokalplan.createddate'|trans, 'createddate') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'lokalplan.modifiedby'|trans, 'modifiedby') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'lokalplan.modifieddate'|trans, 'modifieddate') }}</th>
             {{ helper.header() }}
         </tr>
         </thead>
         <tbody>
-        {% for lokalplan in lokalplans %}
+        {% for lokalplan in pagination %}
         <tr>
                     <td><a href="{{ path('lokalplan_show', { 'id': lokalplan.id }) }}">{{ lokalplan.id }}</a></td>
                     <td>{{ lokalplan.nr }}</td>
@@ -59,4 +62,10 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <div class="row">
+        <div class="col text-center">
+            {{ knp_pagination_render(pagination, "", {}, { "prev_label": "«", "next_label": "»", "first_label": "««", "last_label": "»»"}) }}
+        </div>
+    </div>
     {% endblock %}

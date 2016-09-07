@@ -12,18 +12,21 @@
                     {{ icon('plus') }} {{ 'user.actions.new' | trans }}
                 </a>
                     </div>
+        <div class="col-md-3 text-right">
+            <h2><small>{% include 'AppBundle:_includes:pagination_count.html.twig' %}</small></h2>
+        </div>
 
     </div>
 
     <table class="table table-condensed table-header-rotated">
         <thead>
-        <tr>
-                {{ helper.header('user.id') }}
+        <tr>                
+                <th>{{ knp_pagination_sortable(pagination, 'user.id'|trans, 'id') }}</th>
             {{ helper.header() }}
         </tr>
         </thead>
         <tbody>
-        {% for user in users %}
+        {% for user in pagination %}
         <tr>
                     <td><a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.id }}</a></td>
                     <td class="text-right">
@@ -33,4 +36,10 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <div class="row">
+        <div class="col text-center">
+            {{ knp_pagination_render(pagination, "", {}, { "prev_label": "«", "next_label": "»", "first_label": "««", "last_label": "»»"}) }}
+        </div>
+    </div>
     {% endblock %}

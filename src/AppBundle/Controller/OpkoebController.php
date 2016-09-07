@@ -30,16 +30,25 @@ class OpkoebController extends BaseController
      * @Route("/", name="opkoeb_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $opkoebs = $em->getRepository('AppBundle:Opkoeb')->findAll();
+        $sort = $request->query->get('sort');
+        $direction = $request->query->get('direction');
 
-        return $this->render('opkoeb/index.html.twig', array(
-            'opkoebs' => $opkoebs,
-        ));
-    }
+        $query = $em->getRepository('AppBundle:Opkoeb')->findBy([], [$sort => $direction]);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->get('page', 1),
+            20
+        );
+
+
+    return $this->render('opkoeb/index.html.twig', array('pagination' => $pagination));
+        }
 
     /**
      * Creates a new Opkoeb entity.

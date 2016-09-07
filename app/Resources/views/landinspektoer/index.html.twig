@@ -12,30 +12,33 @@
                     {{ icon('plus') }} {{ 'landinspektoer.actions.new' | trans }}
                 </a>
                     </div>
+        <div class="col-md-3 text-right">
+            <h2><small>{% include 'AppBundle:_includes:pagination_count.html.twig' %}</small></h2>
+        </div>
 
     </div>
 
     <table class="table table-condensed table-header-rotated">
         <thead>
-        <tr>
-                {{ helper.header('landinspektoer.id') }}
-                {{ helper.header('landinspektoer.adresse') }}
-                {{ helper.header('landinspektoer.email') }}
-                {{ helper.header('landinspektoer.mobil') }}
-                {{ helper.header('landinspektoer.navn') }}
-                {{ helper.header('landinspektoer.notat') }}
-                {{ helper.header('landinspektoer.telefon') }}
-                {{ helper.header('landinspektoer.postnrid') }}
-                {{ helper.header('landinspektoer.createdby') }}
-                {{ helper.header('landinspektoer.createddate') }}
-                {{ helper.header('landinspektoer.modifiedby') }}
-                {{ helper.header('landinspektoer.modifieddate') }}
-                {{ helper.header('landinspektoer.active') }}
+        <tr>                
+                <th>{{ knp_pagination_sortable(pagination, 'landinspektoer.id'|trans, 'id') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'landinspektoer.adresse'|trans, 'adresse') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'landinspektoer.email'|trans, 'email') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'landinspektoer.mobil'|trans, 'mobil') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'landinspektoer.navn'|trans, 'navn') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'landinspektoer.notat'|trans, 'notat') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'landinspektoer.telefon'|trans, 'telefon') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'landinspektoer.postnrid'|trans, 'postnrid') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'landinspektoer.createdby'|trans, 'createdby') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'landinspektoer.createddate'|trans, 'createddate') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'landinspektoer.modifiedby'|trans, 'modifiedby') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'landinspektoer.modifieddate'|trans, 'modifieddate') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'landinspektoer.active'|trans, 'active') }}</th>
             {{ helper.header() }}
         </tr>
         </thead>
         <tbody>
-        {% for landinspektoer in landinspektoers %}
+        {% for landinspektoer in pagination %}
         <tr>
                     <td><a href="{{ path('landinspektoer_show', { 'id': landinspektoer.id }) }}">{{ landinspektoer.id }}</a></td>
                     <td>{{ landinspektoer.adresse }}</td>
@@ -57,4 +60,10 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <div class="row">
+        <div class="col text-center">
+            {{ knp_pagination_render(pagination, "", {}, { "prev_label": "«", "next_label": "»", "first_label": "««", "last_label": "»»"}) }}
+        </div>
+    </div>
     {% endblock %}

@@ -12,35 +12,38 @@
                     {{ icon('plus') }} {{ 'interessent.actions.new' | trans }}
                 </a>
                     </div>
+        <div class="col-md-3 text-right">
+            <h2><small>{% include 'AppBundle:_includes:pagination_count.html.twig' %}</small></h2>
+        </div>
 
     </div>
 
     <table class="table table-condensed table-header-rotated">
         <thead>
-        <tr>
-                {{ helper.header('interessent.id') }}
-                {{ helper.header('interessent.createdby') }}
-                {{ helper.header('interessent.createddate') }}
-                {{ helper.header('interessent.modifiedby') }}
-                {{ helper.header('interessent.modifieddate') }}
-                {{ helper.header('interessent.navn') }}
-                {{ helper.header('interessent.adresse') }}
-                {{ helper.header('interessent.land') }}
-                {{ helper.header('interessent.telefon') }}
-                {{ helper.header('interessent.mobil') }}
-                {{ helper.header('interessent.koeberemail') }}
-                {{ helper.header('interessent.navn1') }}
-                {{ helper.header('interessent.adresse1') }}
-                {{ helper.header('interessent.land1') }}
-                {{ helper.header('interessent.telefon1') }}
-                {{ helper.header('interessent.mobil1') }}
-                {{ helper.header('interessent.medkoeberemail') }}
-                {{ helper.header('interessent.notat') }}
+        <tr>                
+                <th>{{ knp_pagination_sortable(pagination, 'interessent.id'|trans, 'id') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'interessent.createdby'|trans, 'createdby') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'interessent.createddate'|trans, 'createddate') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'interessent.modifiedby'|trans, 'modifiedby') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'interessent.modifieddate'|trans, 'modifieddate') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'interessent.navn'|trans, 'navn') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'interessent.adresse'|trans, 'adresse') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'interessent.land'|trans, 'land') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'interessent.telefon'|trans, 'telefon') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'interessent.mobil'|trans, 'mobil') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'interessent.koeberemail'|trans, 'koeberemail') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'interessent.navn1'|trans, 'navn1') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'interessent.adresse1'|trans, 'adresse1') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'interessent.land1'|trans, 'land1') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'interessent.telefon1'|trans, 'telefon1') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'interessent.mobil1'|trans, 'mobil1') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'interessent.medkoeberemail'|trans, 'medkoeberemail') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'interessent.notat'|trans, 'notat') }}</th>
             {{ helper.header() }}
         </tr>
         </thead>
         <tbody>
-        {% for interessent in interessents %}
+        {% for interessent in pagination %}
         <tr>
                     <td><a href="{{ path('interessent_show', { 'id': interessent.id }) }}">{{ interessent.id }}</a></td>
                     <td>{{ interessent.createdby }}</td>
@@ -67,4 +70,10 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <div class="row">
+        <div class="col text-center">
+            {{ knp_pagination_render(pagination, "", {}, { "prev_label": "«", "next_label": "»", "first_label": "««", "last_label": "»»"}) }}
+        </div>
+    </div>
     {% endblock %}

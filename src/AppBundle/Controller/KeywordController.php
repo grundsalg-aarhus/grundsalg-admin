@@ -30,16 +30,25 @@ class KeywordController extends BaseController
      * @Route("/", name="keyword_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $keywords = $em->getRepository('AppBundle:Keyword')->findAll();
+        $sort = $request->query->get('sort');
+        $direction = $request->query->get('direction');
 
-        return $this->render('keyword/index.html.twig', array(
-            'keywords' => $keywords,
-        ));
-    }
+        $query = $em->getRepository('AppBundle:Keyword')->findBy([], [$sort => $direction]);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->get('page', 1),
+            20
+        );
+
+
+    return $this->render('keyword/index.html.twig', array('pagination' => $pagination));
+        }
 
     /**
      * Creates a new Keyword entity.

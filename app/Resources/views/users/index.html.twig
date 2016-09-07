@@ -12,26 +12,29 @@
                     {{ icon('plus') }} {{ 'users.actions.new' | trans }}
                 </a>
                     </div>
+        <div class="col-md-3 text-right">
+            <h2><small>{% include 'AppBundle:_includes:pagination_count.html.twig' %}</small></h2>
+        </div>
 
     </div>
 
     <table class="table table-condensed table-header-rotated">
         <thead>
-        <tr>
-                {{ helper.header('users.id') }}
-                {{ helper.header('users.name') }}
-                {{ helper.header('users.username') }}
-                {{ helper.header('users.password') }}
-                {{ helper.header('users.roles') }}
-                {{ helper.header('users.createdby') }}
-                {{ helper.header('users.createddate') }}
-                {{ helper.header('users.modifiedby') }}
-                {{ helper.header('users.modifieddate') }}
+        <tr>                
+                <th>{{ knp_pagination_sortable(pagination, 'user.id'|trans, 'id') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'user.name'|trans, 'name') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'user.username'|trans, 'username') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'user.password'|trans, 'password') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'user.roles'|trans, 'roles') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'user.createdby'|trans, 'createdby') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'user.createddate'|trans, 'createddate') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'user.modifiedby'|trans, 'modifiedby') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'user.modifieddate'|trans, 'modifieddate') }}</th>
             {{ helper.header() }}
         </tr>
         </thead>
         <tbody>
-        {% for user in users %}
+        {% for user in pagination %}
         <tr>
                     <td><a href="{{ path('users_show', { 'id': user.id }) }}">{{ user.id }}</a></td>
                     <td>{{ user.name }}</td>
@@ -49,4 +52,10 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <div class="row">
+        <div class="col text-center">
+            {{ knp_pagination_render(pagination, "", {}, { "prev_label": "«", "next_label": "»", "first_label": "««", "last_label": "»»"}) }}
+        </div>
+    </div>
     {% endblock %}

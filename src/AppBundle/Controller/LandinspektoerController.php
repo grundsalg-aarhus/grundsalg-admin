@@ -30,16 +30,25 @@ class LandinspektoerController extends BaseController
      * @Route("/", name="landinspektoer_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $landinspektoers = $em->getRepository('AppBundle:Landinspektoer')->findAll();
+        $sort = $request->query->get('sort');
+        $direction = $request->query->get('direction');
 
-        return $this->render('landinspektoer/index.html.twig', array(
-            'landinspektoers' => $landinspektoers,
-        ));
-    }
+        $query = $em->getRepository('AppBundle:Landinspektoer')->findBy([], [$sort => $direction]);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->get('page', 1),
+            20
+        );
+
+
+    return $this->render('landinspektoer/index.html.twig', array('pagination' => $pagination));
+        }
 
     /**
      * Creates a new Landinspektoer entity.

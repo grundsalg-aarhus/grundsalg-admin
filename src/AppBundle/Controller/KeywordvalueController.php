@@ -30,16 +30,25 @@ class KeywordvalueController extends BaseController
      * @Route("/", name="keywordvalue_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $keywordvalues = $em->getRepository('AppBundle:Keywordvalue')->findAll();
+        $sort = $request->query->get('sort');
+        $direction = $request->query->get('direction');
 
-        return $this->render('keywordvalue/index.html.twig', array(
-            'keywordvalues' => $keywordvalues,
-        ));
-    }
+        $query = $em->getRepository('AppBundle:Keywordvalue')->findBy([], [$sort => $direction]);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->get('page', 1),
+            20
+        );
+
+
+    return $this->render('keywordvalue/index.html.twig', array('pagination' => $pagination));
+        }
 
     /**
      * Creates a new Keywordvalue entity.

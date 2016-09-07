@@ -30,16 +30,25 @@ class DelomraadeController extends BaseController
      * @Route("/", name="delomraade_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $delomraades = $em->getRepository('AppBundle:Delomraade')->findAll();
+        $sort = $request->query->get('sort');
+        $direction = $request->query->get('direction');
 
-        return $this->render('delomraade/index.html.twig', array(
-            'delomraades' => $delomraades,
-        ));
-    }
+        $query = $em->getRepository('AppBundle:Delomraade')->findBy([], [$sort => $direction]);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->get('page', 1),
+            20
+        );
+
+
+    return $this->render('delomraade/index.html.twig', array('pagination' => $pagination));
+        }
 
     /**
      * Creates a new Delomraade entity.

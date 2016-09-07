@@ -12,50 +12,53 @@
                     {{ icon('plus') }} {{ 'salgshistorik.actions.new' | trans }}
                 </a>
                     </div>
+        <div class="col-md-3 text-right">
+            <h2><small>{% include 'AppBundle:_includes:pagination_count.html.twig' %}</small></h2>
+        </div>
 
     </div>
 
     <table class="table table-condensed table-header-rotated">
         <thead>
-        <tr>
-                {{ helper.header('salgshistorik.id') }}
-                {{ helper.header('salgshistorik.createdby') }}
-                {{ helper.header('salgshistorik.createddate') }}
-                {{ helper.header('salgshistorik.modifiedby') }}
-                {{ helper.header('salgshistorik.modifieddate') }}
-                {{ helper.header('salgshistorik.aarsag') }}
-                {{ helper.header('salgshistorik.salgstype') }}
-                {{ helper.header('salgshistorik.status') }}
-                {{ helper.header('salgshistorik.resstart') }}
-                {{ helper.header('salgshistorik.resslut') }}
-                {{ helper.header('salgshistorik.tilbudstart') }}
-                {{ helper.header('salgshistorik.tilbudslut') }}
-                {{ helper.header('salgshistorik.accept') }}
-                {{ helper.header('salgshistorik.overtagelse') }}
-                {{ helper.header('salgshistorik.skoederekv') }}
-                {{ helper.header('salgshistorik.beloebanvist') }}
-                {{ helper.header('salgshistorik.auktionstartdato') }}
-                {{ helper.header('salgshistorik.auktionslutdato') }}
-                {{ helper.header('salgshistorik.minbud') }}
-                {{ helper.header('salgshistorik.antagetbud') }}
-                {{ helper.header('salgshistorik.navn') }}
-                {{ helper.header('salgshistorik.adresse') }}
-                {{ helper.header('salgshistorik.land') }}
-                {{ helper.header('salgshistorik.telefon') }}
-                {{ helper.header('salgshistorik.mobil') }}
-                {{ helper.header('salgshistorik.koeberemail') }}
-                {{ helper.header('salgshistorik.navn1') }}
-                {{ helper.header('salgshistorik.adresse1') }}
-                {{ helper.header('salgshistorik.land1') }}
-                {{ helper.header('salgshistorik.telefon1') }}
-                {{ helper.header('salgshistorik.mobil1') }}
-                {{ helper.header('salgshistorik.medkoeberemail') }}
-                {{ helper.header('salgshistorik.notat') }}
+        <tr>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.id'|trans, 'id') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.createdby'|trans, 'createdby') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.createddate'|trans, 'createddate') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.modifiedby'|trans, 'modifiedby') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.modifieddate'|trans, 'modifieddate') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.aarsag'|trans, 'aarsag') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.salgstype'|trans, 'salgstype') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.status'|trans, 'status') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.resstart'|trans, 'resstart') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.resslut'|trans, 'resslut') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.tilbudstart'|trans, 'tilbudstart') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.tilbudslut'|trans, 'tilbudslut') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.accept'|trans, 'accept') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.overtagelse'|trans, 'overtagelse') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.skoederekv'|trans, 'skoederekv') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.beloebanvist'|trans, 'beloebanvist') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.auktionstartdato'|trans, 'auktionstartdato') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.auktionslutdato'|trans, 'auktionslutdato') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.minbud'|trans, 'minbud') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.antagetbud'|trans, 'antagetbud') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.navn'|trans, 'navn') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.adresse'|trans, 'adresse') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.land'|trans, 'land') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.telefon'|trans, 'telefon') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.mobil'|trans, 'mobil') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.koeberemail'|trans, 'koeberemail') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.navn1'|trans, 'navn1') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.adresse1'|trans, 'adresse1') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.land1'|trans, 'land1') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.telefon1'|trans, 'telefon1') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.mobil1'|trans, 'mobil1') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.medkoeberemail'|trans, 'medkoeberemail') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'salgshistorik.notat'|trans, 'notat') }}</th>
             {{ helper.header() }}
         </tr>
         </thead>
         <tbody>
-        {% for salgshistorik in salgshistoriks %}
+        {% for salgshistorik in pagination %}
         <tr>
                     <td><a href="{{ path('salgshistorik_show', { 'id': salgshistorik.id }) }}">{{ salgshistorik.id }}</a></td>
                     <td>{{ salgshistorik.createdby }}</td>
@@ -97,4 +100,10 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <div class="row">
+        <div class="col text-center">
+            {{ knp_pagination_render(pagination, "", {}, { "prev_label": "«", "next_label": "»", "first_label": "««", "last_label": "»»"}) }}
+        </div>
+    </div>
     {% endblock %}

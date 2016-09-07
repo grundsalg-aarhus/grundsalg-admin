@@ -12,31 +12,34 @@
                     {{ icon('plus') }} {{ 'delomraade.actions.new' | trans }}
                 </a>
                     </div>
+        <div class="col-md-3 text-right">
+            <h2><small>{% include 'AppBundle:_includes:pagination_count.html.twig' %}</small></h2>
+        </div>
 
     </div>
 
     <table class="table table-condensed table-header-rotated">
         <thead>
-        <tr>
-                {{ helper.header('delomraade.id') }}
-                {{ helper.header('delomraade.kpl1') }}
-                {{ helper.header('delomraade.kpl2') }}
-                {{ helper.header('delomraade.kpl3') }}
-                {{ helper.header('delomraade.kpl4') }}
-                {{ helper.header('delomraade.o1') }}
-                {{ helper.header('delomraade.o2') }}
-                {{ helper.header('delomraade.o3') }}
-                {{ helper.header('delomraade.anvendelse') }}
-                {{ helper.header('delomraade.mulighedfor') }}
-                {{ helper.header('delomraade.createdby') }}
-                {{ helper.header('delomraade.createddate') }}
-                {{ helper.header('delomraade.modifiedby') }}
-                {{ helper.header('delomraade.modifieddate') }}
+        <tr>                
+                <th>{{ knp_pagination_sortable(pagination, 'delomraade.id'|trans, 'id') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'delomraade.kpl1'|trans, 'kpl1') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'delomraade.kpl2'|trans, 'kpl2') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'delomraade.kpl3'|trans, 'kpl3') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'delomraade.kpl4'|trans, 'kpl4') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'delomraade.o1'|trans, 'o1') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'delomraade.o2'|trans, 'o2') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'delomraade.o3'|trans, 'o3') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'delomraade.anvendelse'|trans, 'anvendelse') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'delomraade.mulighedfor'|trans, 'mulighedfor') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'delomraade.createdby'|trans, 'createdby') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'delomraade.createddate'|trans, 'createddate') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'delomraade.modifiedby'|trans, 'modifiedby') }}</th>                
+                <th>{{ knp_pagination_sortable(pagination, 'delomraade.modifieddate'|trans, 'modifieddate') }}</th>
             {{ helper.header() }}
         </tr>
         </thead>
         <tbody>
-        {% for delomraade in delomraades %}
+        {% for delomraade in pagination %}
         <tr>
                     <td><a href="{{ path('delomraade_show', { 'id': delomraade.id }) }}">{{ delomraade.id }}</a></td>
                     <td>{{ delomraade.kpl1 }}</td>
@@ -59,4 +62,10 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <div class="row">
+        <div class="col text-center">
+            {{ knp_pagination_render(pagination, "", {}, { "prev_label": "«", "next_label": "»", "first_label": "««", "last_label": "»»"}) }}
+        </div>
+    </div>
     {% endblock %}

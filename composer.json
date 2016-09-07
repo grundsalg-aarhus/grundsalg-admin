@@ -31,7 +31,8 @@
         "braincrafted/bootstrap-bundle": "~2",
         "yavin/symfony-init-controller": "~0.4",
         "friendsofsymfony/user-bundle": "~2.0@dev",
-        "whiteoctober/breadcrumbs-bundle": "~1.2"
+        "whiteoctober/breadcrumbs-bundle": "~1.2",
+        "knplabs/knp-paginator-bundle": "~2.5"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
