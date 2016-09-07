@@ -1,25 +1,36 @@
 {% extends 'AppBundle::base.html.twig' %}
 
-{% block body %}
-    <h1>Landinspektoer list</h1>
 
-    <table>
+{% block body %}
+
+    <div class="row heading">
+        <div class="col-md-9">
+            <h1>{{ 'landinspektoer.labels.plural' | trans }}</h1>
+        </div>
+        <div class="col-md-3 text-right">
+                            <a class="btn btn-default" href="{{ path('landinspektoer_new') }}">
+                    {{ icon('plus') }} {{ 'landinspektoer.actions.add' | trans }}
+                </a>
+                    </div>
+
+    </div>
+
+    <table class="table table-condensed table-header-rotated">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Adresse</th>
-                <th>Email</th>
-                <th>Mobil</th>
-                <th>Navn</th>
-                <th>Notat</th>
-                <th>Telefon</th>
-                <th>Postnrid</th>
-                <th>Createdby</th>
-                <th>Createddate</th>
-                <th>Modifiedby</th>
-                <th>Modifieddate</th>
-                <th>Active</th>
-                <th>Actions</th>
+                    {{ helper.header('appbundle.landinspektoer.adresse') }}
+                    {{ helper.header('appbundle.landinspektoer.email') }}
+                    {{ helper.header('appbundle.landinspektoer.mobil') }}
+                    {{ helper.header('appbundle.landinspektoer.navn') }}
+                    {{ helper.header('appbundle.landinspektoer.notat') }}
+                    {{ helper.header('appbundle.landinspektoer.telefon') }}
+                    {{ helper.header('appbundle.landinspektoer.postnrid') }}
+                    {{ helper.header('appbundle.landinspektoer.createdby') }}
+                    {{ helper.header('appbundle.landinspektoer.createddate') }}
+                    {{ helper.header('appbundle.landinspektoer.modifiedby') }}
+                    {{ helper.header('appbundle.landinspektoer.modifieddate') }}
+                    {{ helper.header('appbundle.landinspektoer.active') }}
+                {{ helper.header() }}
             </tr>
         </thead>
         <tbody>
@@ -38,15 +49,8 @@
                 <td>{{ landinspektoer.modifiedby }}</td>
                 <td>{% if landinspektoer.modifieddate %}{{ landinspektoer.modifieddate|date('Y-m-d') }}{% endif %}</td>
                 <td>{{ landinspektoer.active }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('landinspektoer_show', { 'id': landinspektoer.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('landinspektoer_edit', { 'id': landinspektoer.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                <td class="text-right">
+                  <a class="btn btn-default btn-xs" href="{{ path('landinspektoer_edit', { 'id': landinspektoer.id }) }}">{{ 'common.edit' | trans }}</a>
                 </td>
             </tr>
         {% endfor %}

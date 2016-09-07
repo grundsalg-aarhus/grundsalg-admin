@@ -1,28 +1,32 @@
 {% extends 'AppBundle::base.html.twig' %}
 
-{% block body %}
-    <h1>User list</h1>
 
-    <table>
+{% block body %}
+
+    <div class="row heading">
+        <div class="col-md-9">
+            <h1>{{ 'user.labels.plural' | trans }}</h1>
+        </div>
+        <div class="col-md-3 text-right">
+                            <a class="btn btn-default" href="{{ path('user_new') }}">
+                    {{ icon('plus') }} {{ 'user.actions.add' | trans }}
+                </a>
+                    </div>
+
+    </div>
+
+    <table class="table table-condensed table-header-rotated">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Actions</th>
+                {{ helper.header() }}
             </tr>
         </thead>
         <tbody>
         {% for user in users %}
             <tr>
                 <td><a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.id }}</a></td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('user_show', { 'id': user.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('user_edit', { 'id': user.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                <td class="text-right">
+                  <a class="btn btn-default btn-xs" href="{{ path('user_edit', { 'id': user.id }) }}">{{ 'common.edit' | trans }}</a>
                 </td>
             </tr>
         {% endfor %}

@@ -2,20 +2,35 @@
 {{ "{% extends 'AppBundle::base.html.twig' %}" }}
 {% endblock extends %}
 
+{% set class = entity | split('\\') | last | lower %}
+
 {% block body %}
 {{ "{% block body %}" }}
-    <h1>{{ entity }} list</h1>
 
-    <table>
+    <div class="row heading">
+        <div class="col-md-9">
+            <h1>{{ "{{ '" }}{{ class }}{{ ".labels.plural' | trans }}" }}</h1>
+        </div>
+        <div class="col-md-3 text-right">
+            {% if 'new' in actions %}
+                <a class="btn btn-default" href="{{ "{{ path('" ~ route_name_prefix ~ "_new') }}" }}">
+                    {{ "{{ icon('plus') }}" }} {{ "{{ '" }}{{ class }}{{ ".actions.add' | trans }}" }}
+                </a>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <table class="table table-condensed table-header-rotated">
         <thead>
             <tr>
-            {%- for field, metadata in fields %}
+                {%- for field, metadata in fields if field != 'id' %}
 
-                <th>{{ field|capitalize }}</th>
+                    {{ "{{ helper.header('appbundle." }}{{ class }}{{ "." }}{{ field }}{{ "') }}" }}
 
-            {%- endfor %}
+                {%- endfor %}
 
-                <th>Actions</th>
+                {{ "{{ helper.header() }}" }}
             </tr>
         </thead>
         <tbody>
@@ -55,20 +70,10 @@
 
             {%- if loop.last %}
 
-                <td>
-                    <ul>
-
-                    {%- for action in record_actions %}
-
-                        <li>
-                            <a href="{{ "{{ path('" ~ route_name_prefix ~ "_" ~ action ~ "', { 'id': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}">{{ action }}</a>
-                        </li>
-
-                    {%- endfor %}
-
-                    </ul>
+                <td class="text-right">
+                  <a class="btn btn-default btn-xs" href="{{ "{{ path('" ~ route_name_prefix ~ "_edit', { 'id': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}">{{ "{{ 'common.edit' | trans }}"  }}</a>
                 </td>
-
+                
             {%- endif %}
         {%- endfor %}
 
