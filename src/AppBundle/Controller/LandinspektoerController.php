@@ -14,7 +14,7 @@ use AppBundle\Form\LandinspektoerType;
  * Landinspektoer controller.
  *
  * @Route("/landinspektoer")
- * @Security("has_role('ROLE_SUPER_ADMIN')")
+ * @Security("has_role('ROLE_ADMIN')")
  */
 class LandinspektoerController extends BaseController
 {

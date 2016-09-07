@@ -14,7 +14,7 @@ use AppBundle\Form\InteressentgrundmappingType;
  * Interessentgrundmapping controller.
  *
  * @Route("/interessentgrundmapping")
- * @Security("has_role('ROLE_SUPER_ADMIN')")
+ * @Security("has_role('ROLE_ADMIN')")
  */
 class InteressentgrundmappingController extends BaseController
 {

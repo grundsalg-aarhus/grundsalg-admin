@@ -14,7 +14,7 @@ use AppBundle\Form\OpkoebType;
  * Opkoeb controller.
  *
  * @Route("/opkoeb")
- * @Security("has_role('ROLE_SUPER_ADMIN')")
+ * @Security("has_role('ROLE_ADMIN')")
  */
 class OpkoebController extends BaseController
 {

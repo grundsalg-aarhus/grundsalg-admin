@@ -14,7 +14,7 @@ use AppBundle\Form\UsersType;
  * Users controller.
  *
  * @Route("/users")
- * @Security("has_role('ROLE_SUPER_ADMIN')")
+ * @Security("has_role('ROLE_ADMIN')")
  */
 class UsersController extends BaseController
 {

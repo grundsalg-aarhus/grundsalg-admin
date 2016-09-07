@@ -24,9 +24,9 @@
     <table class="table table-condensed table-header-rotated">
         <thead>
             <tr>
-                {%- for field, metadata in fields if field != 'id' %}
+                {%- for field, metadata in fields %}
 
-                    {{ "{{ helper.header('appbundle." }}{{ class }}{{ "." }}{{ field }}{{ "') }}" }}
+                    {{ "{{ helper.header('" }}{{ class }}{{ "." }}{{ field }}{{ "') }}" }}
 
                 {%- endfor %}
 

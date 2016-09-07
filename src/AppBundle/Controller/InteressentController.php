@@ -14,7 +14,7 @@ use AppBundle\Form\InteressentType;
  * Interessent controller.
  *
  * @Route("/interessent")
- * @Security("has_role('ROLE_SUPER_ADMIN')")
+ * @Security("has_role('ROLE_ADMIN')")
  */
 class InteressentController extends BaseController
 {

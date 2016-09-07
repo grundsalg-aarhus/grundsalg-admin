@@ -14,7 +14,7 @@ use AppBundle\Form\LokalplanType;
  * Lokalplan controller.
  *
  * @Route("/lokalplan")
- * @Security("has_role('ROLE_SUPER_ADMIN')")
+ * @Security("has_role('ROLE_ADMIN')")
  */
 class LokalplanController extends BaseController
 {

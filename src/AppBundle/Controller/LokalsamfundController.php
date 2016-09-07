@@ -14,7 +14,7 @@ use AppBundle\Form\LokalsamfundType;
  * Lokalsamfund controller.
  *
  * @Route("/lokalsamfund")
- * @Security("has_role('ROLE_SUPER_ADMIN')")
+ * @Security("has_role('ROLE_ADMIN')")
  */
 class LokalsamfundController extends BaseController
 {

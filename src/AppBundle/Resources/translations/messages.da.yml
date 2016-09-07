@@ -33,3 +33,130 @@ common:
   delete: Slet
 
 appbundle:
+
+
+delomraade:
+  labels:
+    singular: Delområde
+    plural: Delområder
+
+grund:
+  labels:
+    singular: Grund
+    plural: Grunde
+  id: ID
+  createdby: Oprettet af
+  createddate: Oprettelsesdato
+  modifiedby: Ændret af
+  modifieddate: Ændringsdato
+  status: Status
+  gid: ?gid?
+  grundtype: Grundtype
+  mnr: ?mnr?
+  mnr2: ?mnr2?
+  delareal: Delareal
+  ejerlav: Ejerlav
+  vej: Vej
+  husnummer: Husnummer
+  bogstav: Bogstav
+  postbyid: Postnummer/By ID
+  urlgis: GIS link
+  salgstype: Salgstype
+  auktionstartdato: Auktionens startdato
+  auktionslutdato: Auktionens slutdato
+  annonceresej: ?annonceresej?
+  datoannonce: Annoncedato
+  datoannonce1: Annoncedato 1
+  tilsluttet: Tilsluttet
+  maxetagem2: Max etage m2
+  areal: Areal
+  arealvej: ?arealvej?
+  arealkotelet: ?arealkotelet?
+  bruttoareal: Bruttoareal
+  prism2: Pris pr. m2
+  prisfoerkorrektion: Pris før korrektion
+  priskorrektion1: Priskorrektion 1
+  antalkorr1: ?antalkorr1?
+  akrkorr1: ?akrkorr1?
+  priskoor1: ?priskoor1?
+  priskorrektion2: Priskorrektion 2
+  antalkorr2: ?antalkorr2?
+  akrkorr2: ?akrkorr2?
+  priskoor2: ?priskoor2?
+  priskorrektion3: Priskorrektion 3
+  antalkorr3: ?antalkorr3?
+  akrkorr3: ?akrkorr3?
+  priskoor3: ?priskoor3?
+  pris: Pris
+  fastpris: Fastpris
+  minbud: Minimumsbud
+  note: Note
+  landinspektoerid: Landinspektør ID
+  resstart: ?resstart?
+  tilbudstart: Tilbudsstart
+  accept: Accept
+  skoederekv: ?skoederekv?
+  beloebanvist: ?beloebanvist?
+  resslut: ?resslut?
+  tilbudslut: Tilbudsafslutning
+  overtagelse: Overtagelsesdato
+  antagetbud: ?antagetbud?
+  salgsprisumoms: Salgspris uden moms
+  navn: Navn
+  adresse: Adresse
+  land: Land
+  telefon: Telefon
+  mobil: Mobil
+  koeberemail: Købers mail
+  navn1: Navn 1
+  adresse1: Adresse 1
+  land1: Land 1
+  telefon1: Telefon 1
+  mobil1: Mobil 1
+  medkoeberemail: Medkøbers mail
+  notat: Notat
+
+interessent:
+  labels:
+    singular: Interessent
+    plural: Interessenter
+
+landinspektoer:
+  labels:
+    singular: Landinspektør
+    plural: Landinspektører
+
+lokalplan:
+  labels:
+    singular: Lokalplan
+    plural: Lokalplaner
+
+lokalsamfund:
+  labels:
+    singular: Lokalsamfund
+    plural: Lokalsamfund
+
+opkoeb:
+  labels:
+    singular: Opkøb
+    plural: Opkøb
+
+postby:
+  labels:
+    singular: Postnummer/By
+    plural: Postnummer/By
+
+salgshistorik:
+  labels:
+    singular: Salgshistorik
+    plural: Salgshistorik
+
+salgsomraade:
+  labels:
+    singular: Salgsområde
+    plural: Salgsområder
+
+user:
+  labels:
+    singular: Bruger
+    plural: Brugere

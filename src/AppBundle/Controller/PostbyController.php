@@ -14,7 +14,7 @@ use AppBundle\Form\PostbyType;
  * Postby controller.
  *
  * @Route("/postby")
- * @Security("has_role('ROLE_SUPER_ADMIN')")
+ * @Security("has_role('ROLE_ADMIN')")
  */
 class PostbyController extends BaseController
 {

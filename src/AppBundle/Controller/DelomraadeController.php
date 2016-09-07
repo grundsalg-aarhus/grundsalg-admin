@@ -14,7 +14,7 @@ use AppBundle\Form\DelomraadeType;
  * Delomraade controller.
  *
  * @Route("/delomraade")
- * @Security("has_role('ROLE_SUPER_ADMIN')")
+ * @Security("has_role('ROLE_ADMIN')")
  */
 class DelomraadeController extends BaseController
 {

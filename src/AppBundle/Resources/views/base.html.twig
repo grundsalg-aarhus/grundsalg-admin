@@ -31,7 +31,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/"><img src="{{ absolute_url(asset('img/logo.png')) }}" title="Grundsalg Admin" class="navbar-brand--logo"/> </a>
+            <a class="navbar-brand" href="/">Grundsalg Admin</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
@@ -39,9 +39,6 @@
                     <li><a href="/delomraade">{{ icon('home') }} {{ 'delomraade.labels.plural' | trans }}</a></li>
                     <li><a href="/grund">{{ icon('home') }} {{ 'grund.labels.plural' | trans }}</a></li>
                     <li><a href="/interessent">{{ icon('home') }} {{ 'interessent.labels.plural' | trans }}</a></li>
-                    <li><a href="/interessentgrundmapping">{{ icon('home') }} {{ 'interessentgrundmapping.labels.plural' | trans }}</a></li>
-                    <li><a href="/keyword">{{ icon('home') }} {{ 'keyword.labels.plural' | trans }}</a></li>
-                    <li><a href="/keywordvalue">{{ icon('home') }} {{ 'keywordvalue.labels.plural' | trans }}</a></li>
                     <li><a href="/landinspektoer">{{ icon('home') }} {{ 'landinspektoer.labels.plural' | trans }}</a></li>
                     <li><a href="/lokalplan">{{ icon('home') }} {{ 'lokalplan.labels.plural' | trans }}</a></li>
                     <li><a href="/lokalsamfund">{{ icon('home') }} {{ 'lokalsamfund.labels.plural' | trans }}</a></li>

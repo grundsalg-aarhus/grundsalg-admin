@@ -14,7 +14,7 @@ use AppBundle\Form\SalgsomraadeType;
  * Salgsomraade controller.
  *
  * @Route("/salgsomraade")
- * @Security("has_role('ROLE_SUPER_ADMIN')")
+ * @Security("has_role('ROLE_ADMIN')")
  */
 class SalgsomraadeController extends BaseController
 {

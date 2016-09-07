@@ -14,7 +14,7 @@ use AppBundle\Form\KeywordvalueType;
  * Keywordvalue controller.
  *
  * @Route("/keywordvalue")
- * @Security("has_role('ROLE_SUPER_ADMIN')")
+ * @Security("has_role('ROLE_ADMIN')")
  */
 class KeywordvalueController extends BaseController
 {

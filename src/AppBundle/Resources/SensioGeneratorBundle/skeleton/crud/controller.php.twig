@@ -28,7 +28,7 @@ use {{ namespace }}\Form\{{ entity }}Type;
 {% block phpdoc_class_annotations %}
 {% if 'annotation' == format %}
  * @Route("/{{ route_prefix }}")
- * @Security("has_role('ROLE_SUPER_ADMIN')")
+ * @Security("has_role('ROLE_ADMIN')")
 {% endif %}
 {% endblock phpdoc_class_annotations %}
  */
