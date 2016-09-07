@@ -107,19 +107,37 @@ grund:
   land: Land
   telefon: Telefon
   mobil: Mobil
-  koeberemail: Købers mail
+  koeberemail: Købers e-mail
   navn1: Navn 1
   adresse1: Adresse 1
   land1: Land 1
   telefon1: Telefon 1
   mobil1: Mobil 1
-  medkoeberemail: Medkøbers mail
+  medkoeberemail: Medkøbers e-mail
   notat: Notat
 
 interessent:
   labels:
     singular: Interessent
     plural: Interessenter
+  id: ID
+  createdby: Oprettet af
+  createddate: Oprettelsesdato
+  modifiedby: Ændret af
+  modifieddate: Ændringsdato
+  navn: Navn
+  adresse: Adresse
+  land: Land
+  telefon: Telefon
+  mobil: Mobil
+  koeberemail: Købers e-mail
+  navn1: Navn 1
+  adresse1: Adresse 1
+  land1: Land 1
+  telefon1: Telefon 1
+  mobil1: Mobil 1
+  medkoeberemail: Medkøbers e-mail
+  notat: Notat
 
 landinspektoer:
   labels:

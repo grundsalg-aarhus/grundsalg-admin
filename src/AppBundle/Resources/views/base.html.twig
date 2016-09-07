@@ -36,19 +36,19 @@
         <div id="navbar" class="collapse navbar-collapse">
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 <ul class="nav navbar-nav">
-                    <li><a href="/delomraade">{{ icon('home') }} {{ 'delomraade.labels.plural' | trans }}</a></li>
-                    <li><a href="/grund">{{ icon('home') }} {{ 'grund.labels.plural' | trans }}</a></li>
-                    <li><a href="/interessent">{{ icon('home') }} {{ 'interessent.labels.plural' | trans }}</a></li>
-                    <li><a href="/landinspektoer">{{ icon('home') }} {{ 'landinspektoer.labels.plural' | trans }}</a></li>
-                    <li><a href="/lokalplan">{{ icon('home') }} {{ 'lokalplan.labels.plural' | trans }}</a></li>
-                    <li><a href="/lokalsamfund">{{ icon('home') }} {{ 'lokalsamfund.labels.plural' | trans }}</a></li>
-                    <li><a href="/opkoeb">{{ icon('home') }} {{ 'opkoeb.labels.plural' | trans }}</a></li>
+                    <li><a href="/grund">{{ icon('map') }} {{ 'grund.labels.plural' | trans }}</a></li>
+                    <li><a href="/delomraade">{{ icon('industry') }} {{ 'delomraade.labels.plural' | trans }}</a></li>
+                    <li><a href="/interessent">{{ icon('user') }} {{ 'interessent.labels.plural' | trans }}</a></li>
+                    <li><a href="/landinspektoer">{{ icon('eye') }} {{ 'landinspektoer.labels.plural' | trans }}</a></li>
+                    <li><a href="/lokalplan">{{ icon('tree') }} {{ 'lokalplan.labels.plural' | trans }}</a></li>
+                    <li><a href="/lokalsamfund">{{ icon('folder-open') }} {{ 'lokalsamfund.labels.plural' | trans }}</a></li>
+                    <li><a href="/opkoeb">{{ icon('euro') }} {{ 'opkoeb.labels.plural' | trans }}</a></li>
                     <li><a href="/postby">{{ icon('home') }} {{ 'postby.labels.plural' | trans }}</a></li>
-                    <li><a href="/salgshistorik">{{ icon('home') }} {{ 'salgshistorik.labels.plural' | trans }}</a></li>
-                    <li><a href="/salgsomraade">{{ icon('home') }} {{ 'salgsomraade.labels.plural' | trans }}</a></li>
+                    <li><a href="/salgshistorik">{{ icon('history') }} {{ 'salgshistorik.labels.plural' | trans }}</a></li>
+                    <li><a href="/salgsomraade">{{ icon('bus') }} {{ 'salgsomraade.labels.plural' | trans }}</a></li>
 
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
-                        <li><a href="/user">{{ icon('user') }} {{ 'user.labels.plural' | trans }}</a></li>
+                        <li><a href="/user">{{ icon('users') }} {{ 'user.labels.plural' | trans }}</a></li>
                     {% endif %}
                 </ul>
 
