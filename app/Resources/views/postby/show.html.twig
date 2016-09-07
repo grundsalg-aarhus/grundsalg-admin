@@ -1,39 +1,54 @@
 {% extends 'AppBundle::base.html.twig' %}
 
-{% block body %}
-    <h1>Postby</h1>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ postby.id }}</td>
-            </tr>
-            <tr>
-                <th>Postalcode</th>
-                <td>{{ postby.postalcode }}</td>
-            </tr>
-            <tr>
-                <th>City</th>
-                <td>{{ postby.city }}</td>
-            </tr>
-            <tr>
-                <th>Createdby</th>
-                <td>{{ postby.createdby }}</td>
-            </tr>
-            <tr>
-                <th>Createddate</th>
-                <td>{% if postby.createddate %}{{ postby.createddate|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Modifiedby</th>
-                <td>{{ postby.modifiedby }}</td>
-            </tr>
-            <tr>
-                <th>Modifieddate</th>
-                <td>{% if postby.modifieddate %}{{ postby.modifieddate|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
+{% block body %}
+    <div class="row heading">
+        <div class="col-md-9">
+            <h1>Postby</h1>
+        </div>
+        <div class="col-md-3 text-right">
+            <a class="btn btn-default" href="{{ path('postby_edit', { 'id': postby.id }) }}">{{ 'common.edit' | trans }}</a>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ icon('chevron-right') }} {{ 'postby.labels.singular' | trans }}</div>
+                <table class="table table-condensed">
+                    <tbody>
+                            <tr>
+                                <th>{{ 'postby.id' | trans }}</th>
+                                <td>{{ postby.id }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'postby.postalcode' | trans }}</th>
+                                <td>{{ postby.postalcode }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'postby.city' | trans }}</th>
+                                <td>{{ postby.city }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'postby.createdby' | trans }}</th>
+                                <td>{{ postby.createdby }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'postby.createddate' | trans }}</th>
+                                <td>{% if postby.createddate %}{{ postby.createddate|date('Y-m-d') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'postby.modifiedby' | trans }}</th>
+                                <td>{{ postby.modifiedby }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'postby.modifieddate' | trans }}</th>
+                                <td>{% if postby.modifieddate %}{{ postby.modifieddate|date('Y-m-d') }}{% endif %}</td>
+                            </tr>                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

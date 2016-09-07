@@ -435,4 +435,4 @@ class Lokalplan
     {
         return $this->modifieddate;
     }
-public function __toString() { return __CLASS__; }}
+public function __toString() { return $this->titel; }}

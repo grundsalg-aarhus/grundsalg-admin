@@ -1,67 +1,82 @@
 {% extends 'AppBundle::base.html.twig' %}
 
-{% block body %}
-    <h1>Lokalplan</h1>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ lokalplan.id }}</td>
-            </tr>
-            <tr>
-                <th>Nr</th>
-                <td>{{ lokalplan.nr }}</td>
-            </tr>
-            <tr>
-                <th>Lsnr</th>
-                <td>{{ lokalplan.lsnr }}</td>
-            </tr>
-            <tr>
-                <th>Titel</th>
-                <td>{{ lokalplan.titel }}</td>
-            </tr>
-            <tr>
-                <th>Projektleder</th>
-                <td>{{ lokalplan.projektleder }}</td>
-            </tr>
-            <tr>
-                <th>Telefon</th>
-                <td>{{ lokalplan.telefon }}</td>
-            </tr>
-            <tr>
-                <th>Lokalplanlink</th>
-                <td>{{ lokalplan.lokalplanlink }}</td>
-            </tr>
-            <tr>
-                <th>Samletareal</th>
-                <td>{{ lokalplan.samletareal }}</td>
-            </tr>
-            <tr>
-                <th>Salgbartareal</th>
-                <td>{{ lokalplan.salgbartareal }}</td>
-            </tr>
-            <tr>
-                <th>Forbrugsandel</th>
-                <td>{{ lokalplan.forbrugsandel }}</td>
-            </tr>
-            <tr>
-                <th>Createdby</th>
-                <td>{{ lokalplan.createdby }}</td>
-            </tr>
-            <tr>
-                <th>Createddate</th>
-                <td>{% if lokalplan.createddate %}{{ lokalplan.createddate|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Modifiedby</th>
-                <td>{{ lokalplan.modifiedby }}</td>
-            </tr>
-            <tr>
-                <th>Modifieddate</th>
-                <td>{% if lokalplan.modifieddate %}{{ lokalplan.modifieddate|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
+{% block body %}
+    <div class="row heading">
+        <div class="col-md-9">
+            <h1>Lokalplan</h1>
+        </div>
+        <div class="col-md-3 text-right">
+            <a class="btn btn-default" href="{{ path('lokalplan_edit', { 'id': lokalplan.id }) }}">{{ 'common.edit' | trans }}</a>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ icon('chevron-right') }} {{ 'lokalplan.labels.singular' | trans }}</div>
+                <table class="table table-condensed">
+                    <tbody>
+                            <tr>
+                                <th>{{ 'lokalplan.id' | trans }}</th>
+                                <td>{{ lokalplan.id }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalplan.nr' | trans }}</th>
+                                <td>{{ lokalplan.nr }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalplan.lsnr' | trans }}</th>
+                                <td>{{ lokalplan.lsnr }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalplan.titel' | trans }}</th>
+                                <td>{{ lokalplan.titel }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalplan.projektleder' | trans }}</th>
+                                <td>{{ lokalplan.projektleder }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalplan.telefon' | trans }}</th>
+                                <td>{{ lokalplan.telefon }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalplan.lokalplanlink' | trans }}</th>
+                                <td>{{ lokalplan.lokalplanlink }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalplan.samletareal' | trans }}</th>
+                                <td>{{ lokalplan.samletareal }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalplan.salgbartareal' | trans }}</th>
+                                <td>{{ lokalplan.salgbartareal }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalplan.forbrugsandel' | trans }}</th>
+                                <td>{{ lokalplan.forbrugsandel }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalplan.createdby' | trans }}</th>
+                                <td>{{ lokalplan.createdby }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalplan.createddate' | trans }}</th>
+                                <td>{% if lokalplan.createddate %}{{ lokalplan.createddate|date('Y-m-d') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalplan.modifiedby' | trans }}</th>
+                                <td>{{ lokalplan.modifiedby }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalplan.modifieddate' | trans }}</th>
+                                <td>{% if lokalplan.modifieddate %}{{ lokalplan.modifieddate|date('Y-m-d') }}{% endif %}</td>
+                            </tr>                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

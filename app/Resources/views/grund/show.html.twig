@@ -1,299 +1,314 @@
 {% extends 'AppBundle::base.html.twig' %}
 
-{% block body %}
-    <h1>Grund</h1>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ grund.id }}</td>
-            </tr>
-            <tr>
-                <th>Createdby</th>
-                <td>{{ grund.createdby }}</td>
-            </tr>
-            <tr>
-                <th>Createddate</th>
-                <td>{% if grund.createddate %}{{ grund.createddate|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Modifiedby</th>
-                <td>{{ grund.modifiedby }}</td>
-            </tr>
-            <tr>
-                <th>Modifieddate</th>
-                <td>{% if grund.modifieddate %}{{ grund.modifieddate|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{ grund.status }}</td>
-            </tr>
-            <tr>
-                <th>Salgstatus</th>
-                <td>{{ grund.salgstatus }}</td>
-            </tr>
-            <tr>
-                <th>Gid</th>
-                <td>{{ grund.gid }}</td>
-            </tr>
-            <tr>
-                <th>Grundtype</th>
-                <td>{{ grund.grundtype }}</td>
-            </tr>
-            <tr>
-                <th>Mnr</th>
-                <td>{{ grund.mnr }}</td>
-            </tr>
-            <tr>
-                <th>Mnr2</th>
-                <td>{{ grund.mnr2 }}</td>
-            </tr>
-            <tr>
-                <th>Delareal</th>
-                <td>{{ grund.delareal }}</td>
-            </tr>
-            <tr>
-                <th>Ejerlav</th>
-                <td>{{ grund.ejerlav }}</td>
-            </tr>
-            <tr>
-                <th>Vej</th>
-                <td>{{ grund.vej }}</td>
-            </tr>
-            <tr>
-                <th>Husnummer</th>
-                <td>{{ grund.husnummer }}</td>
-            </tr>
-            <tr>
-                <th>Bogstav</th>
-                <td>{{ grund.bogstav }}</td>
-            </tr>
-            <tr>
-                <th>Postbyid</th>
-                <td>{{ grund.postbyid }}</td>
-            </tr>
-            <tr>
-                <th>Urlgis</th>
-                <td>{{ grund.urlgis }}</td>
-            </tr>
-            <tr>
-                <th>Salgstype</th>
-                <td>{{ grund.salgstype }}</td>
-            </tr>
-            <tr>
-                <th>Auktionstartdato</th>
-                <td>{% if grund.auktionstartdato %}{{ grund.auktionstartdato|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Auktionslutdato</th>
-                <td>{% if grund.auktionslutdato %}{{ grund.auktionslutdato|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Annonceresej</th>
-                <td>{{ grund.annonceresej }}</td>
-            </tr>
-            <tr>
-                <th>Datoannonce</th>
-                <td>{% if grund.datoannonce %}{{ grund.datoannonce|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Datoannonce1</th>
-                <td>{% if grund.datoannonce1 %}{{ grund.datoannonce1|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Tilsluttet</th>
-                <td>{{ grund.tilsluttet }}</td>
-            </tr>
-            <tr>
-                <th>Maxetagem2</th>
-                <td>{{ grund.maxetagem2 }}</td>
-            </tr>
-            <tr>
-                <th>Areal</th>
-                <td>{{ grund.areal }}</td>
-            </tr>
-            <tr>
-                <th>Arealvej</th>
-                <td>{{ grund.arealvej }}</td>
-            </tr>
-            <tr>
-                <th>Arealkotelet</th>
-                <td>{{ grund.arealkotelet }}</td>
-            </tr>
-            <tr>
-                <th>Bruttoareal</th>
-                <td>{{ grund.bruttoareal }}</td>
-            </tr>
-            <tr>
-                <th>Prism2</th>
-                <td>{{ grund.prism2 }}</td>
-            </tr>
-            <tr>
-                <th>Prisfoerkorrektion</th>
-                <td>{{ grund.prisfoerkorrektion }}</td>
-            </tr>
-            <tr>
-                <th>Priskorrektion1</th>
-                <td>{{ grund.priskorrektion1 }}</td>
-            </tr>
-            <tr>
-                <th>Antalkorr1</th>
-                <td>{{ grund.antalkorr1 }}</td>
-            </tr>
-            <tr>
-                <th>Akrkorr1</th>
-                <td>{{ grund.akrkorr1 }}</td>
-            </tr>
-            <tr>
-                <th>Priskoor1</th>
-                <td>{{ grund.priskoor1 }}</td>
-            </tr>
-            <tr>
-                <th>Priskorrektion2</th>
-                <td>{{ grund.priskorrektion2 }}</td>
-            </tr>
-            <tr>
-                <th>Antalkorr2</th>
-                <td>{{ grund.antalkorr2 }}</td>
-            </tr>
-            <tr>
-                <th>Akrkorr2</th>
-                <td>{{ grund.akrkorr2 }}</td>
-            </tr>
-            <tr>
-                <th>Priskoor2</th>
-                <td>{{ grund.priskoor2 }}</td>
-            </tr>
-            <tr>
-                <th>Priskorrektion3</th>
-                <td>{{ grund.priskorrektion3 }}</td>
-            </tr>
-            <tr>
-                <th>Antalkorr3</th>
-                <td>{{ grund.antalkorr3 }}</td>
-            </tr>
-            <tr>
-                <th>Akrkorr3</th>
-                <td>{{ grund.akrkorr3 }}</td>
-            </tr>
-            <tr>
-                <th>Priskoor3</th>
-                <td>{{ grund.priskoor3 }}</td>
-            </tr>
-            <tr>
-                <th>Pris</th>
-                <td>{{ grund.pris }}</td>
-            </tr>
-            <tr>
-                <th>Fastpris</th>
-                <td>{{ grund.fastpris }}</td>
-            </tr>
-            <tr>
-                <th>Minbud</th>
-                <td>{{ grund.minbud }}</td>
-            </tr>
-            <tr>
-                <th>Note</th>
-                <td>{{ grund.note }}</td>
-            </tr>
-            <tr>
-                <th>Landinspektoerid</th>
-                <td>{{ grund.landinspektoerid }}</td>
-            </tr>
-            <tr>
-                <th>Resstart</th>
-                <td>{% if grund.resstart %}{{ grund.resstart|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Tilbudstart</th>
-                <td>{% if grund.tilbudstart %}{{ grund.tilbudstart|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Accept</th>
-                <td>{% if grund.accept %}{{ grund.accept|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Skoederekv</th>
-                <td>{% if grund.skoederekv %}{{ grund.skoederekv|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Beloebanvist</th>
-                <td>{% if grund.beloebanvist %}{{ grund.beloebanvist|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Resslut</th>
-                <td>{% if grund.resslut %}{{ grund.resslut|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Tilbudslut</th>
-                <td>{% if grund.tilbudslut %}{{ grund.tilbudslut|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Overtagelse</th>
-                <td>{% if grund.overtagelse %}{{ grund.overtagelse|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Antagetbud</th>
-                <td>{{ grund.antagetbud }}</td>
-            </tr>
-            <tr>
-                <th>Salgsprisumoms</th>
-                <td>{{ grund.salgsprisumoms }}</td>
-            </tr>
-            <tr>
-                <th>Navn</th>
-                <td>{{ grund.navn }}</td>
-            </tr>
-            <tr>
-                <th>Adresse</th>
-                <td>{{ grund.adresse }}</td>
-            </tr>
-            <tr>
-                <th>Land</th>
-                <td>{{ grund.land }}</td>
-            </tr>
-            <tr>
-                <th>Telefon</th>
-                <td>{{ grund.telefon }}</td>
-            </tr>
-            <tr>
-                <th>Mobil</th>
-                <td>{{ grund.mobil }}</td>
-            </tr>
-            <tr>
-                <th>Koeberemail</th>
-                <td>{{ grund.koeberemail }}</td>
-            </tr>
-            <tr>
-                <th>Navn1</th>
-                <td>{{ grund.navn1 }}</td>
-            </tr>
-            <tr>
-                <th>Adresse1</th>
-                <td>{{ grund.adresse1 }}</td>
-            </tr>
-            <tr>
-                <th>Land1</th>
-                <td>{{ grund.land1 }}</td>
-            </tr>
-            <tr>
-                <th>Telefon1</th>
-                <td>{{ grund.telefon1 }}</td>
-            </tr>
-            <tr>
-                <th>Mobil1</th>
-                <td>{{ grund.mobil1 }}</td>
-            </tr>
-            <tr>
-                <th>Medkoeberemail</th>
-                <td>{{ grund.medkoeberemail }}</td>
-            </tr>
-            <tr>
-                <th>Notat</th>
-                <td>{{ grund.notat }}</td>
-            </tr>
-        </tbody>
-    </table>
+{% block body %}
+    <div class="row heading">
+        <div class="col-md-9">
+            <h1>Grund</h1>
+        </div>
+        <div class="col-md-3 text-right">
+            <a class="btn btn-default" href="{{ path('grund_edit', { 'id': grund.id }) }}">{{ 'common.edit' | trans }}</a>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ icon('chevron-right') }} {{ 'grund.labels.singular' | trans }}</div>
+                <table class="table table-condensed">
+                    <tbody>
+                            <tr>
+                                <th>{{ 'grund.id' | trans }}</th>
+                                <td>{{ grund.id }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.createdby' | trans }}</th>
+                                <td>{{ grund.createdby }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.createddate' | trans }}</th>
+                                <td>{% if grund.createddate %}{{ grund.createddate|date('Y-m-d') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.modifiedby' | trans }}</th>
+                                <td>{{ grund.modifiedby }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.modifieddate' | trans }}</th>
+                                <td>{% if grund.modifieddate %}{{ grund.modifieddate|date('Y-m-d') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.status' | trans }}</th>
+                                <td>{{ grund.status }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.salgstatus' | trans }}</th>
+                                <td>{{ grund.salgstatus }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.gid' | trans }}</th>
+                                <td>{{ grund.gid }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.grundtype' | trans }}</th>
+                                <td>{{ grund.grundtype }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.mnr' | trans }}</th>
+                                <td>{{ grund.mnr }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.mnr2' | trans }}</th>
+                                <td>{{ grund.mnr2 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.delareal' | trans }}</th>
+                                <td>{{ grund.delareal }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.ejerlav' | trans }}</th>
+                                <td>{{ grund.ejerlav }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.vej' | trans }}</th>
+                                <td>{{ grund.vej }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.husnummer' | trans }}</th>
+                                <td>{{ grund.husnummer }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.bogstav' | trans }}</th>
+                                <td>{{ grund.bogstav }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.postbyid' | trans }}</th>
+                                <td>{{ grund.postbyid }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.urlgis' | trans }}</th>
+                                <td>{{ grund.urlgis }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.salgstype' | trans }}</th>
+                                <td>{{ grund.salgstype }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.auktionstartdato' | trans }}</th>
+                                <td>{% if grund.auktionstartdato %}{{ grund.auktionstartdato|date('Y-m-d') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.auktionslutdato' | trans }}</th>
+                                <td>{% if grund.auktionslutdato %}{{ grund.auktionslutdato|date('Y-m-d') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.annonceresej' | trans }}</th>
+                                <td>{{ grund.annonceresej }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.datoannonce' | trans }}</th>
+                                <td>{% if grund.datoannonce %}{{ grund.datoannonce|date('Y-m-d') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.datoannonce1' | trans }}</th>
+                                <td>{% if grund.datoannonce1 %}{{ grund.datoannonce1|date('Y-m-d') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.tilsluttet' | trans }}</th>
+                                <td>{{ grund.tilsluttet }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.maxetagem2' | trans }}</th>
+                                <td>{{ grund.maxetagem2 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.areal' | trans }}</th>
+                                <td>{{ grund.areal }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.arealvej' | trans }}</th>
+                                <td>{{ grund.arealvej }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.arealkotelet' | trans }}</th>
+                                <td>{{ grund.arealkotelet }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.bruttoareal' | trans }}</th>
+                                <td>{{ grund.bruttoareal }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.prism2' | trans }}</th>
+                                <td>{{ grund.prism2 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.prisfoerkorrektion' | trans }}</th>
+                                <td>{{ grund.prisfoerkorrektion }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.priskorrektion1' | trans }}</th>
+                                <td>{{ grund.priskorrektion1 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.antalkorr1' | trans }}</th>
+                                <td>{{ grund.antalkorr1 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.akrkorr1' | trans }}</th>
+                                <td>{{ grund.akrkorr1 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.priskoor1' | trans }}</th>
+                                <td>{{ grund.priskoor1 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.priskorrektion2' | trans }}</th>
+                                <td>{{ grund.priskorrektion2 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.antalkorr2' | trans }}</th>
+                                <td>{{ grund.antalkorr2 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.akrkorr2' | trans }}</th>
+                                <td>{{ grund.akrkorr2 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.priskoor2' | trans }}</th>
+                                <td>{{ grund.priskoor2 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.priskorrektion3' | trans }}</th>
+                                <td>{{ grund.priskorrektion3 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.antalkorr3' | trans }}</th>
+                                <td>{{ grund.antalkorr3 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.akrkorr3' | trans }}</th>
+                                <td>{{ grund.akrkorr3 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.priskoor3' | trans }}</th>
+                                <td>{{ grund.priskoor3 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.pris' | trans }}</th>
+                                <td>{{ grund.pris }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.fastpris' | trans }}</th>
+                                <td>{{ grund.fastpris }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.minbud' | trans }}</th>
+                                <td>{{ grund.minbud }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.note' | trans }}</th>
+                                <td>{{ grund.note }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.landinspektoerid' | trans }}</th>
+                                <td>{{ grund.landinspektoerid }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.resstart' | trans }}</th>
+                                <td>{% if grund.resstart %}{{ grund.resstart|date('Y-m-d') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.tilbudstart' | trans }}</th>
+                                <td>{% if grund.tilbudstart %}{{ grund.tilbudstart|date('Y-m-d') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.accept' | trans }}</th>
+                                <td>{% if grund.accept %}{{ grund.accept|date('Y-m-d') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.skoederekv' | trans }}</th>
+                                <td>{% if grund.skoederekv %}{{ grund.skoederekv|date('Y-m-d') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.beloebanvist' | trans }}</th>
+                                <td>{% if grund.beloebanvist %}{{ grund.beloebanvist|date('Y-m-d') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.resslut' | trans }}</th>
+                                <td>{% if grund.resslut %}{{ grund.resslut|date('Y-m-d') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.tilbudslut' | trans }}</th>
+                                <td>{% if grund.tilbudslut %}{{ grund.tilbudslut|date('Y-m-d') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.overtagelse' | trans }}</th>
+                                <td>{% if grund.overtagelse %}{{ grund.overtagelse|date('Y-m-d') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.antagetbud' | trans }}</th>
+                                <td>{{ grund.antagetbud }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.salgsprisumoms' | trans }}</th>
+                                <td>{{ grund.salgsprisumoms }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.navn' | trans }}</th>
+                                <td>{{ grund.navn }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.adresse' | trans }}</th>
+                                <td>{{ grund.adresse }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.land' | trans }}</th>
+                                <td>{{ grund.land }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.telefon' | trans }}</th>
+                                <td>{{ grund.telefon }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.mobil' | trans }}</th>
+                                <td>{{ grund.mobil }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.koeberemail' | trans }}</th>
+                                <td>{{ grund.koeberemail }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.navn1' | trans }}</th>
+                                <td>{{ grund.navn1 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.adresse1' | trans }}</th>
+                                <td>{{ grund.adresse1 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.land1' | trans }}</th>
+                                <td>{{ grund.land1 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.telefon1' | trans }}</th>
+                                <td>{{ grund.telefon1 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.mobil1' | trans }}</th>
+                                <td>{{ grund.mobil1 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.medkoeberemail' | trans }}</th>
+                                <td>{{ grund.medkoeberemail }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.notat' | trans }}</th>
+                                <td>{{ grund.notat }}</td>
+                            </tr>                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

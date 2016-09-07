@@ -2,49 +2,65 @@
 {{ "{% extends 'AppBundle::base.html.twig' %}" }}
 {% endblock extends %}
 
+{% set class = entity | split('\\') | last | lower %}
+
 {% block body %}
 {{ "{% block body %}" }}
-    <h1>{{ entity }}</h1>
+    <div class="row heading">
+        <div class="col-md-9">
+            <h1>{{ entity }}</h1>
+        </div>
+        <div class="col-md-3 text-right">
+            <a class="btn btn-default" href="{{ "{{ path('" ~ route_name_prefix ~ "_edit', { 'id': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}">{{ "{{ 'common.edit' | trans }}"  }}</a>
+        </div>
 
-    <table>
-        <tbody>
-        {%- for field, metadata in fields %}
+    </div>
 
-            <tr>
-                <th>{{ field|capitalize }}</th>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ "{{ icon('chevron-right') }}" }} {{ "{{ '" }}{{ class }}{{ ".labels.singular' | trans }}" }}</div>
+                <table class="table table-condensed">
+                    <tbody>
+                        {%- for field, metadata in fields %}
 
-            {%- if metadata.type in ['datetime'] %}
+                            <tr>
+                                <th>{{ "{{ '" }}{{ class }}{{ "." }}{{ field }}{{ "' | trans }}" }}</th>
 
-                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'Y-m-d H:i:s\') }}{% endif %}' }}</td>
+                            {%- if metadata.type in ['datetime'] %}
 
-            {%- elseif metadata.type in ['date'] %}
+                                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'Y-m-d H:i:s\') }}{% endif %}' }}</td>
 
-                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'Y-m-d\') }}{% endif %}' }}</td>
+                            {%- elseif metadata.type in ['date'] %}
 
-            {%- elseif metadata.type in ['time'] %}
+                                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'Y-m-d\') }}{% endif %}' }}</td>
 
-                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'H:i:s\') }}{% endif %}' }}</td>
+                            {%- elseif metadata.type in ['time'] %}
 
-            {%- elseif metadata.type in ['array'] %}
+                                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'H:i:s\') }}{% endif %}' }}</td>
 
-                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|join(\', \') }}{% endif %}' }}</td>
+                            {%- elseif metadata.type in ['array'] %}
 
-            {%- elseif metadata.type in ['boolean'] %}
+                                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|join(\', \') }}{% endif %}' }}</td>
 
-                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}Yes{% else %}No{% endif %}' }}</td>
+                            {%- elseif metadata.type in ['boolean'] %}
 
-            {%- else %}
+                                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}Yes{% else %}No{% endif %}' }}</td>
 
-                <td>{{ '{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' }}' }}</td>
+                            {%- else %}
 
-            {%- endif %}
+                                <td>{{ '{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' }}' }}</td>
 
-            </tr>
+                            {%- endif %}
 
-        {%- endfor %}
+                            </tr>
 
-        </tbody>
-    </table>
+                        {%- endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 {{ "{% endblock %}" }}
 {% endblock body %}

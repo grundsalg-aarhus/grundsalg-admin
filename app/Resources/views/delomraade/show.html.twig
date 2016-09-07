@@ -1,67 +1,82 @@
 {% extends 'AppBundle::base.html.twig' %}
 
-{% block body %}
-    <h1>Delomraade</h1>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ delomraade.id }}</td>
-            </tr>
-            <tr>
-                <th>Kpl1</th>
-                <td>{{ delomraade.kpl1 }}</td>
-            </tr>
-            <tr>
-                <th>Kpl2</th>
-                <td>{{ delomraade.kpl2 }}</td>
-            </tr>
-            <tr>
-                <th>Kpl3</th>
-                <td>{{ delomraade.kpl3 }}</td>
-            </tr>
-            <tr>
-                <th>Kpl4</th>
-                <td>{{ delomraade.kpl4 }}</td>
-            </tr>
-            <tr>
-                <th>O1</th>
-                <td>{{ delomraade.o1 }}</td>
-            </tr>
-            <tr>
-                <th>O2</th>
-                <td>{{ delomraade.o2 }}</td>
-            </tr>
-            <tr>
-                <th>O3</th>
-                <td>{{ delomraade.o3 }}</td>
-            </tr>
-            <tr>
-                <th>Anvendelse</th>
-                <td>{{ delomraade.anvendelse }}</td>
-            </tr>
-            <tr>
-                <th>Mulighedfor</th>
-                <td>{{ delomraade.mulighedfor }}</td>
-            </tr>
-            <tr>
-                <th>Createdby</th>
-                <td>{{ delomraade.createdby }}</td>
-            </tr>
-            <tr>
-                <th>Createddate</th>
-                <td>{% if delomraade.createddate %}{{ delomraade.createddate|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Modifiedby</th>
-                <td>{{ delomraade.modifiedby }}</td>
-            </tr>
-            <tr>
-                <th>Modifieddate</th>
-                <td>{% if delomraade.modifieddate %}{{ delomraade.modifieddate|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
+{% block body %}
+    <div class="row heading">
+        <div class="col-md-9">
+            <h1>Delomraade</h1>
+        </div>
+        <div class="col-md-3 text-right">
+            <a class="btn btn-default" href="{{ path('delomraade_edit', { 'id': delomraade.id }) }}">{{ 'common.edit' | trans }}</a>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ icon('chevron-right') }} {{ 'delomraade.labels.singular' | trans }}</div>
+                <table class="table table-condensed">
+                    <tbody>
+                            <tr>
+                                <th>{{ 'delomraade.id' | trans }}</th>
+                                <td>{{ delomraade.id }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'delomraade.kpl1' | trans }}</th>
+                                <td>{{ delomraade.kpl1 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'delomraade.kpl2' | trans }}</th>
+                                <td>{{ delomraade.kpl2 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'delomraade.kpl3' | trans }}</th>
+                                <td>{{ delomraade.kpl3 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'delomraade.kpl4' | trans }}</th>
+                                <td>{{ delomraade.kpl4 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'delomraade.o1' | trans }}</th>
+                                <td>{{ delomraade.o1 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'delomraade.o2' | trans }}</th>
+                                <td>{{ delomraade.o2 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'delomraade.o3' | trans }}</th>
+                                <td>{{ delomraade.o3 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'delomraade.anvendelse' | trans }}</th>
+                                <td>{{ delomraade.anvendelse }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'delomraade.mulighedfor' | trans }}</th>
+                                <td>{{ delomraade.mulighedfor }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'delomraade.createdby' | trans }}</th>
+                                <td>{{ delomraade.createdby }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'delomraade.createddate' | trans }}</th>
+                                <td>{% if delomraade.createddate %}{{ delomraade.createddate|date('Y-m-d') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'delomraade.modifiedby' | trans }}</th>
+                                <td>{{ delomraade.modifiedby }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'delomraade.modifieddate' | trans }}</th>
+                                <td>{% if delomraade.modifieddate %}{{ delomraade.modifieddate|date('Y-m-d') }}{% endif %}</td>
+                            </tr>                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

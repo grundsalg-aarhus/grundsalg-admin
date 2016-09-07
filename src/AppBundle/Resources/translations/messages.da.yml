@@ -40,6 +40,9 @@ delomraade:
   labels:
     singular: Delområde
     plural: Delområder
+  actions:
+    edit: Rediger delområde
+    new: Opret delområde
   id: ID
   createdby: Oprettet af
   createddate: Oprettelsesdato
@@ -62,6 +65,7 @@ grund:
     plural: Grunde
   actions:
     edit: Rediger grund
+    new: Opret grund
   id: ID
   createdby: Oprettet af
   createddate: Oprettelsesdato
@@ -148,6 +152,20 @@ lokalplan:
   labels:
     singular: Lokalplan
     plural: Lokalplaner
+  id: ID
+  createdby: Oprettet af
+  createddate: Oprettelsesdato
+  modifiedby: Ændret af
+  modifieddate: Ændringsdato
+  nr: nr
+  titel: Titel
+  projektleder: Projektleder
+  telefon: Telefon
+  lokalplanlink: Link til lokalplan
+  samletareal: Samlet areal
+  salgbartareal: Salgsbart areal
+  forbrugsandel: Forbrugsandel
+
 
 lokalsamfund:
   labels:
