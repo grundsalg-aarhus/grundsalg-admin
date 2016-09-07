@@ -1,7 +1,7 @@
-{% extends 'AppBundle::base.html.twig' %}
+    {% extends 'AppBundle::base.html.twig' %}
 
 
-{% block body %}
+    {% block body %}
 
     <div class="row heading">
         <div class="col-md-9">
@@ -17,52 +17,46 @@
 
     <table class="table table-condensed table-header-rotated">
         <thead>
-            <tr>
-                    {{ helper.header('delomraade.id') }}
-                    {{ helper.header('delomraade.kpl1') }}
-                    {{ helper.header('delomraade.kpl2') }}
-                    {{ helper.header('delomraade.kpl3') }}
-                    {{ helper.header('delomraade.kpl4') }}
-                    {{ helper.header('delomraade.o1') }}
-                    {{ helper.header('delomraade.o2') }}
-                    {{ helper.header('delomraade.o3') }}
-                    {{ helper.header('delomraade.anvendelse') }}
-                    {{ helper.header('delomraade.mulighedfor') }}
-                    {{ helper.header('delomraade.createdby') }}
-                    {{ helper.header('delomraade.createddate') }}
-                    {{ helper.header('delomraade.modifiedby') }}
-                    {{ helper.header('delomraade.modifieddate') }}
-                {{ helper.header() }}
-            </tr>
+        <tr>
+                {{ helper.header('delomraade.id') }}
+                {{ helper.header('delomraade.kpl1') }}
+                {{ helper.header('delomraade.kpl2') }}
+                {{ helper.header('delomraade.kpl3') }}
+                {{ helper.header('delomraade.kpl4') }}
+                {{ helper.header('delomraade.o1') }}
+                {{ helper.header('delomraade.o2') }}
+                {{ helper.header('delomraade.o3') }}
+                {{ helper.header('delomraade.anvendelse') }}
+                {{ helper.header('delomraade.mulighedfor') }}
+                {{ helper.header('delomraade.createdby') }}
+                {{ helper.header('delomraade.createddate') }}
+                {{ helper.header('delomraade.modifiedby') }}
+                {{ helper.header('delomraade.modifieddate') }}
+            {{ helper.header() }}
+        </tr>
         </thead>
         <tbody>
         {% for delomraade in delomraades %}
-            <tr>
-                <td><a href="{{ path('delomraade_show', { 'id': delomraade.id }) }}">{{ delomraade.id }}</a></td>
-                <td>{{ delomraade.kpl1 }}</td>
-                <td>{{ delomraade.kpl2 }}</td>
-                <td>{{ delomraade.kpl3 }}</td>
-                <td>{{ delomraade.kpl4 }}</td>
-                <td>{{ delomraade.o1 }}</td>
-                <td>{{ delomraade.o2 }}</td>
-                <td>{{ delomraade.o3 }}</td>
-                <td>{{ delomraade.anvendelse }}</td>
-                <td>{{ delomraade.mulighedfor }}</td>
-                <td>{{ delomraade.createdby }}</td>
-                <td>{% if delomraade.createddate %}{{ delomraade.createddate|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ delomraade.modifiedby }}</td>
-                <td>{% if delomraade.modifieddate %}{{ delomraade.modifieddate|date('Y-m-d') }}{% endif %}</td>
-                <td class="text-right">
-                  <a class="btn btn-default btn-xs" href="{{ path('delomraade_edit', { 'id': delomraade.id }) }}">{{ 'common.edit' | trans }}</a>
-                </td>
-            </tr>
+        <tr>
+                    <td><a href="{{ path('delomraade_show', { 'id': delomraade.id }) }}">{{ delomraade.id }}</a></td>
+                    <td>{{ delomraade.kpl1 }}</td>
+                    <td>{{ delomraade.kpl2 }}</td>
+                    <td>{{ delomraade.kpl3 }}</td>
+                    <td>{{ delomraade.kpl4 }}</td>
+                    <td>{{ delomraade.o1 }}</td>
+                    <td>{{ delomraade.o2 }}</td>
+                    <td>{{ delomraade.o3 }}</td>
+                    <td>{{ delomraade.anvendelse }}</td>
+                    <td>{{ delomraade.mulighedfor }}</td>
+                    <td>{{ delomraade.createdby }}</td>
+                    <td>{% if delomraade.createddate %}{{ delomraade.createddate|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ delomraade.modifiedby }}</td>
+                    <td>{% if delomraade.modifieddate %}{{ delomraade.modifieddate|date('d/m Y') }}{% endif %}</td>
+                    <td class="text-right">
+                        <a class="btn btn-default btn-xs" href="{{ path('delomraade_edit', { 'id': delomraade.id }) }}">{{ 'common.edit' | trans }}</a>
+                    </td>
+        </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('delomraade_new') }}">Create a new entry</a>
-        </li>
-    </ul>
-{% endblock %}
+    {% endblock %}

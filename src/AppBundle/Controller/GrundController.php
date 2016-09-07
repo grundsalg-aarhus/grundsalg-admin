@@ -53,6 +53,8 @@ class GrundController extends BaseController
         $form = $this->createForm('AppBundle\Form\GrundType', $grund);
         $form->handleRequest($request);
 
+        $this->breadcrumbs->addItem('common.new', $this->generateUrl('grund_index'));
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($grund);
@@ -75,7 +77,9 @@ class GrundController extends BaseController
      */
     public function showAction(Grund $grund)
     {
-        $deleteForm = $this->createDeleteForm($grund);
+    $this->breadcrumbs->addItem($grund, $this->generateUrl('grund_show', array('id' => $grund->getId())));
+
+            $deleteForm = $this->createDeleteForm($grund);
 
         return $this->render('grund/show.html.twig', array(
             'grund' => $grund,
@@ -89,11 +93,14 @@ class GrundController extends BaseController
      * @Route("/{id}/edit", name="grund_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Grund $grund)
+    public function editAction(Request $request, Grund $grund )
     {
         $deleteForm = $this->createDeleteForm($grund);
         $editForm = $this->createForm('AppBundle\Form\GrundType', $grund);
         $editForm->handleRequest($request);
+
+        $this->breadcrumbs->addItem($grund, $this->generateUrl('grund_show', array('id' => $grund->getId())));
+        $this->breadcrumbs->addItem('common.edit', $this->generateUrl('grund_show', array('id' => $grund->getId())));
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();

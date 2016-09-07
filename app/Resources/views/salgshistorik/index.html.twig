@@ -1,7 +1,7 @@
-{% extends 'AppBundle::base.html.twig' %}
+    {% extends 'AppBundle::base.html.twig' %}
 
 
-{% block body %}
+    {% block body %}
 
     <div class="row heading">
         <div class="col-md-9">
@@ -17,90 +17,84 @@
 
     <table class="table table-condensed table-header-rotated">
         <thead>
-            <tr>
-                    {{ helper.header('salgshistorik.id') }}
-                    {{ helper.header('salgshistorik.createdby') }}
-                    {{ helper.header('salgshistorik.createddate') }}
-                    {{ helper.header('salgshistorik.modifiedby') }}
-                    {{ helper.header('salgshistorik.modifieddate') }}
-                    {{ helper.header('salgshistorik.aarsag') }}
-                    {{ helper.header('salgshistorik.salgstype') }}
-                    {{ helper.header('salgshistorik.status') }}
-                    {{ helper.header('salgshistorik.resstart') }}
-                    {{ helper.header('salgshistorik.resslut') }}
-                    {{ helper.header('salgshistorik.tilbudstart') }}
-                    {{ helper.header('salgshistorik.tilbudslut') }}
-                    {{ helper.header('salgshistorik.accept') }}
-                    {{ helper.header('salgshistorik.overtagelse') }}
-                    {{ helper.header('salgshistorik.skoederekv') }}
-                    {{ helper.header('salgshistorik.beloebanvist') }}
-                    {{ helper.header('salgshistorik.auktionstartdato') }}
-                    {{ helper.header('salgshistorik.auktionslutdato') }}
-                    {{ helper.header('salgshistorik.minbud') }}
-                    {{ helper.header('salgshistorik.antagetbud') }}
-                    {{ helper.header('salgshistorik.navn') }}
-                    {{ helper.header('salgshistorik.adresse') }}
-                    {{ helper.header('salgshistorik.land') }}
-                    {{ helper.header('salgshistorik.telefon') }}
-                    {{ helper.header('salgshistorik.mobil') }}
-                    {{ helper.header('salgshistorik.koeberemail') }}
-                    {{ helper.header('salgshistorik.navn1') }}
-                    {{ helper.header('salgshistorik.adresse1') }}
-                    {{ helper.header('salgshistorik.land1') }}
-                    {{ helper.header('salgshistorik.telefon1') }}
-                    {{ helper.header('salgshistorik.mobil1') }}
-                    {{ helper.header('salgshistorik.medkoeberemail') }}
-                    {{ helper.header('salgshistorik.notat') }}
-                {{ helper.header() }}
-            </tr>
+        <tr>
+                {{ helper.header('salgshistorik.id') }}
+                {{ helper.header('salgshistorik.createdby') }}
+                {{ helper.header('salgshistorik.createddate') }}
+                {{ helper.header('salgshistorik.modifiedby') }}
+                {{ helper.header('salgshistorik.modifieddate') }}
+                {{ helper.header('salgshistorik.aarsag') }}
+                {{ helper.header('salgshistorik.salgstype') }}
+                {{ helper.header('salgshistorik.status') }}
+                {{ helper.header('salgshistorik.resstart') }}
+                {{ helper.header('salgshistorik.resslut') }}
+                {{ helper.header('salgshistorik.tilbudstart') }}
+                {{ helper.header('salgshistorik.tilbudslut') }}
+                {{ helper.header('salgshistorik.accept') }}
+                {{ helper.header('salgshistorik.overtagelse') }}
+                {{ helper.header('salgshistorik.skoederekv') }}
+                {{ helper.header('salgshistorik.beloebanvist') }}
+                {{ helper.header('salgshistorik.auktionstartdato') }}
+                {{ helper.header('salgshistorik.auktionslutdato') }}
+                {{ helper.header('salgshistorik.minbud') }}
+                {{ helper.header('salgshistorik.antagetbud') }}
+                {{ helper.header('salgshistorik.navn') }}
+                {{ helper.header('salgshistorik.adresse') }}
+                {{ helper.header('salgshistorik.land') }}
+                {{ helper.header('salgshistorik.telefon') }}
+                {{ helper.header('salgshistorik.mobil') }}
+                {{ helper.header('salgshistorik.koeberemail') }}
+                {{ helper.header('salgshistorik.navn1') }}
+                {{ helper.header('salgshistorik.adresse1') }}
+                {{ helper.header('salgshistorik.land1') }}
+                {{ helper.header('salgshistorik.telefon1') }}
+                {{ helper.header('salgshistorik.mobil1') }}
+                {{ helper.header('salgshistorik.medkoeberemail') }}
+                {{ helper.header('salgshistorik.notat') }}
+            {{ helper.header() }}
+        </tr>
         </thead>
         <tbody>
         {% for salgshistorik in salgshistoriks %}
-            <tr>
-                <td><a href="{{ path('salgshistorik_show', { 'id': salgshistorik.id }) }}">{{ salgshistorik.id }}</a></td>
-                <td>{{ salgshistorik.createdby }}</td>
-                <td>{% if salgshistorik.createddate %}{{ salgshistorik.createddate|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ salgshistorik.modifiedby }}</td>
-                <td>{% if salgshistorik.modifieddate %}{{ salgshistorik.modifieddate|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ salgshistorik.aarsag }}</td>
-                <td>{{ salgshistorik.salgstype }}</td>
-                <td>{{ salgshistorik.status }}</td>
-                <td>{% if salgshistorik.resstart %}{{ salgshistorik.resstart|date('Y-m-d') }}{% endif %}</td>
-                <td>{% if salgshistorik.resslut %}{{ salgshistorik.resslut|date('Y-m-d') }}{% endif %}</td>
-                <td>{% if salgshistorik.tilbudstart %}{{ salgshistorik.tilbudstart|date('Y-m-d') }}{% endif %}</td>
-                <td>{% if salgshistorik.tilbudslut %}{{ salgshistorik.tilbudslut|date('Y-m-d') }}{% endif %}</td>
-                <td>{% if salgshistorik.accept %}{{ salgshistorik.accept|date('Y-m-d') }}{% endif %}</td>
-                <td>{% if salgshistorik.overtagelse %}{{ salgshistorik.overtagelse|date('Y-m-d') }}{% endif %}</td>
-                <td>{% if salgshistorik.skoederekv %}{{ salgshistorik.skoederekv|date('Y-m-d') }}{% endif %}</td>
-                <td>{% if salgshistorik.beloebanvist %}{{ salgshistorik.beloebanvist|date('Y-m-d') }}{% endif %}</td>
-                <td>{% if salgshistorik.auktionstartdato %}{{ salgshistorik.auktionstartdato|date('Y-m-d') }}{% endif %}</td>
-                <td>{% if salgshistorik.auktionslutdato %}{{ salgshistorik.auktionslutdato|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ salgshistorik.minbud }}</td>
-                <td>{{ salgshistorik.antagetbud }}</td>
-                <td>{{ salgshistorik.navn }}</td>
-                <td>{{ salgshistorik.adresse }}</td>
-                <td>{{ salgshistorik.land }}</td>
-                <td>{{ salgshistorik.telefon }}</td>
-                <td>{{ salgshistorik.mobil }}</td>
-                <td>{{ salgshistorik.koeberemail }}</td>
-                <td>{{ salgshistorik.navn1 }}</td>
-                <td>{{ salgshistorik.adresse1 }}</td>
-                <td>{{ salgshistorik.land1 }}</td>
-                <td>{{ salgshistorik.telefon1 }}</td>
-                <td>{{ salgshistorik.mobil1 }}</td>
-                <td>{{ salgshistorik.medkoeberemail }}</td>
-                <td>{{ salgshistorik.notat }}</td>
-                <td class="text-right">
-                  <a class="btn btn-default btn-xs" href="{{ path('salgshistorik_edit', { 'id': salgshistorik.id }) }}">{{ 'common.edit' | trans }}</a>
-                </td>
-            </tr>
+        <tr>
+                    <td><a href="{{ path('salgshistorik_show', { 'id': salgshistorik.id }) }}">{{ salgshistorik.id }}</a></td>
+                    <td>{{ salgshistorik.createdby }}</td>
+                    <td>{% if salgshistorik.createddate %}{{ salgshistorik.createddate|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ salgshistorik.modifiedby }}</td>
+                    <td>{% if salgshistorik.modifieddate %}{{ salgshistorik.modifieddate|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ salgshistorik.aarsag }}</td>
+                    <td>{{ salgshistorik.salgstype }}</td>
+                    <td>{{ salgshistorik.status }}</td>
+                    <td>{% if salgshistorik.resstart %}{{ salgshistorik.resstart|date('d/m Y') }}{% endif %}</td>
+                    <td>{% if salgshistorik.resslut %}{{ salgshistorik.resslut|date('d/m Y') }}{% endif %}</td>
+                    <td>{% if salgshistorik.tilbudstart %}{{ salgshistorik.tilbudstart|date('d/m Y') }}{% endif %}</td>
+                    <td>{% if salgshistorik.tilbudslut %}{{ salgshistorik.tilbudslut|date('d/m Y') }}{% endif %}</td>
+                    <td>{% if salgshistorik.accept %}{{ salgshistorik.accept|date('d/m Y') }}{% endif %}</td>
+                    <td>{% if salgshistorik.overtagelse %}{{ salgshistorik.overtagelse|date('d/m Y') }}{% endif %}</td>
+                    <td>{% if salgshistorik.skoederekv %}{{ salgshistorik.skoederekv|date('d/m Y') }}{% endif %}</td>
+                    <td>{% if salgshistorik.beloebanvist %}{{ salgshistorik.beloebanvist|date('d/m Y') }}{% endif %}</td>
+                    <td>{% if salgshistorik.auktionstartdato %}{{ salgshistorik.auktionstartdato|date('d/m Y') }}{% endif %}</td>
+                    <td>{% if salgshistorik.auktionslutdato %}{{ salgshistorik.auktionslutdato|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ salgshistorik.minbud }}</td>
+                    <td>{{ salgshistorik.antagetbud }}</td>
+                    <td>{{ salgshistorik.navn }}</td>
+                    <td>{{ salgshistorik.adresse }}</td>
+                    <td>{{ salgshistorik.land }}</td>
+                    <td>{{ salgshistorik.telefon }}</td>
+                    <td>{{ salgshistorik.mobil }}</td>
+                    <td>{{ salgshistorik.koeberemail }}</td>
+                    <td>{{ salgshistorik.navn1 }}</td>
+                    <td>{{ salgshistorik.adresse1 }}</td>
+                    <td>{{ salgshistorik.land1 }}</td>
+                    <td>{{ salgshistorik.telefon1 }}</td>
+                    <td>{{ salgshistorik.mobil1 }}</td>
+                    <td>{{ salgshistorik.medkoeberemail }}</td>
+                    <td>{{ salgshistorik.notat }}</td>
+                    <td class="text-right">
+                        <a class="btn btn-default btn-xs" href="{{ path('salgshistorik_edit', { 'id': salgshistorik.id }) }}">{{ 'common.edit' | trans }}</a>
+                    </td>
+        </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('salgshistorik_new') }}">Create a new entry</a>
-        </li>
-    </ul>
-{% endblock %}
+    {% endblock %}

@@ -53,6 +53,8 @@ class InteressentgrundmappingController extends BaseController
         $form = $this->createForm('AppBundle\Form\InteressentgrundmappingType', $interessentgrundmapping);
         $form->handleRequest($request);
 
+        $this->breadcrumbs->addItem('common.new', $this->generateUrl('interessentgrundmapping_index'));
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($interessentgrundmapping);
@@ -75,7 +77,9 @@ class InteressentgrundmappingController extends BaseController
      */
     public function showAction(Interessentgrundmapping $interessentgrundmapping)
     {
-        $deleteForm = $this->createDeleteForm($interessentgrundmapping);
+    $this->breadcrumbs->addItem($interessentgrundmapping, $this->generateUrl('interessentgrundmapping_show', array('id' => $interessentgrundmapping->getId())));
+
+            $deleteForm = $this->createDeleteForm($interessentgrundmapping);
 
         return $this->render('interessentgrundmapping/show.html.twig', array(
             'interessentgrundmapping' => $interessentgrundmapping,
@@ -89,11 +93,14 @@ class InteressentgrundmappingController extends BaseController
      * @Route("/{id}/edit", name="interessentgrundmapping_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Interessentgrundmapping $interessentgrundmapping)
+    public function editAction(Request $request, Interessentgrundmapping $interessentgrundmapping )
     {
         $deleteForm = $this->createDeleteForm($interessentgrundmapping);
         $editForm = $this->createForm('AppBundle\Form\InteressentgrundmappingType', $interessentgrundmapping);
         $editForm->handleRequest($request);
+
+        $this->breadcrumbs->addItem($interessentgrundmapping, $this->generateUrl('interessentgrundmapping_show', array('id' => $interessentgrundmapping->getId())));
+        $this->breadcrumbs->addItem('common.edit', $this->generateUrl('interessentgrundmapping_show', array('id' => $interessentgrundmapping->getId())));
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();

@@ -1,7 +1,7 @@
-{% extends 'AppBundle::base.html.twig' %}
+    {% extends 'AppBundle::base.html.twig' %}
 
 
-{% block body %}
+    {% block body %}
 
     <div class="row heading">
         <div class="col-md-9">
@@ -17,52 +17,46 @@
 
     <table class="table table-condensed table-header-rotated">
         <thead>
-            <tr>
-                    {{ helper.header('lokalplan.id') }}
-                    {{ helper.header('lokalplan.nr') }}
-                    {{ helper.header('lokalplan.lsnr') }}
-                    {{ helper.header('lokalplan.titel') }}
-                    {{ helper.header('lokalplan.projektleder') }}
-                    {{ helper.header('lokalplan.telefon') }}
-                    {{ helper.header('lokalplan.lokalplanlink') }}
-                    {{ helper.header('lokalplan.samletareal') }}
-                    {{ helper.header('lokalplan.salgbartareal') }}
-                    {{ helper.header('lokalplan.forbrugsandel') }}
-                    {{ helper.header('lokalplan.createdby') }}
-                    {{ helper.header('lokalplan.createddate') }}
-                    {{ helper.header('lokalplan.modifiedby') }}
-                    {{ helper.header('lokalplan.modifieddate') }}
-                {{ helper.header() }}
-            </tr>
+        <tr>
+                {{ helper.header('lokalplan.id') }}
+                {{ helper.header('lokalplan.nr') }}
+                {{ helper.header('lokalplan.lsnr') }}
+                {{ helper.header('lokalplan.titel') }}
+                {{ helper.header('lokalplan.projektleder') }}
+                {{ helper.header('lokalplan.telefon') }}
+                {{ helper.header('lokalplan.lokalplanlink') }}
+                {{ helper.header('lokalplan.samletareal') }}
+                {{ helper.header('lokalplan.salgbartareal') }}
+                {{ helper.header('lokalplan.forbrugsandel') }}
+                {{ helper.header('lokalplan.createdby') }}
+                {{ helper.header('lokalplan.createddate') }}
+                {{ helper.header('lokalplan.modifiedby') }}
+                {{ helper.header('lokalplan.modifieddate') }}
+            {{ helper.header() }}
+        </tr>
         </thead>
         <tbody>
         {% for lokalplan in lokalplans %}
-            <tr>
-                <td><a href="{{ path('lokalplan_show', { 'id': lokalplan.id }) }}">{{ lokalplan.id }}</a></td>
-                <td>{{ lokalplan.nr }}</td>
-                <td>{{ lokalplan.lsnr }}</td>
-                <td>{{ lokalplan.titel }}</td>
-                <td>{{ lokalplan.projektleder }}</td>
-                <td>{{ lokalplan.telefon }}</td>
-                <td>{{ lokalplan.lokalplanlink }}</td>
-                <td>{{ lokalplan.samletareal }}</td>
-                <td>{{ lokalplan.salgbartareal }}</td>
-                <td>{{ lokalplan.forbrugsandel }}</td>
-                <td>{{ lokalplan.createdby }}</td>
-                <td>{% if lokalplan.createddate %}{{ lokalplan.createddate|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ lokalplan.modifiedby }}</td>
-                <td>{% if lokalplan.modifieddate %}{{ lokalplan.modifieddate|date('Y-m-d') }}{% endif %}</td>
-                <td class="text-right">
-                  <a class="btn btn-default btn-xs" href="{{ path('lokalplan_edit', { 'id': lokalplan.id }) }}">{{ 'common.edit' | trans }}</a>
-                </td>
-            </tr>
+        <tr>
+                    <td><a href="{{ path('lokalplan_show', { 'id': lokalplan.id }) }}">{{ lokalplan.id }}</a></td>
+                    <td>{{ lokalplan.nr }}</td>
+                    <td>{{ lokalplan.lsnr }}</td>
+                    <td>{{ lokalplan.titel }}</td>
+                    <td>{{ lokalplan.projektleder }}</td>
+                    <td>{{ lokalplan.telefon }}</td>
+                    <td>{{ lokalplan.lokalplanlink }}</td>
+                    <td>{{ lokalplan.samletareal }}</td>
+                    <td>{{ lokalplan.salgbartareal }}</td>
+                    <td>{{ lokalplan.forbrugsandel }}</td>
+                    <td>{{ lokalplan.createdby }}</td>
+                    <td>{% if lokalplan.createddate %}{{ lokalplan.createddate|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ lokalplan.modifiedby }}</td>
+                    <td>{% if lokalplan.modifieddate %}{{ lokalplan.modifieddate|date('d/m Y') }}{% endif %}</td>
+                    <td class="text-right">
+                        <a class="btn btn-default btn-xs" href="{{ path('lokalplan_edit', { 'id': lokalplan.id }) }}">{{ 'common.edit' | trans }}</a>
+                    </td>
+        </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('lokalplan_new') }}">Create a new entry</a>
-        </li>
-    </ul>
-{% endblock %}
+    {% endblock %}

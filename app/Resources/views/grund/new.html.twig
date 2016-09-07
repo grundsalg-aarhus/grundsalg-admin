@@ -1,7 +1,13 @@
 {% extends 'AppBundle::base.html.twig' %}
 
+
 {% block body %}
-    <h1>Grund creation</h1>
+    <div class="row heading">
+        <div class="col-md-9">
+            <h1>{{ 'grund.actions.new' | trans }}</h1>
+        </div>
+        <div class="col-md-3 text-right"></div>
+    </div>
 
     {{ form_start(form) }}
         {{ form_widget(form) }}

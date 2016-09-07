@@ -53,6 +53,8 @@ class UserController extends BaseController
         $form = $this->createForm('AppBundle\Form\UserType', $user);
         $form->handleRequest($request);
 
+        $this->breadcrumbs->addItem('common.new', $this->generateUrl('user_index'));
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
@@ -75,7 +77,9 @@ class UserController extends BaseController
      */
     public function showAction(User $user)
     {
-        $deleteForm = $this->createDeleteForm($user);
+    $this->breadcrumbs->addItem($user, $this->generateUrl('user_show', array('id' => $user->getId())));
+
+            $deleteForm = $this->createDeleteForm($user);
 
         return $this->render('user/show.html.twig', array(
             'user' => $user,
@@ -89,11 +93,14 @@ class UserController extends BaseController
      * @Route("/{id}/edit", name="user_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, User $user)
+    public function editAction(Request $request, User $user )
     {
         $deleteForm = $this->createDeleteForm($user);
         $editForm = $this->createForm('AppBundle\Form\UserType', $user);
         $editForm->handleRequest($request);
+
+        $this->breadcrumbs->addItem($user, $this->generateUrl('user_show', array('id' => $user->getId())));
+        $this->breadcrumbs->addItem('common.edit', $this->generateUrl('user_show', array('id' => $user->getId())));
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();

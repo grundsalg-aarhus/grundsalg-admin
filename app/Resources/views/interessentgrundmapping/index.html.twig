@@ -1,7 +1,7 @@
-{% extends 'AppBundle::base.html.twig' %}
+    {% extends 'AppBundle::base.html.twig' %}
 
 
-{% block body %}
+    {% block body %}
 
     <div class="row heading">
         <div class="col-md-9">
@@ -17,28 +17,22 @@
 
     <table class="table table-condensed table-header-rotated">
         <thead>
-            <tr>
-                    {{ helper.header('interessentgrundmapping.id') }}
-                    {{ helper.header('interessentgrundmapping.annulleret') }}
-                {{ helper.header() }}
-            </tr>
+        <tr>
+                {{ helper.header('interessentgrundmapping.id') }}
+                {{ helper.header('interessentgrundmapping.annulleret') }}
+            {{ helper.header() }}
+        </tr>
         </thead>
         <tbody>
         {% for interessentgrundmapping in interessentgrundmappings %}
-            <tr>
-                <td><a href="{{ path('interessentgrundmapping_show', { 'id': interessentgrundmapping.id }) }}">{{ interessentgrundmapping.id }}</a></td>
-                <td>{{ interessentgrundmapping.annulleret }}</td>
-                <td class="text-right">
-                  <a class="btn btn-default btn-xs" href="{{ path('interessentgrundmapping_edit', { 'id': interessentgrundmapping.id }) }}">{{ 'common.edit' | trans }}</a>
-                </td>
-            </tr>
+        <tr>
+                    <td><a href="{{ path('interessentgrundmapping_show', { 'id': interessentgrundmapping.id }) }}">{{ interessentgrundmapping.id }}</a></td>
+                    <td>{{ interessentgrundmapping.annulleret }}</td>
+                    <td class="text-right">
+                        <a class="btn btn-default btn-xs" href="{{ path('interessentgrundmapping_edit', { 'id': interessentgrundmapping.id }) }}">{{ 'common.edit' | trans }}</a>
+                    </td>
+        </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('interessentgrundmapping_new') }}">Create a new entry</a>
-        </li>
-    </ul>
-{% endblock %}
+    {% endblock %}

@@ -53,6 +53,8 @@ class PostbyController extends BaseController
         $form = $this->createForm('AppBundle\Form\PostbyType', $postby);
         $form->handleRequest($request);
 
+        $this->breadcrumbs->addItem('common.new', $this->generateUrl('postby_index'));
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($postby);
@@ -75,7 +77,9 @@ class PostbyController extends BaseController
      */
     public function showAction(Postby $postby)
     {
-        $deleteForm = $this->createDeleteForm($postby);
+    $this->breadcrumbs->addItem($postby, $this->generateUrl('postby_show', array('id' => $postby->getId())));
+
+            $deleteForm = $this->createDeleteForm($postby);
 
         return $this->render('postby/show.html.twig', array(
             'postby' => $postby,
@@ -89,11 +93,14 @@ class PostbyController extends BaseController
      * @Route("/{id}/edit", name="postby_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Postby $postby)
+    public function editAction(Request $request, Postby $postby )
     {
         $deleteForm = $this->createDeleteForm($postby);
         $editForm = $this->createForm('AppBundle\Form\PostbyType', $postby);
         $editForm->handleRequest($request);
+
+        $this->breadcrumbs->addItem($postby, $this->generateUrl('postby_show', array('id' => $postby->getId())));
+        $this->breadcrumbs->addItem('common.edit', $this->generateUrl('postby_show', array('id' => $postby->getId())));
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();

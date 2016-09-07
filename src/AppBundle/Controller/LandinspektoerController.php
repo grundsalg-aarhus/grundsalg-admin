@@ -53,6 +53,8 @@ class LandinspektoerController extends BaseController
         $form = $this->createForm('AppBundle\Form\LandinspektoerType', $landinspektoer);
         $form->handleRequest($request);
 
+        $this->breadcrumbs->addItem('common.new', $this->generateUrl('landinspektoer_index'));
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($landinspektoer);
@@ -75,7 +77,9 @@ class LandinspektoerController extends BaseController
      */
     public function showAction(Landinspektoer $landinspektoer)
     {
-        $deleteForm = $this->createDeleteForm($landinspektoer);
+    $this->breadcrumbs->addItem($landinspektoer, $this->generateUrl('landinspektoer_show', array('id' => $landinspektoer->getId())));
+
+            $deleteForm = $this->createDeleteForm($landinspektoer);
 
         return $this->render('landinspektoer/show.html.twig', array(
             'landinspektoer' => $landinspektoer,
@@ -89,11 +93,14 @@ class LandinspektoerController extends BaseController
      * @Route("/{id}/edit", name="landinspektoer_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Landinspektoer $landinspektoer)
+    public function editAction(Request $request, Landinspektoer $landinspektoer )
     {
         $deleteForm = $this->createDeleteForm($landinspektoer);
         $editForm = $this->createForm('AppBundle\Form\LandinspektoerType', $landinspektoer);
         $editForm->handleRequest($request);
+
+        $this->breadcrumbs->addItem($landinspektoer, $this->generateUrl('landinspektoer_show', array('id' => $landinspektoer->getId())));
+        $this->breadcrumbs->addItem('common.edit', $this->generateUrl('landinspektoer_show', array('id' => $landinspektoer->getId())));
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();

@@ -53,6 +53,8 @@ class SalgsomraadeController extends BaseController
         $form = $this->createForm('AppBundle\Form\SalgsomraadeType', $salgsomraade);
         $form->handleRequest($request);
 
+        $this->breadcrumbs->addItem('common.new', $this->generateUrl('salgsomraade_index'));
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($salgsomraade);
@@ -75,7 +77,9 @@ class SalgsomraadeController extends BaseController
      */
     public function showAction(Salgsomraade $salgsomraade)
     {
-        $deleteForm = $this->createDeleteForm($salgsomraade);
+    $this->breadcrumbs->addItem($salgsomraade, $this->generateUrl('salgsomraade_show', array('id' => $salgsomraade->getId())));
+
+            $deleteForm = $this->createDeleteForm($salgsomraade);
 
         return $this->render('salgsomraade/show.html.twig', array(
             'salgsomraade' => $salgsomraade,
@@ -89,11 +93,14 @@ class SalgsomraadeController extends BaseController
      * @Route("/{id}/edit", name="salgsomraade_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Salgsomraade $salgsomraade)
+    public function editAction(Request $request, Salgsomraade $salgsomraade )
     {
         $deleteForm = $this->createDeleteForm($salgsomraade);
         $editForm = $this->createForm('AppBundle\Form\SalgsomraadeType', $salgsomraade);
         $editForm->handleRequest($request);
+
+        $this->breadcrumbs->addItem($salgsomraade, $this->generateUrl('salgsomraade_show', array('id' => $salgsomraade->getId())));
+        $this->breadcrumbs->addItem('common.edit', $this->generateUrl('salgsomraade_show', array('id' => $salgsomraade->getId())));
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();

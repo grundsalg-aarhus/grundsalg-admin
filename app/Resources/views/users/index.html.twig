@@ -1,7 +1,7 @@
-{% extends 'AppBundle::base.html.twig' %}
+    {% extends 'AppBundle::base.html.twig' %}
 
 
-{% block body %}
+    {% block body %}
 
     <div class="row heading">
         <div class="col-md-9">
@@ -17,42 +17,36 @@
 
     <table class="table table-condensed table-header-rotated">
         <thead>
-            <tr>
-                    {{ helper.header('users.id') }}
-                    {{ helper.header('users.name') }}
-                    {{ helper.header('users.username') }}
-                    {{ helper.header('users.password') }}
-                    {{ helper.header('users.roles') }}
-                    {{ helper.header('users.createdby') }}
-                    {{ helper.header('users.createddate') }}
-                    {{ helper.header('users.modifiedby') }}
-                    {{ helper.header('users.modifieddate') }}
-                {{ helper.header() }}
-            </tr>
+        <tr>
+                {{ helper.header('users.id') }}
+                {{ helper.header('users.name') }}
+                {{ helper.header('users.username') }}
+                {{ helper.header('users.password') }}
+                {{ helper.header('users.roles') }}
+                {{ helper.header('users.createdby') }}
+                {{ helper.header('users.createddate') }}
+                {{ helper.header('users.modifiedby') }}
+                {{ helper.header('users.modifieddate') }}
+            {{ helper.header() }}
+        </tr>
         </thead>
         <tbody>
         {% for user in users %}
-            <tr>
-                <td><a href="{{ path('users_show', { 'id': user.id }) }}">{{ user.id }}</a></td>
-                <td>{{ user.name }}</td>
-                <td>{{ user.username }}</td>
-                <td>{{ user.password }}</td>
-                <td>{{ user.roles }}</td>
-                <td>{{ user.createdby }}</td>
-                <td>{% if user.createddate %}{{ user.createddate|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ user.modifiedby }}</td>
-                <td>{% if user.modifieddate %}{{ user.modifieddate|date('Y-m-d') }}{% endif %}</td>
-                <td class="text-right">
-                  <a class="btn btn-default btn-xs" href="{{ path('users_edit', { 'id': user.id }) }}">{{ 'common.edit' | trans }}</a>
-                </td>
-            </tr>
+        <tr>
+                    <td><a href="{{ path('users_show', { 'id': user.id }) }}">{{ user.id }}</a></td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.password }}</td>
+                    <td>{{ user.roles }}</td>
+                    <td>{{ user.createdby }}</td>
+                    <td>{% if user.createddate %}{{ user.createddate|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ user.modifiedby }}</td>
+                    <td>{% if user.modifieddate %}{{ user.modifieddate|date('d/m Y') }}{% endif %}</td>
+                    <td class="text-right">
+                        <a class="btn btn-default btn-xs" href="{{ path('users_edit', { 'id': user.id }) }}">{{ 'common.edit' | trans }}</a>
+                    </td>
+        </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('users_new') }}">Create a new entry</a>
-        </li>
-    </ul>
-{% endblock %}
+    {% endblock %}

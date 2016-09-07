@@ -53,6 +53,8 @@ class SalgshistorikController extends BaseController
         $form = $this->createForm('AppBundle\Form\SalgshistorikType', $salgshistorik);
         $form->handleRequest($request);
 
+        $this->breadcrumbs->addItem('common.new', $this->generateUrl('salgshistorik_index'));
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($salgshistorik);
@@ -75,7 +77,9 @@ class SalgshistorikController extends BaseController
      */
     public function showAction(Salgshistorik $salgshistorik)
     {
-        $deleteForm = $this->createDeleteForm($salgshistorik);
+    $this->breadcrumbs->addItem($salgshistorik, $this->generateUrl('salgshistorik_show', array('id' => $salgshistorik->getId())));
+
+            $deleteForm = $this->createDeleteForm($salgshistorik);
 
         return $this->render('salgshistorik/show.html.twig', array(
             'salgshistorik' => $salgshistorik,
@@ -89,11 +93,14 @@ class SalgshistorikController extends BaseController
      * @Route("/{id}/edit", name="salgshistorik_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Salgshistorik $salgshistorik)
+    public function editAction(Request $request, Salgshistorik $salgshistorik )
     {
         $deleteForm = $this->createDeleteForm($salgshistorik);
         $editForm = $this->createForm('AppBundle\Form\SalgshistorikType', $salgshistorik);
         $editForm->handleRequest($request);
+
+        $this->breadcrumbs->addItem($salgshistorik, $this->generateUrl('salgshistorik_show', array('id' => $salgshistorik->getId())));
+        $this->breadcrumbs->addItem('common.edit', $this->generateUrl('salgshistorik_show', array('id' => $salgshistorik->getId())));
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();

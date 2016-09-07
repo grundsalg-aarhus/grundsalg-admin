@@ -53,6 +53,8 @@ class KeywordvalueController extends BaseController
         $form = $this->createForm('AppBundle\Form\KeywordvalueType', $keywordvalue);
         $form->handleRequest($request);
 
+        $this->breadcrumbs->addItem('common.new', $this->generateUrl('keywordvalue_index'));
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($keywordvalue);
@@ -75,7 +77,9 @@ class KeywordvalueController extends BaseController
      */
     public function showAction(Keywordvalue $keywordvalue)
     {
-        $deleteForm = $this->createDeleteForm($keywordvalue);
+    $this->breadcrumbs->addItem($keywordvalue, $this->generateUrl('keywordvalue_show', array('id' => $keywordvalue->getId())));
+
+            $deleteForm = $this->createDeleteForm($keywordvalue);
 
         return $this->render('keywordvalue/show.html.twig', array(
             'keywordvalue' => $keywordvalue,
@@ -89,11 +93,14 @@ class KeywordvalueController extends BaseController
      * @Route("/{id}/edit", name="keywordvalue_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Keywordvalue $keywordvalue)
+    public function editAction(Request $request, Keywordvalue $keywordvalue )
     {
         $deleteForm = $this->createDeleteForm($keywordvalue);
         $editForm = $this->createForm('AppBundle\Form\KeywordvalueType', $keywordvalue);
         $editForm->handleRequest($request);
+
+        $this->breadcrumbs->addItem($keywordvalue, $this->generateUrl('keywordvalue_show', array('id' => $keywordvalue->getId())));
+        $this->breadcrumbs->addItem('common.edit', $this->generateUrl('keywordvalue_show', array('id' => $keywordvalue->getId())));
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();

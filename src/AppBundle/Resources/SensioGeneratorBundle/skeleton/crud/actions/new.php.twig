@@ -20,6 +20,8 @@
         $form = $this->createForm('{{ namespace }}\Form\{{ entity_class }}Type', ${{ entity_singularized }});
         $form->handleRequest($request);
 
+        $this->breadcrumbs->addItem('common.new', $this->generateUrl('{{ route_name_prefix }}_index'));
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist(${{ entity_singularized }});

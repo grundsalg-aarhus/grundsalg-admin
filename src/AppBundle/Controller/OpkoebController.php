@@ -53,6 +53,8 @@ class OpkoebController extends BaseController
         $form = $this->createForm('AppBundle\Form\OpkoebType', $opkoeb);
         $form->handleRequest($request);
 
+        $this->breadcrumbs->addItem('common.new', $this->generateUrl('opkoeb_index'));
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($opkoeb);
@@ -75,7 +77,9 @@ class OpkoebController extends BaseController
      */
     public function showAction(Opkoeb $opkoeb)
     {
-        $deleteForm = $this->createDeleteForm($opkoeb);
+    $this->breadcrumbs->addItem($opkoeb, $this->generateUrl('opkoeb_show', array('id' => $opkoeb->getId())));
+
+            $deleteForm = $this->createDeleteForm($opkoeb);
 
         return $this->render('opkoeb/show.html.twig', array(
             'opkoeb' => $opkoeb,
@@ -89,11 +93,14 @@ class OpkoebController extends BaseController
      * @Route("/{id}/edit", name="opkoeb_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Opkoeb $opkoeb)
+    public function editAction(Request $request, Opkoeb $opkoeb )
     {
         $deleteForm = $this->createDeleteForm($opkoeb);
         $editForm = $this->createForm('AppBundle\Form\OpkoebType', $opkoeb);
         $editForm->handleRequest($request);
+
+        $this->breadcrumbs->addItem($opkoeb, $this->generateUrl('opkoeb_show', array('id' => $opkoeb->getId())));
+        $this->breadcrumbs->addItem('common.edit', $this->generateUrl('opkoeb_show', array('id' => $opkoeb->getId())));
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();

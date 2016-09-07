@@ -53,6 +53,8 @@ class LokalplanController extends BaseController
         $form = $this->createForm('AppBundle\Form\LokalplanType', $lokalplan);
         $form->handleRequest($request);
 
+        $this->breadcrumbs->addItem('common.new', $this->generateUrl('lokalplan_index'));
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($lokalplan);
@@ -75,7 +77,9 @@ class LokalplanController extends BaseController
      */
     public function showAction(Lokalplan $lokalplan)
     {
-        $deleteForm = $this->createDeleteForm($lokalplan);
+    $this->breadcrumbs->addItem($lokalplan, $this->generateUrl('lokalplan_show', array('id' => $lokalplan->getId())));
+
+            $deleteForm = $this->createDeleteForm($lokalplan);
 
         return $this->render('lokalplan/show.html.twig', array(
             'lokalplan' => $lokalplan,
@@ -89,11 +93,14 @@ class LokalplanController extends BaseController
      * @Route("/{id}/edit", name="lokalplan_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Lokalplan $lokalplan)
+    public function editAction(Request $request, Lokalplan $lokalplan )
     {
         $deleteForm = $this->createDeleteForm($lokalplan);
         $editForm = $this->createForm('AppBundle\Form\LokalplanType', $lokalplan);
         $editForm->handleRequest($request);
+
+        $this->breadcrumbs->addItem($lokalplan, $this->generateUrl('lokalplan_show', array('id' => $lokalplan->getId())));
+        $this->breadcrumbs->addItem('common.edit', $this->generateUrl('lokalplan_show', array('id' => $lokalplan->getId())));
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();

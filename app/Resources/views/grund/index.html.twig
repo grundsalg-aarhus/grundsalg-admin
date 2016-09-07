@@ -1,7 +1,7 @@
-{% extends 'AppBundle::base.html.twig' %}
+    {% extends 'AppBundle::base.html.twig' %}
 
 
-{% block body %}
+    {% block body %}
 
     <div class="row heading">
         <div class="col-md-9">
@@ -17,168 +17,162 @@
 
     <table class="table table-condensed table-header-rotated">
         <thead>
-            <tr>
-                    {{ helper.header('grund.id') }}
-                    {{ helper.header('grund.createdby') }}
-                    {{ helper.header('grund.createddate') }}
-                    {{ helper.header('grund.modifiedby') }}
-                    {{ helper.header('grund.modifieddate') }}
-                    {{ helper.header('grund.status') }}
-                    {{ helper.header('grund.salgstatus') }}
-                    {{ helper.header('grund.gid') }}
-                    {{ helper.header('grund.grundtype') }}
-                    {{ helper.header('grund.mnr') }}
-                    {{ helper.header('grund.mnr2') }}
-                    {{ helper.header('grund.delareal') }}
-                    {{ helper.header('grund.ejerlav') }}
-                    {{ helper.header('grund.vej') }}
-                    {{ helper.header('grund.husnummer') }}
-                    {{ helper.header('grund.bogstav') }}
-                    {{ helper.header('grund.postbyid') }}
-                    {{ helper.header('grund.urlgis') }}
-                    {{ helper.header('grund.salgstype') }}
-                    {{ helper.header('grund.auktionstartdato') }}
-                    {{ helper.header('grund.auktionslutdato') }}
-                    {{ helper.header('grund.annonceresej') }}
-                    {{ helper.header('grund.datoannonce') }}
-                    {{ helper.header('grund.datoannonce1') }}
-                    {{ helper.header('grund.tilsluttet') }}
-                    {{ helper.header('grund.maxetagem2') }}
-                    {{ helper.header('grund.areal') }}
-                    {{ helper.header('grund.arealvej') }}
-                    {{ helper.header('grund.arealkotelet') }}
-                    {{ helper.header('grund.bruttoareal') }}
-                    {{ helper.header('grund.prism2') }}
-                    {{ helper.header('grund.prisfoerkorrektion') }}
-                    {{ helper.header('grund.priskorrektion1') }}
-                    {{ helper.header('grund.antalkorr1') }}
-                    {{ helper.header('grund.akrkorr1') }}
-                    {{ helper.header('grund.priskoor1') }}
-                    {{ helper.header('grund.priskorrektion2') }}
-                    {{ helper.header('grund.antalkorr2') }}
-                    {{ helper.header('grund.akrkorr2') }}
-                    {{ helper.header('grund.priskoor2') }}
-                    {{ helper.header('grund.priskorrektion3') }}
-                    {{ helper.header('grund.antalkorr3') }}
-                    {{ helper.header('grund.akrkorr3') }}
-                    {{ helper.header('grund.priskoor3') }}
-                    {{ helper.header('grund.pris') }}
-                    {{ helper.header('grund.fastpris') }}
-                    {{ helper.header('grund.minbud') }}
-                    {{ helper.header('grund.note') }}
-                    {{ helper.header('grund.landinspektoerid') }}
-                    {{ helper.header('grund.resstart') }}
-                    {{ helper.header('grund.tilbudstart') }}
-                    {{ helper.header('grund.accept') }}
-                    {{ helper.header('grund.skoederekv') }}
-                    {{ helper.header('grund.beloebanvist') }}
-                    {{ helper.header('grund.resslut') }}
-                    {{ helper.header('grund.tilbudslut') }}
-                    {{ helper.header('grund.overtagelse') }}
-                    {{ helper.header('grund.antagetbud') }}
-                    {{ helper.header('grund.salgsprisumoms') }}
-                    {{ helper.header('grund.navn') }}
-                    {{ helper.header('grund.adresse') }}
-                    {{ helper.header('grund.land') }}
-                    {{ helper.header('grund.telefon') }}
-                    {{ helper.header('grund.mobil') }}
-                    {{ helper.header('grund.koeberemail') }}
-                    {{ helper.header('grund.navn1') }}
-                    {{ helper.header('grund.adresse1') }}
-                    {{ helper.header('grund.land1') }}
-                    {{ helper.header('grund.telefon1') }}
-                    {{ helper.header('grund.mobil1') }}
-                    {{ helper.header('grund.medkoeberemail') }}
-                    {{ helper.header('grund.notat') }}
-                {{ helper.header() }}
-            </tr>
+        <tr>
+                {{ helper.header('grund.id') }}
+                {{ helper.header('grund.createdby') }}
+                {{ helper.header('grund.createddate') }}
+                {{ helper.header('grund.modifiedby') }}
+                {{ helper.header('grund.modifieddate') }}
+                {{ helper.header('grund.status') }}
+                {{ helper.header('grund.salgstatus') }}
+                {{ helper.header('grund.gid') }}
+                {{ helper.header('grund.grundtype') }}
+                {{ helper.header('grund.mnr') }}
+                {{ helper.header('grund.mnr2') }}
+                {{ helper.header('grund.delareal') }}
+                {{ helper.header('grund.ejerlav') }}
+                {{ helper.header('grund.vej') }}
+                {{ helper.header('grund.husnummer') }}
+                {{ helper.header('grund.bogstav') }}
+                {{ helper.header('grund.postbyid') }}
+                {{ helper.header('grund.urlgis') }}
+                {{ helper.header('grund.salgstype') }}
+                {{ helper.header('grund.auktionstartdato') }}
+                {{ helper.header('grund.auktionslutdato') }}
+                {{ helper.header('grund.annonceresej') }}
+                {{ helper.header('grund.datoannonce') }}
+                {{ helper.header('grund.datoannonce1') }}
+                {{ helper.header('grund.tilsluttet') }}
+                {{ helper.header('grund.maxetagem2') }}
+                {{ helper.header('grund.areal') }}
+                {{ helper.header('grund.arealvej') }}
+                {{ helper.header('grund.arealkotelet') }}
+                {{ helper.header('grund.bruttoareal') }}
+                {{ helper.header('grund.prism2') }}
+                {{ helper.header('grund.prisfoerkorrektion') }}
+                {{ helper.header('grund.priskorrektion1') }}
+                {{ helper.header('grund.antalkorr1') }}
+                {{ helper.header('grund.akrkorr1') }}
+                {{ helper.header('grund.priskoor1') }}
+                {{ helper.header('grund.priskorrektion2') }}
+                {{ helper.header('grund.antalkorr2') }}
+                {{ helper.header('grund.akrkorr2') }}
+                {{ helper.header('grund.priskoor2') }}
+                {{ helper.header('grund.priskorrektion3') }}
+                {{ helper.header('grund.antalkorr3') }}
+                {{ helper.header('grund.akrkorr3') }}
+                {{ helper.header('grund.priskoor3') }}
+                {{ helper.header('grund.pris') }}
+                {{ helper.header('grund.fastpris') }}
+                {{ helper.header('grund.minbud') }}
+                {{ helper.header('grund.note') }}
+                {{ helper.header('grund.landinspektoerid') }}
+                {{ helper.header('grund.resstart') }}
+                {{ helper.header('grund.tilbudstart') }}
+                {{ helper.header('grund.accept') }}
+                {{ helper.header('grund.skoederekv') }}
+                {{ helper.header('grund.beloebanvist') }}
+                {{ helper.header('grund.resslut') }}
+                {{ helper.header('grund.tilbudslut') }}
+                {{ helper.header('grund.overtagelse') }}
+                {{ helper.header('grund.antagetbud') }}
+                {{ helper.header('grund.salgsprisumoms') }}
+                {{ helper.header('grund.navn') }}
+                {{ helper.header('grund.adresse') }}
+                {{ helper.header('grund.land') }}
+                {{ helper.header('grund.telefon') }}
+                {{ helper.header('grund.mobil') }}
+                {{ helper.header('grund.koeberemail') }}
+                {{ helper.header('grund.navn1') }}
+                {{ helper.header('grund.adresse1') }}
+                {{ helper.header('grund.land1') }}
+                {{ helper.header('grund.telefon1') }}
+                {{ helper.header('grund.mobil1') }}
+                {{ helper.header('grund.medkoeberemail') }}
+                {{ helper.header('grund.notat') }}
+            {{ helper.header() }}
+        </tr>
         </thead>
         <tbody>
         {% for grund in grunds %}
-            <tr>
-                <td><a href="{{ path('grund_show', { 'id': grund.id }) }}">{{ grund.id }}</a></td>
-                <td>{{ grund.createdby }}</td>
-                <td>{% if grund.createddate %}{{ grund.createddate|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ grund.modifiedby }}</td>
-                <td>{% if grund.modifieddate %}{{ grund.modifieddate|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ grund.status }}</td>
-                <td>{{ grund.salgstatus }}</td>
-                <td>{{ grund.gid }}</td>
-                <td>{{ grund.grundtype }}</td>
-                <td>{{ grund.mnr }}</td>
-                <td>{{ grund.mnr2 }}</td>
-                <td>{{ grund.delareal }}</td>
-                <td>{{ grund.ejerlav }}</td>
-                <td>{{ grund.vej }}</td>
-                <td>{{ grund.husnummer }}</td>
-                <td>{{ grund.bogstav }}</td>
-                <td>{{ grund.postbyid }}</td>
-                <td>{{ grund.urlgis }}</td>
-                <td>{{ grund.salgstype }}</td>
-                <td>{% if grund.auktionstartdato %}{{ grund.auktionstartdato|date('Y-m-d') }}{% endif %}</td>
-                <td>{% if grund.auktionslutdato %}{{ grund.auktionslutdato|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ grund.annonceresej }}</td>
-                <td>{% if grund.datoannonce %}{{ grund.datoannonce|date('Y-m-d') }}{% endif %}</td>
-                <td>{% if grund.datoannonce1 %}{{ grund.datoannonce1|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ grund.tilsluttet }}</td>
-                <td>{{ grund.maxetagem2 }}</td>
-                <td>{{ grund.areal }}</td>
-                <td>{{ grund.arealvej }}</td>
-                <td>{{ grund.arealkotelet }}</td>
-                <td>{{ grund.bruttoareal }}</td>
-                <td>{{ grund.prism2 }}</td>
-                <td>{{ grund.prisfoerkorrektion }}</td>
-                <td>{{ grund.priskorrektion1 }}</td>
-                <td>{{ grund.antalkorr1 }}</td>
-                <td>{{ grund.akrkorr1 }}</td>
-                <td>{{ grund.priskoor1 }}</td>
-                <td>{{ grund.priskorrektion2 }}</td>
-                <td>{{ grund.antalkorr2 }}</td>
-                <td>{{ grund.akrkorr2 }}</td>
-                <td>{{ grund.priskoor2 }}</td>
-                <td>{{ grund.priskorrektion3 }}</td>
-                <td>{{ grund.antalkorr3 }}</td>
-                <td>{{ grund.akrkorr3 }}</td>
-                <td>{{ grund.priskoor3 }}</td>
-                <td>{{ grund.pris }}</td>
-                <td>{{ grund.fastpris }}</td>
-                <td>{{ grund.minbud }}</td>
-                <td>{{ grund.note }}</td>
-                <td>{{ grund.landinspektoerid }}</td>
-                <td>{% if grund.resstart %}{{ grund.resstart|date('Y-m-d') }}{% endif %}</td>
-                <td>{% if grund.tilbudstart %}{{ grund.tilbudstart|date('Y-m-d') }}{% endif %}</td>
-                <td>{% if grund.accept %}{{ grund.accept|date('Y-m-d') }}{% endif %}</td>
-                <td>{% if grund.skoederekv %}{{ grund.skoederekv|date('Y-m-d') }}{% endif %}</td>
-                <td>{% if grund.beloebanvist %}{{ grund.beloebanvist|date('Y-m-d') }}{% endif %}</td>
-                <td>{% if grund.resslut %}{{ grund.resslut|date('Y-m-d') }}{% endif %}</td>
-                <td>{% if grund.tilbudslut %}{{ grund.tilbudslut|date('Y-m-d') }}{% endif %}</td>
-                <td>{% if grund.overtagelse %}{{ grund.overtagelse|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ grund.antagetbud }}</td>
-                <td>{{ grund.salgsprisumoms }}</td>
-                <td>{{ grund.navn }}</td>
-                <td>{{ grund.adresse }}</td>
-                <td>{{ grund.land }}</td>
-                <td>{{ grund.telefon }}</td>
-                <td>{{ grund.mobil }}</td>
-                <td>{{ grund.koeberemail }}</td>
-                <td>{{ grund.navn1 }}</td>
-                <td>{{ grund.adresse1 }}</td>
-                <td>{{ grund.land1 }}</td>
-                <td>{{ grund.telefon1 }}</td>
-                <td>{{ grund.mobil1 }}</td>
-                <td>{{ grund.medkoeberemail }}</td>
-                <td>{{ grund.notat }}</td>
-                <td class="text-right">
-                  <a class="btn btn-default btn-xs" href="{{ path('grund_edit', { 'id': grund.id }) }}">{{ 'common.edit' | trans }}</a>
-                </td>
-            </tr>
+        <tr>
+                    <td><a href="{{ path('grund_show', { 'id': grund.id }) }}">{{ grund.id }}</a></td>
+                    <td>{{ grund.createdby }}</td>
+                    <td>{% if grund.createddate %}{{ grund.createddate|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ grund.modifiedby }}</td>
+                    <td>{% if grund.modifieddate %}{{ grund.modifieddate|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ grund.status }}</td>
+                    <td>{{ grund.salgstatus }}</td>
+                    <td>{{ grund.gid }}</td>
+                    <td>{{ grund.grundtype }}</td>
+                    <td>{{ grund.mnr }}</td>
+                    <td>{{ grund.mnr2 }}</td>
+                    <td>{{ grund.delareal }}</td>
+                    <td>{{ grund.ejerlav }}</td>
+                    <td>{{ grund.vej }}</td>
+                    <td>{{ grund.husnummer }}</td>
+                    <td>{{ grund.bogstav }}</td>
+                    <td>{{ grund.postbyid }}</td>
+                    <td>{{ grund.urlgis }}</td>
+                    <td>{{ grund.salgstype }}</td>
+                    <td>{% if grund.auktionstartdato %}{{ grund.auktionstartdato|date('d/m Y') }}{% endif %}</td>
+                    <td>{% if grund.auktionslutdato %}{{ grund.auktionslutdato|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ grund.annonceresej }}</td>
+                    <td>{% if grund.datoannonce %}{{ grund.datoannonce|date('d/m Y') }}{% endif %}</td>
+                    <td>{% if grund.datoannonce1 %}{{ grund.datoannonce1|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ grund.tilsluttet }}</td>
+                    <td>{{ grund.maxetagem2 }}</td>
+                    <td>{{ grund.areal }}</td>
+                    <td>{{ grund.arealvej }}</td>
+                    <td>{{ grund.arealkotelet }}</td>
+                    <td>{{ grund.bruttoareal }}</td>
+                    <td>{{ grund.prism2 }}</td>
+                    <td>{{ grund.prisfoerkorrektion }}</td>
+                    <td>{{ grund.priskorrektion1 }}</td>
+                    <td>{{ grund.antalkorr1 }}</td>
+                    <td>{{ grund.akrkorr1 }}</td>
+                    <td>{{ grund.priskoor1 }}</td>
+                    <td>{{ grund.priskorrektion2 }}</td>
+                    <td>{{ grund.antalkorr2 }}</td>
+                    <td>{{ grund.akrkorr2 }}</td>
+                    <td>{{ grund.priskoor2 }}</td>
+                    <td>{{ grund.priskorrektion3 }}</td>
+                    <td>{{ grund.antalkorr3 }}</td>
+                    <td>{{ grund.akrkorr3 }}</td>
+                    <td>{{ grund.priskoor3 }}</td>
+                    <td>{{ grund.pris }}</td>
+                    <td>{{ grund.fastpris }}</td>
+                    <td>{{ grund.minbud }}</td>
+                    <td>{{ grund.note }}</td>
+                    <td>{{ grund.landinspektoerid }}</td>
+                    <td>{% if grund.resstart %}{{ grund.resstart|date('d/m Y') }}{% endif %}</td>
+                    <td>{% if grund.tilbudstart %}{{ grund.tilbudstart|date('d/m Y') }}{% endif %}</td>
+                    <td>{% if grund.accept %}{{ grund.accept|date('d/m Y') }}{% endif %}</td>
+                    <td>{% if grund.skoederekv %}{{ grund.skoederekv|date('d/m Y') }}{% endif %}</td>
+                    <td>{% if grund.beloebanvist %}{{ grund.beloebanvist|date('d/m Y') }}{% endif %}</td>
+                    <td>{% if grund.resslut %}{{ grund.resslut|date('d/m Y') }}{% endif %}</td>
+                    <td>{% if grund.tilbudslut %}{{ grund.tilbudslut|date('d/m Y') }}{% endif %}</td>
+                    <td>{% if grund.overtagelse %}{{ grund.overtagelse|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ grund.antagetbud }}</td>
+                    <td>{{ grund.salgsprisumoms }}</td>
+                    <td>{{ grund.navn }}</td>
+                    <td>{{ grund.adresse }}</td>
+                    <td>{{ grund.land }}</td>
+                    <td>{{ grund.telefon }}</td>
+                    <td>{{ grund.mobil }}</td>
+                    <td>{{ grund.koeberemail }}</td>
+                    <td>{{ grund.navn1 }}</td>
+                    <td>{{ grund.adresse1 }}</td>
+                    <td>{{ grund.land1 }}</td>
+                    <td>{{ grund.telefon1 }}</td>
+                    <td>{{ grund.mobil1 }}</td>
+                    <td>{{ grund.medkoeberemail }}</td>
+                    <td>{{ grund.notat }}</td>
+                    <td class="text-right">
+                        <a class="btn btn-default btn-xs" href="{{ path('grund_edit', { 'id': grund.id }) }}">{{ 'common.edit' | trans }}</a>
+                    </td>
+        </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('grund_new') }}">Create a new entry</a>
-        </li>
-    </ul>
-{% endblock %}
+    {% endblock %}

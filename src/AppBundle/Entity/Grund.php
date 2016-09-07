@@ -2369,4 +2369,8 @@ class Grund
     {
         return $this->salgsomraadeid;
     }
-public function __toString() { return __CLASS__; }}
+
+    public function __toString() {
+      return $this->vej . ' ' . $this->husnummer;
+    }
+}

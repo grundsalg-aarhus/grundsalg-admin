@@ -53,6 +53,8 @@ class LokalsamfundController extends BaseController
         $form = $this->createForm('AppBundle\Form\LokalsamfundType', $lokalsamfund);
         $form->handleRequest($request);
 
+        $this->breadcrumbs->addItem('common.new', $this->generateUrl('lokalsamfund_index'));
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($lokalsamfund);
@@ -75,7 +77,9 @@ class LokalsamfundController extends BaseController
      */
     public function showAction(Lokalsamfund $lokalsamfund)
     {
-        $deleteForm = $this->createDeleteForm($lokalsamfund);
+    $this->breadcrumbs->addItem($lokalsamfund, $this->generateUrl('lokalsamfund_show', array('id' => $lokalsamfund->getId())));
+
+            $deleteForm = $this->createDeleteForm($lokalsamfund);
 
         return $this->render('lokalsamfund/show.html.twig', array(
             'lokalsamfund' => $lokalsamfund,
@@ -89,11 +93,14 @@ class LokalsamfundController extends BaseController
      * @Route("/{id}/edit", name="lokalsamfund_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Lokalsamfund $lokalsamfund)
+    public function editAction(Request $request, Lokalsamfund $lokalsamfund )
     {
         $deleteForm = $this->createDeleteForm($lokalsamfund);
         $editForm = $this->createForm('AppBundle\Form\LokalsamfundType', $lokalsamfund);
         $editForm->handleRequest($request);
+
+        $this->breadcrumbs->addItem($lokalsamfund, $this->generateUrl('lokalsamfund_show', array('id' => $lokalsamfund->getId())));
+        $this->breadcrumbs->addItem('common.edit', $this->generateUrl('lokalsamfund_show', array('id' => $lokalsamfund->getId())));
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();

@@ -1,7 +1,7 @@
-{% extends 'AppBundle::base.html.twig' %}
+    {% extends 'AppBundle::base.html.twig' %}
 
 
-{% block body %}
+    {% block body %}
 
     <div class="row heading">
         <div class="col-md-9">
@@ -17,50 +17,44 @@
 
     <table class="table table-condensed table-header-rotated">
         <thead>
-            <tr>
-                    {{ helper.header('landinspektoer.id') }}
-                    {{ helper.header('landinspektoer.adresse') }}
-                    {{ helper.header('landinspektoer.email') }}
-                    {{ helper.header('landinspektoer.mobil') }}
-                    {{ helper.header('landinspektoer.navn') }}
-                    {{ helper.header('landinspektoer.notat') }}
-                    {{ helper.header('landinspektoer.telefon') }}
-                    {{ helper.header('landinspektoer.postnrid') }}
-                    {{ helper.header('landinspektoer.createdby') }}
-                    {{ helper.header('landinspektoer.createddate') }}
-                    {{ helper.header('landinspektoer.modifiedby') }}
-                    {{ helper.header('landinspektoer.modifieddate') }}
-                    {{ helper.header('landinspektoer.active') }}
-                {{ helper.header() }}
-            </tr>
+        <tr>
+                {{ helper.header('landinspektoer.id') }}
+                {{ helper.header('landinspektoer.adresse') }}
+                {{ helper.header('landinspektoer.email') }}
+                {{ helper.header('landinspektoer.mobil') }}
+                {{ helper.header('landinspektoer.navn') }}
+                {{ helper.header('landinspektoer.notat') }}
+                {{ helper.header('landinspektoer.telefon') }}
+                {{ helper.header('landinspektoer.postnrid') }}
+                {{ helper.header('landinspektoer.createdby') }}
+                {{ helper.header('landinspektoer.createddate') }}
+                {{ helper.header('landinspektoer.modifiedby') }}
+                {{ helper.header('landinspektoer.modifieddate') }}
+                {{ helper.header('landinspektoer.active') }}
+            {{ helper.header() }}
+        </tr>
         </thead>
         <tbody>
         {% for landinspektoer in landinspektoers %}
-            <tr>
-                <td><a href="{{ path('landinspektoer_show', { 'id': landinspektoer.id }) }}">{{ landinspektoer.id }}</a></td>
-                <td>{{ landinspektoer.adresse }}</td>
-                <td>{{ landinspektoer.email }}</td>
-                <td>{{ landinspektoer.mobil }}</td>
-                <td>{{ landinspektoer.navn }}</td>
-                <td>{{ landinspektoer.notat }}</td>
-                <td>{{ landinspektoer.telefon }}</td>
-                <td>{{ landinspektoer.postnrid }}</td>
-                <td>{{ landinspektoer.createdby }}</td>
-                <td>{% if landinspektoer.createddate %}{{ landinspektoer.createddate|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ landinspektoer.modifiedby }}</td>
-                <td>{% if landinspektoer.modifieddate %}{{ landinspektoer.modifieddate|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ landinspektoer.active }}</td>
-                <td class="text-right">
-                  <a class="btn btn-default btn-xs" href="{{ path('landinspektoer_edit', { 'id': landinspektoer.id }) }}">{{ 'common.edit' | trans }}</a>
-                </td>
-            </tr>
+        <tr>
+                    <td><a href="{{ path('landinspektoer_show', { 'id': landinspektoer.id }) }}">{{ landinspektoer.id }}</a></td>
+                    <td>{{ landinspektoer.adresse }}</td>
+                    <td>{{ landinspektoer.email }}</td>
+                    <td>{{ landinspektoer.mobil }}</td>
+                    <td>{{ landinspektoer.navn }}</td>
+                    <td>{{ landinspektoer.notat }}</td>
+                    <td>{{ landinspektoer.telefon }}</td>
+                    <td>{{ landinspektoer.postnrid }}</td>
+                    <td>{{ landinspektoer.createdby }}</td>
+                    <td>{% if landinspektoer.createddate %}{{ landinspektoer.createddate|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ landinspektoer.modifiedby }}</td>
+                    <td>{% if landinspektoer.modifieddate %}{{ landinspektoer.modifieddate|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ landinspektoer.active }}</td>
+                    <td class="text-right">
+                        <a class="btn btn-default btn-xs" href="{{ path('landinspektoer_edit', { 'id': landinspektoer.id }) }}">{{ 'common.edit' | trans }}</a>
+                    </td>
+        </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('landinspektoer_new') }}">Create a new entry</a>
-        </li>
-    </ul>
-{% endblock %}
+    {% endblock %}

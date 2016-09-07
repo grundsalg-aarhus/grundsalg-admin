@@ -1,7 +1,7 @@
-{% extends 'AppBundle::base.html.twig' %}
+    {% extends 'AppBundle::base.html.twig' %}
 
 
-{% block body %}
+    {% block body %}
 
     <div class="row heading">
         <div class="col-md-9">
@@ -17,32 +17,26 @@
 
     <table class="table table-condensed table-header-rotated">
         <thead>
-            <tr>
-                    {{ helper.header('keyword.id') }}
-                    {{ helper.header('keyword.title') }}
-                    {{ helper.header('keyword.alias') }}
-                    {{ helper.header('keyword.description') }}
-                {{ helper.header() }}
-            </tr>
+        <tr>
+                {{ helper.header('keyword.id') }}
+                {{ helper.header('keyword.title') }}
+                {{ helper.header('keyword.alias') }}
+                {{ helper.header('keyword.description') }}
+            {{ helper.header() }}
+        </tr>
         </thead>
         <tbody>
         {% for keyword in keywords %}
-            <tr>
-                <td><a href="{{ path('keyword_show', { 'id': keyword.id }) }}">{{ keyword.id }}</a></td>
-                <td>{{ keyword.title }}</td>
-                <td>{{ keyword.alias }}</td>
-                <td>{{ keyword.description }}</td>
-                <td class="text-right">
-                  <a class="btn btn-default btn-xs" href="{{ path('keyword_edit', { 'id': keyword.id }) }}">{{ 'common.edit' | trans }}</a>
-                </td>
-            </tr>
+        <tr>
+                    <td><a href="{{ path('keyword_show', { 'id': keyword.id }) }}">{{ keyword.id }}</a></td>
+                    <td>{{ keyword.title }}</td>
+                    <td>{{ keyword.alias }}</td>
+                    <td>{{ keyword.description }}</td>
+                    <td class="text-right">
+                        <a class="btn btn-default btn-xs" href="{{ path('keyword_edit', { 'id': keyword.id }) }}">{{ 'common.edit' | trans }}</a>
+                    </td>
+        </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('keyword_new') }}">Create a new entry</a>
-        </li>
-    </ul>
-{% endblock %}
+    {% endblock %}

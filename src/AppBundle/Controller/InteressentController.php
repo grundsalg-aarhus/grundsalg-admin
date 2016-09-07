@@ -53,6 +53,8 @@ class InteressentController extends BaseController
         $form = $this->createForm('AppBundle\Form\InteressentType', $interessent);
         $form->handleRequest($request);
 
+        $this->breadcrumbs->addItem('common.new', $this->generateUrl('interessent_index'));
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($interessent);
@@ -75,7 +77,9 @@ class InteressentController extends BaseController
      */
     public function showAction(Interessent $interessent)
     {
-        $deleteForm = $this->createDeleteForm($interessent);
+    $this->breadcrumbs->addItem($interessent, $this->generateUrl('interessent_show', array('id' => $interessent->getId())));
+
+            $deleteForm = $this->createDeleteForm($interessent);
 
         return $this->render('interessent/show.html.twig', array(
             'interessent' => $interessent,
@@ -89,11 +93,14 @@ class InteressentController extends BaseController
      * @Route("/{id}/edit", name="interessent_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Interessent $interessent)
+    public function editAction(Request $request, Interessent $interessent )
     {
         $deleteForm = $this->createDeleteForm($interessent);
         $editForm = $this->createForm('AppBundle\Form\InteressentType', $interessent);
         $editForm->handleRequest($request);
+
+        $this->breadcrumbs->addItem($interessent, $this->generateUrl('interessent_show', array('id' => $interessent->getId())));
+        $this->breadcrumbs->addItem('common.edit', $this->generateUrl('interessent_show', array('id' => $interessent->getId())));
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();

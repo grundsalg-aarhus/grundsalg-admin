@@ -778,3 +778,7 @@ form .alert ul {
 .grundsalg-calculation-changes .grundsalg-calculation-changes {
   margin-left: 1em;
 }
+
+.container-fluid.container-main {
+  padding: 15px 15px 0;
+}

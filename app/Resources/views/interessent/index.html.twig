@@ -1,7 +1,7 @@
-{% extends 'AppBundle::base.html.twig' %}
+    {% extends 'AppBundle::base.html.twig' %}
 
 
-{% block body %}
+    {% block body %}
 
     <div class="row heading">
         <div class="col-md-9">
@@ -17,60 +17,54 @@
 
     <table class="table table-condensed table-header-rotated">
         <thead>
-            <tr>
-                    {{ helper.header('interessent.id') }}
-                    {{ helper.header('interessent.createdby') }}
-                    {{ helper.header('interessent.createddate') }}
-                    {{ helper.header('interessent.modifiedby') }}
-                    {{ helper.header('interessent.modifieddate') }}
-                    {{ helper.header('interessent.navn') }}
-                    {{ helper.header('interessent.adresse') }}
-                    {{ helper.header('interessent.land') }}
-                    {{ helper.header('interessent.telefon') }}
-                    {{ helper.header('interessent.mobil') }}
-                    {{ helper.header('interessent.koeberemail') }}
-                    {{ helper.header('interessent.navn1') }}
-                    {{ helper.header('interessent.adresse1') }}
-                    {{ helper.header('interessent.land1') }}
-                    {{ helper.header('interessent.telefon1') }}
-                    {{ helper.header('interessent.mobil1') }}
-                    {{ helper.header('interessent.medkoeberemail') }}
-                    {{ helper.header('interessent.notat') }}
-                {{ helper.header() }}
-            </tr>
+        <tr>
+                {{ helper.header('interessent.id') }}
+                {{ helper.header('interessent.createdby') }}
+                {{ helper.header('interessent.createddate') }}
+                {{ helper.header('interessent.modifiedby') }}
+                {{ helper.header('interessent.modifieddate') }}
+                {{ helper.header('interessent.navn') }}
+                {{ helper.header('interessent.adresse') }}
+                {{ helper.header('interessent.land') }}
+                {{ helper.header('interessent.telefon') }}
+                {{ helper.header('interessent.mobil') }}
+                {{ helper.header('interessent.koeberemail') }}
+                {{ helper.header('interessent.navn1') }}
+                {{ helper.header('interessent.adresse1') }}
+                {{ helper.header('interessent.land1') }}
+                {{ helper.header('interessent.telefon1') }}
+                {{ helper.header('interessent.mobil1') }}
+                {{ helper.header('interessent.medkoeberemail') }}
+                {{ helper.header('interessent.notat') }}
+            {{ helper.header() }}
+        </tr>
         </thead>
         <tbody>
         {% for interessent in interessents %}
-            <tr>
-                <td><a href="{{ path('interessent_show', { 'id': interessent.id }) }}">{{ interessent.id }}</a></td>
-                <td>{{ interessent.createdby }}</td>
-                <td>{% if interessent.createddate %}{{ interessent.createddate|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ interessent.modifiedby }}</td>
-                <td>{% if interessent.modifieddate %}{{ interessent.modifieddate|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ interessent.navn }}</td>
-                <td>{{ interessent.adresse }}</td>
-                <td>{{ interessent.land }}</td>
-                <td>{{ interessent.telefon }}</td>
-                <td>{{ interessent.mobil }}</td>
-                <td>{{ interessent.koeberemail }}</td>
-                <td>{{ interessent.navn1 }}</td>
-                <td>{{ interessent.adresse1 }}</td>
-                <td>{{ interessent.land1 }}</td>
-                <td>{{ interessent.telefon1 }}</td>
-                <td>{{ interessent.mobil1 }}</td>
-                <td>{{ interessent.medkoeberemail }}</td>
-                <td>{{ interessent.notat }}</td>
-                <td class="text-right">
-                  <a class="btn btn-default btn-xs" href="{{ path('interessent_edit', { 'id': interessent.id }) }}">{{ 'common.edit' | trans }}</a>
-                </td>
-            </tr>
+        <tr>
+                    <td><a href="{{ path('interessent_show', { 'id': interessent.id }) }}">{{ interessent.id }}</a></td>
+                    <td>{{ interessent.createdby }}</td>
+                    <td>{% if interessent.createddate %}{{ interessent.createddate|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ interessent.modifiedby }}</td>
+                    <td>{% if interessent.modifieddate %}{{ interessent.modifieddate|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ interessent.navn }}</td>
+                    <td>{{ interessent.adresse }}</td>
+                    <td>{{ interessent.land }}</td>
+                    <td>{{ interessent.telefon }}</td>
+                    <td>{{ interessent.mobil }}</td>
+                    <td>{{ interessent.koeberemail }}</td>
+                    <td>{{ interessent.navn1 }}</td>
+                    <td>{{ interessent.adresse1 }}</td>
+                    <td>{{ interessent.land1 }}</td>
+                    <td>{{ interessent.telefon1 }}</td>
+                    <td>{{ interessent.mobil1 }}</td>
+                    <td>{{ interessent.medkoeberemail }}</td>
+                    <td>{{ interessent.notat }}</td>
+                    <td class="text-right">
+                        <a class="btn btn-default btn-xs" href="{{ path('interessent_edit', { 'id': interessent.id }) }}">{{ 'common.edit' | trans }}</a>
+                    </td>
+        </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('interessent_new') }}">Create a new entry</a>
-        </li>
-    </ul>
-{% endblock %}
+    {% endblock %}

@@ -16,7 +16,9 @@
 {% endblock method_definition %}
     {
 {% block method_body %}
-{% if 'delete' in actions %}
+    $this->breadcrumbs->addItem(${{ entity_singularized }}, $this->generateUrl('{{ route_name_prefix }}_show', array('id' => ${{ entity_singularized }}->getId())));
+
+    {% if 'delete' in actions %}
         $deleteForm = $this->createDeleteForm(${{ entity_singularized }});
 {% endif %}
 {% endblock method_body %}

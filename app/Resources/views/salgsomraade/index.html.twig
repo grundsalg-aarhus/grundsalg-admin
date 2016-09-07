@@ -1,7 +1,7 @@
-{% extends 'AppBundle::base.html.twig' %}
+    {% extends 'AppBundle::base.html.twig' %}
 
 
-{% block body %}
+    {% block body %}
 
     <div class="row heading">
         <div class="col-md-9">
@@ -17,56 +17,50 @@
 
     <table class="table table-condensed table-header-rotated">
         <thead>
-            <tr>
-                    {{ helper.header('salgsomraade.id') }}
-                    {{ helper.header('salgsomraade.createdby') }}
-                    {{ helper.header('salgsomraade.createddate') }}
-                    {{ helper.header('salgsomraade.modifiedby') }}
-                    {{ helper.header('salgsomraade.modifieddate') }}
-                    {{ helper.header('salgsomraade.nr') }}
-                    {{ helper.header('salgsomraade.titel') }}
-                    {{ helper.header('salgsomraade.type') }}
-                    {{ helper.header('salgsomraade.matrikkel1') }}
-                    {{ helper.header('salgsomraade.matrikkel2') }}
-                    {{ helper.header('salgsomraade.ejerlav') }}
-                    {{ helper.header('salgsomraade.vej') }}
-                    {{ helper.header('salgsomraade.gisurl') }}
-                    {{ helper.header('salgsomraade.tilsluttet') }}
-                    {{ helper.header('salgsomraade.sagsnr') }}
-                    {{ helper.header('salgsomraade.lploebenummer') }}
-                {{ helper.header() }}
-            </tr>
+        <tr>
+                {{ helper.header('salgsomraade.id') }}
+                {{ helper.header('salgsomraade.createdby') }}
+                {{ helper.header('salgsomraade.createddate') }}
+                {{ helper.header('salgsomraade.modifiedby') }}
+                {{ helper.header('salgsomraade.modifieddate') }}
+                {{ helper.header('salgsomraade.nr') }}
+                {{ helper.header('salgsomraade.titel') }}
+                {{ helper.header('salgsomraade.type') }}
+                {{ helper.header('salgsomraade.matrikkel1') }}
+                {{ helper.header('salgsomraade.matrikkel2') }}
+                {{ helper.header('salgsomraade.ejerlav') }}
+                {{ helper.header('salgsomraade.vej') }}
+                {{ helper.header('salgsomraade.gisurl') }}
+                {{ helper.header('salgsomraade.tilsluttet') }}
+                {{ helper.header('salgsomraade.sagsnr') }}
+                {{ helper.header('salgsomraade.lploebenummer') }}
+            {{ helper.header() }}
+        </tr>
         </thead>
         <tbody>
         {% for salgsomraade in salgsomraades %}
-            <tr>
-                <td><a href="{{ path('salgsomraade_show', { 'id': salgsomraade.id }) }}">{{ salgsomraade.id }}</a></td>
-                <td>{{ salgsomraade.createdby }}</td>
-                <td>{% if salgsomraade.createddate %}{{ salgsomraade.createddate|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ salgsomraade.modifiedby }}</td>
-                <td>{% if salgsomraade.modifieddate %}{{ salgsomraade.modifieddate|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ salgsomraade.nr }}</td>
-                <td>{{ salgsomraade.titel }}</td>
-                <td>{{ salgsomraade.type }}</td>
-                <td>{{ salgsomraade.matrikkel1 }}</td>
-                <td>{{ salgsomraade.matrikkel2 }}</td>
-                <td>{{ salgsomraade.ejerlav }}</td>
-                <td>{{ salgsomraade.vej }}</td>
-                <td>{{ salgsomraade.gisurl }}</td>
-                <td>{{ salgsomraade.tilsluttet }}</td>
-                <td>{{ salgsomraade.sagsnr }}</td>
-                <td>{{ salgsomraade.lploebenummer }}</td>
-                <td class="text-right">
-                  <a class="btn btn-default btn-xs" href="{{ path('salgsomraade_edit', { 'id': salgsomraade.id }) }}">{{ 'common.edit' | trans }}</a>
-                </td>
-            </tr>
+        <tr>
+                    <td><a href="{{ path('salgsomraade_show', { 'id': salgsomraade.id }) }}">{{ salgsomraade.id }}</a></td>
+                    <td>{{ salgsomraade.createdby }}</td>
+                    <td>{% if salgsomraade.createddate %}{{ salgsomraade.createddate|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ salgsomraade.modifiedby }}</td>
+                    <td>{% if salgsomraade.modifieddate %}{{ salgsomraade.modifieddate|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ salgsomraade.nr }}</td>
+                    <td>{{ salgsomraade.titel }}</td>
+                    <td>{{ salgsomraade.type }}</td>
+                    <td>{{ salgsomraade.matrikkel1 }}</td>
+                    <td>{{ salgsomraade.matrikkel2 }}</td>
+                    <td>{{ salgsomraade.ejerlav }}</td>
+                    <td>{{ salgsomraade.vej }}</td>
+                    <td>{{ salgsomraade.gisurl }}</td>
+                    <td>{{ salgsomraade.tilsluttet }}</td>
+                    <td>{{ salgsomraade.sagsnr }}</td>
+                    <td>{{ salgsomraade.lploebenummer }}</td>
+                    <td class="text-right">
+                        <a class="btn btn-default btn-xs" href="{{ path('salgsomraade_edit', { 'id': salgsomraade.id }) }}">{{ 'common.edit' | trans }}</a>
+                    </td>
+        </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('salgsomraade_new') }}">Create a new entry</a>
-        </li>
-    </ul>
-{% endblock %}
+    {% endblock %}

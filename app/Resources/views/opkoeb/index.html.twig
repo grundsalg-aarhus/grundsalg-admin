@@ -1,7 +1,7 @@
-{% extends 'AppBundle::base.html.twig' %}
+    {% extends 'AppBundle::base.html.twig' %}
 
 
-{% block body %}
+    {% block body %}
 
     <div class="row heading">
         <div class="col-md-9">
@@ -17,50 +17,44 @@
 
     <table class="table table-condensed table-header-rotated">
         <thead>
-            <tr>
-                    {{ helper.header('opkoeb.id') }}
-                    {{ helper.header('opkoeb.matrik1') }}
-                    {{ helper.header('opkoeb.matrik2') }}
-                    {{ helper.header('opkoeb.ejerlav') }}
-                    {{ helper.header('opkoeb.m2') }}
-                    {{ helper.header('opkoeb.bemaerkning') }}
-                    {{ helper.header('opkoeb.opkoebdato') }}
-                    {{ helper.header('opkoeb.pris') }}
-                    {{ helper.header('opkoeb.procentaflp') }}
-                    {{ helper.header('opkoeb.createdby') }}
-                    {{ helper.header('opkoeb.createddate') }}
-                    {{ helper.header('opkoeb.modifiedby') }}
-                    {{ helper.header('opkoeb.modifieddate') }}
-                {{ helper.header() }}
-            </tr>
+        <tr>
+                {{ helper.header('opkoeb.id') }}
+                {{ helper.header('opkoeb.matrik1') }}
+                {{ helper.header('opkoeb.matrik2') }}
+                {{ helper.header('opkoeb.ejerlav') }}
+                {{ helper.header('opkoeb.m2') }}
+                {{ helper.header('opkoeb.bemaerkning') }}
+                {{ helper.header('opkoeb.opkoebdato') }}
+                {{ helper.header('opkoeb.pris') }}
+                {{ helper.header('opkoeb.procentaflp') }}
+                {{ helper.header('opkoeb.createdby') }}
+                {{ helper.header('opkoeb.createddate') }}
+                {{ helper.header('opkoeb.modifiedby') }}
+                {{ helper.header('opkoeb.modifieddate') }}
+            {{ helper.header() }}
+        </tr>
         </thead>
         <tbody>
         {% for opkoeb in opkoebs %}
-            <tr>
-                <td><a href="{{ path('opkoeb_show', { 'id': opkoeb.id }) }}">{{ opkoeb.id }}</a></td>
-                <td>{{ opkoeb.matrik1 }}</td>
-                <td>{{ opkoeb.matrik2 }}</td>
-                <td>{{ opkoeb.ejerlav }}</td>
-                <td>{{ opkoeb.m2 }}</td>
-                <td>{{ opkoeb.bemaerkning }}</td>
-                <td>{% if opkoeb.opkoebdato %}{{ opkoeb.opkoebdato|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ opkoeb.pris }}</td>
-                <td>{{ opkoeb.procentaflp }}</td>
-                <td>{{ opkoeb.createdby }}</td>
-                <td>{% if opkoeb.createddate %}{{ opkoeb.createddate|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ opkoeb.modifiedby }}</td>
-                <td>{% if opkoeb.modifieddate %}{{ opkoeb.modifieddate|date('Y-m-d') }}{% endif %}</td>
-                <td class="text-right">
-                  <a class="btn btn-default btn-xs" href="{{ path('opkoeb_edit', { 'id': opkoeb.id }) }}">{{ 'common.edit' | trans }}</a>
-                </td>
-            </tr>
+        <tr>
+                    <td><a href="{{ path('opkoeb_show', { 'id': opkoeb.id }) }}">{{ opkoeb.id }}</a></td>
+                    <td>{{ opkoeb.matrik1 }}</td>
+                    <td>{{ opkoeb.matrik2 }}</td>
+                    <td>{{ opkoeb.ejerlav }}</td>
+                    <td>{{ opkoeb.m2 }}</td>
+                    <td>{{ opkoeb.bemaerkning }}</td>
+                    <td>{% if opkoeb.opkoebdato %}{{ opkoeb.opkoebdato|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ opkoeb.pris }}</td>
+                    <td>{{ opkoeb.procentaflp }}</td>
+                    <td>{{ opkoeb.createdby }}</td>
+                    <td>{% if opkoeb.createddate %}{{ opkoeb.createddate|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ opkoeb.modifiedby }}</td>
+                    <td>{% if opkoeb.modifieddate %}{{ opkoeb.modifieddate|date('d/m Y') }}{% endif %}</td>
+                    <td class="text-right">
+                        <a class="btn btn-default btn-xs" href="{{ path('opkoeb_edit', { 'id': opkoeb.id }) }}">{{ 'common.edit' | trans }}</a>
+                    </td>
+        </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('opkoeb_new') }}">Create a new entry</a>
-        </li>
-    </ul>
-{% endblock %}
+    {% endblock %}

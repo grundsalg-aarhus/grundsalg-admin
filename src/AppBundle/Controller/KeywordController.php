@@ -53,6 +53,8 @@ class KeywordController extends BaseController
         $form = $this->createForm('AppBundle\Form\KeywordType', $keyword);
         $form->handleRequest($request);
 
+        $this->breadcrumbs->addItem('common.new', $this->generateUrl('keyword_index'));
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($keyword);
@@ -75,7 +77,9 @@ class KeywordController extends BaseController
      */
     public function showAction(Keyword $keyword)
     {
-        $deleteForm = $this->createDeleteForm($keyword);
+    $this->breadcrumbs->addItem($keyword, $this->generateUrl('keyword_show', array('id' => $keyword->getId())));
+
+            $deleteForm = $this->createDeleteForm($keyword);
 
         return $this->render('keyword/show.html.twig', array(
             'keyword' => $keyword,
@@ -89,11 +93,14 @@ class KeywordController extends BaseController
      * @Route("/{id}/edit", name="keyword_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Keyword $keyword)
+    public function editAction(Request $request, Keyword $keyword )
     {
         $deleteForm = $this->createDeleteForm($keyword);
         $editForm = $this->createForm('AppBundle\Form\KeywordType', $keyword);
         $editForm->handleRequest($request);
+
+        $this->breadcrumbs->addItem($keyword, $this->generateUrl('keyword_show', array('id' => $keyword->getId())));
+        $this->breadcrumbs->addItem('common.edit', $this->generateUrl('keyword_show', array('id' => $keyword->getId())));
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();

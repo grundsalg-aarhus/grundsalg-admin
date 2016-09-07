@@ -1,7 +1,7 @@
-{% extends 'AppBundle::base.html.twig' %}
+    {% extends 'AppBundle::base.html.twig' %}
 
 
-{% block body %}
+    {% block body %}
 
     <div class="row heading">
         <div class="col-md-9">
@@ -17,40 +17,34 @@
 
     <table class="table table-condensed table-header-rotated">
         <thead>
-            <tr>
-                    {{ helper.header('lokalsamfund.id') }}
-                    {{ helper.header('lokalsamfund.number') }}
-                    {{ helper.header('lokalsamfund.name') }}
-                    {{ helper.header('lokalsamfund.createdby') }}
-                    {{ helper.header('lokalsamfund.createddate') }}
-                    {{ helper.header('lokalsamfund.modifiedby') }}
-                    {{ helper.header('lokalsamfund.modifieddate') }}
-                    {{ helper.header('lokalsamfund.active') }}
-                {{ helper.header() }}
-            </tr>
+        <tr>
+                {{ helper.header('lokalsamfund.id') }}
+                {{ helper.header('lokalsamfund.number') }}
+                {{ helper.header('lokalsamfund.name') }}
+                {{ helper.header('lokalsamfund.createdby') }}
+                {{ helper.header('lokalsamfund.createddate') }}
+                {{ helper.header('lokalsamfund.modifiedby') }}
+                {{ helper.header('lokalsamfund.modifieddate') }}
+                {{ helper.header('lokalsamfund.active') }}
+            {{ helper.header() }}
+        </tr>
         </thead>
         <tbody>
         {% for lokalsamfund in lokalsamfunds %}
-            <tr>
-                <td><a href="{{ path('lokalsamfund_show', { 'id': lokalsamfund.id }) }}">{{ lokalsamfund.id }}</a></td>
-                <td>{{ lokalsamfund.number }}</td>
-                <td>{{ lokalsamfund.name }}</td>
-                <td>{{ lokalsamfund.createdby }}</td>
-                <td>{% if lokalsamfund.createddate %}{{ lokalsamfund.createddate|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ lokalsamfund.modifiedby }}</td>
-                <td>{% if lokalsamfund.modifieddate %}{{ lokalsamfund.modifieddate|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ lokalsamfund.active }}</td>
-                <td class="text-right">
-                  <a class="btn btn-default btn-xs" href="{{ path('lokalsamfund_edit', { 'id': lokalsamfund.id }) }}">{{ 'common.edit' | trans }}</a>
-                </td>
-            </tr>
+        <tr>
+                    <td><a href="{{ path('lokalsamfund_show', { 'id': lokalsamfund.id }) }}">{{ lokalsamfund.id }}</a></td>
+                    <td>{{ lokalsamfund.number }}</td>
+                    <td>{{ lokalsamfund.name }}</td>
+                    <td>{{ lokalsamfund.createdby }}</td>
+                    <td>{% if lokalsamfund.createddate %}{{ lokalsamfund.createddate|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ lokalsamfund.modifiedby }}</td>
+                    <td>{% if lokalsamfund.modifieddate %}{{ lokalsamfund.modifieddate|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ lokalsamfund.active }}</td>
+                    <td class="text-right">
+                        <a class="btn btn-default btn-xs" href="{{ path('lokalsamfund_edit', { 'id': lokalsamfund.id }) }}">{{ 'common.edit' | trans }}</a>
+                    </td>
+        </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('lokalsamfund_new') }}">Create a new entry</a>
-        </li>
-    </ul>
-{% endblock %}
+    {% endblock %}

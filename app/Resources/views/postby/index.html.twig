@@ -1,7 +1,7 @@
-{% extends 'AppBundle::base.html.twig' %}
+    {% extends 'AppBundle::base.html.twig' %}
 
 
-{% block body %}
+    {% block body %}
 
     <div class="row heading">
         <div class="col-md-9">
@@ -17,38 +17,32 @@
 
     <table class="table table-condensed table-header-rotated">
         <thead>
-            <tr>
-                    {{ helper.header('postby.id') }}
-                    {{ helper.header('postby.postalcode') }}
-                    {{ helper.header('postby.city') }}
-                    {{ helper.header('postby.createdby') }}
-                    {{ helper.header('postby.createddate') }}
-                    {{ helper.header('postby.modifiedby') }}
-                    {{ helper.header('postby.modifieddate') }}
-                {{ helper.header() }}
-            </tr>
+        <tr>
+                {{ helper.header('postby.id') }}
+                {{ helper.header('postby.postalcode') }}
+                {{ helper.header('postby.city') }}
+                {{ helper.header('postby.createdby') }}
+                {{ helper.header('postby.createddate') }}
+                {{ helper.header('postby.modifiedby') }}
+                {{ helper.header('postby.modifieddate') }}
+            {{ helper.header() }}
+        </tr>
         </thead>
         <tbody>
         {% for postby in postbies %}
-            <tr>
-                <td><a href="{{ path('postby_show', { 'id': postby.id }) }}">{{ postby.id }}</a></td>
-                <td>{{ postby.postalcode }}</td>
-                <td>{{ postby.city }}</td>
-                <td>{{ postby.createdby }}</td>
-                <td>{% if postby.createddate %}{{ postby.createddate|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ postby.modifiedby }}</td>
-                <td>{% if postby.modifieddate %}{{ postby.modifieddate|date('Y-m-d') }}{% endif %}</td>
-                <td class="text-right">
-                  <a class="btn btn-default btn-xs" href="{{ path('postby_edit', { 'id': postby.id }) }}">{{ 'common.edit' | trans }}</a>
-                </td>
-            </tr>
+        <tr>
+                    <td><a href="{{ path('postby_show', { 'id': postby.id }) }}">{{ postby.id }}</a></td>
+                    <td>{{ postby.postalcode }}</td>
+                    <td>{{ postby.city }}</td>
+                    <td>{{ postby.createdby }}</td>
+                    <td>{% if postby.createddate %}{{ postby.createddate|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ postby.modifiedby }}</td>
+                    <td>{% if postby.modifieddate %}{{ postby.modifieddate|date('d/m Y') }}{% endif %}</td>
+                    <td class="text-right">
+                        <a class="btn btn-default btn-xs" href="{{ path('postby_edit', { 'id': postby.id }) }}">{{ 'common.edit' | trans }}</a>
+                    </td>
+        </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('postby_new') }}">Create a new entry</a>
-        </li>
-    </ul>
-{% endblock %}
+    {% endblock %}

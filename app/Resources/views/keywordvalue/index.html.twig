@@ -1,7 +1,7 @@
-{% extends 'AppBundle::base.html.twig' %}
+    {% extends 'AppBundle::base.html.twig' %}
 
 
-{% block body %}
+    {% block body %}
 
     <div class="row heading">
         <div class="col-md-9">
@@ -17,30 +17,24 @@
 
     <table class="table table-condensed table-header-rotated">
         <thead>
-            <tr>
-                    {{ helper.header('keywordvalue.id') }}
-                    {{ helper.header('keywordvalue.display') }}
-                    {{ helper.header('keywordvalue.value') }}
-                {{ helper.header() }}
-            </tr>
+        <tr>
+                {{ helper.header('keywordvalue.id') }}
+                {{ helper.header('keywordvalue.display') }}
+                {{ helper.header('keywordvalue.value') }}
+            {{ helper.header() }}
+        </tr>
         </thead>
         <tbody>
         {% for keywordvalue in keywordvalues %}
-            <tr>
-                <td><a href="{{ path('keywordvalue_show', { 'id': keywordvalue.id }) }}">{{ keywordvalue.id }}</a></td>
-                <td>{{ keywordvalue.display }}</td>
-                <td>{{ keywordvalue.value }}</td>
-                <td class="text-right">
-                  <a class="btn btn-default btn-xs" href="{{ path('keywordvalue_edit', { 'id': keywordvalue.id }) }}">{{ 'common.edit' | trans }}</a>
-                </td>
-            </tr>
+        <tr>
+                    <td><a href="{{ path('keywordvalue_show', { 'id': keywordvalue.id }) }}">{{ keywordvalue.id }}</a></td>
+                    <td>{{ keywordvalue.display }}</td>
+                    <td>{{ keywordvalue.value }}</td>
+                    <td class="text-right">
+                        <a class="btn btn-default btn-xs" href="{{ path('keywordvalue_edit', { 'id': keywordvalue.id }) }}">{{ 'common.edit' | trans }}</a>
+                    </td>
+        </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('keywordvalue_new') }}">Create a new entry</a>
-        </li>
-    </ul>
-{% endblock %}
+    {% endblock %}
