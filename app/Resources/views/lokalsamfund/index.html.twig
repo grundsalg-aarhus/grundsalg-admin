@@ -1,0 +1,51 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+    <h1>Lokalsamfund list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Number</th>
+                <th>Name</th>
+                <th>Createdby</th>
+                <th>Createddate</th>
+                <th>Modifiedby</th>
+                <th>Modifieddate</th>
+                <th>Active</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for lokalsamfund in lokalsamfunds %}
+            <tr>
+                <td><a href="{{ path('lokalsamfund_show', { 'id': lokalsamfund.id }) }}">{{ lokalsamfund.id }}</a></td>
+                <td>{{ lokalsamfund.number }}</td>
+                <td>{{ lokalsamfund.name }}</td>
+                <td>{{ lokalsamfund.createdby }}</td>
+                <td>{% if lokalsamfund.createddate %}{{ lokalsamfund.createddate|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ lokalsamfund.modifiedby }}</td>
+                <td>{% if lokalsamfund.modifieddate %}{{ lokalsamfund.modifieddate|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ lokalsamfund.active }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('lokalsamfund_show', { 'id': lokalsamfund.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('lokalsamfund_edit', { 'id': lokalsamfund.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('lokalsamfund_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

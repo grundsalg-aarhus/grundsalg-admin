@@ -4,7 +4,7 @@ namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SalgshistorikType extends AbstractType
 {
@@ -16,22 +16,22 @@ class SalgshistorikType extends AbstractType
     {
         $builder
             ->add('createdby')
-            ->add('createddate')
+            ->add('createddate', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('modifiedby')
-            ->add('modifieddate')
+            ->add('modifieddate', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('aarsag')
             ->add('salgstype')
             ->add('status')
-            ->add('resstart')
-            ->add('resslut')
-            ->add('tilbudstart')
-            ->add('tilbudslut')
-            ->add('accept')
-            ->add('overtagelse')
-            ->add('skoederekv')
-            ->add('beloebanvist')
-            ->add('auktionstartdato')
-            ->add('auktionslutdato')
+            ->add('resstart', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('resslut', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('tilbudstart', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('tilbudslut', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('accept', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('overtagelse', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('skoederekv', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('beloebanvist', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('auktionstartdato', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('auktionslutdato', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('minbud')
             ->add('antagetbud')
             ->add('navn')
@@ -54,20 +54,12 @@ class SalgshistorikType extends AbstractType
     }
     
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Salgshistorik'
         ));
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'appbundle_salgshistorik';
     }
 }

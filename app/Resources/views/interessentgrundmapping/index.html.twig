@@ -1,0 +1,39 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+    <h1>Interessentgrundmapping list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Annulleret</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for interessentgrundmapping in interessentgrundmappings %}
+            <tr>
+                <td><a href="{{ path('interessentgrundmapping_show', { 'id': interessentgrundmapping.id }) }}">{{ interessentgrundmapping.id }}</a></td>
+                <td>{{ interessentgrundmapping.annulleret }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('interessentgrundmapping_show', { 'id': interessentgrundmapping.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('interessentgrundmapping_edit', { 'id': interessentgrundmapping.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('interessentgrundmapping_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

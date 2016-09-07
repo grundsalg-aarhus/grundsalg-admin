@@ -4,7 +4,7 @@ namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LandinspektoerType extends AbstractType
 {
@@ -23,28 +23,20 @@ class LandinspektoerType extends AbstractType
             ->add('telefon')
             ->add('postnrid')
             ->add('createdby')
-            ->add('createddate')
+            ->add('createddate', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('modifiedby')
-            ->add('modifieddate')
+            ->add('modifieddate', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('active')
         ;
     }
     
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Landinspektoer'
         ));
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'appbundle_landinspektoer';
     }
 }

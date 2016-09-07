@@ -6,109 +6,57 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Salgsomraade;
 use AppBundle\Form\SalgsomraadeType;
-use AppBundle\Controller\BaseController;
 
 /**
  * Salgsomraade controller.
  *
  * @Route("/salgsomraade")
- * @Security("has_role('ROLE_SUPER_ADMIN')")
  */
-class SalgsomraadeController extends BaseController
+class SalgsomraadeController extends Controller
 {
-
-  public function init(Request $request) {
-    parent::init($request);
-    $this->breadcrumbs->addItem('salgsomraade.labels.singular', $this->generateUrl('salgsomraade'));
-}
-
-
     /**
      * Lists all Salgsomraade entities.
      *
-     * @Route("/", name="salgsomraade")
+     * @Route("/", name="salgsomraade_index")
      * @Method("GET")
-     * @Template()
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AppBundle:Salgsomraade')->findAll();
+        $salgsomraades = $em->getRepository('AppBundle:Salgsomraade')->findAll();
 
-        return array(
-            'entities' => $entities,
-        );
+        return $this->render('salgsomraade/index.html.twig', array(
+            'salgsomraades' => $salgsomraades,
+        ));
     }
+
     /**
      * Creates a new Salgsomraade entity.
      *
-     * @Route("/", name="salgsomraade_create")
-     * @Method("POST")
-     * @Template("AppBundle:Salgsomraade:new.html.twig")
+     * @Route("/new", name="salgsomraade_new")
+     * @Method({"GET", "POST"})
      */
-    public function createAction(Request $request)
+    public function newAction(Request $request)
     {
-        $entity = new Salgsomraade();
-        $form = $this->createCreateForm($entity);
+        $salgsomraade = new Salgsomraade();
+        $form = $this->createForm('AppBundle\Form\SalgsomraadeType', $salgsomraade);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $em->persist($salgsomraade);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('salgsomraade'));
-
+            return $this->redirectToRoute('salgsomraade_show', array('id' => $salgsomraade->getId()));
         }
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Creates a form to create a Salgsomraade entity.
-     *
-     * @param Salgsomraade $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(Salgsomraade $entity)
-    {
-        $form = $this->createForm('AppBundle\Form\SalgsomraadeType', $entity, array(
-            'action' => $this->generateUrl('salgsomraade_create'),
-            'method' => 'POST',
+        return $this->render('salgsomraade/new.html.twig', array(
+            'salgsomraade' => $salgsomraade,
+            'form' => $form->createView(),
         ));
-
-        $this->addUpdate($form, $this->generateUrl('salgsomraade'));
-
-        return $form;
-    }
-
-    /**
-     * Displays a form to create a new Salgsomraade entity.
-     *
-     * @Route("/new", name="salgsomraade_new")
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $this->breadcrumbs->addItem('common.add', $this->generateUrl('salgsomraade'));
-
-        $entity = new Salgsomraade();
-        $form   = $this->createCreateForm($entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
     }
 
     /**
@@ -116,144 +64,76 @@ class SalgsomraadeController extends BaseController
      *
      * @Route("/{id}", name="salgsomraade_show")
      * @Method("GET")
-     * @Template()
      */
-    public function showAction($id)
+    public function showAction(Salgsomraade $salgsomraade)
     {
+        $deleteForm = $this->createDeleteForm($salgsomraade);
 
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('AppBundle:Salgsomraade')->find($id);
-        $this->breadcrumbs->addItem($entity, $this->generateUrl('salgsomraade_show', array('id' => $entity->getId())));
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Salgsomraade entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
+        return $this->render('salgsomraade/show.html.twig', array(
+            'salgsomraade' => $salgsomraade,
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
 
     /**
      * Displays a form to edit an existing Salgsomraade entity.
      *
      * @Route("/{id}/edit", name="salgsomraade_edit")
-     * @Method("GET")
-     * @Template()
+     * @Method({"GET", "POST"})
      */
-    public function editAction(Salgsomraade $entity)
+    public function editAction(Request $request, Salgsomraade $salgsomraade)
     {
-        $this->breadcrumbs->addItem($entity, $this->generateUrl('salgsomraade_show', array('id' => $entity->getId())));
-        $this->breadcrumbs->addItem('common.edit', $this->generateUrl('salgsomraade_show', array('id' => $entity->getId())));
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Salgsomraade entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($entity->getId());
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-    * Creates a form to edit a Salgsomraade entity.
-    *
-    * @param Salgsomraade $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Salgsomraade $entity)
-    {
-        $form = $this->createForm('AppBundle\Form\SalgsomraadeType', $entity, array(
-            'action' => $this->generateUrl('salgsomraade_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        $this->addUpdate($form, $this->generateUrl('salgsomraade_show', array('id' => $entity->getId())));
-
-        return $form;
-    }
-    /**
-     * Edits an existing Salgsomraade entity.
-     *
-     * @Route("/{id}", name="salgsomraade_update")
-     * @Method("PUT")
-     * @Template("AppBundle:Salgsomraade:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('AppBundle:Salgsomraade')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Salgsomraade entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($salgsomraade);
+        $editForm = $this->createForm('AppBundle\Form\SalgsomraadeType', $salgsomraade);
         $editForm->handleRequest($request);
 
-        if ($editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($salgsomraade);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('salgsomraade'));
+            return $this->redirectToRoute('salgsomraade_edit', array('id' => $salgsomraade->getId()));
         }
 
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+        return $this->render('salgsomraade/edit.html.twig', array(
+            'salgsomraade' => $salgsomraade,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
+
     /**
      * Deletes a Salgsomraade entity.
      *
      * @Route("/{id}", name="salgsomraade_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, Salgsomraade $salgsomraade)
     {
-        $form = $this->createDeleteForm($id);
+        $form = $this->createDeleteForm($salgsomraade);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AppBundle:Salgsomraade')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Salgsomraade entity.');
-            }
-
-            $em->remove($entity);
+            $em->remove($salgsomraade);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('salgsomraade'));
+        return $this->redirectToRoute('salgsomraade_index');
     }
 
     /**
-     * Creates a form to delete a Salgsomraade entity by id.
+     * Creates a form to delete a Salgsomraade entity.
      *
-     * @param mixed $id The entity id
+     * @param Salgsomraade $salgsomraade The Salgsomraade entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
+    private function createDeleteForm(Salgsomraade $salgsomraade)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('salgsomraade_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('salgsomraade_delete', array('id' => $salgsomraade->getId())))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
     }

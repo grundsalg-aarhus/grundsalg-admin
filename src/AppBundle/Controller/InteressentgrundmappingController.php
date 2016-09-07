@@ -6,109 +6,57 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Interessentgrundmapping;
 use AppBundle\Form\InteressentgrundmappingType;
-use AppBundle\Controller\BaseController;
 
 /**
  * Interessentgrundmapping controller.
  *
  * @Route("/interessentgrundmapping")
- * @Security("has_role('ROLE_SUPER_ADMIN')")
  */
-class InteressentgrundmappingController extends BaseController
+class InteressentgrundmappingController extends Controller
 {
-
-  public function init(Request $request) {
-    parent::init($request);
-    $this->breadcrumbs->addItem('interessentgrundmapping.labels.singular', $this->generateUrl('interessentgrundmapping'));
-}
-
-
     /**
      * Lists all Interessentgrundmapping entities.
      *
-     * @Route("/", name="interessentgrundmapping")
+     * @Route("/", name="interessentgrundmapping_index")
      * @Method("GET")
-     * @Template()
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AppBundle:Interessentgrundmapping')->findAll();
+        $interessentgrundmappings = $em->getRepository('AppBundle:Interessentgrundmapping')->findAll();
 
-        return array(
-            'entities' => $entities,
-        );
+        return $this->render('interessentgrundmapping/index.html.twig', array(
+            'interessentgrundmappings' => $interessentgrundmappings,
+        ));
     }
+
     /**
      * Creates a new Interessentgrundmapping entity.
      *
-     * @Route("/", name="interessentgrundmapping_create")
-     * @Method("POST")
-     * @Template("AppBundle:Interessentgrundmapping:new.html.twig")
+     * @Route("/new", name="interessentgrundmapping_new")
+     * @Method({"GET", "POST"})
      */
-    public function createAction(Request $request)
+    public function newAction(Request $request)
     {
-        $entity = new Interessentgrundmapping();
-        $form = $this->createCreateForm($entity);
+        $interessentgrundmapping = new Interessentgrundmapping();
+        $form = $this->createForm('AppBundle\Form\InteressentgrundmappingType', $interessentgrundmapping);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $em->persist($interessentgrundmapping);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('interessentgrundmapping'));
-
+            return $this->redirectToRoute('interessentgrundmapping_show', array('id' => $interessentgrundmapping->getId()));
         }
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Creates a form to create a Interessentgrundmapping entity.
-     *
-     * @param Interessentgrundmapping $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(Interessentgrundmapping $entity)
-    {
-        $form = $this->createForm('AppBundle\Form\InteressentgrundmappingType', $entity, array(
-            'action' => $this->generateUrl('interessentgrundmapping_create'),
-            'method' => 'POST',
+        return $this->render('interessentgrundmapping/new.html.twig', array(
+            'interessentgrundmapping' => $interessentgrundmapping,
+            'form' => $form->createView(),
         ));
-
-        $this->addUpdate($form, $this->generateUrl('interessentgrundmapping'));
-
-        return $form;
-    }
-
-    /**
-     * Displays a form to create a new Interessentgrundmapping entity.
-     *
-     * @Route("/new", name="interessentgrundmapping_new")
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $this->breadcrumbs->addItem('common.add', $this->generateUrl('interessentgrundmapping'));
-
-        $entity = new Interessentgrundmapping();
-        $form   = $this->createCreateForm($entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
     }
 
     /**
@@ -116,144 +64,76 @@ class InteressentgrundmappingController extends BaseController
      *
      * @Route("/{id}", name="interessentgrundmapping_show")
      * @Method("GET")
-     * @Template()
      */
-    public function showAction($id)
+    public function showAction(Interessentgrundmapping $interessentgrundmapping)
     {
+        $deleteForm = $this->createDeleteForm($interessentgrundmapping);
 
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('AppBundle:Interessentgrundmapping')->find($id);
-        $this->breadcrumbs->addItem($entity, $this->generateUrl('interessentgrundmapping_show', array('id' => $entity->getId())));
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Interessentgrundmapping entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
+        return $this->render('interessentgrundmapping/show.html.twig', array(
+            'interessentgrundmapping' => $interessentgrundmapping,
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
 
     /**
      * Displays a form to edit an existing Interessentgrundmapping entity.
      *
      * @Route("/{id}/edit", name="interessentgrundmapping_edit")
-     * @Method("GET")
-     * @Template()
+     * @Method({"GET", "POST"})
      */
-    public function editAction(Interessentgrundmapping $entity)
+    public function editAction(Request $request, Interessentgrundmapping $interessentgrundmapping)
     {
-        $this->breadcrumbs->addItem($entity, $this->generateUrl('interessentgrundmapping_show', array('id' => $entity->getId())));
-        $this->breadcrumbs->addItem('common.edit', $this->generateUrl('interessentgrundmapping_show', array('id' => $entity->getId())));
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Interessentgrundmapping entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($entity->getId());
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-    * Creates a form to edit a Interessentgrundmapping entity.
-    *
-    * @param Interessentgrundmapping $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Interessentgrundmapping $entity)
-    {
-        $form = $this->createForm('AppBundle\Form\InteressentgrundmappingType', $entity, array(
-            'action' => $this->generateUrl('interessentgrundmapping_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        $this->addUpdate($form, $this->generateUrl('interessentgrundmapping_show', array('id' => $entity->getId())));
-
-        return $form;
-    }
-    /**
-     * Edits an existing Interessentgrundmapping entity.
-     *
-     * @Route("/{id}", name="interessentgrundmapping_update")
-     * @Method("PUT")
-     * @Template("AppBundle:Interessentgrundmapping:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('AppBundle:Interessentgrundmapping')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Interessentgrundmapping entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($interessentgrundmapping);
+        $editForm = $this->createForm('AppBundle\Form\InteressentgrundmappingType', $interessentgrundmapping);
         $editForm->handleRequest($request);
 
-        if ($editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($interessentgrundmapping);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('interessentgrundmapping'));
+            return $this->redirectToRoute('interessentgrundmapping_edit', array('id' => $interessentgrundmapping->getId()));
         }
 
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+        return $this->render('interessentgrundmapping/edit.html.twig', array(
+            'interessentgrundmapping' => $interessentgrundmapping,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
+
     /**
      * Deletes a Interessentgrundmapping entity.
      *
      * @Route("/{id}", name="interessentgrundmapping_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, Interessentgrundmapping $interessentgrundmapping)
     {
-        $form = $this->createDeleteForm($id);
+        $form = $this->createDeleteForm($interessentgrundmapping);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AppBundle:Interessentgrundmapping')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Interessentgrundmapping entity.');
-            }
-
-            $em->remove($entity);
+            $em->remove($interessentgrundmapping);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('interessentgrundmapping'));
+        return $this->redirectToRoute('interessentgrundmapping_index');
     }
 
     /**
-     * Creates a form to delete a Interessentgrundmapping entity by id.
+     * Creates a form to delete a Interessentgrundmapping entity.
      *
-     * @param mixed $id The entity id
+     * @param Interessentgrundmapping $interessentgrundmapping The Interessentgrundmapping entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
+    private function createDeleteForm(Interessentgrundmapping $interessentgrundmapping)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('interessentgrundmapping_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('interessentgrundmapping_delete', array('id' => $interessentgrundmapping->getId())))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
     }

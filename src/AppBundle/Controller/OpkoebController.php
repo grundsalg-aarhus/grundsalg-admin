@@ -6,109 +6,57 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Opkoeb;
 use AppBundle\Form\OpkoebType;
-use AppBundle\Controller\BaseController;
 
 /**
  * Opkoeb controller.
  *
  * @Route("/opkoeb")
- * @Security("has_role('ROLE_SUPER_ADMIN')")
  */
-class OpkoebController extends BaseController
+class OpkoebController extends Controller
 {
-
-  public function init(Request $request) {
-    parent::init($request);
-    $this->breadcrumbs->addItem('opkoeb.labels.singular', $this->generateUrl('opkoeb'));
-}
-
-
     /**
      * Lists all Opkoeb entities.
      *
-     * @Route("/", name="opkoeb")
+     * @Route("/", name="opkoeb_index")
      * @Method("GET")
-     * @Template()
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AppBundle:Opkoeb')->findAll();
+        $opkoebs = $em->getRepository('AppBundle:Opkoeb')->findAll();
 
-        return array(
-            'entities' => $entities,
-        );
+        return $this->render('opkoeb/index.html.twig', array(
+            'opkoebs' => $opkoebs,
+        ));
     }
+
     /**
      * Creates a new Opkoeb entity.
      *
-     * @Route("/", name="opkoeb_create")
-     * @Method("POST")
-     * @Template("AppBundle:Opkoeb:new.html.twig")
+     * @Route("/new", name="opkoeb_new")
+     * @Method({"GET", "POST"})
      */
-    public function createAction(Request $request)
+    public function newAction(Request $request)
     {
-        $entity = new Opkoeb();
-        $form = $this->createCreateForm($entity);
+        $opkoeb = new Opkoeb();
+        $form = $this->createForm('AppBundle\Form\OpkoebType', $opkoeb);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $em->persist($opkoeb);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('opkoeb'));
-
+            return $this->redirectToRoute('opkoeb_show', array('id' => $opkoeb->getId()));
         }
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Creates a form to create a Opkoeb entity.
-     *
-     * @param Opkoeb $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(Opkoeb $entity)
-    {
-        $form = $this->createForm('AppBundle\Form\OpkoebType', $entity, array(
-            'action' => $this->generateUrl('opkoeb_create'),
-            'method' => 'POST',
+        return $this->render('opkoeb/new.html.twig', array(
+            'opkoeb' => $opkoeb,
+            'form' => $form->createView(),
         ));
-
-        $this->addUpdate($form, $this->generateUrl('opkoeb'));
-
-        return $form;
-    }
-
-    /**
-     * Displays a form to create a new Opkoeb entity.
-     *
-     * @Route("/new", name="opkoeb_new")
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $this->breadcrumbs->addItem('common.add', $this->generateUrl('opkoeb'));
-
-        $entity = new Opkoeb();
-        $form   = $this->createCreateForm($entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
     }
 
     /**
@@ -116,144 +64,76 @@ class OpkoebController extends BaseController
      *
      * @Route("/{id}", name="opkoeb_show")
      * @Method("GET")
-     * @Template()
      */
-    public function showAction($id)
+    public function showAction(Opkoeb $opkoeb)
     {
+        $deleteForm = $this->createDeleteForm($opkoeb);
 
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('AppBundle:Opkoeb')->find($id);
-        $this->breadcrumbs->addItem($entity, $this->generateUrl('opkoeb_show', array('id' => $entity->getId())));
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Opkoeb entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
+        return $this->render('opkoeb/show.html.twig', array(
+            'opkoeb' => $opkoeb,
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
 
     /**
      * Displays a form to edit an existing Opkoeb entity.
      *
      * @Route("/{id}/edit", name="opkoeb_edit")
-     * @Method("GET")
-     * @Template()
+     * @Method({"GET", "POST"})
      */
-    public function editAction(Opkoeb $entity)
+    public function editAction(Request $request, Opkoeb $opkoeb)
     {
-        $this->breadcrumbs->addItem($entity, $this->generateUrl('opkoeb_show', array('id' => $entity->getId())));
-        $this->breadcrumbs->addItem('common.edit', $this->generateUrl('opkoeb_show', array('id' => $entity->getId())));
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Opkoeb entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($entity->getId());
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-    * Creates a form to edit a Opkoeb entity.
-    *
-    * @param Opkoeb $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Opkoeb $entity)
-    {
-        $form = $this->createForm('AppBundle\Form\OpkoebType', $entity, array(
-            'action' => $this->generateUrl('opkoeb_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        $this->addUpdate($form, $this->generateUrl('opkoeb_show', array('id' => $entity->getId())));
-
-        return $form;
-    }
-    /**
-     * Edits an existing Opkoeb entity.
-     *
-     * @Route("/{id}", name="opkoeb_update")
-     * @Method("PUT")
-     * @Template("AppBundle:Opkoeb:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('AppBundle:Opkoeb')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Opkoeb entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($opkoeb);
+        $editForm = $this->createForm('AppBundle\Form\OpkoebType', $opkoeb);
         $editForm->handleRequest($request);
 
-        if ($editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($opkoeb);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('opkoeb'));
+            return $this->redirectToRoute('opkoeb_edit', array('id' => $opkoeb->getId()));
         }
 
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+        return $this->render('opkoeb/edit.html.twig', array(
+            'opkoeb' => $opkoeb,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
+
     /**
      * Deletes a Opkoeb entity.
      *
      * @Route("/{id}", name="opkoeb_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, Opkoeb $opkoeb)
     {
-        $form = $this->createDeleteForm($id);
+        $form = $this->createDeleteForm($opkoeb);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AppBundle:Opkoeb')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Opkoeb entity.');
-            }
-
-            $em->remove($entity);
+            $em->remove($opkoeb);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('opkoeb'));
+        return $this->redirectToRoute('opkoeb_index');
     }
 
     /**
-     * Creates a form to delete a Opkoeb entity by id.
+     * Creates a form to delete a Opkoeb entity.
      *
-     * @param mixed $id The entity id
+     * @param Opkoeb $opkoeb The Opkoeb entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
+    private function createDeleteForm(Opkoeb $opkoeb)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('opkoeb_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('opkoeb_delete', array('id' => $opkoeb->getId())))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
     }

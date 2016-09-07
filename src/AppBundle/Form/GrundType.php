@@ -4,7 +4,7 @@ namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GrundType extends AbstractType
 {
@@ -16,9 +16,9 @@ class GrundType extends AbstractType
     {
         $builder
             ->add('createdby')
-            ->add('createddate')
+            ->add('createddate', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('modifiedby')
-            ->add('modifieddate')
+            ->add('modifieddate', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('status')
             ->add('salgstatus')
             ->add('gid')
@@ -33,11 +33,11 @@ class GrundType extends AbstractType
             ->add('postbyid')
             ->add('urlgis')
             ->add('salgstype')
-            ->add('auktionstartdato')
-            ->add('auktionslutdato')
+            ->add('auktionstartdato', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('auktionslutdato', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('annonceresej')
-            ->add('datoannonce')
-            ->add('datoannonce1')
+            ->add('datoannonce', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('datoannonce1', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('tilsluttet')
             ->add('maxetagem2')
             ->add('areal')
@@ -63,14 +63,14 @@ class GrundType extends AbstractType
             ->add('minbud')
             ->add('note')
             ->add('landinspektoerid')
-            ->add('resstart')
-            ->add('tilbudstart')
-            ->add('accept')
-            ->add('skoederekv')
-            ->add('beloebanvist')
-            ->add('resslut')
-            ->add('tilbudslut')
-            ->add('overtagelse')
+            ->add('resstart', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('tilbudstart', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('accept', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('skoederekv', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('beloebanvist', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('resslut', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('tilbudslut', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('overtagelse', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('antagetbud')
             ->add('salgsprisumoms')
             ->add('navn')
@@ -94,20 +94,12 @@ class GrundType extends AbstractType
     }
     
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Grund'
         ));
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'appbundle_grund';
     }
 }

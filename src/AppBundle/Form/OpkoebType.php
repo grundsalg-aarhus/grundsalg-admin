@@ -4,7 +4,7 @@ namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class OpkoebType extends AbstractType
 {
@@ -20,32 +20,24 @@ class OpkoebType extends AbstractType
             ->add('ejerlav')
             ->add('m2')
             ->add('bemaerkning')
-            ->add('opkoebdato')
+            ->add('opkoebdato', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('pris')
             ->add('procentaflp')
             ->add('createdby')
-            ->add('createddate')
+            ->add('createddate', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('modifiedby')
-            ->add('modifieddate')
+            ->add('modifieddate', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('lpid')
         ;
     }
     
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Opkoeb'
         ));
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'appbundle_opkoeb';
     }
 }

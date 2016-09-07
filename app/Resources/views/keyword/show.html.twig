@@ -1,0 +1,40 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+    <h1>Keyword</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ keyword.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ keyword.title }}</td>
+            </tr>
+            <tr>
+                <th>Alias</th>
+                <td>{{ keyword.alias }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ keyword.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('keyword_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('keyword_edit', { 'id': keyword.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

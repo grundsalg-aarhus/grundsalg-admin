@@ -1,22 +1,17 @@
 {% block extends %}
-  {{ "{% extends 'AppBundle::base.html.twig' %}" }}
+{{ "{% extends 'AppBundle::base.html.twig' %}" }}
 {% endblock extends %}
 
-{% set class = entity | split('\\') | last | lower %}
-
 {% block body %}
-  {{ "{% block body -%}" }}
-  <div class="row heading">
-    <div class="col-md-9">
-      <h1>{{ "{{ '" }}{{ class }}{{ ".actions.add' | trans }}" }}</h1>
-    </div>
-    <div class="col-md-3 text-right">
-    </div>
+{{ "{% block body %}" }}
+    <h1>{{ entity }} creation</h1>
 
-  </div>
+    {{ '{{ form_start(form) }}' }}
+        {{ '{{ form_widget(form) }}' }}
+        <input type="submit" value="Create" />
+    {{ '{{ form_end(form) }}' }}
 
-  {{ '{{ form(form) }}' }}
-
-  {% set hide_edit, hide_delete = true, false %}
-  {{ "{% endblock %}" }}
+{% set hide_edit, hide_delete = true, true %}
+{{ include('crud/views/others/record_actions.html.twig.twig') -}}
+{{ "{% endblock %}" }}
 {% endblock body %}

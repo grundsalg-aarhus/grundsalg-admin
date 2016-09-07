@@ -6,109 +6,57 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Lokalsamfund;
 use AppBundle\Form\LokalsamfundType;
-use AppBundle\Controller\BaseController;
 
 /**
  * Lokalsamfund controller.
  *
  * @Route("/lokalsamfund")
- * @Security("has_role('ROLE_SUPER_ADMIN')")
  */
-class LokalsamfundController extends BaseController
+class LokalsamfundController extends Controller
 {
-
-  public function init(Request $request) {
-    parent::init($request);
-    $this->breadcrumbs->addItem('lokalsamfund.labels.singular', $this->generateUrl('lokalsamfund'));
-}
-
-
     /**
      * Lists all Lokalsamfund entities.
      *
-     * @Route("/", name="lokalsamfund")
+     * @Route("/", name="lokalsamfund_index")
      * @Method("GET")
-     * @Template()
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AppBundle:Lokalsamfund')->findAll();
+        $lokalsamfunds = $em->getRepository('AppBundle:Lokalsamfund')->findAll();
 
-        return array(
-            'entities' => $entities,
-        );
+        return $this->render('lokalsamfund/index.html.twig', array(
+            'lokalsamfunds' => $lokalsamfunds,
+        ));
     }
+
     /**
      * Creates a new Lokalsamfund entity.
      *
-     * @Route("/", name="lokalsamfund_create")
-     * @Method("POST")
-     * @Template("AppBundle:Lokalsamfund:new.html.twig")
+     * @Route("/new", name="lokalsamfund_new")
+     * @Method({"GET", "POST"})
      */
-    public function createAction(Request $request)
+    public function newAction(Request $request)
     {
-        $entity = new Lokalsamfund();
-        $form = $this->createCreateForm($entity);
+        $lokalsamfund = new Lokalsamfund();
+        $form = $this->createForm('AppBundle\Form\LokalsamfundType', $lokalsamfund);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $em->persist($lokalsamfund);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('lokalsamfund'));
-
+            return $this->redirectToRoute('lokalsamfund_show', array('id' => $lokalsamfund->getId()));
         }
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Creates a form to create a Lokalsamfund entity.
-     *
-     * @param Lokalsamfund $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(Lokalsamfund $entity)
-    {
-        $form = $this->createForm('AppBundle\Form\LokalsamfundType', $entity, array(
-            'action' => $this->generateUrl('lokalsamfund_create'),
-            'method' => 'POST',
+        return $this->render('lokalsamfund/new.html.twig', array(
+            'lokalsamfund' => $lokalsamfund,
+            'form' => $form->createView(),
         ));
-
-        $this->addUpdate($form, $this->generateUrl('lokalsamfund'));
-
-        return $form;
-    }
-
-    /**
-     * Displays a form to create a new Lokalsamfund entity.
-     *
-     * @Route("/new", name="lokalsamfund_new")
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $this->breadcrumbs->addItem('common.add', $this->generateUrl('lokalsamfund'));
-
-        $entity = new Lokalsamfund();
-        $form   = $this->createCreateForm($entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
     }
 
     /**
@@ -116,144 +64,76 @@ class LokalsamfundController extends BaseController
      *
      * @Route("/{id}", name="lokalsamfund_show")
      * @Method("GET")
-     * @Template()
      */
-    public function showAction($id)
+    public function showAction(Lokalsamfund $lokalsamfund)
     {
+        $deleteForm = $this->createDeleteForm($lokalsamfund);
 
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('AppBundle:Lokalsamfund')->find($id);
-        $this->breadcrumbs->addItem($entity, $this->generateUrl('lokalsamfund_show', array('id' => $entity->getId())));
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Lokalsamfund entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
+        return $this->render('lokalsamfund/show.html.twig', array(
+            'lokalsamfund' => $lokalsamfund,
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
 
     /**
      * Displays a form to edit an existing Lokalsamfund entity.
      *
      * @Route("/{id}/edit", name="lokalsamfund_edit")
-     * @Method("GET")
-     * @Template()
+     * @Method({"GET", "POST"})
      */
-    public function editAction(Lokalsamfund $entity)
+    public function editAction(Request $request, Lokalsamfund $lokalsamfund)
     {
-        $this->breadcrumbs->addItem($entity, $this->generateUrl('lokalsamfund_show', array('id' => $entity->getId())));
-        $this->breadcrumbs->addItem('common.edit', $this->generateUrl('lokalsamfund_show', array('id' => $entity->getId())));
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Lokalsamfund entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($entity->getId());
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-    * Creates a form to edit a Lokalsamfund entity.
-    *
-    * @param Lokalsamfund $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Lokalsamfund $entity)
-    {
-        $form = $this->createForm('AppBundle\Form\LokalsamfundType', $entity, array(
-            'action' => $this->generateUrl('lokalsamfund_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        $this->addUpdate($form, $this->generateUrl('lokalsamfund_show', array('id' => $entity->getId())));
-
-        return $form;
-    }
-    /**
-     * Edits an existing Lokalsamfund entity.
-     *
-     * @Route("/{id}", name="lokalsamfund_update")
-     * @Method("PUT")
-     * @Template("AppBundle:Lokalsamfund:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('AppBundle:Lokalsamfund')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Lokalsamfund entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($lokalsamfund);
+        $editForm = $this->createForm('AppBundle\Form\LokalsamfundType', $lokalsamfund);
         $editForm->handleRequest($request);
 
-        if ($editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($lokalsamfund);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('lokalsamfund'));
+            return $this->redirectToRoute('lokalsamfund_edit', array('id' => $lokalsamfund->getId()));
         }
 
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+        return $this->render('lokalsamfund/edit.html.twig', array(
+            'lokalsamfund' => $lokalsamfund,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
+
     /**
      * Deletes a Lokalsamfund entity.
      *
      * @Route("/{id}", name="lokalsamfund_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, Lokalsamfund $lokalsamfund)
     {
-        $form = $this->createDeleteForm($id);
+        $form = $this->createDeleteForm($lokalsamfund);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AppBundle:Lokalsamfund')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Lokalsamfund entity.');
-            }
-
-            $em->remove($entity);
+            $em->remove($lokalsamfund);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('lokalsamfund'));
+        return $this->redirectToRoute('lokalsamfund_index');
     }
 
     /**
-     * Creates a form to delete a Lokalsamfund entity by id.
+     * Creates a form to delete a Lokalsamfund entity.
      *
-     * @param mixed $id The entity id
+     * @param Lokalsamfund $lokalsamfund The Lokalsamfund entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
+    private function createDeleteForm(Lokalsamfund $lokalsamfund)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('lokalsamfund_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('lokalsamfund_delete', array('id' => $lokalsamfund->getId())))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
     }

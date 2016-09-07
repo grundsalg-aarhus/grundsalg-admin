@@ -1,0 +1,49 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+    <h1>Postby list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Postalcode</th>
+                <th>City</th>
+                <th>Createdby</th>
+                <th>Createddate</th>
+                <th>Modifiedby</th>
+                <th>Modifieddate</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for postby in postbies %}
+            <tr>
+                <td><a href="{{ path('postby_show', { 'id': postby.id }) }}">{{ postby.id }}</a></td>
+                <td>{{ postby.postalcode }}</td>
+                <td>{{ postby.city }}</td>
+                <td>{{ postby.createdby }}</td>
+                <td>{% if postby.createddate %}{{ postby.createddate|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ postby.modifiedby }}</td>
+                <td>{% if postby.modifieddate %}{{ postby.modifieddate|date('Y-m-d') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('postby_show', { 'id': postby.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('postby_edit', { 'id': postby.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('postby_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

@@ -6,109 +6,57 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Keyword;
 use AppBundle\Form\KeywordType;
-use AppBundle\Controller\BaseController;
 
 /**
  * Keyword controller.
  *
  * @Route("/keyword")
- * @Security("has_role('ROLE_SUPER_ADMIN')")
  */
-class KeywordController extends BaseController
+class KeywordController extends Controller
 {
-
-  public function init(Request $request) {
-    parent::init($request);
-    $this->breadcrumbs->addItem('keyword.labels.singular', $this->generateUrl('keyword'));
-}
-
-
     /**
      * Lists all Keyword entities.
      *
-     * @Route("/", name="keyword")
+     * @Route("/", name="keyword_index")
      * @Method("GET")
-     * @Template()
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AppBundle:Keyword')->findAll();
+        $keywords = $em->getRepository('AppBundle:Keyword')->findAll();
 
-        return array(
-            'entities' => $entities,
-        );
+        return $this->render('keyword/index.html.twig', array(
+            'keywords' => $keywords,
+        ));
     }
+
     /**
      * Creates a new Keyword entity.
      *
-     * @Route("/", name="keyword_create")
-     * @Method("POST")
-     * @Template("AppBundle:Keyword:new.html.twig")
+     * @Route("/new", name="keyword_new")
+     * @Method({"GET", "POST"})
      */
-    public function createAction(Request $request)
+    public function newAction(Request $request)
     {
-        $entity = new Keyword();
-        $form = $this->createCreateForm($entity);
+        $keyword = new Keyword();
+        $form = $this->createForm('AppBundle\Form\KeywordType', $keyword);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $em->persist($keyword);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('keyword'));
-
+            return $this->redirectToRoute('keyword_show', array('id' => $keyword->getId()));
         }
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Creates a form to create a Keyword entity.
-     *
-     * @param Keyword $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(Keyword $entity)
-    {
-        $form = $this->createForm('AppBundle\Form\KeywordType', $entity, array(
-            'action' => $this->generateUrl('keyword_create'),
-            'method' => 'POST',
+        return $this->render('keyword/new.html.twig', array(
+            'keyword' => $keyword,
+            'form' => $form->createView(),
         ));
-
-        $this->addUpdate($form, $this->generateUrl('keyword'));
-
-        return $form;
-    }
-
-    /**
-     * Displays a form to create a new Keyword entity.
-     *
-     * @Route("/new", name="keyword_new")
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $this->breadcrumbs->addItem('common.add', $this->generateUrl('keyword'));
-
-        $entity = new Keyword();
-        $form   = $this->createCreateForm($entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
     }
 
     /**
@@ -116,144 +64,76 @@ class KeywordController extends BaseController
      *
      * @Route("/{id}", name="keyword_show")
      * @Method("GET")
-     * @Template()
      */
-    public function showAction($id)
+    public function showAction(Keyword $keyword)
     {
+        $deleteForm = $this->createDeleteForm($keyword);
 
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('AppBundle:Keyword')->find($id);
-        $this->breadcrumbs->addItem($entity, $this->generateUrl('keyword_show', array('id' => $entity->getId())));
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Keyword entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
+        return $this->render('keyword/show.html.twig', array(
+            'keyword' => $keyword,
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
 
     /**
      * Displays a form to edit an existing Keyword entity.
      *
      * @Route("/{id}/edit", name="keyword_edit")
-     * @Method("GET")
-     * @Template()
+     * @Method({"GET", "POST"})
      */
-    public function editAction(Keyword $entity)
+    public function editAction(Request $request, Keyword $keyword)
     {
-        $this->breadcrumbs->addItem($entity, $this->generateUrl('keyword_show', array('id' => $entity->getId())));
-        $this->breadcrumbs->addItem('common.edit', $this->generateUrl('keyword_show', array('id' => $entity->getId())));
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Keyword entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($entity->getId());
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-    * Creates a form to edit a Keyword entity.
-    *
-    * @param Keyword $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Keyword $entity)
-    {
-        $form = $this->createForm('AppBundle\Form\KeywordType', $entity, array(
-            'action' => $this->generateUrl('keyword_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        $this->addUpdate($form, $this->generateUrl('keyword_show', array('id' => $entity->getId())));
-
-        return $form;
-    }
-    /**
-     * Edits an existing Keyword entity.
-     *
-     * @Route("/{id}", name="keyword_update")
-     * @Method("PUT")
-     * @Template("AppBundle:Keyword:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('AppBundle:Keyword')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Keyword entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($keyword);
+        $editForm = $this->createForm('AppBundle\Form\KeywordType', $keyword);
         $editForm->handleRequest($request);
 
-        if ($editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($keyword);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('keyword'));
+            return $this->redirectToRoute('keyword_edit', array('id' => $keyword->getId()));
         }
 
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+        return $this->render('keyword/edit.html.twig', array(
+            'keyword' => $keyword,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
+
     /**
      * Deletes a Keyword entity.
      *
      * @Route("/{id}", name="keyword_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, Keyword $keyword)
     {
-        $form = $this->createDeleteForm($id);
+        $form = $this->createDeleteForm($keyword);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AppBundle:Keyword')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Keyword entity.');
-            }
-
-            $em->remove($entity);
+            $em->remove($keyword);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('keyword'));
+        return $this->redirectToRoute('keyword_index');
     }
 
     /**
-     * Creates a form to delete a Keyword entity by id.
+     * Creates a form to delete a Keyword entity.
      *
-     * @param mixed $id The entity id
+     * @param Keyword $keyword The Keyword entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
+    private function createDeleteForm(Keyword $keyword)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('keyword_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('keyword_delete', array('id' => $keyword->getId())))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
     }

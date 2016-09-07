@@ -1,0 +1,43 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+    <h1>Keyword list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Alias</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for keyword in keywords %}
+            <tr>
+                <td><a href="{{ path('keyword_show', { 'id': keyword.id }) }}">{{ keyword.id }}</a></td>
+                <td>{{ keyword.title }}</td>
+                <td>{{ keyword.alias }}</td>
+                <td>{{ keyword.description }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('keyword_show', { 'id': keyword.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('keyword_edit', { 'id': keyword.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('keyword_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

@@ -6,109 +6,57 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Salgshistorik;
 use AppBundle\Form\SalgshistorikType;
-use AppBundle\Controller\BaseController;
 
 /**
  * Salgshistorik controller.
  *
  * @Route("/salgshistorik")
- * @Security("has_role('ROLE_SUPER_ADMIN')")
  */
-class SalgshistorikController extends BaseController
+class SalgshistorikController extends Controller
 {
-
-  public function init(Request $request) {
-    parent::init($request);
-    $this->breadcrumbs->addItem('salgshistorik.labels.singular', $this->generateUrl('salgshistorik'));
-}
-
-
     /**
      * Lists all Salgshistorik entities.
      *
-     * @Route("/", name="salgshistorik")
+     * @Route("/", name="salgshistorik_index")
      * @Method("GET")
-     * @Template()
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AppBundle:Salgshistorik')->findAll();
+        $salgshistoriks = $em->getRepository('AppBundle:Salgshistorik')->findAll();
 
-        return array(
-            'entities' => $entities,
-        );
+        return $this->render('salgshistorik/index.html.twig', array(
+            'salgshistoriks' => $salgshistoriks,
+        ));
     }
+
     /**
      * Creates a new Salgshistorik entity.
      *
-     * @Route("/", name="salgshistorik_create")
-     * @Method("POST")
-     * @Template("AppBundle:Salgshistorik:new.html.twig")
+     * @Route("/new", name="salgshistorik_new")
+     * @Method({"GET", "POST"})
      */
-    public function createAction(Request $request)
+    public function newAction(Request $request)
     {
-        $entity = new Salgshistorik();
-        $form = $this->createCreateForm($entity);
+        $salgshistorik = new Salgshistorik();
+        $form = $this->createForm('AppBundle\Form\SalgshistorikType', $salgshistorik);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $em->persist($salgshistorik);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('salgshistorik'));
-
+            return $this->redirectToRoute('salgshistorik_show', array('id' => $salgshistorik->getId()));
         }
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Creates a form to create a Salgshistorik entity.
-     *
-     * @param Salgshistorik $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(Salgshistorik $entity)
-    {
-        $form = $this->createForm('AppBundle\Form\SalgshistorikType', $entity, array(
-            'action' => $this->generateUrl('salgshistorik_create'),
-            'method' => 'POST',
+        return $this->render('salgshistorik/new.html.twig', array(
+            'salgshistorik' => $salgshistorik,
+            'form' => $form->createView(),
         ));
-
-        $this->addUpdate($form, $this->generateUrl('salgshistorik'));
-
-        return $form;
-    }
-
-    /**
-     * Displays a form to create a new Salgshistorik entity.
-     *
-     * @Route("/new", name="salgshistorik_new")
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $this->breadcrumbs->addItem('common.add', $this->generateUrl('salgshistorik'));
-
-        $entity = new Salgshistorik();
-        $form   = $this->createCreateForm($entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
     }
 
     /**
@@ -116,144 +64,76 @@ class SalgshistorikController extends BaseController
      *
      * @Route("/{id}", name="salgshistorik_show")
      * @Method("GET")
-     * @Template()
      */
-    public function showAction($id)
+    public function showAction(Salgshistorik $salgshistorik)
     {
+        $deleteForm = $this->createDeleteForm($salgshistorik);
 
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('AppBundle:Salgshistorik')->find($id);
-        $this->breadcrumbs->addItem($entity, $this->generateUrl('salgshistorik_show', array('id' => $entity->getId())));
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Salgshistorik entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
+        return $this->render('salgshistorik/show.html.twig', array(
+            'salgshistorik' => $salgshistorik,
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
 
     /**
      * Displays a form to edit an existing Salgshistorik entity.
      *
      * @Route("/{id}/edit", name="salgshistorik_edit")
-     * @Method("GET")
-     * @Template()
+     * @Method({"GET", "POST"})
      */
-    public function editAction(Salgshistorik $entity)
+    public function editAction(Request $request, Salgshistorik $salgshistorik)
     {
-        $this->breadcrumbs->addItem($entity, $this->generateUrl('salgshistorik_show', array('id' => $entity->getId())));
-        $this->breadcrumbs->addItem('common.edit', $this->generateUrl('salgshistorik_show', array('id' => $entity->getId())));
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Salgshistorik entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($entity->getId());
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-    * Creates a form to edit a Salgshistorik entity.
-    *
-    * @param Salgshistorik $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Salgshistorik $entity)
-    {
-        $form = $this->createForm('AppBundle\Form\SalgshistorikType', $entity, array(
-            'action' => $this->generateUrl('salgshistorik_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        $this->addUpdate($form, $this->generateUrl('salgshistorik_show', array('id' => $entity->getId())));
-
-        return $form;
-    }
-    /**
-     * Edits an existing Salgshistorik entity.
-     *
-     * @Route("/{id}", name="salgshistorik_update")
-     * @Method("PUT")
-     * @Template("AppBundle:Salgshistorik:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('AppBundle:Salgshistorik')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Salgshistorik entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($salgshistorik);
+        $editForm = $this->createForm('AppBundle\Form\SalgshistorikType', $salgshistorik);
         $editForm->handleRequest($request);
 
-        if ($editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($salgshistorik);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('salgshistorik'));
+            return $this->redirectToRoute('salgshistorik_edit', array('id' => $salgshistorik->getId()));
         }
 
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+        return $this->render('salgshistorik/edit.html.twig', array(
+            'salgshistorik' => $salgshistorik,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
+
     /**
      * Deletes a Salgshistorik entity.
      *
      * @Route("/{id}", name="salgshistorik_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, Salgshistorik $salgshistorik)
     {
-        $form = $this->createDeleteForm($id);
+        $form = $this->createDeleteForm($salgshistorik);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AppBundle:Salgshistorik')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Salgshistorik entity.');
-            }
-
-            $em->remove($entity);
+            $em->remove($salgshistorik);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('salgshistorik'));
+        return $this->redirectToRoute('salgshistorik_index');
     }
 
     /**
-     * Creates a form to delete a Salgshistorik entity by id.
+     * Creates a form to delete a Salgshistorik entity.
      *
-     * @param mixed $id The entity id
+     * @param Salgshistorik $salgshistorik The Salgshistorik entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
+    private function createDeleteForm(Salgshistorik $salgshistorik)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('salgshistorik_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('salgshistorik_delete', array('id' => $salgshistorik->getId())))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
     }

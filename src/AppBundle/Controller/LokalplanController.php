@@ -6,109 +6,57 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Lokalplan;
 use AppBundle\Form\LokalplanType;
-use AppBundle\Controller\BaseController;
 
 /**
  * Lokalplan controller.
  *
  * @Route("/lokalplan")
- * @Security("has_role('ROLE_SUPER_ADMIN')")
  */
-class LokalplanController extends BaseController
+class LokalplanController extends Controller
 {
-
-  public function init(Request $request) {
-    parent::init($request);
-    $this->breadcrumbs->addItem('lokalplan.labels.singular', $this->generateUrl('lokalplan'));
-}
-
-
     /**
      * Lists all Lokalplan entities.
      *
-     * @Route("/", name="lokalplan")
+     * @Route("/", name="lokalplan_index")
      * @Method("GET")
-     * @Template()
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AppBundle:Lokalplan')->findAll();
+        $lokalplans = $em->getRepository('AppBundle:Lokalplan')->findAll();
 
-        return array(
-            'entities' => $entities,
-        );
+        return $this->render('lokalplan/index.html.twig', array(
+            'lokalplans' => $lokalplans,
+        ));
     }
+
     /**
      * Creates a new Lokalplan entity.
      *
-     * @Route("/", name="lokalplan_create")
-     * @Method("POST")
-     * @Template("AppBundle:Lokalplan:new.html.twig")
+     * @Route("/new", name="lokalplan_new")
+     * @Method({"GET", "POST"})
      */
-    public function createAction(Request $request)
+    public function newAction(Request $request)
     {
-        $entity = new Lokalplan();
-        $form = $this->createCreateForm($entity);
+        $lokalplan = new Lokalplan();
+        $form = $this->createForm('AppBundle\Form\LokalplanType', $lokalplan);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $em->persist($lokalplan);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('lokalplan'));
-
+            return $this->redirectToRoute('lokalplan_show', array('id' => $lokalplan->getId()));
         }
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Creates a form to create a Lokalplan entity.
-     *
-     * @param Lokalplan $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(Lokalplan $entity)
-    {
-        $form = $this->createForm('AppBundle\Form\LokalplanType', $entity, array(
-            'action' => $this->generateUrl('lokalplan_create'),
-            'method' => 'POST',
+        return $this->render('lokalplan/new.html.twig', array(
+            'lokalplan' => $lokalplan,
+            'form' => $form->createView(),
         ));
-
-        $this->addUpdate($form, $this->generateUrl('lokalplan'));
-
-        return $form;
-    }
-
-    /**
-     * Displays a form to create a new Lokalplan entity.
-     *
-     * @Route("/new", name="lokalplan_new")
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $this->breadcrumbs->addItem('common.add', $this->generateUrl('lokalplan'));
-
-        $entity = new Lokalplan();
-        $form   = $this->createCreateForm($entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
     }
 
     /**
@@ -116,144 +64,76 @@ class LokalplanController extends BaseController
      *
      * @Route("/{id}", name="lokalplan_show")
      * @Method("GET")
-     * @Template()
      */
-    public function showAction($id)
+    public function showAction(Lokalplan $lokalplan)
     {
+        $deleteForm = $this->createDeleteForm($lokalplan);
 
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('AppBundle:Lokalplan')->find($id);
-        $this->breadcrumbs->addItem($entity, $this->generateUrl('lokalplan_show', array('id' => $entity->getId())));
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Lokalplan entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
+        return $this->render('lokalplan/show.html.twig', array(
+            'lokalplan' => $lokalplan,
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
 
     /**
      * Displays a form to edit an existing Lokalplan entity.
      *
      * @Route("/{id}/edit", name="lokalplan_edit")
-     * @Method("GET")
-     * @Template()
+     * @Method({"GET", "POST"})
      */
-    public function editAction(Lokalplan $entity)
+    public function editAction(Request $request, Lokalplan $lokalplan)
     {
-        $this->breadcrumbs->addItem($entity, $this->generateUrl('lokalplan_show', array('id' => $entity->getId())));
-        $this->breadcrumbs->addItem('common.edit', $this->generateUrl('lokalplan_show', array('id' => $entity->getId())));
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Lokalplan entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($entity->getId());
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-    * Creates a form to edit a Lokalplan entity.
-    *
-    * @param Lokalplan $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Lokalplan $entity)
-    {
-        $form = $this->createForm('AppBundle\Form\LokalplanType', $entity, array(
-            'action' => $this->generateUrl('lokalplan_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        $this->addUpdate($form, $this->generateUrl('lokalplan_show', array('id' => $entity->getId())));
-
-        return $form;
-    }
-    /**
-     * Edits an existing Lokalplan entity.
-     *
-     * @Route("/{id}", name="lokalplan_update")
-     * @Method("PUT")
-     * @Template("AppBundle:Lokalplan:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('AppBundle:Lokalplan')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Lokalplan entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($lokalplan);
+        $editForm = $this->createForm('AppBundle\Form\LokalplanType', $lokalplan);
         $editForm->handleRequest($request);
 
-        if ($editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($lokalplan);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('lokalplan'));
+            return $this->redirectToRoute('lokalplan_edit', array('id' => $lokalplan->getId()));
         }
 
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+        return $this->render('lokalplan/edit.html.twig', array(
+            'lokalplan' => $lokalplan,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
+
     /**
      * Deletes a Lokalplan entity.
      *
      * @Route("/{id}", name="lokalplan_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, Lokalplan $lokalplan)
     {
-        $form = $this->createDeleteForm($id);
+        $form = $this->createDeleteForm($lokalplan);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AppBundle:Lokalplan')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Lokalplan entity.');
-            }
-
-            $em->remove($entity);
+            $em->remove($lokalplan);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('lokalplan'));
+        return $this->redirectToRoute('lokalplan_index');
     }
 
     /**
-     * Creates a form to delete a Lokalplan entity by id.
+     * Creates a form to delete a Lokalplan entity.
      *
-     * @param mixed $id The entity id
+     * @param Lokalplan $lokalplan The Lokalplan entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
+    private function createDeleteForm(Lokalplan $lokalplan)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('lokalplan_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('lokalplan_delete', array('id' => $lokalplan->getId())))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
     }
