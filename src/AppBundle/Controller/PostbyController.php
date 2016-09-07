@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Postby;
 use AppBundle\Form\PostbyType;
 
@@ -13,9 +14,16 @@ use AppBundle\Form\PostbyType;
  * Postby controller.
  *
  * @Route("/postby")
+ * @Security("has_role('ROLE_SUPER_ADMIN')")
  */
-class PostbyController extends Controller
+class PostbyController extends BaseController
 {
+
+  public function init(Request $request) {
+    parent::init($request);
+    $this->breadcrumbs->addItem('postby.labels.singular', $this->generateUrl('postby_index'));
+  }
+
     /**
      * Lists all Postby entities.
      *

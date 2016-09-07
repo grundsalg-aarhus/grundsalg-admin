@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Keyword;
 use AppBundle\Form\KeywordType;
 
@@ -13,9 +14,16 @@ use AppBundle\Form\KeywordType;
  * Keyword controller.
  *
  * @Route("/keyword")
+ * @Security("has_role('ROLE_SUPER_ADMIN')")
  */
-class KeywordController extends Controller
+class KeywordController extends BaseController
 {
+
+  public function init(Request $request) {
+    parent::init($request);
+    $this->breadcrumbs->addItem('keyword.labels.singular', $this->generateUrl('keyword_index'));
+  }
+
     /**
      * Lists all Keyword entities.
      *

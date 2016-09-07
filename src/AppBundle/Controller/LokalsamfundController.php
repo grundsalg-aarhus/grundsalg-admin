@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Lokalsamfund;
 use AppBundle\Form\LokalsamfundType;
 
@@ -13,9 +14,16 @@ use AppBundle\Form\LokalsamfundType;
  * Lokalsamfund controller.
  *
  * @Route("/lokalsamfund")
+ * @Security("has_role('ROLE_SUPER_ADMIN')")
  */
-class LokalsamfundController extends Controller
+class LokalsamfundController extends BaseController
 {
+
+  public function init(Request $request) {
+    parent::init($request);
+    $this->breadcrumbs->addItem('lokalsamfund.labels.singular', $this->generateUrl('lokalsamfund_index'));
+  }
+
     /**
      * Lists all Lokalsamfund entities.
      *

@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Interessentgrundmapping;
 use AppBundle\Form\InteressentgrundmappingType;
 
@@ -13,9 +14,16 @@ use AppBundle\Form\InteressentgrundmappingType;
  * Interessentgrundmapping controller.
  *
  * @Route("/interessentgrundmapping")
+ * @Security("has_role('ROLE_SUPER_ADMIN')")
  */
-class InteressentgrundmappingController extends Controller
+class InteressentgrundmappingController extends BaseController
 {
+
+  public function init(Request $request) {
+    parent::init($request);
+    $this->breadcrumbs->addItem('interessentgrundmapping.labels.singular', $this->generateUrl('interessentgrundmapping_index'));
+  }
+
     /**
      * Lists all Interessentgrundmapping entities.
      *

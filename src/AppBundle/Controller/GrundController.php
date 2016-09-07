@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Grund;
 use AppBundle\Form\GrundType;
 
@@ -13,9 +14,16 @@ use AppBundle\Form\GrundType;
  * Grund controller.
  *
  * @Route("/grund")
+ * @Security("has_role('ROLE_SUPER_ADMIN')")
  */
-class GrundController extends Controller
+class GrundController extends BaseController
 {
+
+  public function init(Request $request) {
+    parent::init($request);
+    $this->breadcrumbs->addItem('grund.labels.singular', $this->generateUrl('grund_index'));
+  }
+
     /**
      * Lists all Grund entities.
      *

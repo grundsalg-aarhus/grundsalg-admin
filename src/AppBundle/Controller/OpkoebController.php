@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Opkoeb;
 use AppBundle\Form\OpkoebType;
 
@@ -13,9 +14,16 @@ use AppBundle\Form\OpkoebType;
  * Opkoeb controller.
  *
  * @Route("/opkoeb")
+ * @Security("has_role('ROLE_SUPER_ADMIN')")
  */
-class OpkoebController extends Controller
+class OpkoebController extends BaseController
 {
+
+  public function init(Request $request) {
+    parent::init($request);
+    $this->breadcrumbs->addItem('opkoeb.labels.singular', $this->generateUrl('opkoeb_index'));
+  }
+
     /**
      * Lists all Opkoeb entities.
      *

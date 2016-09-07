@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Salgshistorik;
 use AppBundle\Form\SalgshistorikType;
 
@@ -13,9 +14,16 @@ use AppBundle\Form\SalgshistorikType;
  * Salgshistorik controller.
  *
  * @Route("/salgshistorik")
+ * @Security("has_role('ROLE_SUPER_ADMIN')")
  */
-class SalgshistorikController extends Controller
+class SalgshistorikController extends BaseController
 {
+
+  public function init(Request $request) {
+    parent::init($request);
+    $this->breadcrumbs->addItem('salgshistorik.labels.singular', $this->generateUrl('salgshistorik_index'));
+  }
+
     /**
      * Lists all Salgshistorik entities.
      *

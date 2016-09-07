@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Lokalplan;
 use AppBundle\Form\LokalplanType;
 
@@ -13,9 +14,16 @@ use AppBundle\Form\LokalplanType;
  * Lokalplan controller.
  *
  * @Route("/lokalplan")
+ * @Security("has_role('ROLE_SUPER_ADMIN')")
  */
-class LokalplanController extends Controller
+class LokalplanController extends BaseController
 {
+
+  public function init(Request $request) {
+    parent::init($request);
+    $this->breadcrumbs->addItem('lokalplan.labels.singular', $this->generateUrl('lokalplan_index'));
+  }
+
     /**
      * Lists all Lokalplan entities.
      *

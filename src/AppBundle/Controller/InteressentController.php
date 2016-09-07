@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Interessent;
 use AppBundle\Form\InteressentType;
 
@@ -13,9 +14,16 @@ use AppBundle\Form\InteressentType;
  * Interessent controller.
  *
  * @Route("/interessent")
+ * @Security("has_role('ROLE_SUPER_ADMIN')")
  */
-class InteressentController extends Controller
+class InteressentController extends BaseController
 {
+
+  public function init(Request $request) {
+    parent::init($request);
+    $this->breadcrumbs->addItem('interessent.labels.singular', $this->generateUrl('interessent_index'));
+  }
+
     /**
      * Lists all Interessent entities.
      *

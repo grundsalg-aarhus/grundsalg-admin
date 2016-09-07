@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Delomraade;
 use AppBundle\Form\DelomraadeType;
 
@@ -13,9 +14,16 @@ use AppBundle\Form\DelomraadeType;
  * Delomraade controller.
  *
  * @Route("/delomraade")
+ * @Security("has_role('ROLE_SUPER_ADMIN')")
  */
-class DelomraadeController extends Controller
+class DelomraadeController extends BaseController
 {
+
+  public function init(Request $request) {
+    parent::init($request);
+    $this->breadcrumbs->addItem('delomraade.labels.singular', $this->generateUrl('delomraade_index'));
+  }
+
     /**
      * Lists all Delomraade entities.
      *

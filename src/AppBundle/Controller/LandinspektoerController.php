@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Landinspektoer;
 use AppBundle\Form\LandinspektoerType;
 
@@ -13,9 +14,16 @@ use AppBundle\Form\LandinspektoerType;
  * Landinspektoer controller.
  *
  * @Route("/landinspektoer")
+ * @Security("has_role('ROLE_SUPER_ADMIN')")
  */
-class LandinspektoerController extends Controller
+class LandinspektoerController extends BaseController
 {
+
+  public function init(Request $request) {
+    parent::init($request);
+    $this->breadcrumbs->addItem('landinspektoer.labels.singular', $this->generateUrl('landinspektoer_index'));
+  }
+
     /**
      * Lists all Landinspektoer entities.
      *

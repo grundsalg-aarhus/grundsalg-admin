@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
 
@@ -13,9 +14,16 @@ use AppBundle\Form\UserType;
  * User controller.
  *
  * @Route("/user")
+ * @Security("has_role('ROLE_SUPER_ADMIN')")
  */
-class UserController extends Controller
+class UserController extends BaseController
 {
+
+  public function init(Request $request) {
+    parent::init($request);
+    $this->breadcrumbs->addItem('user.labels.singular', $this->generateUrl('user_index'));
+  }
+
     /**
      * Lists all User entities.
      *
