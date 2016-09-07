@@ -1,0 +1,35 @@
+fos:
+  user:
+
+    profile:
+      form:
+        username: Email
+        email: Email
+        firstname: Fornavn
+        lastname: Efternavn
+        phone: Telefon
+        current:
+          password: Nuværende kodeord
+    resetting:
+      form:
+        plainPassword:
+          first: Indtast nyt kodeord
+          second: Gentag kodeord
+    change:
+      password:
+        form:
+          current:
+            password: Nuværende kodeord
+          plainPassword:
+            first: Indtast nyt kodeord
+            second: Gentag kodeord
+
+security:
+  login:
+    username: Email
+
+common:
+  edit: Rediger
+  delete: Slet
+
+appbundle:

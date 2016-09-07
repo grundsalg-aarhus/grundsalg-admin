@@ -2,16 +2,34 @@
 {{ "{% extends 'AppBundle::base.html.twig' %}" }}
 {% endblock extends %}
 
+{% set class = entity | split('\\') | last | lower %}
+
 {% block body %}
 {{ "{% block body %}" }}
-    <h1>{{ entity }} edit</h1>
+    <div class="row heading">
+        <div class="col-md-9">
+            <h1>{{ "{{ '" }}{{ class }}{{ ".actions.edit' | trans }}" }}</h1>
+        </div>
+        <div class="col-md-3 text-right">
+            {%- if ('delete' in actions) %}
+
+                {{ '{{ form_start(delete_form) }}' }}
+                <input type="submit" class="btn btn-danger" value="{{ "{{ 'common.delete' | trans }}" }}">
+                {{ '{{ form_end(delete_form) }}' }}
+
+            {%- endif %}
+        </div>
+    </div>
 
     {{ '{{ form_start(edit_form) }}' }}
-        {{ '{{ form_widget(edit_form) }}' }}
-        <input type="submit" value="Edit" />
+    {%- for field in fields %}
+        {%- if field | first != 'id'  %}
+        {{ '
+    {{ form_row(edit_form.' }}{{ field | first }}{{ ')}}' }}
+        {%- endif  %}
+    {%- endfor %}
     {{ '{{ form_end(edit_form) }}' }}
+    <input type="submit" class="btn btn-primary" value="{{ "{{ 'common.edit' | trans }}" }}" />
 
-{% set hide_edit, hide_delete = true, false %}
-{{ include('crud/views/others/record_actions.html.twig.twig') -}}
 {{ "{% endblock %}" }}
 {% endblock body %}

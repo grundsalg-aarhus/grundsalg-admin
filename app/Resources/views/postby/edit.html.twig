@@ -1,21 +1,24 @@
 {% extends 'AppBundle::base.html.twig' %}
 
+
 {% block body %}
-    <h1>Postby edit</h1>
+    <div class="row heading">
+        <div class="col-md-9">
+            <h1>{{ 'postby.actions.edit' | trans }}</h1>
+        </div>
+        <div class="col-md-3 text-right">
+                {{ form_start(delete_form) }}
+                <input type="submit" class="btn btn-danger" value="{{ 'common.delete' | trans }}">
+                {{ form_end(delete_form) }}        </div>
+    </div>
 
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
+    {{ form_start(edit_form) }}        
+    {{ form_row(edit_form.postalcode)}}        
+    {{ form_row(edit_form.city)}}        
+    {{ form_row(edit_form.createdby)}}        
+    {{ form_row(edit_form.createddate)}}        
+    {{ form_row(edit_form.modifiedby)}}        
+    {{ form_row(edit_form.modifieddate)}}    {{ form_end(edit_form) }}
+    <input type="submit" class="btn btn-primary" value="{{ 'common.edit' | trans }}" />
 
-    <ul>
-        <li>
-            <a href="{{ path('postby_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
 {% endblock %}
