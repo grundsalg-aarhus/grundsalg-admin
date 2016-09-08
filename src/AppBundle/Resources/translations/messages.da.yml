@@ -57,6 +57,8 @@ delomraade:
   o3: o2
   anvendelse: Anvendelse
   mulighedfor: Mulighed for
+  lokalplanid: Lokalplan
+  lokalplanid.help: Vælg hvilken lokalplan der gælder for delområdet.
 
 
 grund:

@@ -21,13 +21,13 @@
     <table class="table table-condensed table-header-rotated">
         <thead>
         <tr>                
-                <th>{{ knp_pagination_sortable(pagination, 'postby.id'|trans, 'id') }}</th>                
-                <th>{{ knp_pagination_sortable(pagination, 'postby.postalcode'|trans, 'postalcode') }}</th>                
-                <th>{{ knp_pagination_sortable(pagination, 'postby.city'|trans, 'city') }}</th>                
-                <th>{{ knp_pagination_sortable(pagination, 'postby.createdby'|trans, 'createdby') }}</th>                
-                <th>{{ knp_pagination_sortable(pagination, 'postby.createddate'|trans, 'createddate') }}</th>                
-                <th>{{ knp_pagination_sortable(pagination, 'postby.modifiedby'|trans, 'modifiedby') }}</th>                
-                <th>{{ knp_pagination_sortable(pagination, 'postby.modifieddate'|trans, 'modifieddate') }}</th>
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'postby.id'|trans, 'id') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'postby.postalcode'|trans, 'postalcode') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'postby.city'|trans, 'city') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'postby.createdby'|trans, 'createdby') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'postby.createddate'|trans, 'createddate') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'postby.modifiedby'|trans, 'modifiedby') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'postby.modifieddate'|trans, 'modifieddate') }}</span></div></th>
             {{ helper.header() }}
         </tr>
         </thead>

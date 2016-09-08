@@ -21,10 +21,10 @@
     <table class="table table-condensed table-header-rotated">
         <thead>
         <tr>                
-                <th>{{ knp_pagination_sortable(pagination, 'keyword.id'|trans, 'id') }}</th>                
-                <th>{{ knp_pagination_sortable(pagination, 'keyword.title'|trans, 'title') }}</th>                
-                <th>{{ knp_pagination_sortable(pagination, 'keyword.alias'|trans, 'alias') }}</th>                
-                <th>{{ knp_pagination_sortable(pagination, 'keyword.description'|trans, 'description') }}</th>
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'keyword.id'|trans, 'id') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'keyword.title'|trans, 'title') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'keyword.alias'|trans, 'alias') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'keyword.description'|trans, 'description') }}</span></div></th>
             {{ helper.header() }}
         </tr>
         </thead>

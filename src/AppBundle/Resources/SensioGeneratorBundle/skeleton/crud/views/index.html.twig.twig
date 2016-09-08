@@ -30,7 +30,7 @@
             {%- for field, metadata in fields %}
                 {% set class_field = entity_singularized ~ '.' ~ field %}
 
-                <th>{{ '{{ knp_pagination_sortable(pagination, '}}{{ "'" }}{{ class_field }}{{ "'" }}{{ '|trans, ' }}{{ "'" }}{{ field }}{{ "'" }}{{ ') }}' }}</th>
+                <th class="rotate"><div><span>{{ '{{ knp_pagination_sortable(pagination, '}}{{ "'" }}{{ class_field }}{{ "'" }}{{ '|trans, ' }}{{ "'" }}{{ field }}{{ "'" }}{{ ') }}' }}</span></div></th>
 
             {%- endfor %}
 

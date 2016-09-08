@@ -21,15 +21,15 @@
     <table class="table table-condensed table-header-rotated">
         <thead>
         <tr>                
-                <th>{{ knp_pagination_sortable(pagination, 'user.id'|trans, 'id') }}</th>                
-                <th>{{ knp_pagination_sortable(pagination, 'user.name'|trans, 'name') }}</th>                
-                <th>{{ knp_pagination_sortable(pagination, 'user.username'|trans, 'username') }}</th>                
-                <th>{{ knp_pagination_sortable(pagination, 'user.password'|trans, 'password') }}</th>                
-                <th>{{ knp_pagination_sortable(pagination, 'user.roles'|trans, 'roles') }}</th>                
-                <th>{{ knp_pagination_sortable(pagination, 'user.createdby'|trans, 'createdby') }}</th>                
-                <th>{{ knp_pagination_sortable(pagination, 'user.createddate'|trans, 'createddate') }}</th>                
-                <th>{{ knp_pagination_sortable(pagination, 'user.modifiedby'|trans, 'modifiedby') }}</th>                
-                <th>{{ knp_pagination_sortable(pagination, 'user.modifieddate'|trans, 'modifieddate') }}</th>
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'user.id'|trans, 'id') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'user.name'|trans, 'name') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'user.username'|trans, 'username') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'user.password'|trans, 'password') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'user.roles'|trans, 'roles') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'user.createdby'|trans, 'createdby') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'user.createddate'|trans, 'createddate') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'user.modifiedby'|trans, 'modifiedby') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'user.modifieddate'|trans, 'modifieddate') }}</span></div></th>
             {{ helper.header() }}
         </tr>
         </thead>

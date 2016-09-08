@@ -13,6 +13,7 @@
         <div class="col-md-3 text-right"></div>
     </div>
 
+    {{ '{% form_theme form "AppBundle::Form/twocol-form.html.twig"  %}' }}
     {{ '{{ form_start(form) }}' }}
         {{ '{{ form_widget(form) }}' }}
         <input type="submit" value="Create" />

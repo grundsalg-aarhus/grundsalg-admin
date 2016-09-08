@@ -21,8 +21,8 @@
     <table class="table table-condensed table-header-rotated">
         <thead>
         <tr>                
-                <th>{{ knp_pagination_sortable(pagination, 'interessentgrundmapping.id'|trans, 'id') }}</th>                
-                <th>{{ knp_pagination_sortable(pagination, 'interessentgrundmapping.annulleret'|trans, 'annulleret') }}</th>
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'interessentgrundmapping.id'|trans, 'id') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'interessentgrundmapping.annulleret'|trans, 'annulleret') }}</span></div></th>
             {{ helper.header() }}
         </tr>
         </thead>

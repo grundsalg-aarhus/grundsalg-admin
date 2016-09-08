@@ -791,3 +791,7 @@ form .alert ul {
 .footer-logo {
   height: 50px;
 }
+
+.form-actions {
+  padding-bottom: 1em;
+}

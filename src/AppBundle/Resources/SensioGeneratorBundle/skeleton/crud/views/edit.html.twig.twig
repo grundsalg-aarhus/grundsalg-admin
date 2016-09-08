@@ -21,6 +21,7 @@
         </div>
     </div>
 
+    {{ '{% form_theme edit_form "AppBundle::Form/twocol-form.html.twig"  %}' }}
     {{ '{{ form_start(edit_form) }}' }}
     {%- for field in fields %}
         {%- if field | first != 'id'  %}
@@ -28,8 +29,14 @@
     {{ form_row(edit_form.' }}{{ field | first }}{{ ')}}' }}
         {%- endif  %}
     {%- endfor %}
+
     {{ '{{ form_end(edit_form) }}' }}
-    <input type="submit" class="btn btn-primary" value="{{ "{{ 'common.edit' | trans }}" }}" />
+
+
+    <div class="form-actions">
+        <input type="submit" class="btn btn-primary" value="{{ "{{ 'common.edit' | trans }}" }}" />
+    </div>
+
 
 {{ "{% endblock %}" }}
 {% endblock body %}

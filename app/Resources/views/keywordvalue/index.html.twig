@@ -21,9 +21,9 @@
     <table class="table table-condensed table-header-rotated">
         <thead>
         <tr>                
-                <th>{{ knp_pagination_sortable(pagination, 'keywordvalue.id'|trans, 'id') }}</th>                
-                <th>{{ knp_pagination_sortable(pagination, 'keywordvalue.display'|trans, 'display') }}</th>                
-                <th>{{ knp_pagination_sortable(pagination, 'keywordvalue.value'|trans, 'value') }}</th>
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'keywordvalue.id'|trans, 'id') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'keywordvalue.display'|trans, 'display') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'keywordvalue.value'|trans, 'value') }}</span></div></th>
             {{ helper.header() }}
         </tr>
         </thead>
