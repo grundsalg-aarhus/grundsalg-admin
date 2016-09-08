@@ -1,6 +1,5 @@
 fos:
   user:
-
     profile:
       form:
         username: Email
@@ -28,10 +27,14 @@ security:
   login:
     username: Email
 
+profile:
+  title: Profil
+
 common:
   edit: Rediger
   delete: Slet
   new: Opret
+  showing: Viser
 
 frontpage:
   title: Arealudvikling Aarhus

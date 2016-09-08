@@ -131,10 +131,10 @@ td.number {
 }
 
 .table-header-rotated th.rotate > div {
-  transform: translate(-15px, 15px) rotate(-45deg);
-  -webkit-transform: translate(-15px, 15px) rotate(-45deg);
-  -ms-transform: translate(-15px, 15px) rotate(-45deg);
-  -moz-transform: translate(-15px, 15px) rotate(-45deg);
+  transform: translate(-15px, 15px) rotate(-40deg);
+  -webkit-transform: translate(-15px, 15px) rotate(-40deg);
+  -ms-transform: translate(-15px, 15px) rotate(-40deg);
+  -moz-transform: translate(-15px, 15px) rotate(-40deg);
   position: relative;
   transform-origin: 0% 0%;
   -webkit-transform-origin: 0% 0%;

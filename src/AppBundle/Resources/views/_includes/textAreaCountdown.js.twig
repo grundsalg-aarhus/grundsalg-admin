@@ -6,7 +6,6 @@ $('textarea[maxlength]').on("load propertychange keyup input paste",
             $(this).val($(this).val().substring(0, limit));
         }
         $(this).siblings(".textarea-countdown").text(remainingChars <= 0 ? 0 : remainingChars + '/' + limit);
-        //.siblings( ".selected" )
     });
 
 $('textarea[maxlength]').trigger('load');
