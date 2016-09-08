@@ -37,6 +37,13 @@ class LokalplanController extends BaseController
         $sort = $request->query->get('sort');
         $direction = $request->query->get('direction');
 
+        if (!isset($sort)) {
+            $sort = 'id';
+        }
+        if (!isset($direction)) {
+            $direction = 'desc';
+        }
+
         $query = $em->getRepository('AppBundle:Lokalplan')->findBy([], [$sort => $direction]);
 
         $paginator = $this->get('knp_paginator');
@@ -48,7 +55,7 @@ class LokalplanController extends BaseController
 
 
     return $this->render('lokalplan/index.html.twig', array('pagination' => $pagination));
-        }
+    }
 
     /**
      * Creates a new Lokalplan entity.

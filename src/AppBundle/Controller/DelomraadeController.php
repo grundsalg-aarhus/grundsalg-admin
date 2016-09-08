@@ -37,6 +37,13 @@ class DelomraadeController extends BaseController
         $sort = $request->query->get('sort');
         $direction = $request->query->get('direction');
 
+        if (!isset($sort)) {
+            $sort = 'id';
+        }
+        if (!isset($direction)) {
+            $direction = 'desc';
+        }
+
         $query = $em->getRepository('AppBundle:Delomraade')->findBy([], [$sort => $direction]);
 
         $paginator = $this->get('knp_paginator');
@@ -48,7 +55,7 @@ class DelomraadeController extends BaseController
 
 
     return $this->render('delomraade/index.html.twig', array('pagination' => $pagination));
-        }
+    }
 
     /**
      * Creates a new Delomraade entity.

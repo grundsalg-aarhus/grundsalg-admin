@@ -37,6 +37,13 @@ class InteressentController extends BaseController
         $sort = $request->query->get('sort');
         $direction = $request->query->get('direction');
 
+        if (!isset($sort)) {
+            $sort = 'id';
+        }
+        if (!isset($direction)) {
+            $direction = 'desc';
+        }
+
         $query = $em->getRepository('AppBundle:Interessent')->findBy([], [$sort => $direction]);
 
         $paginator = $this->get('knp_paginator');
@@ -48,7 +55,7 @@ class InteressentController extends BaseController
 
 
     return $this->render('interessent/index.html.twig', array('pagination' => $pagination));
-        }
+    }
 
     /**
      * Creates a new Interessent entity.

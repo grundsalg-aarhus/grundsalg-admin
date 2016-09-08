@@ -37,6 +37,13 @@ class SalgsomraadeController extends BaseController
         $sort = $request->query->get('sort');
         $direction = $request->query->get('direction');
 
+        if (!isset($sort)) {
+            $sort = 'id';
+        }
+        if (!isset($direction)) {
+            $direction = 'desc';
+        }
+
         $query = $em->getRepository('AppBundle:Salgsomraade')->findBy([], [$sort => $direction]);
 
         $paginator = $this->get('knp_paginator');
@@ -48,7 +55,7 @@ class SalgsomraadeController extends BaseController
 
 
     return $this->render('salgsomraade/index.html.twig', array('pagination' => $pagination));
-        }
+    }
 
     /**
      * Creates a new Salgsomraade entity.
