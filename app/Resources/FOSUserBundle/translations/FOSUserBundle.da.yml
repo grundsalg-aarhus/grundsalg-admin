@@ -1,5 +1,3 @@
-fos.user.resetting.form.plainPassword.first: Test2
-
 # Group
 group:
     edit:
@@ -24,7 +22,7 @@ security:
 # Profile
 profile:
     show:
-        username: Email
+        username: Brugernavn
         email: Email
         name: Navn
         phone: Telefon

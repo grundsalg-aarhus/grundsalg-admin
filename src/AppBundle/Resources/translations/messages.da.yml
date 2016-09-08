@@ -1,6 +1,7 @@
 fos:
   user:
     profile:
+      title: Profil
       form:
         username: Email
         email: Email
@@ -26,9 +27,6 @@ fos:
 security:
   login:
     username: Email
-
-profile:
-  title: Profil
 
 common:
   edit: Rediger

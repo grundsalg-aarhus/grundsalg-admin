@@ -2,9 +2,9 @@
 
 <h1>{{ 'profile.edit.info' | trans }}</h1>
 
-<form action="{{ path('fos_user_profile_edit') }}" method="POST" class="fos_user_profile_edit">
+{{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
     {{ form_widget(form) }}
     <div>
-        <input type="submit" value="{{ 'profile.edit.submit'|trans }}" class="btn btn-primary"/>
+        <input type="submit" value="{{ 'profile.edit.submit'|trans }}" class="btn btn-primary" />
     </div>
-</form>
+{{ form_end(form) }}

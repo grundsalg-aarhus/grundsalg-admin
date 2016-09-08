@@ -58,7 +58,7 @@
                             {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ path('fos_user_profile_show') }}">{{ icon('user') }} {{ 'profile.title' | trans }}</a></li>
+                            <li><a href="{{ path('fos_user_profile_show') }}">{{ icon('user') }} {{ 'fos.user.profile.title' | trans }}</a></li>
                             <li><a href="{{ path('fos_user_change_password') }}">{{ icon('key') }} {{ 'change_password.submit'|trans({}, 'FOSUserBundle') }}</a></li>
                         </ul>
                     </li>
