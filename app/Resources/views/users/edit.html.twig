@@ -22,12 +22,15 @@
     {{ form_row(edit_form.createddate)}}        
     {{ form_row(edit_form.modifiedby)}}        
     {{ form_row(edit_form.modifieddate)}}
-    {{ form_end(edit_form) }}
+    {{ form_rest(edit_form) }}
 
-
-    <div class="form-actions">
-        <input type="submit" class="btn btn-primary" value="{{ 'common.edit' | trans }}" />
+    <div class="row form-actions">
+        <div class="col-lg-12">
+            <input type="submit" class="btn btn-primary" value="{{ 'common.edit' | trans }}" />
+        </div>
     </div>
+
+    {{ form_end(edit_form) }}
 
 
 {% endblock %}

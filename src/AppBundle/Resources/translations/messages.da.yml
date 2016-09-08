@@ -33,8 +33,9 @@ common:
   delete: Slet
   new: Opret
 
-appbundle:
-
+frontpage:
+  title: Arealudvikling Aarhus
+  welcome: Velkommen til Arealudvikling Aarhus. Her kan du administrere grundsalg i Aarhus Kommune.
 
 delomraade:
   labels:
@@ -59,7 +60,6 @@ delomraade:
   mulighedfor: Mulighed for
   lokalplanid: Lokalplan
   lokalplanid.help: Vælg hvilken lokalplan der gælder for delområdet.
-
 
 grund:
   labels:

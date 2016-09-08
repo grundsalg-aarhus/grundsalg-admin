@@ -12,7 +12,15 @@
     {% form_theme form "AppBundle::Form/twocol-form.html.twig"  %}
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+
+    {{ form_rest(form) }}
+
+    <div class="row form-actions">
+        <div class="col-lg-12">
+            <input type="submit" class="btn btn-primary" value="{{ 'common.new' | trans }}" />
+        </div>
+    </div>
+
     {{ form_end(form) }}
 
 {% endblock %}
