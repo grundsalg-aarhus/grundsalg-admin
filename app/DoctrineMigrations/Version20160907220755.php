@@ -53,6 +53,12 @@ class Version20160907220755 extends AbstractMigration implements ContainerAwareI
       $newUser->setPlainPassword($user->getPassword());
       $newUser->setEnabled(true);
 
+      $roles = explode('#', $user->getRoles());
+
+      foreach ($roles as $role) {
+        $newUser->addRole("ROLE_" . $role);
+      }
+
       $userManager->updateUser($newUser, true);
     }
   }
