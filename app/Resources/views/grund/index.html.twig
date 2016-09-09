@@ -33,7 +33,6 @@
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.vej'|trans, 'vej') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.husnummer'|trans, 'husnummer') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.bogstav'|trans, 'bogstav') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.postbyid'|trans, 'postbyid') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.urlgis'|trans, 'urlgis') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.salgstype'|trans, 'salgstype') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.auktionstartdato'|trans, 'auktionstartdato') }}</span></div></th>                
@@ -111,7 +110,6 @@
                     <td>{{ grund.vej }}</td>
                     <td>{{ grund.husnummer }}</td>
                     <td>{{ grund.bogstav }}</td>
-                    <td>{{ grund.postbyid }}</td>
                     <td>{{ grund.urlgis }}</td>
                     <td>{{ grund.salgstype }}</td>
                     <td>{% if grund.auktionstartdato %}{{ grund.auktionstartdato|date('d/m Y') }}{% endif %}</td>

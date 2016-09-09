@@ -15,11 +15,9 @@
 {% endblock method_definition %}
     {
 {% block method_body %}
-        $em = $this->getDoctrine()->getManager();
-
+        // Get sort, and direction.
         $sort = $request->query->get('sort');
         $direction = $request->query->get('direction');
-
         if (!isset($sort)) {
             $sort = 'id';
         }
@@ -27,8 +25,10 @@
             $direction = 'desc';
         }
 
-        $query = $em->getRepository('{{ bundle }}:{{ entity }}')->findBy([], [$sort => $direction]);
+        // Setup query.
+        $query = $this->getDoctrine()->getManager()->getRepository('{{ bundle }}:{{ entity }}')->findBy([], [$sort => $direction]);
 
+        // Apply pagination.
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $query,

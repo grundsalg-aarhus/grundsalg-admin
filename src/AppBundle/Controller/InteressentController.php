@@ -32,11 +32,9 @@ class InteressentController extends BaseController
      */
     public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-
+        // Get sort, and direction.
         $sort = $request->query->get('sort');
         $direction = $request->query->get('direction');
-
         if (!isset($sort)) {
             $sort = 'id';
         }
@@ -44,8 +42,10 @@ class InteressentController extends BaseController
             $direction = 'desc';
         }
 
-        $query = $em->getRepository('AppBundle:Interessent')->findBy([], [$sort => $direction]);
+        // Setup query.
+        $query = $this->getDoctrine()->getManager()->getRepository('AppBundle:Interessent')->findBy([], [$sort => $direction]);
 
+        // Apply pagination.
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $query,
