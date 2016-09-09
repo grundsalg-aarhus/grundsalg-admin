@@ -84,34 +84,6 @@ class Opkoeb
     private $procentaflp;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="createdBy", type="text", nullable=false)
-     */
-    private $createdby;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="createdDate", type="date", nullable=false)
-     */
-    private $createddate;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="modifiedBy", type="text", nullable=false)
-     */
-    private $modifiedby;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="modifiedDate", type="date", nullable=false)
-     */
-    private $modifieddate;
-
-    /**
      * @var \Lokalplan
      *
      * @ORM\ManyToOne(targetEntity="Lokalplan")
@@ -323,102 +295,6 @@ class Opkoeb
     public function getProcentaflp()
     {
         return $this->procentaflp;
-    }
-
-    /**
-     * Set createdby
-     *
-     * @param string $createdby
-     *
-     * @return Opkoeb
-     */
-    public function setCreatedby($createdby)
-    {
-        $this->createdby = $createdby;
-
-        return $this;
-    }
-
-    /**
-     * Get createdby
-     *
-     * @return string
-     */
-    public function getCreatedby()
-    {
-        return $this->createdby;
-    }
-
-    /**
-     * Set createddate
-     *
-     * @param \DateTime $createddate
-     *
-     * @return Opkoeb
-     */
-    public function setCreateddate($createddate)
-    {
-        $this->createddate = $createddate;
-
-        return $this;
-    }
-
-    /**
-     * Get createddate
-     *
-     * @return \DateTime
-     */
-    public function getCreateddate()
-    {
-        return $this->createddate;
-    }
-
-    /**
-     * Set modifiedby
-     *
-     * @param string $modifiedby
-     *
-     * @return Opkoeb
-     */
-    public function setModifiedby($modifiedby)
-    {
-        $this->modifiedby = $modifiedby;
-
-        return $this;
-    }
-
-    /**
-     * Get modifiedby
-     *
-     * @return string
-     */
-    public function getModifiedby()
-    {
-        return $this->modifiedby;
-    }
-
-    /**
-     * Set modifieddate
-     *
-     * @param \DateTime $modifieddate
-     *
-     * @return Opkoeb
-     */
-    public function setModifieddate($modifieddate)
-    {
-        $this->modifieddate = $modifieddate;
-
-        return $this;
-    }
-
-    /**
-     * Get modifieddate
-     *
-     * @return \DateTime
-     */
-    public function getModifieddate()
-    {
-        return $this->modifieddate;
     }
 
     /**

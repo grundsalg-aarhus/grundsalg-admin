@@ -42,34 +42,6 @@ class Lokalsamfund
     private $name;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="createdBy", type="text", nullable=false)
-     */
-    private $createdby;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="createdDate", type="date", nullable=false)
-     */
-    private $createddate;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="modifiedBy", type="text", nullable=false)
-     */
-    private $modifiedby;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="modifiedDate", type="date", nullable=false)
-     */
-    private $modifieddate;
-
-    /**
      * @var integer
      *
      * @ORM\Column(name="active", type="integer", nullable=false)
@@ -134,102 +106,6 @@ class Lokalsamfund
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set createdby
-     *
-     * @param string $createdby
-     *
-     * @return Lokalsamfund
-     */
-    public function setCreatedby($createdby)
-    {
-        $this->createdby = $createdby;
-
-        return $this;
-    }
-
-    /**
-     * Get createdby
-     *
-     * @return string
-     */
-    public function getCreatedby()
-    {
-        return $this->createdby;
-    }
-
-    /**
-     * Set createddate
-     *
-     * @param \DateTime $createddate
-     *
-     * @return Lokalsamfund
-     */
-    public function setCreateddate($createddate)
-    {
-        $this->createddate = $createddate;
-
-        return $this;
-    }
-
-    /**
-     * Get createddate
-     *
-     * @return \DateTime
-     */
-    public function getCreateddate()
-    {
-        return $this->createddate;
-    }
-
-    /**
-     * Set modifiedby
-     *
-     * @param string $modifiedby
-     *
-     * @return Lokalsamfund
-     */
-    public function setModifiedby($modifiedby)
-    {
-        $this->modifiedby = $modifiedby;
-
-        return $this;
-    }
-
-    /**
-     * Get modifiedby
-     *
-     * @return string
-     */
-    public function getModifiedby()
-    {
-        return $this->modifiedby;
-    }
-
-    /**
-     * Set modifieddate
-     *
-     * @param \DateTime $modifieddate
-     *
-     * @return Lokalsamfund
-     */
-    public function setModifieddate($modifieddate)
-    {
-        $this->modifieddate = $modifieddate;
-
-        return $this;
-    }
-
-    /**
-     * Get modifieddate
-     *
-     * @return \DateTime
-     */
-    public function getModifieddate()
-    {
-        return $this->modifieddate;
     }
 
     /**
