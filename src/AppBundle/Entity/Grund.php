@@ -105,9 +105,12 @@ class Grund
     private $bogstav;
 
     /**
-     * @var string
+     * @var \Postby
      *
-     * @ORM\Column(name="postbyId", type="text", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Postby")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="postbyId", referencedColumnName="id")
+     * })
      */
     private $postbyid;
 
@@ -2253,6 +2256,6 @@ class Grund
     }
 
     public function __toString() {
-      return $this->vej . ' ' . $this->husnummer;
+      return $this->vej . ' ' . $this->husnummer . ($this->postbyid ? ', ' . $this->postbyid : '');
     }
 }
