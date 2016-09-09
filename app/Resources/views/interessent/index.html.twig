@@ -22,10 +22,6 @@
         <thead>
         <tr>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'interessent.id'|trans, 'id') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'interessent.createdby'|trans, 'createdby') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'interessent.createddate'|trans, 'createddate') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'interessent.modifiedby'|trans, 'modifiedby') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'interessent.modifieddate'|trans, 'modifieddate') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'interessent.navn'|trans, 'navn') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'interessent.adresse'|trans, 'adresse') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'interessent.land'|trans, 'land') }}</span></div></th>                
@@ -50,10 +46,6 @@
         {% for interessent in pagination %}
         <tr>
                     <td><a href="{{ path('interessent_show', { 'id': interessent.id }) }}">{{ interessent.id }}</a></td>
-                    <td>{{ interessent.createdby }}</td>
-                    <td>{% if interessent.createddate %}{{ interessent.createddate|date('d/m Y') }}{% endif %}</td>
-                    <td>{{ interessent.modifiedby }}</td>
-                    <td>{% if interessent.modifieddate %}{{ interessent.modifieddate|date('d/m Y') }}{% endif %}</td>
                     <td>{{ interessent.navn }}</td>
                     <td>{{ interessent.adresse }}</td>
                     <td>{{ interessent.land }}</td>

@@ -15,10 +15,6 @@ class SalgshistorikType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('createdby')
-            ->add('createddate', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
-            ->add('modifiedby')
-            ->add('modifieddate', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('aarsag')
             ->add('salgstype')
             ->add('status')

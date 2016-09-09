@@ -29,10 +29,6 @@
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'landinspektoer.notat'|trans, 'notat') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'landinspektoer.telefon'|trans, 'telefon') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'landinspektoer.postnrid'|trans, 'postnrid') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'landinspektoer.createdby'|trans, 'createdby') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'landinspektoer.createddate'|trans, 'createddate') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'landinspektoer.modifiedby'|trans, 'modifiedby') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'landinspektoer.modifieddate'|trans, 'modifieddate') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'landinspektoer.active'|trans, 'active') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'landinspektoer.createdBy'|trans, 'createdBy') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'landinspektoer.updatedBy'|trans, 'updatedBy') }}</span></div></th>                
@@ -52,10 +48,6 @@
                     <td>{{ landinspektoer.notat }}</td>
                     <td>{{ landinspektoer.telefon }}</td>
                     <td>{{ landinspektoer.postnrid }}</td>
-                    <td>{{ landinspektoer.createdby }}</td>
-                    <td>{% if landinspektoer.createddate %}{{ landinspektoer.createddate|date('d/m Y') }}{% endif %}</td>
-                    <td>{{ landinspektoer.modifiedby }}</td>
-                    <td>{% if landinspektoer.modifieddate %}{{ landinspektoer.modifieddate|date('d/m Y') }}{% endif %}</td>
                     <td>{{ landinspektoer.active }}</td>
                     <td>{{ landinspektoer.createdBy }}</td>
                     <td>{{ landinspektoer.updatedBy }}</td>

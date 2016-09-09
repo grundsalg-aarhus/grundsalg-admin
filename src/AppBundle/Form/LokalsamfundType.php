@@ -17,10 +17,6 @@ class LokalsamfundType extends AbstractType
         $builder
             ->add('number')
             ->add('name')
-            ->add('createdby')
-            ->add('createddate', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
-            ->add('modifiedby')
-            ->add('modifieddate', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('active')
             ->add('createdBy')
             ->add('updatedBy')

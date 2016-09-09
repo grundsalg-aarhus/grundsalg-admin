@@ -31,10 +31,6 @@
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalplan.samletareal'|trans, 'samletareal') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalplan.salgbartareal'|trans, 'salgbartareal') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalplan.forbrugsandel'|trans, 'forbrugsandel') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalplan.createdby'|trans, 'createdby') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalplan.createddate'|trans, 'createddate') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalplan.modifiedby'|trans, 'modifiedby') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalplan.modifieddate'|trans, 'modifieddate') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalplan.createdBy'|trans, 'createdBy') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalplan.updatedBy'|trans, 'updatedBy') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalplan.createdAt'|trans, 'createdAt') }}</span></div></th>                
@@ -55,10 +51,6 @@
                     <td>{{ lokalplan.samletareal }}</td>
                     <td>{{ lokalplan.salgbartareal }}</td>
                     <td>{{ lokalplan.forbrugsandel }}</td>
-                    <td>{{ lokalplan.createdby }}</td>
-                    <td>{% if lokalplan.createddate %}{{ lokalplan.createddate|date('d/m Y') }}{% endif %}</td>
-                    <td>{{ lokalplan.modifiedby }}</td>
-                    <td>{% if lokalplan.modifieddate %}{{ lokalplan.modifieddate|date('d/m Y') }}{% endif %}</td>
                     <td>{{ lokalplan.createdBy }}</td>
                     <td>{{ lokalplan.updatedBy }}</td>
                     <td>{% if lokalplan.createdAt %}{{ lokalplan.createdAt|date('d/m Y H:i:s') }}{% endif %}</td>

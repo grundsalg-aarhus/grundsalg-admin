@@ -24,10 +24,6 @@
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalsamfund.id'|trans, 'id') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalsamfund.number'|trans, 'number') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalsamfund.name'|trans, 'name') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalsamfund.createdby'|trans, 'createdby') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalsamfund.createddate'|trans, 'createddate') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalsamfund.modifiedby'|trans, 'modifiedby') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalsamfund.modifieddate'|trans, 'modifieddate') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalsamfund.active'|trans, 'active') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalsamfund.createdBy'|trans, 'createdBy') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalsamfund.updatedBy'|trans, 'updatedBy') }}</span></div></th>                
@@ -42,10 +38,6 @@
                     <td><a href="{{ path('lokalsamfund_show', { 'id': lokalsamfund.id }) }}">{{ lokalsamfund.id }}</a></td>
                     <td>{{ lokalsamfund.number }}</td>
                     <td>{{ lokalsamfund.name }}</td>
-                    <td>{{ lokalsamfund.createdby }}</td>
-                    <td>{% if lokalsamfund.createddate %}{{ lokalsamfund.createddate|date('d/m Y') }}{% endif %}</td>
-                    <td>{{ lokalsamfund.modifiedby }}</td>
-                    <td>{% if lokalsamfund.modifieddate %}{{ lokalsamfund.modifieddate|date('d/m Y') }}{% endif %}</td>
                     <td>{{ lokalsamfund.active }}</td>
                     <td>{{ lokalsamfund.createdBy }}</td>
                     <td>{{ lokalsamfund.updatedBy }}</td>

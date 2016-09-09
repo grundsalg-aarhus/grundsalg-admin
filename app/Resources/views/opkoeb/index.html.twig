@@ -30,10 +30,6 @@
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.opkoebdato'|trans, 'opkoebdato') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.pris'|trans, 'pris') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.procentaflp'|trans, 'procentaflp') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.createdby'|trans, 'createdby') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.createddate'|trans, 'createddate') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.modifiedby'|trans, 'modifiedby') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.modifieddate'|trans, 'modifieddate') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.createdBy'|trans, 'createdBy') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.updatedBy'|trans, 'updatedBy') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.createdAt'|trans, 'createdAt') }}</span></div></th>                
@@ -53,10 +49,6 @@
                     <td>{% if opkoeb.opkoebdato %}{{ opkoeb.opkoebdato|date('d/m Y') }}{% endif %}</td>
                     <td>{{ opkoeb.pris }}</td>
                     <td>{{ opkoeb.procentaflp }}</td>
-                    <td>{{ opkoeb.createdby }}</td>
-                    <td>{% if opkoeb.createddate %}{{ opkoeb.createddate|date('d/m Y') }}{% endif %}</td>
-                    <td>{{ opkoeb.modifiedby }}</td>
-                    <td>{% if opkoeb.modifieddate %}{{ opkoeb.modifieddate|date('d/m Y') }}{% endif %}</td>
                     <td>{{ opkoeb.createdBy }}</td>
                     <td>{{ opkoeb.updatedBy }}</td>
                     <td>{% if opkoeb.createdAt %}{{ opkoeb.createdAt|date('d/m Y H:i:s') }}{% endif %}</td>

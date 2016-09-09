@@ -22,10 +22,6 @@
         <thead>
         <tr>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.id'|trans, 'id') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.createdby'|trans, 'createdby') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.createddate'|trans, 'createddate') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.modifiedby'|trans, 'modifiedby') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.modifieddate'|trans, 'modifieddate') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.status'|trans, 'status') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.salgstatus'|trans, 'salgstatus') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.gid'|trans, 'gid') }}</span></div></th>                
@@ -104,10 +100,6 @@
         {% for grund in pagination %}
         <tr>
                     <td><a href="{{ path('grund_show', { 'id': grund.id }) }}">{{ grund.id }}</a></td>
-                    <td>{{ grund.createdby }}</td>
-                    <td>{% if grund.createddate %}{{ grund.createddate|date('d/m Y') }}{% endif %}</td>
-                    <td>{{ grund.modifiedby }}</td>
-                    <td>{% if grund.modifieddate %}{{ grund.modifieddate|date('d/m Y') }}{% endif %}</td>
                     <td>{{ grund.status }}</td>
                     <td>{{ grund.salgstatus }}</td>
                     <td>{{ grund.gid }}</td>

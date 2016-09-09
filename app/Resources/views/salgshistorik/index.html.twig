@@ -22,10 +22,6 @@
         <thead>
         <tr>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgshistorik.id'|trans, 'id') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgshistorik.createdby'|trans, 'createdby') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgshistorik.createddate'|trans, 'createddate') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgshistorik.modifiedby'|trans, 'modifiedby') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgshistorik.modifieddate'|trans, 'modifieddate') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgshistorik.aarsag'|trans, 'aarsag') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgshistorik.salgstype'|trans, 'salgstype') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgshistorik.status'|trans, 'status') }}</span></div></th>                
@@ -65,10 +61,6 @@
         {% for salgshistorik in pagination %}
         <tr>
                     <td><a href="{{ path('salgshistorik_show', { 'id': salgshistorik.id }) }}">{{ salgshistorik.id }}</a></td>
-                    <td>{{ salgshistorik.createdby }}</td>
-                    <td>{% if salgshistorik.createddate %}{{ salgshistorik.createddate|date('d/m Y') }}{% endif %}</td>
-                    <td>{{ salgshistorik.modifiedby }}</td>
-                    <td>{% if salgshistorik.modifieddate %}{{ salgshistorik.modifieddate|date('d/m Y') }}{% endif %}</td>
                     <td>{{ salgshistorik.aarsag }}</td>
                     <td>{{ salgshistorik.salgstype }}</td>
                     <td>{{ salgshistorik.status }}</td>

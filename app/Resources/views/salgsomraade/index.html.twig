@@ -22,10 +22,6 @@
         <thead>
         <tr>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgsomraade.id'|trans, 'id') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgsomraade.createdby'|trans, 'createdby') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgsomraade.createddate'|trans, 'createddate') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgsomraade.modifiedby'|trans, 'modifiedby') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgsomraade.modifieddate'|trans, 'modifieddate') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgsomraade.nr'|trans, 'nr') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgsomraade.titel'|trans, 'titel') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgsomraade.type'|trans, 'type') }}</span></div></th>                
@@ -48,10 +44,6 @@
         {% for salgsomraade in pagination %}
         <tr>
                     <td><a href="{{ path('salgsomraade_show', { 'id': salgsomraade.id }) }}">{{ salgsomraade.id }}</a></td>
-                    <td>{{ salgsomraade.createdby }}</td>
-                    <td>{% if salgsomraade.createddate %}{{ salgsomraade.createddate|date('d/m Y') }}{% endif %}</td>
-                    <td>{{ salgsomraade.modifiedby }}</td>
-                    <td>{% if salgsomraade.modifieddate %}{{ salgsomraade.modifieddate|date('d/m Y') }}{% endif %}</td>
                     <td>{{ salgsomraade.nr }}</td>
                     <td>{{ salgsomraade.titel }}</td>
                     <td>{{ salgsomraade.type }}</td>
