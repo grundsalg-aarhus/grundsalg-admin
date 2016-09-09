@@ -7,9 +7,9 @@ use Doctrine\DBAL\Schema\Schema;
 
 /**
  * Migration:
- * - changes create_at and updated_at to nullable for fos_user, to make "fos:user:create" command work.
+ * - Removes Users
  */
-class Version20160907220001 extends AbstractMigration
+class Version20160909103923 extends AbstractMigration
 {
     /**
      * @param Schema $schema
@@ -19,7 +19,7 @@ class Version20160907220001 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE fos_user CHANGE created_at created_at DATETIME DEFAULT NULL, CHANGE updated_at updated_at DATETIME DEFAULT NULL');
+        $this->addSql('DROP TABLE Users');
     }
 
     /**
@@ -30,6 +30,6 @@ class Version20160907220001 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE fos_user CHANGE created_at created_at DATETIME NOT NULL, CHANGE updated_at updated_at DATETIME NOT NULL');
+        $this->addSql('CREATE TABLE Users (id BIGINT AUTO_INCREMENT NOT NULL, name LONGTEXT NOT NULL COLLATE latin1_swedish_ci, userName LONGTEXT NOT NULL COLLATE latin1_swedish_ci, password LONGTEXT NOT NULL COLLATE latin1_swedish_ci, roles LONGTEXT NOT NULL COLLATE latin1_swedish_ci, createdBy LONGTEXT NOT NULL COLLATE latin1_swedish_ci, createdDate DATE NOT NULL, modifiedBy LONGTEXT NOT NULL COLLATE latin1_swedish_ci, modifiedDate DATE NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
     }
 }

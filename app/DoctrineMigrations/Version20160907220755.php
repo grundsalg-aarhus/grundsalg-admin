@@ -9,7 +9,8 @@ use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
- * Auto-generated Migration: Please modify to your needs!
+ * Migration:
+ * - Imports users from Users table into fos_user.
  */
 class Version20160907220755 extends AbstractMigration implements ContainerAwareInterface
 {

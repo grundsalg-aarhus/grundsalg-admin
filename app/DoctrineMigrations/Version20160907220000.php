@@ -6,7 +6,8 @@ use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
- * Auto-generated Migration: Please modify to your needs!
+ * Migration:
+ * - Makes name nullable
  */
 class Version20160907220000 extends AbstractMigration
 {

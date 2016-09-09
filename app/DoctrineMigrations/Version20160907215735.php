@@ -6,7 +6,8 @@ use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
- * Auto-generated Migration: Please modify to your needs!
+ * Migration:
+ * - Adds blamable and timestampable fields
  */
 class Version20160907215735 extends AbstractMigration
 {
