@@ -35,15 +35,19 @@ class OpkoebController extends BaseController
         // Get sort, and direction.
         $sort = $request->query->get('sort');
         $direction = $request->query->get('direction');
+        $search = $request->query->get('search');
         if (!isset($sort)) {
             $sort = 'id';
         }
         if (!isset($direction)) {
             $direction = 'desc';
         }
+        if (!isset($search)) {
+            $search = [];
+        }
 
         // Setup query.
-        $query = $this->getDoctrine()->getManager()->getRepository('AppBundle:Opkoeb')->findBy([], [$sort => $direction]);
+        $query = $this->getDoctrine()->getManager()->getRepository('AppBundle:Opkoeb')->findBy($search, [$sort => $direction]);
 
         // Apply pagination.
         $paginator = $this->get('knp_paginator');

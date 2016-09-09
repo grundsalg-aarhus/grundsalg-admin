@@ -33,6 +33,7 @@ common:
   delete: Slet
   new: Opret
   showing: Viser
+  admin: Administration
 
 frontpage:
   title: Arealudvikling Aarhus
@@ -121,7 +122,10 @@ grund:
   mobil1: Mobil 1
   medkoeberemail: Medkøbers e-mail
   notat: Notat
-
+  parcelhusgrund: Parcelhusgrund
+  storparcel: Storparcel
+  erhvervsgrund: Erhvervsgrund
+  all: Alle grunde
 
 interessent:
   labels:
