@@ -81,6 +81,22 @@
                             <tr>
                                 <th>{{ 'salgsomraade.lploebenummer' | trans }}</th>
                                 <td>{{ salgsomraade.lploebenummer }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'salgsomraade.createdBy' | trans }}</th>
+                                <td>{{ salgsomraade.createdBy }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'salgsomraade.updatedBy' | trans }}</th>
+                                <td>{{ salgsomraade.updatedBy }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'salgsomraade.createdAt' | trans }}</th>
+                                <td>{% if salgsomraade.createdAt %}{{ salgsomraade.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'salgsomraade.updatedAt' | trans }}</th>
+                                <td>{% if salgsomraade.updatedAt %}{{ salgsomraade.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                             </tr>                    </tbody>
                 </table>
             </div>

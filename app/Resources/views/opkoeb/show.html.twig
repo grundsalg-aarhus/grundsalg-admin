@@ -69,6 +69,22 @@
                             <tr>
                                 <th>{{ 'opkoeb.modifieddate' | trans }}</th>
                                 <td>{% if opkoeb.modifieddate %}{{ opkoeb.modifieddate|date('Y-m-d') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'opkoeb.createdBy' | trans }}</th>
+                                <td>{{ opkoeb.createdBy }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'opkoeb.updatedBy' | trans }}</th>
+                                <td>{{ opkoeb.updatedBy }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'opkoeb.createdAt' | trans }}</th>
+                                <td>{% if opkoeb.createdAt %}{{ opkoeb.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'opkoeb.updatedAt' | trans }}</th>
+                                <td>{% if opkoeb.updatedAt %}{{ opkoeb.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                             </tr>                    </tbody>
                 </table>
             </div>

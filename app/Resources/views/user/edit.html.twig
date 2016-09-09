@@ -13,7 +13,12 @@
     </div>
 
     {% form_theme edit_form "AppBundle::Form/twocol-form.html.twig"  %}
-    {{ form_start(edit_form) }}
+    {{ form_start(edit_form) }}        
+    {{ form_row(edit_form.name)}}        
+    {{ form_row(edit_form.createdAt)}}        
+    {{ form_row(edit_form.updatedAt)}}        
+    {{ form_row(edit_form.createdBy)}}        
+    {{ form_row(edit_form.updatedBy)}}
     {{ form_rest(edit_form) }}
 
     <div class="row form-actions">

@@ -49,6 +49,22 @@
                             <tr>
                                 <th>{{ 'lokalsamfund.active' | trans }}</th>
                                 <td>{{ lokalsamfund.active }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalsamfund.createdBy' | trans }}</th>
+                                <td>{{ lokalsamfund.createdBy }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalsamfund.updatedBy' | trans }}</th>
+                                <td>{{ lokalsamfund.updatedBy }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalsamfund.createdAt' | trans }}</th>
+                                <td>{% if lokalsamfund.createdAt %}{{ lokalsamfund.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalsamfund.updatedAt' | trans }}</th>
+                                <td>{% if lokalsamfund.updatedAt %}{{ lokalsamfund.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                             </tr>                    </tbody>
                 </table>
             </div>

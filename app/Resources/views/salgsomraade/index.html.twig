@@ -36,7 +36,11 @@
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgsomraade.gisurl'|trans, 'gisurl') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgsomraade.tilsluttet'|trans, 'tilsluttet') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgsomraade.sagsnr'|trans, 'sagsnr') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgsomraade.lploebenummer'|trans, 'lploebenummer') }}</span></div></th>
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgsomraade.lploebenummer'|trans, 'lploebenummer') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgsomraade.createdBy'|trans, 'createdBy') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgsomraade.updatedBy'|trans, 'updatedBy') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgsomraade.createdAt'|trans, 'createdAt') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgsomraade.updatedAt'|trans, 'updatedAt') }}</span></div></th>
             {{ helper.header() }}
         </tr>
         </thead>
@@ -59,6 +63,10 @@
                     <td>{{ salgsomraade.tilsluttet }}</td>
                     <td>{{ salgsomraade.sagsnr }}</td>
                     <td>{{ salgsomraade.lploebenummer }}</td>
+                    <td>{{ salgsomraade.createdBy }}</td>
+                    <td>{{ salgsomraade.updatedBy }}</td>
+                    <td>{% if salgsomraade.createdAt %}{{ salgsomraade.createdAt|date('d/m Y H:i:s') }}{% endif %}</td>
+                    <td>{% if salgsomraade.updatedAt %}{{ salgsomraade.updatedAt|date('d/m Y H:i:s') }}{% endif %}</td>
                     <td class="text-right">
                         <a class="btn btn-default btn-xs" href="{{ path('salgsomraade_edit', { 'id': salgsomraade.id }) }}">{{ 'common.edit' | trans }}</a>
                     </td>

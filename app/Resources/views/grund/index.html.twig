@@ -92,7 +92,11 @@
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.telefon1'|trans, 'telefon1') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.mobil1'|trans, 'mobil1') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.medkoeberemail'|trans, 'medkoeberemail') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.notat'|trans, 'notat') }}</span></div></th>
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.notat'|trans, 'notat') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.createdBy'|trans, 'createdBy') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.updatedBy'|trans, 'updatedBy') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.createdAt'|trans, 'createdAt') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.updatedAt'|trans, 'updatedAt') }}</span></div></th>
             {{ helper.header() }}
         </tr>
         </thead>
@@ -171,6 +175,10 @@
                     <td>{{ grund.mobil1 }}</td>
                     <td>{{ grund.medkoeberemail }}</td>
                     <td>{{ grund.notat }}</td>
+                    <td>{{ grund.createdBy }}</td>
+                    <td>{{ grund.updatedBy }}</td>
+                    <td>{% if grund.createdAt %}{{ grund.createdAt|date('d/m Y H:i:s') }}{% endif %}</td>
+                    <td>{% if grund.updatedAt %}{{ grund.updatedAt|date('d/m Y H:i:s') }}{% endif %}</td>
                     <td class="text-right">
                         <a class="btn btn-default btn-xs" href="{{ path('grund_edit', { 'id': grund.id }) }}">{{ 'common.edit' | trans }}</a>
                     </td>

@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Gedmo\Blameable\Traits\BlameableEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,7 +14,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Interessent
 {
-    /**
+  use BlameableEntity;
+  use TimestampableEntity;
+
+
+  /**
      * @var integer
      *
      * @ORM\Column(name="id", type="bigint", nullable=false)
@@ -627,4 +633,4 @@ class Interessent
     {
         return $this->koeberpostbyid;
     }
-public function __toString() { return __CLASS__; }}
+public function __toString() { return $this->navn . " / " . $this->navn1; }}

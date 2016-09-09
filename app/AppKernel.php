@@ -20,6 +20,8 @@ class AppKernel extends Kernel
       new WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),
       new Braincrafted\Bundle\BootstrapBundle\BraincraftedBootstrapBundle(),
       new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+      new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+      new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
       new AppBundle\AppBundle(),
     ];

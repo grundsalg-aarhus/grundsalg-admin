@@ -45,6 +45,22 @@
                             <tr>
                                 <th>{{ 'postby.modifieddate' | trans }}</th>
                                 <td>{% if postby.modifieddate %}{{ postby.modifieddate|date('Y-m-d') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'postby.createdBy' | trans }}</th>
+                                <td>{{ postby.createdBy }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'postby.updatedBy' | trans }}</th>
+                                <td>{{ postby.updatedBy }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'postby.createdAt' | trans }}</th>
+                                <td>{% if postby.createdAt %}{{ postby.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'postby.updatedAt' | trans }}</th>
+                                <td>{% if postby.updatedAt %}{{ postby.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                             </tr>                    </tbody>
                 </table>
             </div>

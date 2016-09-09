@@ -27,7 +27,11 @@
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'postby.createdby'|trans, 'createdby') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'postby.createddate'|trans, 'createddate') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'postby.modifiedby'|trans, 'modifiedby') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'postby.modifieddate'|trans, 'modifieddate') }}</span></div></th>
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'postby.modifieddate'|trans, 'modifieddate') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'postby.createdBy'|trans, 'createdBy') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'postby.updatedBy'|trans, 'updatedBy') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'postby.createdAt'|trans, 'createdAt') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'postby.updatedAt'|trans, 'updatedAt') }}</span></div></th>
             {{ helper.header() }}
         </tr>
         </thead>
@@ -41,6 +45,10 @@
                     <td>{% if postby.createddate %}{{ postby.createddate|date('d/m Y') }}{% endif %}</td>
                     <td>{{ postby.modifiedby }}</td>
                     <td>{% if postby.modifieddate %}{{ postby.modifieddate|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ postby.createdBy }}</td>
+                    <td>{{ postby.updatedBy }}</td>
+                    <td>{% if postby.createdAt %}{{ postby.createdAt|date('d/m Y H:i:s') }}{% endif %}</td>
+                    <td>{% if postby.updatedAt %}{{ postby.updatedAt|date('d/m Y H:i:s') }}{% endif %}</td>
                     <td class="text-right">
                         <a class="btn btn-default btn-xs" href="{{ path('postby_edit', { 'id': postby.id }) }}">{{ 'common.edit' | trans }}</a>
                     </td>

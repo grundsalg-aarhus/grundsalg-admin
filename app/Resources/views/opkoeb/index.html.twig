@@ -33,7 +33,11 @@
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.createdby'|trans, 'createdby') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.createddate'|trans, 'createddate') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.modifiedby'|trans, 'modifiedby') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.modifieddate'|trans, 'modifieddate') }}</span></div></th>
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.modifieddate'|trans, 'modifieddate') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.createdBy'|trans, 'createdBy') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.updatedBy'|trans, 'updatedBy') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.createdAt'|trans, 'createdAt') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.updatedAt'|trans, 'updatedAt') }}</span></div></th>
             {{ helper.header() }}
         </tr>
         </thead>
@@ -53,6 +57,10 @@
                     <td>{% if opkoeb.createddate %}{{ opkoeb.createddate|date('d/m Y') }}{% endif %}</td>
                     <td>{{ opkoeb.modifiedby }}</td>
                     <td>{% if opkoeb.modifieddate %}{{ opkoeb.modifieddate|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ opkoeb.createdBy }}</td>
+                    <td>{{ opkoeb.updatedBy }}</td>
+                    <td>{% if opkoeb.createdAt %}{{ opkoeb.createdAt|date('d/m Y H:i:s') }}{% endif %}</td>
+                    <td>{% if opkoeb.updatedAt %}{{ opkoeb.updatedAt|date('d/m Y H:i:s') }}{% endif %}</td>
                     <td class="text-right">
                         <a class="btn btn-default btn-xs" href="{{ path('opkoeb_edit', { 'id': opkoeb.id }) }}">{{ 'common.edit' | trans }}</a>
                     </td>

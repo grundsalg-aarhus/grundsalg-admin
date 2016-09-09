@@ -21,7 +21,12 @@
     <table class="table table-condensed table-header-rotated">
         <thead>
         <tr>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'user.id'|trans, 'id') }}</span></div></th>
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'user.id'|trans, 'id') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'user.name'|trans, 'name') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'user.createdAt'|trans, 'createdAt') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'user.updatedAt'|trans, 'updatedAt') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'user.createdBy'|trans, 'createdBy') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'user.updatedBy'|trans, 'updatedBy') }}</span></div></th>
             {{ helper.header() }}
         </tr>
         </thead>
@@ -29,6 +34,11 @@
         {% for user in pagination %}
         <tr>
                     <td><a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.id }}</a></td>
+                    <td>{{ user.name }}</td>
+                    <td>{% if user.createdAt %}{{ user.createdAt|date('d/m Y H:i:s') }}{% endif %}</td>
+                    <td>{% if user.updatedAt %}{{ user.updatedAt|date('d/m Y H:i:s') }}{% endif %}</td>
+                    <td>{{ user.createdBy }}</td>
+                    <td>{{ user.updatedBy }}</td>
                     <td class="text-right">
                         <a class="btn btn-default btn-xs" href="{{ path('user_edit', { 'id': user.id }) }}">{{ 'common.edit' | trans }}</a>
                     </td>

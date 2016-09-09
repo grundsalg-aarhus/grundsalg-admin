@@ -32,6 +32,10 @@ class InteressentType extends AbstractType
             ->add('mobil1')
             ->add('medkoeberemail')
             ->add('notat')
+            ->add('createdBy')
+            ->add('updatedBy')
+            ->add('createdAt', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('updatedAt', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('medkoeberpostbyid')
             ->add('koeberpostbyid')
         ;

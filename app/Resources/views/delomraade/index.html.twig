@@ -34,7 +34,11 @@
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'delomraade.createdby'|trans, 'createdby') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'delomraade.createddate'|trans, 'createddate') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'delomraade.modifiedby'|trans, 'modifiedby') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'delomraade.modifieddate'|trans, 'modifieddate') }}</span></div></th>
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'delomraade.modifieddate'|trans, 'modifieddate') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'delomraade.createdBy'|trans, 'createdBy') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'delomraade.updatedBy'|trans, 'updatedBy') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'delomraade.createdAt'|trans, 'createdAt') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'delomraade.updatedAt'|trans, 'updatedAt') }}</span></div></th>
             {{ helper.header() }}
         </tr>
         </thead>
@@ -55,6 +59,10 @@
                     <td>{% if delomraade.createddate %}{{ delomraade.createddate|date('d/m Y') }}{% endif %}</td>
                     <td>{{ delomraade.modifiedby }}</td>
                     <td>{% if delomraade.modifieddate %}{{ delomraade.modifieddate|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ delomraade.createdBy }}</td>
+                    <td>{{ delomraade.updatedBy }}</td>
+                    <td>{% if delomraade.createdAt %}{{ delomraade.createdAt|date('d/m Y H:i:s') }}{% endif %}</td>
+                    <td>{% if delomraade.updatedAt %}{{ delomraade.updatedAt|date('d/m Y H:i:s') }}{% endif %}</td>
                     <td class="text-right">
                         <a class="btn btn-default btn-xs" href="{{ path('delomraade_edit', { 'id': delomraade.id }) }}">{{ 'common.edit' | trans }}</a>
                     </td>

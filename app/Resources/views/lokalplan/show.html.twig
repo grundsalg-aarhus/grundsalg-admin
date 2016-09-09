@@ -73,6 +73,22 @@
                             <tr>
                                 <th>{{ 'lokalplan.modifieddate' | trans }}</th>
                                 <td>{% if lokalplan.modifieddate %}{{ lokalplan.modifieddate|date('Y-m-d') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalplan.createdBy' | trans }}</th>
+                                <td>{{ lokalplan.createdBy }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalplan.updatedBy' | trans }}</th>
+                                <td>{{ lokalplan.updatedBy }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalplan.createdAt' | trans }}</th>
+                                <td>{% if lokalplan.createdAt %}{{ lokalplan.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalplan.updatedAt' | trans }}</th>
+                                <td>{% if lokalplan.updatedAt %}{{ lokalplan.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                             </tr>                    </tbody>
                 </table>
             </div>

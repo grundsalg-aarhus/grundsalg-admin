@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Gedmo\Blameable\Traits\BlameableEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,7 +14,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Salgsomraade
 {
-    /**
+  use BlameableEntity;
+  use TimestampableEntity;
+
+
+  /**
      * @var integer
      *
      * @ORM\Column(name="id", type="bigint", nullable=false)
@@ -633,4 +639,4 @@ class Salgsomraade
     {
         return $this->postbyid;
     }
-public function __toString() { return __CLASS__; }}
+public function __toString() { return $this->titel; }}

@@ -8,7 +8,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends AbstractType
 {
-
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('name')
+            ->add('createdAt', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('updatedAt', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('createdBy')
+            ->add('updatedBy')
+        ;
+    }
+    
     /**
      * @param OptionsResolver $resolver
      */

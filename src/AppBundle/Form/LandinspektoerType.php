@@ -27,6 +27,10 @@ class LandinspektoerType extends AbstractType
             ->add('modifiedby')
             ->add('modifieddate', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('active')
+            ->add('createdBy')
+            ->add('updatedBy')
+            ->add('createdAt', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('updatedAt', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
         ;
     }
     

@@ -53,7 +53,11 @@
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgshistorik.telefon1'|trans, 'telefon1') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgshistorik.mobil1'|trans, 'mobil1') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgshistorik.medkoeberemail'|trans, 'medkoeberemail') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgshistorik.notat'|trans, 'notat') }}</span></div></th>
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgshistorik.notat'|trans, 'notat') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgshistorik.createdBy'|trans, 'createdBy') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgshistorik.updatedBy'|trans, 'updatedBy') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgshistorik.createdAt'|trans, 'createdAt') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'salgshistorik.updatedAt'|trans, 'updatedAt') }}</span></div></th>
             {{ helper.header() }}
         </tr>
         </thead>
@@ -93,6 +97,10 @@
                     <td>{{ salgshistorik.mobil1 }}</td>
                     <td>{{ salgshistorik.medkoeberemail }}</td>
                     <td>{{ salgshistorik.notat }}</td>
+                    <td>{{ salgshistorik.createdBy }}</td>
+                    <td>{{ salgshistorik.updatedBy }}</td>
+                    <td>{% if salgshistorik.createdAt %}{{ salgshistorik.createdAt|date('d/m Y H:i:s') }}{% endif %}</td>
+                    <td>{% if salgshistorik.updatedAt %}{{ salgshistorik.updatedAt|date('d/m Y H:i:s') }}{% endif %}</td>
                     <td class="text-right">
                         <a class="btn btn-default btn-xs" href="{{ path('salgshistorik_edit', { 'id': salgshistorik.id }) }}">{{ 'common.edit' | trans }}</a>
                     </td>

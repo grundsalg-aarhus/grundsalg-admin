@@ -73,6 +73,22 @@
                             <tr>
                                 <th>{{ 'delomraade.modifieddate' | trans }}</th>
                                 <td>{% if delomraade.modifieddate %}{{ delomraade.modifieddate|date('Y-m-d') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'delomraade.createdBy' | trans }}</th>
+                                <td>{{ delomraade.createdBy }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'delomraade.updatedBy' | trans }}</th>
+                                <td>{{ delomraade.updatedBy }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'delomraade.createdAt' | trans }}</th>
+                                <td>{% if delomraade.createdAt %}{{ delomraade.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'delomraade.updatedAt' | trans }}</th>
+                                <td>{% if delomraade.updatedAt %}{{ delomraade.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                             </tr>                    </tbody>
                 </table>
             </div>

@@ -69,6 +69,22 @@
                             <tr>
                                 <th>{{ 'landinspektoer.active' | trans }}</th>
                                 <td>{{ landinspektoer.active }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'landinspektoer.createdBy' | trans }}</th>
+                                <td>{{ landinspektoer.createdBy }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'landinspektoer.updatedBy' | trans }}</th>
+                                <td>{{ landinspektoer.updatedBy }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'landinspektoer.createdAt' | trans }}</th>
+                                <td>{% if landinspektoer.createdAt %}{{ landinspektoer.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'landinspektoer.updatedAt' | trans }}</th>
+                                <td>{% if landinspektoer.updatedAt %}{{ landinspektoer.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                             </tr>                    </tbody>
                 </table>
             </div>

@@ -33,7 +33,11 @@
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'landinspektoer.createddate'|trans, 'createddate') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'landinspektoer.modifiedby'|trans, 'modifiedby') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'landinspektoer.modifieddate'|trans, 'modifieddate') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'landinspektoer.active'|trans, 'active') }}</span></div></th>
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'landinspektoer.active'|trans, 'active') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'landinspektoer.createdBy'|trans, 'createdBy') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'landinspektoer.updatedBy'|trans, 'updatedBy') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'landinspektoer.createdAt'|trans, 'createdAt') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'landinspektoer.updatedAt'|trans, 'updatedAt') }}</span></div></th>
             {{ helper.header() }}
         </tr>
         </thead>
@@ -53,6 +57,10 @@
                     <td>{{ landinspektoer.modifiedby }}</td>
                     <td>{% if landinspektoer.modifieddate %}{{ landinspektoer.modifieddate|date('d/m Y') }}{% endif %}</td>
                     <td>{{ landinspektoer.active }}</td>
+                    <td>{{ landinspektoer.createdBy }}</td>
+                    <td>{{ landinspektoer.updatedBy }}</td>
+                    <td>{% if landinspektoer.createdAt %}{{ landinspektoer.createdAt|date('d/m Y H:i:s') }}{% endif %}</td>
+                    <td>{% if landinspektoer.updatedAt %}{{ landinspektoer.updatedAt|date('d/m Y H:i:s') }}{% endif %}</td>
                     <td class="text-right">
                         <a class="btn btn-default btn-xs" href="{{ path('landinspektoer_edit', { 'id': landinspektoer.id }) }}">{{ 'common.edit' | trans }}</a>
                     </td>

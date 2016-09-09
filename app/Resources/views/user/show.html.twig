@@ -21,6 +21,26 @@
                             <tr>
                                 <th>{{ 'user.id' | trans }}</th>
                                 <td>{{ user.id }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'user.name' | trans }}</th>
+                                <td>{{ user.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'user.createdAt' | trans }}</th>
+                                <td>{% if user.createdAt %}{{ user.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'user.updatedAt' | trans }}</th>
+                                <td>{% if user.updatedAt %}{{ user.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'user.createdBy' | trans }}</th>
+                                <td>{{ user.createdBy }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'user.updatedBy' | trans }}</th>
+                                <td>{{ user.updatedBy }}</td>
                             </tr>                    </tbody>
                 </table>
             </div>

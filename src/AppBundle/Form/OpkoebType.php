@@ -27,6 +27,10 @@ class OpkoebType extends AbstractType
             ->add('createddate', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('modifiedby')
             ->add('modifieddate', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('createdBy')
+            ->add('updatedBy')
+            ->add('createdAt', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
+            ->add('updatedAt', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('lpid')
         ;
     }

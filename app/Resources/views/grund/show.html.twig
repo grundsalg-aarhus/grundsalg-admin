@@ -305,6 +305,22 @@
                             <tr>
                                 <th>{{ 'grund.notat' | trans }}</th>
                                 <td>{{ grund.notat }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.createdBy' | trans }}</th>
+                                <td>{{ grund.createdBy }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.updatedBy' | trans }}</th>
+                                <td>{{ grund.updatedBy }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.createdAt' | trans }}</th>
+                                <td>{% if grund.createdAt %}{{ grund.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'grund.updatedAt' | trans }}</th>
+                                <td>{% if grund.updatedAt %}{{ grund.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                             </tr>                    </tbody>
                 </table>
             </div>

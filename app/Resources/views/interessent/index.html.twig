@@ -38,7 +38,11 @@
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'interessent.telefon1'|trans, 'telefon1') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'interessent.mobil1'|trans, 'mobil1') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'interessent.medkoeberemail'|trans, 'medkoeberemail') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'interessent.notat'|trans, 'notat') }}</span></div></th>
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'interessent.notat'|trans, 'notat') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'interessent.createdBy'|trans, 'createdBy') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'interessent.updatedBy'|trans, 'updatedBy') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'interessent.createdAt'|trans, 'createdAt') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'interessent.updatedAt'|trans, 'updatedAt') }}</span></div></th>
             {{ helper.header() }}
         </tr>
         </thead>
@@ -63,6 +67,10 @@
                     <td>{{ interessent.mobil1 }}</td>
                     <td>{{ interessent.medkoeberemail }}</td>
                     <td>{{ interessent.notat }}</td>
+                    <td>{{ interessent.createdBy }}</td>
+                    <td>{{ interessent.updatedBy }}</td>
+                    <td>{% if interessent.createdAt %}{{ interessent.createdAt|date('d/m Y H:i:s') }}{% endif %}</td>
+                    <td>{% if interessent.updatedAt %}{{ interessent.updatedAt|date('d/m Y H:i:s') }}{% endif %}</td>
                     <td class="text-right">
                         <a class="btn btn-default btn-xs" href="{{ path('interessent_edit', { 'id': interessent.id }) }}">{{ 'common.edit' | trans }}</a>
                     </td>

@@ -149,6 +149,22 @@
                             <tr>
                                 <th>{{ 'salgshistorik.notat' | trans }}</th>
                                 <td>{{ salgshistorik.notat }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'salgshistorik.createdBy' | trans }}</th>
+                                <td>{{ salgshistorik.createdBy }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'salgshistorik.updatedBy' | trans }}</th>
+                                <td>{{ salgshistorik.updatedBy }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'salgshistorik.createdAt' | trans }}</th>
+                                <td>{% if salgshistorik.createdAt %}{{ salgshistorik.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'salgshistorik.updatedAt' | trans }}</th>
+                                <td>{% if salgshistorik.updatedAt %}{{ salgshistorik.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                             </tr>                    </tbody>
                 </table>
             </div>
