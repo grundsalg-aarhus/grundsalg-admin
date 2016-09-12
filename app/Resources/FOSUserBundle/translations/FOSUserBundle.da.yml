@@ -14,7 +14,7 @@ group:
 # Security
 security:
     login:
-        username: "Email:"
+        username: "Brugernavn:"
         password: "Kodeord:"
         remember_me: Husk mig
         submit: Log ind
@@ -98,7 +98,7 @@ layout:
 # Form field labels
 form:
     group_name: "Gruppe navn:"
-    username: "Email:"
+    username: "Brugernavn:"
     email: "Email:"
     current_password: "Nuværende kodeord:"
     password: "Kodeord:"
