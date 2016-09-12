@@ -41,24 +41,32 @@
                     <li><a href="/grund?search%5Bgrundtype%5D=Erhvervsgrund">{{ icon('industry') }} {{ 'grund.erhvervsgrund' | trans }}</a></li>
                     <li><a href="/grund">{{ icon('map-o') }} {{ 'grund.all' | trans }}</a></li>
 
-                    {% if is_granted('ROLE_SUPER_ADMIN') %}
-                        <li><a href="/user">{{ icon('users') }} {{ 'user.labels.plural' | trans }}</a></li>
-                    {% endif %}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            {{ 'common.lokalplan_menu' | trans }} <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/lokalplan">{{ icon('tree') }} {{ 'lokalplan.labels.plural' | trans }}</a></li>
+                            <li><a href="/delomraade">{{ icon('industry') }} {{ 'delomraade.labels.plural' | trans }}</a></li>
+                            <li><a href="/salgsomraade">{{ icon('bus') }} {{ 'salgsomraade.labels.plural' | trans }}</a></li>
+                            <li><a href="/opkoeb">{{ icon('euro') }} {{ 'opkoeb.labels.plural' | trans }}</a></li>
+                        </ul>
+                    </li>
+
 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             {{ 'common.admin' | trans }} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="/delomraade">{{ icon('industry') }} {{ 'delomraade.labels.plural' | trans }}</a></li>
-                            <li><a href="/interessent">{{ icon('user') }} {{ 'interessent.labels.plural' | trans }}</a></li>
-                            <li><a href="/landinspektoer">{{ icon('eye') }} {{ 'landinspektoer.labels.plural' | trans }}</a></li>
-                            <li><a href="/lokalplan">{{ icon('tree') }} {{ 'lokalplan.labels.plural' | trans }}</a></li>
-                            <li><a href="/lokalsamfund">{{ icon('folder-open') }} {{ 'lokalsamfund.labels.plural' | trans }}</a></li>
-                            <li><a href="/opkoeb">{{ icon('euro') }} {{ 'opkoeb.labels.plural' | trans }}</a></li>
                             <li><a href="/postby">{{ icon('home') }} {{ 'postby.labels.plural' | trans }}</a></li>
+                            <li><a href="/lokalsamfund">{{ icon('folder-open') }} {{ 'lokalsamfund.labels.plural' | trans }}</a></li>
+                            <li><a href="/landinspektoer">{{ icon('eye') }} {{ 'landinspektoer.labels.plural' | trans }}</a></li>
                             <li><a href="/salgshistorik">{{ icon('history') }} {{ 'salgshistorik.labels.plural' | trans }}</a></li>
-                            <li><a href="/salgsomraade">{{ icon('bus') }} {{ 'salgsomraade.labels.plural' | trans }}</a></li>
+                            <li><a href="/interessent">{{ icon('user') }} {{ 'interessent.labels.plural' | trans }}</a></li>
+                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                <li><a href="/user">{{ icon('users') }} {{ 'user.labels.plural' | trans }}</a></li>
+                            {% endif %}
                         </ul>
                     </li>
                 </ul>
