@@ -1,0 +1,18 @@
+web:
+    build: .
+    environment:
+        SYMFONY_ENV: dev
+    links:
+        - database
+    volumes:
+        - .:/app
+    ports:
+        - 8888:80
+
+database:
+    image: mysql
+    environment:
+        MYSQL_ROOT_PASSWORD: changeme
+        MYSQL_DATABASE: grundsalg
+        MYSQL_USER: grundsalg
+        MYSQL_PASSWORD: grundsalg
