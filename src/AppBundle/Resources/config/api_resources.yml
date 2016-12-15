@@ -1,0 +1,99 @@
+resources:
+    AppBundle\Entity\Delomraade:
+        collectionOperations:
+            get:
+                method: 'GET'
+        itemOperations:
+            get:
+                method: 'GET'
+    AppBundle\Entity\Grund:
+        collectionOperations:
+            get:
+                method: 'GET'
+        itemOperations:
+            get:
+                method: 'GET'
+    AppBundle\Entity\Interessentgrundmapping:
+        collectionOperations:
+            get:
+                method: 'GET'
+        itemOperations:
+            get:
+                method: 'GET'
+    AppBundle\Entity\Interessent:
+        collectionOperations:
+            get:
+                method: 'GET'
+        itemOperations:
+            get:
+                method: 'GET'
+    AppBundle\Entity\Keyword:
+        collectionOperations:
+            get:
+                method: 'GET'
+        itemOperations:
+            get:
+                method: 'GET'
+    AppBundle\Entity\Keywordvalue:
+        collectionOperations:
+            get:
+                method: 'GET'
+        itemOperations:
+            get:
+                method: 'GET'
+    AppBundle\Entity\Landinspektoer:
+        collectionOperations:
+            get:
+                method: 'GET'
+        itemOperations:
+            get:
+                method: 'GET'
+    AppBundle\Entity\Lokalplan:
+        collectionOperations:
+            get:
+                method: 'GET'
+        itemOperations:
+            get:
+                method: 'GET'
+    AppBundle\Entity\Lokalsamfund:
+        collectionOperations:
+            get:
+                method: 'GET'
+        itemOperations:
+            get:
+                method: 'GET'
+    AppBundle\Entity\Opkoeb:
+        collectionOperations:
+            get:
+                method: 'GET'
+        itemOperations:
+            get:
+                method: 'GET'
+    AppBundle\Entity\Postby:
+        collectionOperations:
+            get:
+                method: 'GET'
+        itemOperations:
+            get:
+                method: 'GET'
+    AppBundle\Entity\Salgshistorik:
+        collectionOperations:
+            get:
+                method: 'GET'
+        itemOperations:
+            get:
+                method: 'GET'
+    AppBundle\Entity\Salgsomraade:
+        collectionOperations:
+            get:
+                method: 'GET'
+        itemOperations:
+            get:
+                method: 'GET'
+    AppBundle\Entity\User:
+        collectionOperations:
+            get:
+                method: 'GET'
+        itemOperations:
+            get:
+                method: 'GET'
