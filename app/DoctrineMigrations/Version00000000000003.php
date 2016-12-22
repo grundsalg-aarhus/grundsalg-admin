@@ -51,7 +51,7 @@ class Version00000000000003 extends AbstractMigration implements ContainerAwareI
       $userManager->updateUser($newUser, true);
     }
 
-    $this->addSql('SELECT * FROM fos_user');
+    $this->addSql('DROP TABLE Users');
 
   }
 
