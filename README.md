@@ -38,3 +38,5 @@ In vagrant, run import script
 ```
 /vagrant/scripts/import_legacy_db.sh 
 ```
+
+_(If this fails with node errors validate the node export app install in /vagrant/scripts/legacy)_
