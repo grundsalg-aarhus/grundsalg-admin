@@ -65,6 +65,20 @@ class Version00000000000003 extends AbstractMigration implements ContainerAwareI
 
     $this->addSql('TRUNCATE TABLE fos_user');
 
+    $this->addSql('
+      CREATE TABLE Users (
+        id bigint(20) NOT NULL,
+        name longtext NOT NULL,
+        userName longtext NOT NULL,
+        password longtext NOT NULL,
+        roles longtext NOT NULL,
+        createdBy longtext NOT NULL,
+        createdDate date NOT NULL,
+        modifiedBy longtext NOT NULL,
+        modifiedDate date NOT NULL,
+        PRIMARY KEY (id)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8
+    ');
   }
 
   /**
