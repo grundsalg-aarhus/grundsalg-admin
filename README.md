@@ -32,12 +32,6 @@ Change password: `php bin/console fos:user:change-password`
 
 ## Import Legacy Data
 
-On host, copy DB Dump from Dropbox
-
-```
-cp ~/Dropbox*/Projekter/Grundsalgsløsning/resources/SYM_GrundSalg.mysql .
-```
-
 To DROP and recreate database:  
 In vagrant, run import script 
 
