@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Grund
  *
  * @ORM\Table(name="Grund", indexes={@ORM\Index(name="fk_Grund_lokalsamfundId", columns={"lokalsamfundId"}), @ORM\Index(name="fk_Grund_salgsomraadeId", columns={"salgsomraadeId"}), @ORM\Index(name="fk_Grund_koeberPostById", columns={"koeberPostById"}), @ORM\Index(name="fk_Grund_medKoeberPostById", columns={"medKoeberPostById"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\GrundRepository")
  */
 class Grund
 {
