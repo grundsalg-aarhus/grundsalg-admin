@@ -8,19 +8,29 @@ class GrundRepository extends EntityRepository
 {
 
   /**
-   * Get Grunde active for sale, select only public fields
+   * Get Query for Grunde active for sale for given salgsomraade
    *
-   * @return array
+   * @param null $salgsomraadeId
+   * @return \Doctrine\ORM\Query
    */
-  public function getActiveSales()
+  public function getGrundeForSalgsOmraade($salgsomraadeId = null)
   {
-    return $this->getEntityManager()
-      ->createQuery(
-        "SELECT g.id, g.vej, g.husnummer, g.bogstav, g.status, g.areal, g.pris  
-          FROM AppBundle:Grund g 
-          WHERE g.annonceresej IS NULL AND g.datoannonce < CURRENT_TIMESTAMP() AND g.status = 'Ledig'
-          ORDER BY g.id ASC"
-      )
-      ->getResult();
+    $qb = $this->getEntityManager()->createQueryBuilder();
+
+    $qb->select('g')
+        ->from('AppBundle:Grund', 'g')
+        ->where('g.annonceresej is NULL')
+        ->andWhere('g.datoannonce < :now')
+        ->addOrderBy('g.vej', 'ASC')
+        ->addOrderBy('g.husnummer', 'ASC')
+        ->addOrderBy('g.bogstav', 'ASC')
+        ->setParameter('now', new \DateTime(), \Doctrine\DBAL\Types\Type::DATETIME);
+
+    if($salgsomraadeId) {
+      $qb->andWhere('g.salgsomraadeid = :salgsomraadeid')
+          ->setParameter('salgsomraadeid', $salgsomraadeId);
+    }
+
+    return $qb->getQuery();
   }
 }

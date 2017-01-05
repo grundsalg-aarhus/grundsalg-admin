@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Grund;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,28 +14,31 @@ use Symfony\Component\HttpFoundation\Request;
 class ApiController extends Controller
 {
     /**
-     * @Route("/grunde", name="pub_api_grunde")
+     * @Route("/udstykning/{udstykningsId}/grunde", name="pub_api_grunde")
      */
-    public function grundeAction(Request $request)
+    public function grundeAction(Request $request, $udstykningsId)
     {
       $em = $this->getDoctrine()->getManager();
-      $grunde = $em->getRepository('AppBundle:Grund')->getActiveSales();
+      $query = $em->getRepository('AppBundle:Grund')->getGrundeForSalgsOmraade($udstykningsId);
 
-      $list = array();
+      $grunde = $query->getResult();
+
+      $list['count'] = count($grunde);
+      $list['grunde'] = array();
 
       foreach ($grunde as $grund) {
         $data = array();
-        $data['id'] = $grund['id'];
-        $data['address'] = trim($grund['vej'].' '.$grund['husnummer'].$grund['bogstav']);
-        $data['status'] = $grund['status'];
-        $data['area_m2'] = $grund['areal'];
+        $data['id'] = $grund->getId();
+        $data['address'] = trim($grund->getVej().' '.$grund->getHusnummer().$grund->getBogstav());
+        $data['status'] = $grund->getStatus();
+        $data['area_m2'] = $grund->getAreal();
         // @TODO which fields to map for prices?
-        $data['minimum_price'] = $grund['pris'];
-        $data['sale_price'] = $grund['pris'];
+        $data['minimum_price'] = $grund->getMinbud();
+        $data['sale_price'] = $grund->getPris();
         // @TODO add pdf link when access import complete
         $data['pdf_link'] = 'http://todo.com/todo.pdf';
 
-        $list[] = $data;
+        $list['grunde'][] = $data;
       }
 
       $response = $this->json($list);
