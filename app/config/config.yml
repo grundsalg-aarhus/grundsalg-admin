@@ -53,8 +53,8 @@ doctrine:
         password: "%database_password%"
         charset:  UTF8
         default_table_options:
-          charset:  UTF8
-          collate: utf8_danish_ci
+          charset: utf8mb4
+          collate: utf8mb4_danish_ci
         server_version: "%server_version%"
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
