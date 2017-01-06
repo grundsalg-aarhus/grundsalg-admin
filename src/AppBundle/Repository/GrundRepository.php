@@ -19,7 +19,7 @@ class GrundRepository extends EntityRepository
 
     $qb->select('g')
         ->from('AppBundle:Grund', 'g')
-        ->where('g.annonceresej is NULL')
+        ->where('g.annonceresej != 1')
         ->andWhere('g.datoannonce < :now')
         ->addOrderBy('g.vej', 'ASC')
         ->addOrderBy('g.husnummer', 'ASC')
@@ -27,7 +27,7 @@ class GrundRepository extends EntityRepository
         ->setParameter('now', new \DateTime(), \Doctrine\DBAL\Types\Type::DATETIME);
 
     if($salgsomraadeId) {
-      $qb->andWhere('g.salgsomraadeid = :salgsomraadeid')
+      $qb->andWhere('g.salgsomraade = :salgsomraadeid')
           ->setParameter('salgsomraadeid', $salgsomraadeId);
     }
 

@@ -11,12 +11,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Legacy data command.
  */
-class LegacyDataCommand extends ContainerAwareCommand {
+class LegacyDataCommand extends ContainerAwareCommand
+{
 
   /**
    * {@inheritdoc}
    */
-  protected function configure() {
+  protected function configure()
+  {
     $this
       ->setName('app:import-legacy-data')
       ->setDescription('Imports legacy data.')
@@ -28,7 +30,8 @@ class LegacyDataCommand extends ContainerAwareCommand {
   /**
    * {@inheritdoc}
    */
-  protected function execute(InputInterface $input, OutputInterface $output) {
+  protected function execute(InputInterface $input, OutputInterface $output)
+  {
     $this->output = $output;
     $filename = $input->getArgument('file');
     $data = $this->getData($filename);
@@ -42,14 +45,13 @@ class LegacyDataCommand extends ContainerAwareCommand {
           $columns = array_keys($row);
           $sql = 'INSERT INTO ' . $table . ' (' . implode(', ', $columns);
           $sql .= ') VALUES (' . implode(', ', array_map(function ($column) {
-            return ':' . $column;
-          }, $columns));
+              return ':' . $column;
+            }, $columns));
           $sql .= ');';
           try {
             $stmt = $connection->prepare($sql);
             $stmt->execute($row);
-          }
-          catch (ForeignKeyConstraintViolationException $e) {
+          } catch (ForeignKeyConstraintViolationException $e) {
             var_export($row);
             throw $e;
           }
@@ -67,16 +69,15 @@ class LegacyDataCommand extends ContainerAwareCommand {
    * @return array
    *   The data to import.
    */
-  private function getData($filename) {
+  private function getData($filename)
+  {
     $content = '';
 
     if ($filename === '-') {
       $content = file_get_contents("php://stdin");
-    }
-    elseif (file_exists($filename)) {
+    } elseif (file_exists($filename)) {
       $content = file_get_contents($filename);
-    }
-    else {
+    } else {
       throw new \Exception('File ' . $filename . ' does not exist');
     }
 
@@ -143,6 +144,26 @@ class LegacyDataCommand extends ContainerAwareCommand {
           if (in_array($row['salgsomraadeId'], ['0', '15', '268', '271'])) {
             $this->setValue($table, $row, 'salgsomraadeId', NULL);
           }
+
+          // Ensure that "husNummer" is either null or numeric for safe column type conversion (longtext -> INT)
+          if (!is_numeric($row['husNummer'])) {
+            if (is_numeric(trim($row['husNummer']))) {
+              $this->setValue($table, $row, 'husNummer', trim($row['husNummer']));
+            } else if (empty($row['husNummer'])) {
+              $this->setValue($table, $row, 'husNummer', NULL);
+            } else {
+              $this->throwException($table, $row, 'husNummer', 'Cannot be safely converted to nummeric value');
+            }
+          }
+
+          // Ensure that "annonceresEj" is either null or 0/1 for safe column type conversion (varchar(50) -> BOOL)
+          if ($row['annonceresEj'] === 'X') {
+            $this->setValue($table, $row, 'annonceresEj', 1);
+          } else if (empty($row['annonceresEj'])) {
+            $this->setValue($table, $row, 'annonceresEj', NULL);
+          } else {
+            $this->throwException($table, $row, 'annonceresEj', 'Cannot be safely converted to bool value');
+          }
         }
 
         if ($table == 'Salgshistorik') {
@@ -197,11 +218,19 @@ class LegacyDataCommand extends ContainerAwareCommand {
    * @param mixed $value
    *   The value.
    */
-  private function setValue(string $table, array &$row, string $column, $value) {
+  private function setValue(string $table, array &$row, string $column, $value)
+  {
     $output = $this->output instanceof ConsoleOutputInterface ? $this->output->getErrorOutput() : $this->output;
 
     $output->writeln(sprintf('<comment>Warning: %s#%d.%s: %s -> %s</comment>', $table, $row['id'], $column, var_export($row[$column], TRUE), var_export($value, TRUE)));
     $row[$column] = $value;
+  }
+
+  private function throwException(string $table, array &$row, string $column, string $error_message)
+  {
+    $message = sprintf('Conversion Error: %s#%d.%s: %s -> %s', $table, $row['id'], $column, var_export($row[$column], TRUE), $error_message);
+
+    throw new \Exception($message);
   }
 
 }

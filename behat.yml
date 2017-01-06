@@ -6,6 +6,7 @@ default:
       contexts:
         - AuthenticationContext: { doctrine: "@doctrine" }
         - DatabaseSetupContext: { doctrine: "@doctrine" }
+        - GrundContext: { doctrine: "@doctrine" }
         - JsonValidationContext
         - UserContext: { doctrine: "@doctrine" }
         - Behat\MinkExtension\Context\MinkContext

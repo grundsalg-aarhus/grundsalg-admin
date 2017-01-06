@@ -91,9 +91,9 @@ class Grund
     private $vej;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="husNummer", type="text", nullable=true)
+     * @ORM\Column(name="husNummer", type="integer", nullable=true)
      */
     private $husnummer;
 
@@ -143,9 +143,9 @@ class Grund
     private $auktionslutdato;
 
     /**
-     * @var string
+     * @var boolean
      *
-     * @ORM\Column(name="annonceresEj", type="string", length=50, nullable=true)
+     * @ORM\Column(name="annonceresEj", type="boolean", nullable=true)
      */
     private $annonceresej;
 
@@ -537,7 +537,7 @@ class Grund
      *   @ORM\JoinColumn(name="salgsomraadeId", referencedColumnName="id")
      * })
      */
-    private $salgsomraadeid;
+    private $salgsomraade;
 
 
 
@@ -2238,9 +2238,9 @@ class Grund
      *
      * @return Grund
      */
-    public function setSalgsomraadeid(\AppBundle\Entity\Salgsomraade $salgsomraadeid = null)
+    public function setSalgsomraade(\AppBundle\Entity\Salgsomraade $salgsomraade = null)
     {
-        $this->salgsomraadeid = $salgsomraadeid;
+        $this->salgsomraade = $salgsomraade;
 
         return $this;
     }
@@ -2250,9 +2250,9 @@ class Grund
      *
      * @return \AppBundle\Entity\Salgsomraade
      */
-    public function getSalgsomraadeid()
+    public function getSalgsomraade()
     {
-        return $this->salgsomraadeid;
+        return $this->salgsomraade;
     }
 
     public function __toString() {
