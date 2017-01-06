@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9be94309d41b8636e390f2be4d8cea67",
+    "content-hash": "8796963b0c3ee360b086b3f179a3d0e1",
     "packages": [
         {
             "name": "api-platform/core",
-            "version": "v2.0.1",
+            "version": "v2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/core.git",
-                "reference": "63c880f975435c3cb04512f1d6367a17dad9ff0d"
+                "reference": "b06fb7d1be9aa16c56fde6fcaa2626d85079bc14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/api-platform/core/zipball/63c880f975435c3cb04512f1d6367a17dad9ff0d",
-                "reference": "63c880f975435c3cb04512f1d6367a17dad9ff0d",
+                "url": "https://api.github.com/repos/api-platform/core/zipball/b06fb7d1be9aa16c56fde6fcaa2626d85079bc14",
+                "reference": "b06fb7d1be9aa16c56fde6fcaa2626d85079bc14",
                 "shasum": ""
             },
             "require": {
@@ -49,7 +49,7 @@
                 "psr/log": "^1.0",
                 "symfony/asset": "^2.7 || ^3.0",
                 "symfony/cache": "^3.1",
-                "symfony/config": "^2.7 || ^3.0",
+                "symfony/config": "^3.2",
                 "symfony/dependency-injection": "^2.7 || ^3.0",
                 "symfony/doctrine-bridge": "^2.8 || ^3.0",
                 "symfony/finder": "^2.7 || ^3.0",
@@ -101,7 +101,7 @@
                 "rest",
                 "swagger"
             ],
-            "time": "2016-12-02T13:50:49+00:00"
+            "time": "2017-01-06T09:09:15+00:00"
         },
         {
             "name": "behat/transliterator",
@@ -1113,12 +1113,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "1f97ccf3c41cc811176d0e5c142e5636842a9124"
+                "reference": "f60dd67c3f0259718c4c98702632470ce6926398"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/1f97ccf3c41cc811176d0e5c142e5636842a9124",
-                "reference": "1f97ccf3c41cc811176d0e5c142e5636842a9124",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/f60dd67c3f0259718c4c98702632470ce6926398",
+                "reference": "f60dd67c3f0259718c4c98702632470ce6926398",
                 "shasum": ""
             },
             "require": {
@@ -1131,6 +1131,7 @@
                 "symfony/twig-bundle": "^2.7 || ^3.0"
             },
             "conflict": {
+                "doctrine/doctrine-bundle": "<1.3",
                 "symfony/doctrine-bridge": "<2.7"
             },
             "require-dev": {
@@ -1180,7 +1181,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2017-01-02 10:24:18"
+            "time": "2017-01-05 10:11:08"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -2723,16 +2724,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v3.2.1",
+            "version": "v3.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "5824d423678a0cc44f3eb46efc246aecd1836dd7"
+                "reference": "ae37418e617a6e063482d931d22b1f67b23785f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/5824d423678a0cc44f3eb46efc246aecd1836dd7",
-                "reference": "5824d423678a0cc44f3eb46efc246aecd1836dd7",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/ae37418e617a6e063482d931d22b1f67b23785f9",
+                "reference": "ae37418e617a6e063482d931d22b1f67b23785f9",
                 "shasum": ""
             },
             "require": {
@@ -2800,7 +2801,6 @@
                 "symfony/validator": "self.version",
                 "symfony/var-dumper": "self.version",
                 "symfony/web-profiler-bundle": "self.version",
-                "symfony/workflow": "self.version",
                 "symfony/yaml": "self.version"
             },
             "require-dev": {
@@ -2810,7 +2810,7 @@
                 "doctrine/dbal": "~2.4",
                 "doctrine/doctrine-bundle": "~1.4",
                 "doctrine/orm": "~2.4,>=2.4.5",
-                "egulias/email-validator": "~1.2,>=1.2.8|~2.0",
+                "egulias/email-validator": "~1.2,>=1.2.1",
                 "monolog/monolog": "~1.11",
                 "ocramius/proxy-manager": "~0.4|~1.0|~2.0",
                 "phpdocumentor/reflection-docblock": "^3.0",
@@ -2822,7 +2822,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.2-dev"
+                    "dev-master": "3.1-dev"
                 }
             },
             "autoload": {
@@ -2861,7 +2861,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2016-12-13T13:20:15+00:00"
+            "time": "2016-12-13T12:52:30+00:00"
         },
         {
             "name": "twig/twig",
