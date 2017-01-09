@@ -71,7 +71,6 @@ class LegacyDataCommand extends ContainerAwareCommand
    */
   private function getData($filename)
   {
-    $content = '';
 
     if ($filename === '-') {
       $content = file_get_contents("php://stdin");
@@ -114,91 +113,130 @@ class LegacyDataCommand extends ContainerAwareCommand
     foreach ($data as $table => &$rows) {
       foreach ($rows as &$row) {
         if ($table == 'Delomraade') {
-          if (in_array($row['lokalplanId'], ['LP. 763', 'Areal ved Skovvejen, Aarhus N'], TRUE)) {
+          if (!$this->validateIdExists($data['Lokalplan'], $row['lokalplanId'])) {
             $this->setValue($table, $row, 'lokalplanId', NULL);
           }
         }
 
         if ($table == 'Salgsomraade') {
-          if (in_array($row['delomraadeId'], ['', '0', '1020-TEST'], TRUE)) {
+          if (!$this->validateIdExists($data['Delomraade'], $row['delomraadeId'])) {
             $this->setValue($table, $row, 'delomraadeId', NULL);
           }
-          if (in_array($row['landinspektorId'], ['', '0'], TRUE)) {
+          if (!$this->validateIdExists($data['Landinspektoer'], $row['landinspektorId'])) {
             $this->setValue($table, $row, 'landinspektorId', NULL);
           }
-          if (in_array($row['lokalPlanId'], ['0'], TRUE)) {
+          if (!$this->validateIdExists($data['Lokalplan'], $row['lokalPlanId'])) {
             $this->setValue($table, $row, 'lokalPlanId', NULL);
           }
-          if (in_array($row['postById'], ['0'], TRUE)) {
+          if (!$this->validateIdExists($data['PostBy'], $row['postById'])) {
             $this->setValue($table, $row, 'postById', NULL);
           }
         }
 
         if ($table == 'Grund') {
-          if (in_array($row['koeberPostById'], ['', '0', '239'], TRUE)) {
+          if (!$this->validateIdExists($data['PostBy'], $row['koeberPostById'])) {
             $this->setValue($table, $row, 'koeberPostById', NULL);
           }
-          if (in_array($row['medKoeberPostById'], ['', '0', '239'], TRUE)) {
+          if (!$this->validateIdExists($data['PostBy'], $row['medKoeberPostById'])) {
             $this->setValue($table, $row, 'medKoeberPostById', NULL);
           }
-          if (in_array($row['salgsomraadeId'], ['0', '15', '268', '271'])) {
+          if (!$this->validateIdExists($data['PostBy'], $row['postbyId'])) {
+            $this->setValue($table, $row, 'postbyId', NULL);
+          }
+          if (!$this->validateIdExists($data['Salgsomraade'], $row['salgsomraadeId'])) {
             $this->setValue($table, $row, 'salgsomraadeId', NULL);
+          }
+          if (!$this->validateIdExists($data['Landinspektoer'], $row['landInspektoerId'])) {
+            $this->setValue($table, $row, 'landInspektoerId', NULL);
           }
 
           // Ensure that "husNummer" is either null or numeric for safe column type conversion (longtext -> INT)
-          if (!is_numeric($row['husNummer'])) {
-            if (is_numeric(trim($row['husNummer']))) {
-              $this->setValue($table, $row, 'husNummer', trim($row['husNummer']));
-            } else if (empty($row['husNummer'])) {
-              $this->setValue($table, $row, 'husNummer', NULL);
-            } else {
-              $this->throwException($table, $row, 'husNummer', 'Cannot be safely converted to nummeric value');
-            }
-          }
+          $this->convertToNumeric($table, $row, 'husNummer');
 
           // Ensure that "annonceresEj" is either null or 0/1 for safe column type conversion (varchar(50) -> BOOL)
-          if ($row['annonceresEj'] === 'X') {
-            $this->setValue($table, $row, 'annonceresEj', 1);
-          } else if (empty($row['annonceresEj'])) {
-            $this->setValue($table, $row, 'annonceresEj', NULL);
-          } else {
-            $this->throwException($table, $row, 'annonceresEj', 'Cannot be safely converted to bool value');
-          }
+          $this->convertXToBoolean($table, $row, 'annonceresEj');
         }
 
         if ($table == 'Salgshistorik') {
-          // @codingStandardsIgnoreLine
-          if (in_array($row['grundId'], ['0', '96', '115', '1299', '1300', '1745', '1746', '1753', '1757', '1769', '1770', '1742', '1771', '1748', '1666', '1654'], TRUE)) {
+          if (!$this->validateIdExists($data['Grund'], $row['grundId'])) {
             $this->setValue($table, $row, 'grundId', NULL);
           }
-          if (in_array($row['koeberPostById'], ['', '0', '239'], TRUE)) {
+          if (!$this->validateIdExists($data['PostBy'], $row['koeberPostById'])) {
             $this->setValue($table, $row, 'koeberPostById', NULL);
           }
-          if (in_array($row['medKoeberPostById'], ['', '0'], TRUE)) {
+          if (!$this->validateIdExists($data['PostBy'], $row['medKoeberPostById'])) {
             $this->setValue($table, $row, 'medKoeberPostById', NULL);
           }
         }
 
         if ($table == 'Opkoeb') {
-          if (in_array($row['lpId'], ['0'], TRUE)) {
+          if (!$this->validateIdExists($data['Lokalplan'], $row['lpId'])) {
             $this->setValue($table, $row, 'lpId', NULL);
           }
+
+          // Ensure that "m2" is either null or numeric for safe column type conversion (varchar(50) -> INT)
+          $this->convertToNumeric($table, $row, 'm2');
+
+          // Ensure that "pris" is either null or numeric for safe column type conversion (varchar(50) -> INT)
+          $this->convertToNumeric($table, $row, 'pris');
+
+          // Ensure that "procentAfLP" is either null or numeric for safe column type conversion (varchar(50) -> INT)
+          $this->convertToNumeric($table, $row, 'procentAfLP');
         }
 
         if ($table == 'Interessent') {
-          if (in_array($row['koeberPostById'], ['', '0'], TRUE)) {
+          if (!$this->validateIdExists($data['PostBy'], $row['koeberPostById'])) {
             $this->setValue($table, $row, 'koeberPostById', NULL);
           }
-          if (in_array($row['medKoeberPostById'], ['', '0'], TRUE)) {
+          if (!$this->validateIdExists($data['PostBy'], $row['medKoeberPostById'])) {
             $this->setValue($table, $row, 'medKoeberPostById', NULL);
           }
         }
 
         if ($table == 'InteressentGrundMapping') {
-          // @codingStandardsIgnoreLine
-          if (in_array($row['grundId'], ['0', '115', '1746', '1747', '1748', '1749', '1753', '1757', '1758', '1759', '1760', '1770', '1772', '1773', '2427', '2427'], TRUE)) {
+          if (!$this->validateIdExists($data['Grund'], $row['grundId'])) {
             $this->setValue($table, $row, 'grundId', NULL);
           }
+
+          // Warn if either mapping id is empty - redundant row will be deleted
+          if (empty($row['grundId'])) {
+            $this->printWarning($table, $row, 'grundId', 'Row redundant if referenced id NULL - row will be deleted');
+          } else if (empty($row['interessentId'])) {
+            $this->printWarning($table, $row, 'interessentId', 'Row redundant if referenced id NULL - row will be deleted');
+          }
+
+          // Ensure that "annulleret" is either null or 0/1 for safe column type conversion (varchar(50) -> BOOL)
+          $this->convertXToBoolean($table, $row, 'annulleret');
+        }
+
+        if ($table == 'Landinspektoer') {
+          if (!$this->validateIdExists($data['PostBy'], $row['postnrId'])) {
+            $this->setValue($table, $row, 'postnrId', NULL);
+          }
+
+          // Ensure that "active" is either null or 0/1 for safe column type conversion (int(11) -> BOOL)
+          if ($row['active'] !== 1 && $row['active'] !== 0) {
+            $this->throwException($table, $row, 'active', 'Cannot be safely converted to bool value');
+          }
+        }
+
+        if ($table == 'Lokalsamfund') {
+          // Ensure that "active" is either null or 0/1 for safe column type conversion (int(11) -> BOOL)
+          if ($row['active'] !== 1 && $row['active'] !== 0) {
+            $this->throwException($table, $row, 'active', 'Cannot be safely converted to bool value');
+          }
+        }
+
+        if ($table == 'Lokalplan') {
+          if (!$this->validateIdExists($data['Lokalsamfund'], $row['lsnr'])) {
+            $this->setValue($table, $row, 'lsnr', NULL);
+          }
+
+          // Ensure that "samletAreal" is either null or numeric for safe column type conversion (LONGTEXT -> INT)
+          $this->convertToNumeric($table, $row, 'samletAreal');
+
+          // Ensure that "salgbartAreal" is either null or numeric for safe column type conversion (LONGTEXT -> INT)
+          $this->convertToNumeric($table, $row, 'salgbartAreal');
         }
       }
     }
@@ -226,11 +264,98 @@ class LegacyDataCommand extends ContainerAwareCommand
     $row[$column] = $value;
   }
 
+  /**
+   * Convert value in import row to numeric value.
+   *
+   * @param string $table
+   *   The table name.
+   * @param array $row
+   *   The row.
+   * @param string $column
+   *   The column name.
+   */
+  private function convertToNumeric(string $table, array &$row, string $column)
+  {
+    if (is_numeric(trim($row[$column]))) {
+      $this->setValue($table, $row, $column, trim($row[$column]));
+    } else if (empty($row[$column])) {
+      $this->setValue($table, $row, $column, NULL);
+    } else {
+      $this->throwException($table, $row, $column, 'Cannot be safely converted to nummeric value');
+    }
+  }
+
+  /**
+   * Convert value in import row to boolean value.
+   *
+   * @param string $table
+   *   The table name.
+   * @param array $row
+   *   The row.
+   * @param string $column
+   *   The column name.
+   */
+  private function convertXToBoolean(string $table, array &$row, string $column)
+  {
+    if ($row[$column] === 'X') {
+      $this->setValue($table, $row, $column, 1);
+    } else if (empty($row[$column])) {
+      $this->setValue($table, $row, $column, 0);
+    } else {
+      $this->throwException($table, $row, $column, 'Cannot be safely converted to bool value');
+    }
+  }
+
+  /**
+   * Set value in import row.
+   *
+   * @param string $table
+   *   The table name.
+   * @param array $row
+   *   The row.
+   * @param string $column
+   *   The column name.
+   * @param string $message
+   *   The warning message.
+   */
+  private function printWarning(string $table, array &$row, string $column, $message)
+  {
+    $output = $this->output instanceof ConsoleOutputInterface ? $this->output->getErrorOutput() : $this->output;
+
+    $output->writeln(sprintf('<comment>Warning: %s#%d.%s: %s -> %s</comment>', $table, $row['id'], $column, var_export($row[$column], TRUE), $message));
+  }
+
+  /**
+   * Throw exception if for given table, row, column with error message
+   *
+   * @param string $table
+   * @param array $row
+   * @param string $column
+   * @param string $error_message
+   * @throws \Exception
+   */
   private function throwException(string $table, array &$row, string $column, string $error_message)
   {
     $message = sprintf('Conversion Error: %s#%d.%s: %s -> %s', $table, $row['id'], $column, var_export($row[$column], TRUE), $error_message);
 
     throw new \Exception($message);
+  }
+
+  /**
+   * Validate that given id exists in referenced table
+   *
+   * @param array $table
+   * @param $id
+   * @return bool
+   */
+  private function validateIdExists(array &$table, $id) {
+    foreach ($table as $row) {
+      if($row['id'] === $id) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
 }

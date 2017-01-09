@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Entity\Interessentgrundmapping;
+use AppBundle\Entity\InteressentGrundMapping;
 use AppBundle\Form\InteressentgrundmappingType;
 
 /**
@@ -69,7 +69,7 @@ class InteressentgrundmappingController extends BaseController
      */
     public function newAction(Request $request)
     {
-        $interessentgrundmapping = new Interessentgrundmapping();
+        $interessentgrundmapping = new InteressentGrundMapping();
         $form = $this->createForm('AppBundle\Form\InteressentgrundmappingType', $interessentgrundmapping);
         $form->handleRequest($request);
 
@@ -95,7 +95,7 @@ class InteressentgrundmappingController extends BaseController
      * @Route("/{id}", name="interessentgrundmapping_show")
      * @Method("GET")
      */
-    public function showAction(Interessentgrundmapping $interessentgrundmapping)
+    public function showAction(InteressentGrundMapping $interessentgrundmapping)
     {
     $this->breadcrumbs->addItem($interessentgrundmapping, $this->generateUrl('interessentgrundmapping_show', array('id' => $interessentgrundmapping->getId())));
 
@@ -113,7 +113,7 @@ class InteressentgrundmappingController extends BaseController
      * @Route("/{id}/edit", name="interessentgrundmapping_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Interessentgrundmapping $interessentgrundmapping )
+    public function editAction(Request $request, InteressentGrundMapping $interessentgrundmapping )
     {
         $deleteForm = $this->createDeleteForm($interessentgrundmapping);
         $editForm = $this->createForm('AppBundle\Form\InteressentgrundmappingType', $interessentgrundmapping);
@@ -143,7 +143,7 @@ class InteressentgrundmappingController extends BaseController
      * @Route("/{id}", name="interessentgrundmapping_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, Interessentgrundmapping $interessentgrundmapping)
+    public function deleteAction(Request $request, InteressentGrundMapping $interessentgrundmapping)
     {
         $form = $this->createDeleteForm($interessentgrundmapping);
         $form->handleRequest($request);
@@ -160,11 +160,11 @@ class InteressentgrundmappingController extends BaseController
     /**
      * Creates a form to delete a Interessentgrundmapping entity.
      *
-     * @param Interessentgrundmapping $interessentgrundmapping The Interessentgrundmapping entity
+     * @param InteressentGrundMapping $interessentgrundmapping The Interessentgrundmapping entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Interessentgrundmapping $interessentgrundmapping)
+    private function createDeleteForm(InteressentGrundMapping $interessentgrundmapping)
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('interessentgrundmapping_delete', array('id' => $interessentgrundmapping->getId())))

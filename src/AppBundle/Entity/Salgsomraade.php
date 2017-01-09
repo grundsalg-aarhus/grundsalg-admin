@@ -112,7 +112,7 @@ class Salgsomraade
    *   @ORM\JoinColumn(name="landinspektorId", referencedColumnName="id")
    * })
    */
-  private $landinspektorid;
+  private $landinspektoer;
 
   /**
    * @var \Delomraade
@@ -122,7 +122,7 @@ class Salgsomraade
    *   @ORM\JoinColumn(name="delomraadeId", referencedColumnName="id")
    * })
    */
-  private $delomraadeid;
+  private $delomraade;
 
   /**
    * @var \Lokalplan
@@ -132,7 +132,7 @@ class Salgsomraade
    *   @ORM\JoinColumn(name="lokalplanId", referencedColumnName="id")
    * })
    */
-  private $lokalplanid;
+  private $lokalplan;
 
   /**
    * @var \Postby
@@ -142,7 +142,7 @@ class Salgsomraade
    *   @ORM\JoinColumn(name="postById", referencedColumnName="id")
    * })
    */
-  private $postbyid;
+  private $postby;
 
 
   /**
@@ -422,13 +422,13 @@ class Salgsomraade
   /**
    * Set landinspektorid
    *
-   * @param \AppBundle\Entity\Landinspektoer $landinspektorid
+   * @param \AppBundle\Entity\Landinspektoer $landinspektoer
    *
    * @return Salgsomraade
    */
-  public function setLandinspektorid(\AppBundle\Entity\Landinspektoer $landinspektorid = null)
+  public function setLandinspektoer(\AppBundle\Entity\Landinspektoer $landinspektoer = null)
   {
-    $this->landinspektorid = $landinspektorid;
+    $this->landinspektoer = $landinspektoer;
 
     return $this;
   }
@@ -438,21 +438,21 @@ class Salgsomraade
    *
    * @return \AppBundle\Entity\Landinspektoer
    */
-  public function getLandinspektorid()
+  public function getLandinspektoer()
   {
-    return $this->landinspektorid;
+    return $this->landinspektoer;
   }
 
   /**
    * Set delomraadeid
    *
-   * @param \AppBundle\Entity\Delomraade $delomraadeid
+   * @param \AppBundle\Entity\Delomraade $delomraade
    *
    * @return Salgsomraade
    */
-  public function setDelomraadeid(\AppBundle\Entity\Delomraade $delomraadeid = null)
+  public function setDelomraade(\AppBundle\Entity\Delomraade $delomraade = null)
   {
-    $this->delomraadeid = $delomraadeid;
+    $this->delomraade = $delomraade;
 
     return $this;
   }
@@ -462,21 +462,21 @@ class Salgsomraade
    *
    * @return \AppBundle\Entity\Delomraade
    */
-  public function getDelomraadeid()
+  public function getDelomraade()
   {
-    return $this->delomraadeid;
+    return $this->delomraade;
   }
 
   /**
    * Set lokalplanid
    *
-   * @param \AppBundle\Entity\Lokalplan $lokalplanid
+   * @param \AppBundle\Entity\Lokalplan $lokalplan
    *
    * @return Salgsomraade
    */
-  public function setLokalplanid(\AppBundle\Entity\Lokalplan $lokalplanid = null)
+  public function setLokalplan(\AppBundle\Entity\Lokalplan $lokalplan = null)
   {
-    $this->lokalplanid = $lokalplanid;
+    $this->lokalplan = $lokalplan;
 
     return $this;
   }
@@ -486,21 +486,21 @@ class Salgsomraade
    *
    * @return \AppBundle\Entity\Lokalplan
    */
-  public function getLokalplanid()
+  public function getLokalplan()
   {
-    return $this->lokalplanid;
+    return $this->lokalplan;
   }
 
   /**
    * Set postbyid
    *
-   * @param \AppBundle\Entity\Postby $postbyid
+   * @param \AppBundle\Entity\Postby $postby
    *
    * @return Salgsomraade
    */
-  public function setPostbyid(\AppBundle\Entity\Postby $postbyid = null)
+  public function setPostby(\AppBundle\Entity\Postby $postby = null)
   {
-    $this->postbyid = $postbyid;
+    $this->postby = $postby;
 
     return $this;
   }
@@ -510,9 +510,9 @@ class Salgsomraade
    *
    * @return \AppBundle\Entity\Postby
    */
-  public function getPostbyid()
+  public function getPostby()
   {
-    return $this->postbyid;
+    return $this->postby;
   }
 
   public function __toString()

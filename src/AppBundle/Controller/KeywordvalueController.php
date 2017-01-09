@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Entity\Keywordvalue;
+use AppBundle\Entity\KeywordValue;
 use AppBundle\Form\KeywordvalueType;
 
 /**
@@ -69,7 +69,7 @@ class KeywordvalueController extends BaseController
      */
     public function newAction(Request $request)
     {
-        $keywordvalue = new Keywordvalue();
+        $keywordvalue = new KeywordValue();
         $form = $this->createForm('AppBundle\Form\KeywordvalueType', $keywordvalue);
         $form->handleRequest($request);
 
@@ -95,7 +95,7 @@ class KeywordvalueController extends BaseController
      * @Route("/{id}", name="keywordvalue_show")
      * @Method("GET")
      */
-    public function showAction(Keywordvalue $keywordvalue)
+    public function showAction(KeywordValue $keywordvalue)
     {
     $this->breadcrumbs->addItem($keywordvalue, $this->generateUrl('keywordvalue_show', array('id' => $keywordvalue->getId())));
 
@@ -113,7 +113,7 @@ class KeywordvalueController extends BaseController
      * @Route("/{id}/edit", name="keywordvalue_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Keywordvalue $keywordvalue )
+    public function editAction(Request $request, KeywordValue $keywordvalue )
     {
         $deleteForm = $this->createDeleteForm($keywordvalue);
         $editForm = $this->createForm('AppBundle\Form\KeywordvalueType', $keywordvalue);
@@ -143,7 +143,7 @@ class KeywordvalueController extends BaseController
      * @Route("/{id}", name="keywordvalue_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, Keywordvalue $keywordvalue)
+    public function deleteAction(Request $request, KeywordValue $keywordvalue)
     {
         $form = $this->createDeleteForm($keywordvalue);
         $form->handleRequest($request);
@@ -160,11 +160,11 @@ class KeywordvalueController extends BaseController
     /**
      * Creates a form to delete a Keywordvalue entity.
      *
-     * @param Keywordvalue $keywordvalue The Keywordvalue entity
+     * @param KeywordValue $keywordvalue The Keywordvalue entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Keywordvalue $keywordvalue)
+    private function createDeleteForm(KeywordValue $keywordvalue)
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('keywordvalue_delete', array('id' => $keywordvalue->getId())))
