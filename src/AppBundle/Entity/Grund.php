@@ -335,12 +335,12 @@ class Grund
   /**
    * @var \LandInspektoer
    *
-   * @ORM\ManyToOne(targetEntity="landInspektoer")
+   * @ORM\ManyToOne(targetEntity="Landinspektoer")
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="landInspektoerId", referencedColumnName="id", nullable=true)
    * })
    */
-  private $landInspektoer;
+  private $landinspektoer;
 
   /**
    * @var \DateTime
@@ -1587,15 +1587,15 @@ class Grund
   }
 
   /**
-   * Set landinspektoerid
+   * Set Landinspektoer
    *
-   * @param string $landInspektoer
+   * @param string $landinspektoer
    *
    * @return Grund
    */
-  public function setLandInspektoer($landInspektoer)
+  public function setLandinspektoer($landinspektoer)
   {
-    $this->landInspektoer = $landInspektoer;
+    $this->landinspektoer = $landinspektoer;
 
     return $this;
   }
@@ -1605,9 +1605,9 @@ class Grund
    *
    * @return string
    */
-  public function getLandInspektoer()
+  public function getLandinspektoer()
   {
-    return $this->landInspektoer;
+    return $this->landinspektoer;
   }
 
   /**

@@ -23,7 +23,7 @@
         <tr>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalplan.id'|trans, 'id') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalplan.nr'|trans, 'nr') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalplan.lsnr'|trans, 'lsnr') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalplan.lokalsamfund'|trans, 'lokalsamfund') }}</span></div></th>
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalplan.titel'|trans, 'titel') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalplan.projektleder'|trans, 'projektleder') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalplan.telefon'|trans, 'telefon') }}</span></div></th>                
@@ -43,7 +43,7 @@
         <tr>
                     <td><a href="{{ path('lokalplan_show', { 'id': lokalplan.id }) }}">{{ lokalplan.id }}</a></td>
                     <td>{{ lokalplan.nr }}</td>
-                    <td>{{ lokalplan.lsnr }}</td>
+                    <td>{{ lokalplan.lokalsamfund }}</td>
                     <td>{{ lokalplan.titel }}</td>
                     <td>{{ lokalplan.projektleder }}</td>
                     <td>{{ lokalplan.telefon }}</td>
