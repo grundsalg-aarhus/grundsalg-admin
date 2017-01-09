@@ -19,305 +19,306 @@ class Lokalplan
 
 
   /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="bigint", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+   * @var integer
+   *
+   * @ORM\Column(name="id", type="bigint", nullable=false)
+   * @ORM\Id
+   * @ORM\GeneratedValue(strategy="IDENTITY")
+   */
+  private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="nr", type="text", nullable=false)
-     */
-    private $nr;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="nr", type="text", nullable=false)
+   */
+  private $nr;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="lsnr", type="text", nullable=false)
-     */
-    private $lsnr;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="lsnr", type="text", nullable=false)
+   */
+  private $lsnr;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="titel", type="text", nullable=false)
-     */
-    private $titel;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="titel", type="text", nullable=false)
+   */
+  private $titel;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="projektLeder", type="text", nullable=false)
-     */
-    private $projektleder;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="projektLeder", type="text", nullable=false)
+   */
+  private $projektleder;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="telefon", type="text", nullable=false)
-     */
-    private $telefon;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="telefon", type="text", nullable=false)
+   */
+  private $telefon;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="lokalPlanLink", type="text", nullable=false)
-     */
-    private $lokalplanlink;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="lokalPlanLink", type="text", nullable=false)
+   */
+  private $lokalplanlink;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="samletAreal", type="text", nullable=false)
-     */
-    private $samletareal;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="samletAreal", type="text", nullable=false)
+   */
+  private $samletareal;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="salgbartAreal", type="text", nullable=false)
-     */
-    private $salgbartareal;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="salgbartAreal", type="text", nullable=false)
+   */
+  private $salgbartareal;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="forbrugsAndel", type="text", nullable=false)
-     */
-    private $forbrugsandel;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="forbrugsAndel", type="text", nullable=false)
+   */
+  private $forbrugsandel;
 
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+  /**
+   * Get id
+   *
+   * @return integer
+   */
+  public function getId()
+  {
+    return $this->id;
+  }
 
-    /**
-     * Set nr
-     *
-     * @param string $nr
-     *
-     * @return Lokalplan
-     */
-    public function setNr($nr)
-    {
-        $this->nr = $nr;
+  /**
+   * Set nr
+   *
+   * @param string $nr
+   *
+   * @return Lokalplan
+   */
+  public function setNr($nr)
+  {
+    $this->nr = $nr;
 
-        return $this;
-    }
+    return $this;
+  }
 
-    /**
-     * Get nr
-     *
-     * @return string
-     */
-    public function getNr()
-    {
-        return $this->nr;
-    }
+  /**
+   * Get nr
+   *
+   * @return string
+   */
+  public function getNr()
+  {
+    return $this->nr;
+  }
 
-    /**
-     * Set lsnr
-     *
-     * @param string $lsnr
-     *
-     * @return Lokalplan
-     */
-    public function setLsnr($lsnr)
-    {
-        $this->lsnr = $lsnr;
+  /**
+   * Set lsnr
+   *
+   * @param string $lsnr
+   *
+   * @return Lokalplan
+   */
+  public function setLsnr($lsnr)
+  {
+    $this->lsnr = $lsnr;
 
-        return $this;
-    }
+    return $this;
+  }
 
-    /**
-     * Get lsnr
-     *
-     * @return string
-     */
-    public function getLsnr()
-    {
-        return $this->lsnr;
-    }
+  /**
+   * Get lsnr
+   *
+   * @return string
+   */
+  public function getLsnr()
+  {
+    return $this->lsnr;
+  }
 
-    /**
-     * Set titel
-     *
-     * @param string $titel
-     *
-     * @return Lokalplan
-     */
-    public function setTitel($titel)
-    {
-        $this->titel = $titel;
+  /**
+   * Set titel
+   *
+   * @param string $titel
+   *
+   * @return Lokalplan
+   */
+  public function setTitel($titel)
+  {
+    $this->titel = $titel;
 
-        return $this;
-    }
+    return $this;
+  }
 
-    /**
-     * Get titel
-     *
-     * @return string
-     */
-    public function getTitel()
-    {
-        return $this->titel;
-    }
+  /**
+   * Get titel
+   *
+   * @return string
+   */
+  public function getTitel()
+  {
+    return $this->titel;
+  }
 
-    /**
-     * Set projektleder
-     *
-     * @param string $projektleder
-     *
-     * @return Lokalplan
-     */
-    public function setProjektleder($projektleder)
-    {
-        $this->projektleder = $projektleder;
+  /**
+   * Set projektleder
+   *
+   * @param string $projektleder
+   *
+   * @return Lokalplan
+   */
+  public function setProjektleder($projektleder)
+  {
+    $this->projektleder = $projektleder;
 
-        return $this;
-    }
+    return $this;
+  }
 
-    /**
-     * Get projektleder
-     *
-     * @return string
-     */
-    public function getProjektleder()
-    {
-        return $this->projektleder;
-    }
+  /**
+   * Get projektleder
+   *
+   * @return string
+   */
+  public function getProjektleder()
+  {
+    return $this->projektleder;
+  }
 
-    /**
-     * Set telefon
-     *
-     * @param string $telefon
-     *
-     * @return Lokalplan
-     */
-    public function setTelefon($telefon)
-    {
-        $this->telefon = $telefon;
+  /**
+   * Set telefon
+   *
+   * @param string $telefon
+   *
+   * @return Lokalplan
+   */
+  public function setTelefon($telefon)
+  {
+    $this->telefon = $telefon;
 
-        return $this;
-    }
+    return $this;
+  }
 
-    /**
-     * Get telefon
-     *
-     * @return string
-     */
-    public function getTelefon()
-    {
-        return $this->telefon;
-    }
+  /**
+   * Get telefon
+   *
+   * @return string
+   */
+  public function getTelefon()
+  {
+    return $this->telefon;
+  }
 
-    /**
-     * Set lokalplanlink
-     *
-     * @param string $lokalplanlink
-     *
-     * @return Lokalplan
-     */
-    public function setLokalplanlink($lokalplanlink)
-    {
-        $this->lokalplanlink = $lokalplanlink;
+  /**
+   * Set lokalplanlink
+   *
+   * @param string $lokalplanlink
+   *
+   * @return Lokalplan
+   */
+  public function setLokalplanlink($lokalplanlink)
+  {
+    $this->lokalplanlink = $lokalplanlink;
 
-        return $this;
-    }
+    return $this;
+  }
 
-    /**
-     * Get lokalplanlink
-     *
-     * @return string
-     */
-    public function getLokalplanlink()
-    {
-        return $this->lokalplanlink;
-    }
+  /**
+   * Get lokalplanlink
+   *
+   * @return string
+   */
+  public function getLokalplanlink()
+  {
+    return $this->lokalplanlink;
+  }
 
-    /**
-     * Set samletareal
-     *
-     * @param string $samletareal
-     *
-     * @return Lokalplan
-     */
-    public function setSamletareal($samletareal)
-    {
-        $this->samletareal = $samletareal;
+  /**
+   * Set samletareal
+   *
+   * @param string $samletareal
+   *
+   * @return Lokalplan
+   */
+  public function setSamletareal($samletareal)
+  {
+    $this->samletareal = $samletareal;
 
-        return $this;
-    }
+    return $this;
+  }
 
-    /**
-     * Get samletareal
-     *
-     * @return string
-     */
-    public function getSamletareal()
-    {
-        return $this->samletareal;
-    }
+  /**
+   * Get samletareal
+   *
+   * @return string
+   */
+  public function getSamletareal()
+  {
+    return $this->samletareal;
+  }
 
-    /**
-     * Set salgbartareal
-     *
-     * @param string $salgbartareal
-     *
-     * @return Lokalplan
-     */
-    public function setSalgbartareal($salgbartareal)
-    {
-        $this->salgbartareal = $salgbartareal;
+  /**
+   * Set salgbartareal
+   *
+   * @param string $salgbartareal
+   *
+   * @return Lokalplan
+   */
+  public function setSalgbartareal($salgbartareal)
+  {
+    $this->salgbartareal = $salgbartareal;
 
-        return $this;
-    }
+    return $this;
+  }
 
-    /**
-     * Get salgbartareal
-     *
-     * @return string
-     */
-    public function getSalgbartareal()
-    {
-        return $this->salgbartareal;
-    }
+  /**
+   * Get salgbartareal
+   *
+   * @return string
+   */
+  public function getSalgbartareal()
+  {
+    return $this->salgbartareal;
+  }
 
-    /**
-     * Set forbrugsandel
-     *
-     * @param string $forbrugsandel
-     *
-     * @return Lokalplan
-     */
-    public function setForbrugsandel($forbrugsandel)
-    {
-        $this->forbrugsandel = $forbrugsandel;
+  /**
+   * Set forbrugsandel
+   *
+   * @param string $forbrugsandel
+   *
+   * @return Lokalplan
+   */
+  public function setForbrugsandel($forbrugsandel)
+  {
+    $this->forbrugsandel = $forbrugsandel;
 
-        return $this;
-    }
+    return $this;
+  }
 
-    /**
-     * Get forbrugsandel
-     *
-     * @return string
-     */
-    public function getForbrugsandel()
-    {
-        return $this->forbrugsandel;
-    }
+  /**
+   * Get forbrugsandel
+   *
+   * @return string
+   */
+  public function getForbrugsandel()
+  {
+    return $this->forbrugsandel;
+  }
 
-    public function __toString() {
-      return $this->titel;
-    }
+  public function __toString()
+  {
+    return $this->titel;
+  }
 }

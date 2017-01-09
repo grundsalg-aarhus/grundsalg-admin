@@ -19,271 +19,275 @@ class Landinspektoer
 
 
   /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="bigint", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+   * @var integer
+   *
+   * @ORM\Column(name="id", type="bigint", nullable=false)
+   * @ORM\Id
+   * @ORM\GeneratedValue(strategy="IDENTITY")
+   */
+  private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="adresse", type="text", nullable=false)
-     */
-    private $adresse;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="adresse", type="text", nullable=false)
+   */
+  private $adresse;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="text", nullable=false)
-     */
-    private $email;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="email", type="text", nullable=false)
+   */
+  private $email;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="mobil", type="text", nullable=false)
-     */
-    private $mobil;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="mobil", type="text", nullable=false)
+   */
+  private $mobil;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="navn", type="text", nullable=false)
-     */
-    private $navn;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="navn", type="text", nullable=false)
+   */
+  private $navn;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="notat", type="text", nullable=false)
-     */
-    private $notat;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="notat", type="text", nullable=false)
+   */
+  private $notat;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="telefon", type="text", nullable=false)
-     */
-    private $telefon;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="telefon", type="text", nullable=false)
+   */
+  private $telefon;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="postnrId", type="bigint", nullable=false)
-     */
-    private $postnrid;
+  /**
+   * @var integer
+   *
+   * @ORM\Column(name="postnrId", type="bigint", nullable=false)
+   */
+  private $postnrid;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="active", type="boolean", nullable=false)
-     */
-    private $active;
+  /**
+   * @var integer
+   *
+   * @ORM\Column(name="active", type="boolean", nullable=false)
+   */
+  private $active;
 
 
+  /**
+   * Get id
+   *
+   * @return integer
+   */
+  public function getId()
+  {
+    return $this->id;
+  }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+  /**
+   * Set adresse
+   *
+   * @param string $adresse
+   *
+   * @return Landinspektoer
+   */
+  public function setAdresse($adresse)
+  {
+    $this->adresse = $adresse;
 
-    /**
-     * Set adresse
-     *
-     * @param string $adresse
-     *
-     * @return Landinspektoer
-     */
-    public function setAdresse($adresse)
-    {
-        $this->adresse = $adresse;
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Get adresse
+   *
+   * @return string
+   */
+  public function getAdresse()
+  {
+    return $this->adresse;
+  }
 
-    /**
-     * Get adresse
-     *
-     * @return string
-     */
-    public function getAdresse()
-    {
-        return $this->adresse;
-    }
+  /**
+   * Set email
+   *
+   * @param string $email
+   *
+   * @return Landinspektoer
+   */
+  public function setEmail($email)
+  {
+    $this->email = $email;
 
-    /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return Landinspektoer
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Get email
+   *
+   * @return string
+   */
+  public function getEmail()
+  {
+    return $this->email;
+  }
 
-    /**
-     * Get email
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
+  /**
+   * Set mobil
+   *
+   * @param string $mobil
+   *
+   * @return Landinspektoer
+   */
+  public function setMobil($mobil)
+  {
+    $this->mobil = $mobil;
 
-    /**
-     * Set mobil
-     *
-     * @param string $mobil
-     *
-     * @return Landinspektoer
-     */
-    public function setMobil($mobil)
-    {
-        $this->mobil = $mobil;
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Get mobil
+   *
+   * @return string
+   */
+  public function getMobil()
+  {
+    return $this->mobil;
+  }
 
-    /**
-     * Get mobil
-     *
-     * @return string
-     */
-    public function getMobil()
-    {
-        return $this->mobil;
-    }
+  /**
+   * Set navn
+   *
+   * @param string $navn
+   *
+   * @return Landinspektoer
+   */
+  public function setNavn($navn)
+  {
+    $this->navn = $navn;
 
-    /**
-     * Set navn
-     *
-     * @param string $navn
-     *
-     * @return Landinspektoer
-     */
-    public function setNavn($navn)
-    {
-        $this->navn = $navn;
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Get navn
+   *
+   * @return string
+   */
+  public function getNavn()
+  {
+    return $this->navn;
+  }
 
-    /**
-     * Get navn
-     *
-     * @return string
-     */
-    public function getNavn()
-    {
-        return $this->navn;
-    }
+  /**
+   * Set notat
+   *
+   * @param string $notat
+   *
+   * @return Landinspektoer
+   */
+  public function setNotat($notat)
+  {
+    $this->notat = $notat;
 
-    /**
-     * Set notat
-     *
-     * @param string $notat
-     *
-     * @return Landinspektoer
-     */
-    public function setNotat($notat)
-    {
-        $this->notat = $notat;
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Get notat
+   *
+   * @return string
+   */
+  public function getNotat()
+  {
+    return $this->notat;
+  }
 
-    /**
-     * Get notat
-     *
-     * @return string
-     */
-    public function getNotat()
-    {
-        return $this->notat;
-    }
+  /**
+   * Set telefon
+   *
+   * @param string $telefon
+   *
+   * @return Landinspektoer
+   */
+  public function setTelefon($telefon)
+  {
+    $this->telefon = $telefon;
 
-    /**
-     * Set telefon
-     *
-     * @param string $telefon
-     *
-     * @return Landinspektoer
-     */
-    public function setTelefon($telefon)
-    {
-        $this->telefon = $telefon;
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Get telefon
+   *
+   * @return string
+   */
+  public function getTelefon()
+  {
+    return $this->telefon;
+  }
 
-    /**
-     * Get telefon
-     *
-     * @return string
-     */
-    public function getTelefon()
-    {
-        return $this->telefon;
-    }
+  /**
+   * Set postnrid
+   *
+   * @param integer $postnrid
+   *
+   * @return Landinspektoer
+   */
+  public function setPostnrid($postnrid)
+  {
+    $this->postnrid = $postnrid;
 
-    /**
-     * Set postnrid
-     *
-     * @param integer $postnrid
-     *
-     * @return Landinspektoer
-     */
-    public function setPostnrid($postnrid)
-    {
-        $this->postnrid = $postnrid;
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Get postnrid
+   *
+   * @return integer
+   */
+  public function getPostnrid()
+  {
+    return $this->postnrid;
+  }
 
-    /**
-     * Get postnrid
-     *
-     * @return integer
-     */
-    public function getPostnrid()
-    {
-        return $this->postnrid;
-    }
+  /**
+   * Set active
+   *
+   * @param integer $active
+   *
+   * @return Landinspektoer
+   */
+  public function setActive($active)
+  {
+    $this->active = $active;
 
-    /**
-     * Set active
-     *
-     * @param integer $active
-     *
-     * @return Landinspektoer
-     */
-    public function setActive($active)
-    {
-        $this->active = $active;
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Get active
+   *
+   * @return integer
+   */
+  public function getActive()
+  {
+    return $this->active;
+  }
 
-    /**
-     * Get active
-     *
-     * @return integer
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-public function __toString() { return $this->navn; }}
+  public function __toString()
+  {
+    return $this->navn;
+  }
+}
