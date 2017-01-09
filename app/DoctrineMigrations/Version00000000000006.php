@@ -28,6 +28,14 @@ class Version00000000000006 extends AbstractMigration
     // "import-legacy-data" command throws exception for non-safe values
     $this->addSql('ALTER TABLE Grund CHANGE annonceresEj annonceresEj BOOLEAN DEFAULT NULL');
 
+    // int(11) to bool/tinyint conversion - assumes only safe values in DB
+    // "import-legacy-data" command throws exception for non-safe values
+    $this->addSql('ALTER TABLE Landinspektoer CHANGE active active BOOLEAN NOT NULL');
+
+    // int(11) to bool/tinyint conversion - assumes only safe values in DB
+    // "import-legacy-data" command throws exception for non-safe values
+    $this->addSql('ALTER TABLE Lokalsamfund CHANGE active active BOOLEAN NOT NULL');
+
   }
 
   /**

@@ -79,7 +79,7 @@ class Landinspektoer
     /**
      * @var integer
      *
-     * @ORM\Column(name="active", type="integer", nullable=false)
+     * @ORM\Column(name="active", type="boolean", nullable=false)
      */
     private $active;
 
