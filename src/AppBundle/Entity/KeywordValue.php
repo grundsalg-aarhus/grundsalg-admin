@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="KeywordValue", indexes={@ORM\Index(name="fk_KeywordValue_keywordId", columns={"keywordId"})})
  * @ORM\Entity
  */
-class Keywordvalue
+class KeywordValue
 {
   /**
    * @var integer
@@ -43,7 +43,7 @@ class Keywordvalue
    *   @ORM\JoinColumn(name="keywordId", referencedColumnName="id")
    * })
    */
-  private $keywordid;
+  private $keyword;
 
 
   /**
@@ -61,7 +61,7 @@ class Keywordvalue
    *
    * @param string $display
    *
-   * @return Keywordvalue
+   * @return KeywordValue
    */
   public function setDisplay($display)
   {
@@ -85,7 +85,7 @@ class Keywordvalue
    *
    * @param string $value
    *
-   * @return Keywordvalue
+   * @return KeywordValue
    */
   public function setValue($value)
   {
@@ -107,13 +107,13 @@ class Keywordvalue
   /**
    * Set keywordid
    *
-   * @param \AppBundle\Entity\Keyword $keywordid
+   * @param \AppBundle\Entity\Keyword $keyword
    *
-   * @return Keywordvalue
+   * @return KeywordValue
    */
-  public function setKeywordid(\AppBundle\Entity\Keyword $keywordid = null)
+  public function setKeyword(\AppBundle\Entity\Keyword $keyword = null)
   {
-    $this->keywordid = $keywordid;
+    $this->keyword = $keyword;
 
     return $this;
   }
@@ -123,9 +123,9 @@ class Keywordvalue
    *
    * @return \AppBundle\Entity\Keyword
    */
-  public function getKeywordid()
+  public function getKeyword()
   {
-    return $this->keywordid;
+    return $this->keyword;
   }
 
   public function __toString()
