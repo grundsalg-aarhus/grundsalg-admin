@@ -35,7 +35,8 @@
         "knplabs/knp-paginator-bundle": "~2.5",
         "stof/doctrine-extensions-bundle": "~1.2",
         "api-platform/core": "^2.0",
-        "lexik/jwt-authentication-bundle": "^2.0"
+        "lexik/jwt-authentication-bundle": "^2.0",
+        "guzzlehttp/guzzle": "^6.2"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

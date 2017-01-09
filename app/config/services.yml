@@ -18,3 +18,7 @@ services:
     arguments: ['@translator']
     tags:
       - {name: "twig.extension"}
+
+  grundsalg.communication:
+    class: AppBundle\Service\GrundsalgCommunicationService
+    arguments: ['@service_container']
