@@ -20,14 +20,26 @@ class Version00000000000004 extends AbstractMigration
     // this up() migration is auto-generated, please modify it to your needs
     $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-    $entities = ['Delomraade', 'Grund', 'Interessent', 'Landinspektoer', 'Lokalplan', 'Lokalsamfund', 'Opkoeb', 'PostBy', 'Salgshistorik', 'Salgsomraade'];
+    $entities = [
+      // Table name, Last Coloumn Name
+      ['Delomraade', 'mulighedFor'],
+      ['Grund', 'notat'],
+      ['Interessent', 'notat'],
+      ['Landinspektoer', 'active'],
+      ['Lokalplan', 'forbrugsAndel'],
+      ['Lokalsamfund', 'active'],
+      ['Opkoeb', 'procentAfLP'],
+      ['PostBy', 'city'],
+      ['Salgshistorik', 'notat'],
+      ['Salgsomraade', 'lokalplanId']
+    ];
 
     foreach ($entities as $entity) {
-      $this->addSql('ALTER TABLE '.$entity.' CHANGE id id BIGINT AUTO_INCREMENT NOT NULL');
-      $this->addSql('ALTER TABLE '.$entity.' CHANGE createdDate created_at DATETIME NOT NULL');
-      $this->addSql('ALTER TABLE '.$entity.' CHANGE createdBy created_by VARCHAR(255) DEFAULT NULL');
-      $this->addSql('ALTER TABLE '.$entity.' CHANGE modifiedDate updated_at DATETIME NOT NULL');
-      $this->addSql('ALTER TABLE '.$entity.' CHANGE modifiedBy updated_by VARCHAR(255) DEFAULT NULL');
+      $this->addSql('ALTER TABLE '.$entity[0].' CHANGE id id BIGINT AUTO_INCREMENT NOT NULL');
+      $this->addSql('ALTER TABLE '.$entity[0].' CHANGE createdDate created_at DATETIME NOT NULL AFTER '.$entity[1]);
+      $this->addSql('ALTER TABLE '.$entity[0].' CHANGE createdBy created_by VARCHAR(255) DEFAULT NULL AFTER created_at');
+      $this->addSql('ALTER TABLE '.$entity[0].' CHANGE modifiedDate updated_at DATETIME NOT NULL AFTER created_by');
+      $this->addSql('ALTER TABLE '.$entity[0].' CHANGE modifiedBy updated_by VARCHAR(255) DEFAULT NULL AFTER updated_at');
     }
 
     $this->addSql('ALTER TABLE Grund CHANGE postbyId postbyId BIGINT DEFAULT NULL');
