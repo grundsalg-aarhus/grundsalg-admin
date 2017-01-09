@@ -31,6 +31,9 @@ class Version00000000000005 extends AbstractMigration
     $this->addSql('ALTER TABLE Landinspektoer ADD CONSTRAINT FK_88949929940376CF FOREIGN KEY (postbyId) REFERENCES PostBy (id)');
     $this->addSql('CREATE INDEX IDX_88949929940376CF ON Landinspektoer (postbyId)');
 
+    $this->addSql('ALTER TABLE Lokalplan ADD CONSTRAINT FK_3DA18C6772834E81 FOREIGN KEY (lokalsamfundId) REFERENCES Lokalsamfund (id)');
+    $this->addSql('CREATE INDEX IDX_3DA18C6772834E81 ON Lokalplan (lokalsamfundId)');
+
   }
 
   /**

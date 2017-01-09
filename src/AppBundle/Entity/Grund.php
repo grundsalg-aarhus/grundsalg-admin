@@ -2211,7 +2211,7 @@ class Grund
   }
 
   /**
-   * Set lokalsamfundid
+   * Set lokalsamfund
    *
    * @param \AppBundle\Entity\Lokalsamfund $lokalsamfund
    *
@@ -2225,7 +2225,7 @@ class Grund
   }
 
   /**
-   * Get lokalsamfundid
+   * Get lokalsamfund
    *
    * @return \AppBundle\Entity\Lokalsamfund
    */

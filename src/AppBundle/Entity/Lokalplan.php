@@ -35,11 +35,14 @@ class Lokalplan
   private $nr;
 
   /**
-   * @var string
+   * @var \Lokalsamfund
    *
-   * @ORM\Column(name="lsnr", type="text", nullable=false)
+   * @ORM\ManyToOne(targetEntity="Lokalsamfund")
+   * @ORM\JoinColumns({
+   *   @ORM\JoinColumn(name="lokalsamfundId", referencedColumnName="id")
+   * })
    */
-  private $lsnr;
+  private $lokalsamfund;
 
   /**
    * @var string
@@ -126,27 +129,27 @@ class Lokalplan
   }
 
   /**
-   * Set lsnr
+   * Set lokalsamfund
    *
-   * @param string $lsnr
+   * @param \AppBundle\Entity\Lokalsamfund $lokalsamfund
    *
-   * @return Lokalplan
+   * @return Grund
    */
-  public function setLsnr($lsnr)
+  public function setLokalsamfund(\AppBundle\Entity\Lokalsamfund $lokalsamfund = null)
   {
-    $this->lsnr = $lsnr;
+    $this->lokalsamfund = $lokalsamfund;
 
     return $this;
   }
 
   /**
-   * Get lsnr
+   * Get lokalsamfund
    *
-   * @return string
+   * @return \AppBundle\Entity\Lokalsamfund
    */
-  public function getLsnr()
+  public function getLokalsamfund()
   {
-    return $this->lsnr;
+    return $this->lokalsamfund;
   }
 
   /**

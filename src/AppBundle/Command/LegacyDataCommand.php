@@ -237,6 +237,12 @@ class LegacyDataCommand extends ContainerAwareCommand
             $this->throwException($table, $row, 'active', 'Cannot be safely converted to bool value');
           }
         }
+
+        if ($table == 'Lokalplan') {
+          if (!$this->validateIdExists($data['Lokalsamfund'], $row['lsnr'])) {
+            $this->setValue($table, $row, 'lsnr', NULL);
+          }
+        }
       }
     }
 
