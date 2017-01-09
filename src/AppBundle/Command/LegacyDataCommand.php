@@ -202,6 +202,22 @@ class LegacyDataCommand extends ContainerAwareCommand
           if (!$this->validateIdExists($data['Grund'], $row['grundId'])) {
             $this->setValue($table, $row, 'grundId', NULL);
           }
+
+          // Warn if either mapping id is empty - redundant row will be deleted
+          if (empty($row['grundId'])) {
+            $this->printWarning($table, $row, 'grundId', 'Row redundant if referenced id NULL - row will be deleted');
+          } else if (empty($row['interessentId'])) {
+            $this->printWarning($table, $row, 'interessentId', 'Row redundant if referenced id NULL - row will be deleted');
+          }
+
+          // Ensure that "annonceresEj" is either null or 0/1 for safe column type conversion (varchar(50) -> BOOL)
+          if ($row['annulleret'] === 'X') {
+            $this->setValue($table, $row, 'annulleret', 1);
+          } else if (empty($row['annulleret'])) {
+            $this->setValue($table, $row, 'annulleret', 0);
+          } else {
+            $this->throwException($table, $row, 'annulleret', 'Cannot be safely converted to bool value');
+          }
         }
 
         if ($table == 'Landinspektoer') {
@@ -241,6 +257,25 @@ class LegacyDataCommand extends ContainerAwareCommand
 
     $output->writeln(sprintf('<comment>Warning: %s#%d.%s: %s -> %s</comment>', $table, $row['id'], $column, var_export($row[$column], TRUE), var_export($value, TRUE)));
     $row[$column] = $value;
+  }
+
+  /**
+   * Set value in import row.
+   *
+   * @param string $table
+   *   The table name.
+   * @param array $row
+   *   The row.
+   * @param string $column
+   *   The column name.
+   * @param string $message
+   *   The warning message.
+   */
+  private function printWarning(string $table, array &$row, string $column, $message)
+  {
+    $output = $this->output instanceof ConsoleOutputInterface ? $this->output->getErrorOutput() : $this->output;
+
+    $output->writeln(sprintf('<comment>Warning: %s#%d.%s: %s -> %s</comment>', $table, $row['id'], $column, var_export($row[$column], TRUE), $message));
   }
 
   /**

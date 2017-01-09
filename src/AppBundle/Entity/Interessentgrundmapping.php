@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="InteressentGrundMapping", indexes={@ORM\Index(name="fk_InteressentGrundMapping_interessentId", columns={"interessentId"}), @ORM\Index(name="fk_InteressentGrundMapping_grundId", columns={"grundId"})})
  * @ORM\Entity
  */
-class Interessentgrundmapping
+class InteressentGrundMapping
 {
   /**
    * @var integer
@@ -24,7 +24,7 @@ class Interessentgrundmapping
   /**
    * @var string
    *
-   * @ORM\Column(name="annulleret", type="string", length=50, nullable=false)
+   * @ORM\Column(name="annulleret", type="boolean", nullable=false)
    */
   private $annulleret;
 
@@ -64,7 +64,7 @@ class Interessentgrundmapping
    *
    * @param string $annulleret
    *
-   * @return Interessentgrundmapping
+   * @return InteressentGrundMapping
    */
   public function setAnnulleret($annulleret)
   {
@@ -88,7 +88,7 @@ class Interessentgrundmapping
    *
    * @param \AppBundle\Entity\Grund $grundid
    *
-   * @return Interessentgrundmapping
+   * @return InteressentGrundMapping
    */
   public function setGrundid(\AppBundle\Entity\Grund $grundid = null)
   {
@@ -112,7 +112,7 @@ class Interessentgrundmapping
    *
    * @param \AppBundle\Entity\Interessent $interessentid
    *
-   * @return Interessentgrundmapping
+   * @return InteressentGrundMapping
    */
   public function setInteressentid(\AppBundle\Entity\Interessent $interessentid = null)
   {
