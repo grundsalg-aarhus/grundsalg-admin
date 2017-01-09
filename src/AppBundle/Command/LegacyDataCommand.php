@@ -146,6 +146,9 @@ class LegacyDataCommand extends ContainerAwareCommand
           if (!$this->validateIdExists($data['Salgsomraade'], $row['salgsomraadeId'])) {
             $this->setValue($table, $row, 'salgsomraadeId', NULL);
           }
+          if (!$this->validateIdExists($data['Landinspektoer'], $row['landInspektoerId'])) {
+            $this->setValue($table, $row, 'landInspektoerId', NULL);
+          }
 
           // Ensure that "husNummer" is either null or numeric for safe column type conversion (longtext -> INT)
           if (!is_numeric($row['husNummer'])) {
