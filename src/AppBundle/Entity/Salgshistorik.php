@@ -231,7 +231,7 @@ class Salgshistorik
    *   @ORM\JoinColumn(name="medKoeberPostById", referencedColumnName="id")
    * })
    */
-  private $medkoeberpostbyid;
+  private $medkoeberPostby;
 
   /**
    * @var \Grund
@@ -241,7 +241,7 @@ class Salgshistorik
    *   @ORM\JoinColumn(name="grundId", referencedColumnName="id")
    * })
    */
-  private $grundid;
+  private $grund;
 
   /**
    * @var \Postby
@@ -251,7 +251,7 @@ class Salgshistorik
    *   @ORM\JoinColumn(name="koeberPostById", referencedColumnName="id")
    * })
    */
-  private $koeberpostbyid;
+  private $koeberPostby;
 
 
   /**
@@ -939,13 +939,13 @@ class Salgshistorik
   /**
    * Set medkoeberpostbyid
    *
-   * @param \AppBundle\Entity\Postby $medkoeberpostbyid
+   * @param \AppBundle\Entity\Postby $medkoeberPostby
    *
    * @return Salgshistorik
    */
-  public function setMedkoeberpostbyid(\AppBundle\Entity\Postby $medkoeberpostbyid = null)
+  public function setMedkoeberPostby(\AppBundle\Entity\Postby $medkoeberPostby = null)
   {
-    $this->medkoeberpostbyid = $medkoeberpostbyid;
+    $this->medkoeberPostby = $medkoeberPostby;
 
     return $this;
   }
@@ -955,21 +955,21 @@ class Salgshistorik
    *
    * @return \AppBundle\Entity\Postby
    */
-  public function getMedkoeberpostbyid()
+  public function getMedkoeberPostby()
   {
-    return $this->medkoeberpostbyid;
+    return $this->medkoeberPostby;
   }
 
   /**
    * Set grundid
    *
-   * @param \AppBundle\Entity\Grund $grundid
+   * @param \AppBundle\Entity\Grund $grund
    *
    * @return Salgshistorik
    */
-  public function setGrundid(\AppBundle\Entity\Grund $grundid = null)
+  public function setGrund(\AppBundle\Entity\Grund $grund = null)
   {
-    $this->grundid = $grundid;
+    $this->grund = $grund;
 
     return $this;
   }
@@ -979,21 +979,21 @@ class Salgshistorik
    *
    * @return \AppBundle\Entity\Grund
    */
-  public function getGrundid()
+  public function getGrund()
   {
-    return $this->grundid;
+    return $this->grund;
   }
 
   /**
    * Set koeberpostbyid
    *
-   * @param \AppBundle\Entity\Postby $koeberpostbyid
+   * @param \AppBundle\Entity\Postby $koeberPostby
    *
    * @return Salgshistorik
    */
-  public function setKoeberpostbyid(\AppBundle\Entity\Postby $koeberpostbyid = null)
+  public function setKoeberPostby(\AppBundle\Entity\Postby $koeberPostby = null)
   {
-    $this->koeberpostbyid = $koeberpostbyid;
+    $this->koeberPostby = $koeberPostby;
 
     return $this;
   }
@@ -1003,9 +1003,9 @@ class Salgshistorik
    *
    * @return \AppBundle\Entity\Postby
    */
-  public function getKoeberpostbyid()
+  public function getKoeberPostby()
   {
-    return $this->koeberpostbyid;
+    return $this->koeberPostby;
   }
 
   public function __toString()
