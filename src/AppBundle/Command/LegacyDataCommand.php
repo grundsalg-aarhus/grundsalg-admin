@@ -210,7 +210,7 @@ class LegacyDataCommand extends ContainerAwareCommand
             $this->printWarning($table, $row, 'interessentId', 'Row redundant if referenced id NULL - row will be deleted');
           }
 
-          // Ensure that "annonceresEj" is either null or 0/1 for safe column type conversion (varchar(50) -> BOOL)
+          // Ensure that "annulleret" is either null or 0/1 for safe column type conversion (varchar(50) -> BOOL)
           if ($row['annulleret'] === 'X') {
             $this->setValue($table, $row, 'annulleret', 1);
           } else if (empty($row['annulleret'])) {
@@ -221,6 +221,10 @@ class LegacyDataCommand extends ContainerAwareCommand
         }
 
         if ($table == 'Landinspektoer') {
+          if (!$this->validateIdExists($data['PostBy'], $row['postnrId'])) {
+            $this->setValue($table, $row, 'postnrId', NULL);
+          }
+
           // Ensure that "active" is either null or 0/1 for safe column type conversion (int(11) -> BOOL)
           if ($row['active'] != 1 && $row['active'] != 0) {
             $this->throwException($table, $row, 'active', 'Cannot be safely converted to bool value');

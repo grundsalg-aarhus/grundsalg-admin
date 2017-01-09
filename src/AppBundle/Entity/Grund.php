@@ -821,7 +821,7 @@ class Grund
   /**
    * Set postbyid
    *
-   * @param string $postby
+   * @param \AppBundle\Entity\Postby $postby
    *
    * @return Grund
    */
@@ -835,7 +835,7 @@ class Grund
   /**
    * Get postbyid
    *
-   * @return string
+   * @return \AppBundle\Entity\Postby
    */
   public function getPostby()
   {

@@ -70,11 +70,14 @@ class Landinspektoer
   private $telefon;
 
   /**
-   * @var integer
+   * @var \Postby
    *
-   * @ORM\Column(name="postnrId", type="bigint", nullable=false)
+   * @ORM\ManyToOne(targetEntity="Postby")
+   * @ORM\JoinColumns({
+   *   @ORM\JoinColumn(name="postbyId", referencedColumnName="id")
+   * })
    */
-  private $postnrid;
+  private $postby;
 
   /**
    * @var integer
@@ -239,27 +242,27 @@ class Landinspektoer
   }
 
   /**
-   * Set postnrid
+   * Set postbyid
    *
-   * @param integer $postnrid
+   * @param \AppBundle\Entity\Postby $postby
    *
-   * @return Landinspektoer
+   * @return Grund
    */
-  public function setPostnrid($postnrid)
+  public function setPostby($postby)
   {
-    $this->postnrid = $postnrid;
+    $this->postby = $postby;
 
     return $this;
   }
 
   /**
-   * Get postnrid
+   * Get postbyid
    *
-   * @return integer
+   * @return \AppBundle\Entity\Postby
    */
-  public function getPostnrid()
+  public function getPostby()
   {
-    return $this->postnrid;
+    return $this->postby;
   }
 
   /**
