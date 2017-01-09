@@ -511,7 +511,7 @@ class Grund
    *   @ORM\JoinColumn(name="medKoeberPostById", referencedColumnName="id")
    * })
    */
-  private $medkoeberpostbyid;
+  private $medkoeberPostby;
 
   /**
    * @var \Postby
@@ -521,7 +521,7 @@ class Grund
    *   @ORM\JoinColumn(name="koeberPostById", referencedColumnName="id")
    * })
    */
-  private $koeberpostbyid;
+  private $koeberPostby;
 
   /**
    * @var \Lokalsamfund
@@ -531,7 +531,7 @@ class Grund
    *   @ORM\JoinColumn(name="lokalsamfundId", referencedColumnName="id")
    * })
    */
-  private $lokalsamfundid;
+  private $lokalsamfund;
 
   /**
    * @var \Salgsomraade
@@ -2165,13 +2165,13 @@ class Grund
   /**
    * Set medkoeberpostbyid
    *
-   * @param \AppBundle\Entity\Postby $medkoeberpostbyid
+   * @param \AppBundle\Entity\Postby $medkoeberPostby
    *
    * @return Grund
    */
-  public function setMedkoeberpostbyid(\AppBundle\Entity\Postby $medkoeberpostbyid = null)
+  public function setMedkoeberPostby(\AppBundle\Entity\Postby $medkoeberPostby = null)
   {
-    $this->medkoeberpostbyid = $medkoeberpostbyid;
+    $this->medkoeberPostby = $medkoeberPostby;
 
     return $this;
   }
@@ -2181,21 +2181,21 @@ class Grund
    *
    * @return \AppBundle\Entity\Postby
    */
-  public function getMedkoeberpostbyid()
+  public function getMedkoeberPostby()
   {
-    return $this->medkoeberpostbyid;
+    return $this->medkoeberPostby;
   }
 
   /**
    * Set koeberpostbyid
    *
-   * @param \AppBundle\Entity\Postby $koeberpostbyid
+   * @param \AppBundle\Entity\Postby $koeberPostby
    *
    * @return Grund
    */
-  public function setKoeberpostbyid(\AppBundle\Entity\Postby $koeberpostbyid = null)
+  public function setKoeberPostby(\AppBundle\Entity\Postby $koeberPostby = null)
   {
-    $this->koeberpostbyid = $koeberpostbyid;
+    $this->koeberPostby = $koeberPostby;
 
     return $this;
   }
@@ -2205,21 +2205,21 @@ class Grund
    *
    * @return \AppBundle\Entity\Postby
    */
-  public function getKoeberpostbyid()
+  public function getKoeberPostby()
   {
-    return $this->koeberpostbyid;
+    return $this->koeberPostby;
   }
 
   /**
    * Set lokalsamfundid
    *
-   * @param \AppBundle\Entity\Lokalsamfund $lokalsamfundid
+   * @param \AppBundle\Entity\Lokalsamfund $lokalsamfund
    *
    * @return Grund
    */
-  public function setLokalsamfundid(\AppBundle\Entity\Lokalsamfund $lokalsamfundid = null)
+  public function setLokalsamfund(\AppBundle\Entity\Lokalsamfund $lokalsamfund = null)
   {
-    $this->lokalsamfundid = $lokalsamfundid;
+    $this->lokalsamfund = $lokalsamfund;
 
     return $this;
   }
@@ -2229,9 +2229,9 @@ class Grund
    *
    * @return \AppBundle\Entity\Lokalsamfund
    */
-  public function getLokalsamfundid()
+  public function getLokalsamfund()
   {
-    return $this->lokalsamfundid;
+    return $this->lokalsamfund;
   }
 
   /**
