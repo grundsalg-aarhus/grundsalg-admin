@@ -40,6 +40,19 @@ class Version00000000000006 extends AbstractMigration
     // "import-legacy-data" command throws exception for non-safe values
     $this->addSql('ALTER TABLE Lokalsamfund CHANGE active active BOOLEAN NOT NULL');
 
+    // varchar to int conversion - assumes only safe values in DB
+    // "import-legacy-data" command throws exception for non-safe values
+    $this->addSql('ALTER TABLE Opkoeb CHANGE m2 m2 INT DEFAULT NULL');
+
+    // varchar to int conversion - assumes only safe values in DB
+    // "import-legacy-data" command throws exception for non-safe values
+    $this->addSql('ALTER TABLE Opkoeb CHANGE pris pris DOUBLE PRECISION DEFAULT NULL');
+
+    // varchar to int conversion - assumes only safe values in DB
+    // "import-legacy-data" command throws exception for non-safe values
+    $this->addSql('ALTER TABLE Opkoeb CHANGE procentAfLP procentAfLP DOUBLE PRECISION DEFAULT NULL');
+
+
   }
 
   /**

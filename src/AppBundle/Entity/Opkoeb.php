@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Opkoeb
  *
- * @ORM\Table(name="Opkoeb", indexes={@ORM\Index(name="fk_Opkoeb_lpId", columns={"lpId"})})
+ * @ORM\Table(name="Opkoeb", indexes={@ORM\Index(name="fk_Opkoeb_lokalplanId", columns={"lokalplanId"})})
  * @ORM\Entity
  */
 class Opkoeb
@@ -49,9 +49,9 @@ class Opkoeb
   private $ejerlav;
 
   /**
-   * @var string
+   * @var integer
    *
-   * @ORM\Column(name="m2", type="string", length=50, nullable=true)
+   * @ORM\Column(name="m2", type="integer", nullable=true)
    */
   private $m2;
 
@@ -72,14 +72,14 @@ class Opkoeb
   /**
    * @var string
    *
-   * @ORM\Column(name="pris", type="string", length=50, nullable=true)
+   * @ORM\Column(name="pris", type="float", precision=16, scale=2, nullable=true)
    */
   private $pris;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="procentAfLP", type="string", length=50, nullable=true)
+   * @ORM\Column(name="procentAfLP", type="float", precision=12, scale=2, nullable=true)
    */
   private $procentaflp;
 
@@ -88,10 +88,10 @@ class Opkoeb
    *
    * @ORM\ManyToOne(targetEntity="Lokalplan")
    * @ORM\JoinColumns({
-   *   @ORM\JoinColumn(name="lpId", referencedColumnName="id")
+   *   @ORM\JoinColumn(name="lokalplanId", referencedColumnName="id")
    * })
    */
-  private $lpid;
+  private $lokalplan;
 
 
   /**
@@ -179,7 +179,7 @@ class Opkoeb
   /**
    * Set m2
    *
-   * @param string $m2
+   * @param integer $m2
    *
    * @return Opkoeb
    */
@@ -193,7 +193,7 @@ class Opkoeb
   /**
    * Get m2
    *
-   * @return string
+   * @return integer
    */
   public function getM2()
   {
@@ -299,13 +299,13 @@ class Opkoeb
   /**
    * Set lpid
    *
-   * @param \AppBundle\Entity\Lokalplan $lpid
+   * @param \AppBundle\Entity\Lokalplan $lokalplan
    *
    * @return Opkoeb
    */
-  public function setLpid(\AppBundle\Entity\Lokalplan $lpid = null)
+  public function setLokalplan(\AppBundle\Entity\Lokalplan $lokalplan = null)
   {
-    $this->lpid = $lpid;
+    $this->lokalplan = $lokalplan;
 
     return $this;
   }
@@ -315,9 +315,9 @@ class Opkoeb
    *
    * @return \AppBundle\Entity\Lokalplan
    */
-  public function getLpid()
+  public function getLokalplan()
   {
-    return $this->lpid;
+    return $this->lokalplan;
   }
 
   public function __toString()

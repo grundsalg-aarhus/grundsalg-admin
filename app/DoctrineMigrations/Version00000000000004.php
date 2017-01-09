@@ -45,6 +45,12 @@ class Version00000000000004 extends AbstractMigration
     $this->addSql('ALTER TABLE Grund CHANGE postbyId postbyId BIGINT DEFAULT NULL');
     $this->addSql('ALTER TABLE Landinspektoer CHANGE postnrId postbyId BIGINT DEFAULT NULL');
     $this->addSql('ALTER TABLE Lokalplan CHANGE lsnr LokalsamfundId BIGINT DEFAULT NULL');
+
+    // Drop required before rename allowed
+    $this->addSql('ALTER TABLE Opkoeb DROP FOREIGN KEY fk_Opkoeb_lpId');
+    $this->addSql('ALTER TABLE Opkoeb DROP INDEX fk_Opkoeb_lpId');
+    $this->addSql('ALTER TABLE Opkoeb CHANGE lpId lokalplanId BIGINT DEFAULT NULL');
+
     $this->addSql('ALTER TABLE InteressentGrundMapping CHANGE id id BIGINT AUTO_INCREMENT NOT NULL');
     $this->addSql('ALTER TABLE Keyword CHANGE id id BIGINT AUTO_INCREMENT NOT NULL');
     $this->addSql('ALTER TABLE KeywordValue CHANGE id id BIGINT AUTO_INCREMENT NOT NULL, CHANGE keywordId keywordId BIGINT DEFAULT NULL');

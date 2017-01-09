@@ -151,24 +151,10 @@ class LegacyDataCommand extends ContainerAwareCommand
           }
 
           // Ensure that "husNummer" is either null or numeric for safe column type conversion (longtext -> INT)
-          if (!is_numeric($row['husNummer'])) {
-            if (is_numeric(trim($row['husNummer']))) {
-              $this->setValue($table, $row, 'husNummer', trim($row['husNummer']));
-            } else if (empty($row['husNummer'])) {
-              $this->setValue($table, $row, 'husNummer', NULL);
-            } else {
-              $this->throwException($table, $row, 'husNummer', 'Cannot be safely converted to nummeric value');
-            }
-          }
+          $this->convertToNumeric($table, $row, 'husNummer');
 
           // Ensure that "annonceresEj" is either null or 0/1 for safe column type conversion (varchar(50) -> BOOL)
-          if ($row['annonceresEj'] === 'X') {
-            $this->setValue($table, $row, 'annonceresEj', 1);
-          } else if (empty($row['annonceresEj'])) {
-            $this->setValue($table, $row, 'annonceresEj', NULL);
-          } else {
-            $this->throwException($table, $row, 'annonceresEj', 'Cannot be safely converted to bool value');
-          }
+          $this->convertXToBoolean($table, $row, 'annonceresEj');
         }
 
         if ($table == 'Salgshistorik') {
@@ -187,6 +173,15 @@ class LegacyDataCommand extends ContainerAwareCommand
           if (!$this->validateIdExists($data['Lokalplan'], $row['lpId'])) {
             $this->setValue($table, $row, 'lpId', NULL);
           }
+
+          // Ensure that "m2" is either null or numeric for safe column type conversion (varchar(50) -> INT)
+          $this->convertToNumeric($table, $row, 'm2');
+
+          // Ensure that "pris" is either null or numeric for safe column type conversion (varchar(50) -> INT)
+          $this->convertToNumeric($table, $row, 'pris');
+
+          // Ensure that "procentAfLP" is either null or numeric for safe column type conversion (varchar(50) -> INT)
+          $this->convertToNumeric($table, $row, 'procentAfLP');
         }
 
         if ($table == 'Interessent') {
@@ -211,13 +206,7 @@ class LegacyDataCommand extends ContainerAwareCommand
           }
 
           // Ensure that "annulleret" is either null or 0/1 for safe column type conversion (varchar(50) -> BOOL)
-          if ($row['annulleret'] === 'X') {
-            $this->setValue($table, $row, 'annulleret', 1);
-          } else if (empty($row['annulleret'])) {
-            $this->setValue($table, $row, 'annulleret', 0);
-          } else {
-            $this->throwException($table, $row, 'annulleret', 'Cannot be safely converted to bool value');
-          }
+          $this->convertXToBoolean($table, $row, 'annulleret');
         }
 
         if ($table == 'Landinspektoer') {
@@ -226,7 +215,7 @@ class LegacyDataCommand extends ContainerAwareCommand
           }
 
           // Ensure that "active" is either null or 0/1 for safe column type conversion (int(11) -> BOOL)
-          if ($row['active'] != 1 && $row['active'] != 0) {
+          if ($row['active'] !== 1 && $row['active'] !== 0) {
             $this->throwException($table, $row, 'active', 'Cannot be safely converted to bool value');
           }
         }
@@ -267,6 +256,48 @@ class LegacyDataCommand extends ContainerAwareCommand
 
     $output->writeln(sprintf('<comment>Warning: %s#%d.%s: %s -> %s</comment>', $table, $row['id'], $column, var_export($row[$column], TRUE), var_export($value, TRUE)));
     $row[$column] = $value;
+  }
+
+  /**
+   * Convert value in import row to numeric value.
+   *
+   * @param string $table
+   *   The table name.
+   * @param array $row
+   *   The row.
+   * @param string $column
+   *   The column name.
+   */
+  private function convertToNumeric(string $table, array &$row, string $column)
+  {
+    if (is_numeric(trim($row[$column]))) {
+      $this->setValue($table, $row, $column, trim($row[$column]));
+    } else if (empty($row[$column])) {
+      $this->setValue($table, $row, $column, NULL);
+    } else {
+      $this->throwException($table, $row, $column, 'Cannot be safely converted to nummeric value');
+    }
+  }
+
+  /**
+   * Convert value in import row to boolean value.
+   *
+   * @param string $table
+   *   The table name.
+   * @param array $row
+   *   The row.
+   * @param string $column
+   *   The column name.
+   */
+  private function convertXToBoolean(string $table, array &$row, string $column)
+  {
+    if ($row[$column] === 'X') {
+      $this->setValue($table, $row, $column, 1);
+    } else if (empty($row[$column])) {
+      $this->setValue($table, $row, $column, 0);
+    } else {
+      $this->throwException($table, $row, $column, 'Cannot be safely converted to bool value');
+    }
   }
 
   /**
