@@ -231,6 +231,12 @@ class LegacyDataCommand extends ContainerAwareCommand
           if (!$this->validateIdExists($data['Lokalsamfund'], $row['lsnr'])) {
             $this->setValue($table, $row, 'lsnr', NULL);
           }
+
+          // Ensure that "samletAreal" is either null or numeric for safe column type conversion (LONGTEXT -> INT)
+          $this->convertToNumeric($table, $row, 'samletAreal');
+
+          // Ensure that "salgbartAreal" is either null or numeric for safe column type conversion (LONGTEXT -> INT)
+          $this->convertToNumeric($table, $row, 'salgbartAreal');
         }
       }
     }

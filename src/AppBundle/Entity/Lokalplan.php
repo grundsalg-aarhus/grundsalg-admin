@@ -73,16 +73,16 @@ class Lokalplan
   private $lokalplanlink;
 
   /**
-   * @var string
+   * @var integer
    *
-   * @ORM\Column(name="samletAreal", type="text", nullable=false)
+   * @ORM\Column(name="samletAreal", type="integer", nullable=true)
    */
   private $samletareal;
 
   /**
-   * @var string
+   * @var integer
    *
-   * @ORM\Column(name="salgbartAreal", type="text", nullable=false)
+   * @ORM\Column(name="salgbartAreal", type="integer", nullable=true)
    */
   private $salgbartareal;
 
@@ -275,7 +275,7 @@ class Lokalplan
   /**
    * Set salgbartareal
    *
-   * @param string $salgbartareal
+   * @param integer $salgbartareal
    *
    * @return Lokalplan
    */
@@ -289,7 +289,7 @@ class Lokalplan
   /**
    * Get salgbartareal
    *
-   * @return string
+   * @return integer
    */
   public function getSalgbartareal()
   {
@@ -299,7 +299,7 @@ class Lokalplan
   /**
    * Set forbrugsandel
    *
-   * @param string $forbrugsandel
+   * @param integer $forbrugsandel
    *
    * @return Lokalplan
    */
@@ -313,7 +313,7 @@ class Lokalplan
   /**
    * Get forbrugsandel
    *
-   * @return string
+   * @return integer
    */
   public function getForbrugsandel()
   {

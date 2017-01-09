@@ -52,6 +52,13 @@ class Version00000000000006 extends AbstractMigration
     // "import-legacy-data" command throws exception for non-safe values
     $this->addSql('ALTER TABLE Opkoeb CHANGE procentAfLP procentAfLP DOUBLE PRECISION DEFAULT NULL');
 
+    // longtext to int conversion - assumes only safe values in DB
+    // "import-legacy-data" command throws exception for non-safe values
+    $this->addSql('ALTER TABLE Lokalplan CHANGE samletAreal samletAreal INT DEFAULT NULL');
+
+    // longtext to int conversion - assumes only safe values in DB
+    // "import-legacy-data" command throws exception for non-safe values
+    $this->addSql('ALTER TABLE Lokalplan CHANGE salgbartAreal salgbartAreal INT DEFAULT NULL');
 
   }
 
