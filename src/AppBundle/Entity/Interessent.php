@@ -126,7 +126,7 @@ class Interessent
    *   @ORM\JoinColumn(name="medKoeberPostById", referencedColumnName="id")
    * })
    */
-  private $medkoeberpostbyid;
+  private $medkoeberPostby;
 
   /**
    * @var \Postby
@@ -136,7 +136,7 @@ class Interessent
    *   @ORM\JoinColumn(name="koeberPostById", referencedColumnName="id")
    * })
    */
-  private $koeberpostbyid;
+  private $koeberPostby;
 
 
   /**
@@ -464,13 +464,13 @@ class Interessent
   /**
    * Set medkoeberpostbyid
    *
-   * @param \AppBundle\Entity\Postby $medkoeberpostbyid
+   * @param \AppBundle\Entity\Postby $medkoeberPostby
    *
    * @return Interessent
    */
-  public function setMedkoeberpostbyid(\AppBundle\Entity\Postby $medkoeberpostbyid = null)
+  public function setMedkoeberPostby(\AppBundle\Entity\Postby $medkoeberPostby = null)
   {
-    $this->medkoeberpostbyid = $medkoeberpostbyid;
+    $this->medkoeberPostby = $medkoeberPostby;
 
     return $this;
   }
@@ -480,21 +480,21 @@ class Interessent
    *
    * @return \AppBundle\Entity\Postby
    */
-  public function getMedkoeberpostbyid()
+  public function getMedkoeberPostby()
   {
-    return $this->medkoeberpostbyid;
+    return $this->medkoeberPostby;
   }
 
   /**
    * Set koeberpostbyid
    *
-   * @param \AppBundle\Entity\Postby $koeberpostbyid
+   * @param \AppBundle\Entity\Postby $koeberPostby
    *
    * @return Interessent
    */
-  public function setKoeberpostbyid(\AppBundle\Entity\Postby $koeberpostbyid = null)
+  public function setKoeberPostby(\AppBundle\Entity\Postby $koeberPostby = null)
   {
-    $this->koeberpostbyid = $koeberpostbyid;
+    $this->koeberPostby = $koeberPostby;
 
     return $this;
   }
@@ -504,9 +504,9 @@ class Interessent
    *
    * @return \AppBundle\Entity\Postby
    */
-  public function getKoeberpostbyid()
+  public function getKoeberPostby()
   {
-    return $this->koeberpostbyid;
+    return $this->koeberPostby;
   }
 
   public function __toString()
