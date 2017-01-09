@@ -97,7 +97,7 @@ class Delomraade
    *   @ORM\JoinColumn(name="lokalplanId", referencedColumnName="id")
    * })
    */
-  private $lokalplanid;
+  private $lokalplan;
 
 
   /**
@@ -329,13 +329,13 @@ class Delomraade
   /**
    * Set lokalplanid
    *
-   * @param \AppBundle\Entity\Lokalplan $lokalplanid
+   * @param \AppBundle\Entity\Lokalplan $lokalplan
    *
    * @return Delomraade
    */
-  public function setLokalplanid(\AppBundle\Entity\Lokalplan $lokalplanid = null)
+  public function setLokalplan(\AppBundle\Entity\Lokalplan $lokalplan = null)
   {
-    $this->lokalplanid = $lokalplanid;
+    $this->lokalplan = $lokalplan;
 
     return $this;
   }
@@ -345,9 +345,9 @@ class Delomraade
    *
    * @return \AppBundle\Entity\Lokalplan
    */
-  public function getLokalplanid()
+  public function getLokalplan()
   {
-    return $this->lokalplanid;
+    return $this->lokalplan;
   }
 
   public function __toString()

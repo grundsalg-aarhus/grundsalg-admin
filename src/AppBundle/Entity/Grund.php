@@ -112,7 +112,7 @@ class Grund
      *   @ORM\JoinColumn(name="postbyId", referencedColumnName="id")
      * })
      */
-    private $postbyid;
+    private $postby;
 
     /**
      * @var string
@@ -331,12 +331,16 @@ class Grund
      */
     private $note;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="landInspektoerId", type="string", length=50, nullable=true)
-     */
-    private $landinspektoerid;
+
+  /**
+   * @var \LandInspektoer
+   *
+   * @ORM\ManyToOne(targetEntity="landInspektoer")
+   * @ORM\JoinColumns({
+   *   @ORM\JoinColumn(name="landInspektoerId", referencedColumnName="id", nullable=true)
+   * })
+   */
+    private $landInspektoer;
 
     /**
      * @var \DateTime
@@ -818,13 +822,13 @@ class Grund
     /**
      * Set postbyid
      *
-     * @param string $postbyid
+     * @param string $postby
      *
      * @return Grund
      */
-    public function setPostbyid($postbyid)
+    public function setPostby($postby)
     {
-        $this->postbyid = $postbyid;
+        $this->postby = $postby;
 
         return $this;
     }
@@ -834,9 +838,9 @@ class Grund
      *
      * @return string
      */
-    public function getPostbyid()
+    public function getPostby()
     {
-        return $this->postbyid;
+        return $this->postby;
     }
 
     /**
@@ -1586,13 +1590,13 @@ class Grund
     /**
      * Set landinspektoerid
      *
-     * @param string $landinspektoerid
+     * @param string $landInspektoer
      *
      * @return Grund
      */
-    public function setLandinspektoerid($landinspektoerid)
+    public function setLandInspektoer($landInspektoer)
     {
-        $this->landinspektoerid = $landinspektoerid;
+        $this->landInspektoer = $landInspektoer;
 
         return $this;
     }
@@ -1602,9 +1606,9 @@ class Grund
      *
      * @return string
      */
-    public function getLandinspektoerid()
+    public function getLandInspektoer()
     {
-        return $this->landinspektoerid;
+        return $this->landInspektoer;
     }
 
     /**
@@ -2256,6 +2260,6 @@ class Grund
     }
 
     public function __toString() {
-      return $this->vej . ' ' . $this->husnummer . ($this->postbyid ? ', ' . $this->postbyid : '');
+      return $this->vej . ' ' . $this->husnummer . ($this->postby ? ', ' . $this->postby : '');
     }
 }
