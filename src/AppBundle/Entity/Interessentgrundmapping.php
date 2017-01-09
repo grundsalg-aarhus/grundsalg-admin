@@ -36,7 +36,7 @@ class InteressentGrundMapping
    *   @ORM\JoinColumn(name="grundId", referencedColumnName="id")
    * })
    */
-  private $grundid;
+  private $grund;
 
   /**
    * @var \Interessent
@@ -46,7 +46,7 @@ class InteressentGrundMapping
    *   @ORM\JoinColumn(name="interessentId", referencedColumnName="id")
    * })
    */
-  private $interessentid;
+  private $interessent;
 
 
   /**
@@ -86,13 +86,13 @@ class InteressentGrundMapping
   /**
    * Set grundid
    *
-   * @param \AppBundle\Entity\Grund $grundid
+   * @param \AppBundle\Entity\Grund $grund
    *
    * @return InteressentGrundMapping
    */
-  public function setGrundid(\AppBundle\Entity\Grund $grundid = null)
+  public function setGrund(\AppBundle\Entity\Grund $grund = null)
   {
-    $this->grundid = $grundid;
+    $this->grund = $grund;
 
     return $this;
   }
@@ -102,21 +102,21 @@ class InteressentGrundMapping
    *
    * @return \AppBundle\Entity\Grund
    */
-  public function getGrundid()
+  public function getGrund()
   {
-    return $this->grundid;
+    return $this->grund;
   }
 
   /**
    * Set interessentid
    *
-   * @param \AppBundle\Entity\Interessent $interessentid
+   * @param \AppBundle\Entity\Interessent $interessent
    *
    * @return InteressentGrundMapping
    */
-  public function setInteressentid(\AppBundle\Entity\Interessent $interessentid = null)
+  public function setInteressent(\AppBundle\Entity\Interessent $interessent = null)
   {
-    $this->interessentid = $interessentid;
+    $this->interessent = $interessent;
 
     return $this;
   }
@@ -126,9 +126,9 @@ class InteressentGrundMapping
    *
    * @return \AppBundle\Entity\Interessent
    */
-  public function getInteressentid()
+  public function getInteressent()
   {
-    return $this->interessentid;
+    return $this->interessent;
   }
 
   public function __toString()
