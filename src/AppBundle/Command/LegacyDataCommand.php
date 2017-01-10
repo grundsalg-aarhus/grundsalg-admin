@@ -194,6 +194,21 @@ class LegacyDataCommand extends ContainerAwareCommand
           if ($row['active'] !== 1 && $row['active'] !== 0) {
             $this->throwException($table, $row, 'active', 'Cannot be safely converted to bool value');
           }
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthSorterThanOrEqual($table, $row, 'adresse', 50);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthSorterThanOrEqual($table, $row, 'email', 50);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(20))
+          $this->validateLengthSorterThanOrEqual($table, $row, 'mobil', 20);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(100))
+          $this->validateLengthSorterThanOrEqual($table, $row, 'navn', 100);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(20))
+          $this->validateLengthSorterThanOrEqual($table, $row, 'telefon', 20);
         }
 
 

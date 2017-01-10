@@ -74,6 +74,13 @@ class Version00000000000006 extends AbstractMigration
     $this->addSql('ALTER TABLE Delomraade CHANGE anvendelse anvendelse VARCHAR(50) NOT NULL');
     $this->addSql('ALTER TABLE Delomraade CHANGE mulighedFor mulighedFor VARCHAR(50) NOT NULL');
 
+    // longtext to VARCHAR conversion
+    $this->addSql('ALTER TABLE Landinspektoer CHANGE adresse adresse VARCHAR(50) NOT NULL');
+    $this->addSql('ALTER TABLE Landinspektoer CHANGE email email VARCHAR(50) NOT NULL');
+    $this->addSql('ALTER TABLE Landinspektoer CHANGE mobil mobil VARCHAR(20) NOT NULL');
+    $this->addSql('ALTER TABLE Landinspektoer CHANGE navn navn VARCHAR(100) NOT NULL');
+    $this->addSql('ALTER TABLE Landinspektoer CHANGE telefon telefon VARCHAR(20) NOT NULL');
+
   }
 
   /**
