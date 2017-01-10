@@ -416,6 +416,30 @@ class LegacyDataCommand extends ContainerAwareCommand
           if (!$this->validateIdExists($data['PostBy'], $row['medKoeberPostById'])) {
             $this->setValue($table, $row, 'medKoeberPostById', NULL);
           }
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(255))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'navn', 255);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(100))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'adresse', 100);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'land', 50);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(120))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'koeberEmail', 120);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(120))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'navn1', 120);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(120))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'adresse1', 120);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'land1', 50);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(120))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'medKoeberEmail', 120);
         }
 
 

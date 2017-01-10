@@ -30,21 +30,21 @@ class Interessent
   /**
    * @var string
    *
-   * @ORM\Column(name="navn", type="text", nullable=true)
+   * @ORM\Column(name="navn", type="string", length=255, nullable=true)
    */
   private $navn;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="adresse", type="text", nullable=true)
+   * @ORM\Column(name="adresse", type="string", length=100, nullable=true)
    */
   private $adresse;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="land", type="text", nullable=true)
+   * @ORM\Column(name="land", type="string", length=50, nullable=true)
    */
   private $land;
 
@@ -65,28 +65,28 @@ class Interessent
   /**
    * @var string
    *
-   * @ORM\Column(name="koeberEmail", type="text", nullable=true)
+   * @ORM\Column(name="koeberEmail", type="string", length=120, nullable=true)
    */
   private $koeberemail;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="navn1", type="text", nullable=true)
+   * @ORM\Column(name="navn1", type="string", length=120, nullable=true)
    */
   private $navn1;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="adresse1", type="text", nullable=true)
+   * @ORM\Column(name="adresse1", type="string", length=120, nullable=true)
    */
   private $adresse1;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="land1", type="text", nullable=true)
+   * @ORM\Column(name="land1", type="string", length=50, nullable=true)
    */
   private $land1;
 
@@ -107,7 +107,7 @@ class Interessent
   /**
    * @var string
    *
-   * @ORM\Column(name="medKoeberEmail", type="text", nullable=true)
+   * @ORM\Column(name="medKoeberEmail", type="string", length=120, nullable=true)
    */
   private $medkoeberemail;
 

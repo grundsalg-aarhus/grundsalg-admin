@@ -129,6 +129,16 @@ class Version00000000000006 extends AbstractMigration
     // longtext to VARCHAR conversion
     $this->addSql('ALTER TABLE Opkoeb CHANGE ejerlav ejerlav VARCHAR(60) DEFAULT NULL');
 
+    // longtext to VARCHAR conversion
+    $this->addSql('ALTER TABLE Interessent CHANGE navn navn VARCHAR(255) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Interessent CHANGE adresse adresse VARCHAR(100) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Interessent CHANGE land land VARCHAR(50) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Interessent CHANGE koeberEmail koeberEmail VARCHAR(120) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Interessent CHANGE navn1 navn1 VARCHAR(120) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Interessent CHANGE adresse1 adresse1 VARCHAR(120) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Interessent CHANGE land1 land1 VARCHAR(50) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Interessent CHANGE medKoeberEmail medKoeberEmail VARCHAR(120) DEFAULT NULL');
+
   }
 
   /**
