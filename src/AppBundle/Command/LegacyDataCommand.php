@@ -121,7 +121,7 @@ class LegacyDataCommand extends ContainerAwareCommand
 
         // PostBy
         if ($table == 'PostBy') {
-          // Ensure that "city" is either null or numeric for safe column type conversion (LONGTEXT -> VARCHAR(100))
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(100))
           $this->validateLengthSorterThanOrEqual($table, $row, 'city', 100);
         }
 
@@ -132,6 +132,9 @@ class LegacyDataCommand extends ContainerAwareCommand
           if ($row['active'] !== 1 && $row['active'] !== 0) {
             $this->throwException($table, $row, 'active', 'Cannot be safely converted to bool value');
           }
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthSorterThanOrEqual($table, $row, 'name', 50);
         }
 
 
@@ -147,6 +150,21 @@ class LegacyDataCommand extends ContainerAwareCommand
 
           // Ensure that "salgbartAreal" is either null or numeric for safe column type conversion (LONGTEXT -> INT)
           $this->convertToNumeric($table, $row, 'salgbartAreal');
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(255))
+          $this->validateLengthSorterThanOrEqual($table, $row, 'titel', 255);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthSorterThanOrEqual($table, $row, 'projektLeder', 50);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(20))
+          $this->validateLengthSorterThanOrEqual($table, $row, 'telefon', 20);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(255))
+          $this->validateLengthSorterThanOrEqual($table, $row, 'lokalPlanLink', 255);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthSorterThanOrEqual($table, $row, 'nr', 50);
         }
 
 
@@ -464,7 +482,7 @@ class LegacyDataCommand extends ContainerAwareCommand
   }
 
   private function validateLengthSorterThanOrEqual(string $table, array &$row, string $column, $maxLength) {
-    if(!strval($row[$column])) {
+    if(!empty($row[$column]) && !strval($row[$column])) {
       $this->throwException($table, $row, $column, 'is not a valid string');
     } else if(strlen($row[$column]) > $maxLength) {
       $this->throwException($table, $row, $column, 'is longer than '.$maxLength);

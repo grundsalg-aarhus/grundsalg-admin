@@ -30,7 +30,7 @@ class Lokalplan
   /**
    * @var string
    *
-   * @ORM\Column(name="nr", type="text", nullable=false)
+   * @ORM\Column(name="nr", type="string", length=50, nullable=false)
    */
   private $nr;
 
@@ -47,28 +47,28 @@ class Lokalplan
   /**
    * @var string
    *
-   * @ORM\Column(name="titel", type="text", nullable=false)
+   * @ORM\Column(name="titel", type="string", length=255, nullable=false)
    */
   private $titel;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="projektLeder", type="text", nullable=false)
+   * @ORM\Column(name="projektLeder", type="string", length=50, nullable=false)
    */
   private $projektleder;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="telefon", type="text", nullable=false)
+   * @ORM\Column(name="telefon", type="string", length=20, nullable=false)
    */
   private $telefon;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="lokalPlanLink", type="text", nullable=false)
+   * @ORM\Column(name="lokalPlanLink", type="string", length=255, nullable=false)
    */
   private $lokalplanlink;
 

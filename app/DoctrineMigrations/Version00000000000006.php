@@ -53,8 +53,22 @@ class Version00000000000006 extends AbstractMigration
     // longtext to int conversion
     $this->addSql('ALTER TABLE Lokalplan CHANGE salgbartAreal salgbartAreal INT DEFAULT NULL');
 
-    // longtext to VARCHAR(100) conversion
+    // longtext to VARCHAR conversion
     $this->addSql('ALTER TABLE PostBy CHANGE city city VARCHAR(100) NOT NULL');
+
+    // longtext to VARCHAR conversion
+    $this->addSql('ALTER TABLE Lokalsamfund CHANGE name name VARCHAR(50) NOT NULL');
+
+    // longtext to VARCHAR conversion
+    $this->addSql('ALTER TABLE Lokalplan CHANGE titel titel VARCHAR(255) NOT NULL');
+    // longtext to VARCHAR conversion
+    $this->addSql('ALTER TABLE Lokalplan CHANGE projektLeder projektLeder VARCHAR(50) NOT NULL');
+    // longtext to VARCHAR conversion
+    $this->addSql('ALTER TABLE Lokalplan CHANGE telefon telefon VARCHAR(20) NOT NULL');
+    // longtext to VARCHAR conversion
+    $this->addSql('ALTER TABLE Lokalplan CHANGE lokalPlanLink lokalPlanLink VARCHAR(255) NOT NULL');
+    // longtext to VARCHAR conversion
+    $this->addSql('ALTER TABLE Lokalplan CHANGE nr nr VARCHAR(50) NOT NULL');
 
   }
 
