@@ -92,6 +92,27 @@ class Version00000000000006 extends AbstractMigration
     $this->addSql('ALTER TABLE Salgsomraade CHANGE tilsluttet tilsluttet VARCHAR(50) NOT NULL');
     $this->addSql('ALTER TABLE Salgsomraade CHANGE sagsNr sagsNr VARCHAR(50) NOT NULL');
 
+    // longtext to VARCHAR conversion
+    $this->addSql('ALTER TABLE Grund CHANGE mnr mnr VARCHAR(20) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Grund CHANGE mnr2 mnr2 VARCHAR(20) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Grund CHANGE delAreal delAreal VARCHAR(60) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Grund CHANGE ejerlav ejerlav VARCHAR(60) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Grund CHANGE vej vej VARCHAR(60) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Grund CHANGE bogstav bogstav VARCHAR(30) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Grund CHANGE urlGIS urlGIS VARCHAR(255) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Grund CHANGE tilsluttet tilsluttet VARCHAR(50) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Grund CHANGE prisKorrektion1 prisKorrektion1 VARCHAR(30) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Grund CHANGE prisKorrektion2 prisKorrektion2 VARCHAR(30) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Grund CHANGE prisKorrektion3 prisKorrektion3 VARCHAR(30) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Grund CHANGE salgsType salgsType VARCHAR(30) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Grund CHANGE navn navn VARCHAR(255) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Grund CHANGE adresse adresse VARCHAR(100) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Grund CHANGE land land VARCHAR(50) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Grund CHANGE koeberEmail koeberEmail VARCHAR(120) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Grund CHANGE navn1 navn1 VARCHAR(120) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Grund CHANGE adresse1 adresse1 VARCHAR(120) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Grund CHANGE land1 land1 VARCHAR(50) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Grund CHANGE medKoeberEmail medKoeberEmail VARCHAR(120) DEFAULT NULL');
 
   }
 

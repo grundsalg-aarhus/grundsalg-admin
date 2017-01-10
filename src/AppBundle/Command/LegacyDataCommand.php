@@ -122,7 +122,7 @@ class LegacyDataCommand extends ContainerAwareCommand
         // PostBy
         if ($table == 'PostBy') {
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(100))
-          $this->validateLengthSorterThanOrEqual($table, $row, 'city', 100);
+          $this->validateLengthShorterThanOrEqual($table, $row, 'city', 100);
         }
 
         // Lokalsamfund
@@ -134,7 +134,7 @@ class LegacyDataCommand extends ContainerAwareCommand
           }
 
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
-          $this->validateLengthSorterThanOrEqual($table, $row, 'name', 50);
+          $this->validateLengthShorterThanOrEqual($table, $row, 'name', 50);
         }
 
 
@@ -152,19 +152,19 @@ class LegacyDataCommand extends ContainerAwareCommand
           $this->convertToNumeric($table, $row, 'salgbartAreal');
 
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(255))
-          $this->validateLengthSorterThanOrEqual($table, $row, 'titel', 255);
+          $this->validateLengthShorterThanOrEqual($table, $row, 'titel', 255);
 
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
-          $this->validateLengthSorterThanOrEqual($table, $row, 'projektLeder', 50);
+          $this->validateLengthShorterThanOrEqual($table, $row, 'projektLeder', 50);
 
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(20))
-          $this->validateLengthSorterThanOrEqual($table, $row, 'telefon', 20);
+          $this->validateLengthShorterThanOrEqual($table, $row, 'telefon', 20);
 
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(255))
-          $this->validateLengthSorterThanOrEqual($table, $row, 'lokalPlanLink', 255);
+          $this->validateLengthShorterThanOrEqual($table, $row, 'lokalPlanLink', 255);
 
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
-          $this->validateLengthSorterThanOrEqual($table, $row, 'nr', 50);
+          $this->validateLengthShorterThanOrEqual($table, $row, 'nr', 50);
         }
 
 
@@ -176,10 +176,10 @@ class LegacyDataCommand extends ContainerAwareCommand
           }
 
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
-          $this->validateLengthSorterThanOrEqual($table, $row, 'anvendelse', 50);
+          $this->validateLengthShorterThanOrEqual($table, $row, 'anvendelse', 50);
 
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
-          $this->validateLengthSorterThanOrEqual($table, $row, 'mulighedFor', 50);
+          $this->validateLengthShorterThanOrEqual($table, $row, 'mulighedFor', 50);
         }
 
 
@@ -196,19 +196,19 @@ class LegacyDataCommand extends ContainerAwareCommand
           }
 
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
-          $this->validateLengthSorterThanOrEqual($table, $row, 'adresse', 50);
+          $this->validateLengthShorterThanOrEqual($table, $row, 'adresse', 50);
 
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
-          $this->validateLengthSorterThanOrEqual($table, $row, 'email', 50);
+          $this->validateLengthShorterThanOrEqual($table, $row, 'email', 50);
 
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(20))
-          $this->validateLengthSorterThanOrEqual($table, $row, 'mobil', 20);
+          $this->validateLengthShorterThanOrEqual($table, $row, 'mobil', 20);
 
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(100))
-          $this->validateLengthSorterThanOrEqual($table, $row, 'navn', 100);
+          $this->validateLengthShorterThanOrEqual($table, $row, 'navn', 100);
 
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(20))
-          $this->validateLengthSorterThanOrEqual($table, $row, 'telefon', 20);
+          $this->validateLengthShorterThanOrEqual($table, $row, 'telefon', 20);
         }
 
 
@@ -229,31 +229,31 @@ class LegacyDataCommand extends ContainerAwareCommand
           }
 
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(255))
-          $this->validateLengthSorterThanOrEqual($table, $row, 'titel', 255);
+          $this->validateLengthShorterThanOrEqual($table, $row, 'titel', 255);
 
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(30))
-          $this->validateLengthSorterThanOrEqual($table, $row, 'type', 30);
+          $this->validateLengthShorterThanOrEqual($table, $row, 'type', 30);
 
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(20))
-          $this->validateLengthSorterThanOrEqual($table, $row, 'matrikkel1', 20);
+          $this->validateLengthShorterThanOrEqual($table, $row, 'matrikkel1', 20);
 
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(20))
-          $this->validateLengthSorterThanOrEqual($table, $row, 'matrikkel2', 20);
+          $this->validateLengthShorterThanOrEqual($table, $row, 'matrikkel2', 20);
 
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(60))
-          $this->validateLengthSorterThanOrEqual($table, $row, 'ejerlav', 60);
+          $this->validateLengthShorterThanOrEqual($table, $row, 'ejerlav', 60);
 
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(60))
-          $this->validateLengthSorterThanOrEqual($table, $row, 'vej', 60);
+          $this->validateLengthShorterThanOrEqual($table, $row, 'vej', 60);
 
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(255))
-          $this->validateLengthSorterThanOrEqual($table, $row, 'gisUrl', 255);
+          $this->validateLengthShorterThanOrEqual($table, $row, 'gisUrl', 255);
 
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
-          $this->validateLengthSorterThanOrEqual($table, $row, 'tilsluttet', 50);
+          $this->validateLengthShorterThanOrEqual($table, $row, 'tilsluttet', 50);
 
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
-          $this->validateLengthSorterThanOrEqual($table, $row, 'sagsNr', 50);
+          $this->validateLengthShorterThanOrEqual($table, $row, 'sagsNr', 50);
         }
 
 
@@ -281,6 +281,63 @@ class LegacyDataCommand extends ContainerAwareCommand
 
           // Ensure that "annonceresEj" is either null or 0/1 for safe column type conversion (varchar(50) -> BOOL)
           $this->convertXToBoolean($table, $row, 'annonceresEj');
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(20))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'mnr', 20);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(20))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'mnr2', 20);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(60))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'delAreal', 60);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(60))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'ejerlav', 60);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(60))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'vej', 60);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(255))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'urlGIS', 255);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'tilsluttet', 50);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(30))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'prisKorrektion1', 30);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(30))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'prisKorrektion2', 30);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(30))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'prisKorrektion3', 30);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(30))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'salgsType', 30);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(255))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'navn', 255);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(100))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'adresse', 100);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'land', 50);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(120))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'koeberEmail', 120);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(120))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'navn1', 120);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(120))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'adresse1', 120);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'land1', 50);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(120))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'medKoeberEmail', 120);
         }
 
 
@@ -529,7 +586,7 @@ class LegacyDataCommand extends ContainerAwareCommand
     return false;
   }
 
-  private function validateLengthSorterThanOrEqual(string $table, array &$row, string $column, $maxLength) {
+  private function validateLengthShorterThanOrEqual(string $table, array &$row, string $column, $maxLength) {
     if(!empty($row[$column]) && !strval($row[$column])) {
       $this->throwException($table, $row, $column, 'is not a valid string');
     } else if(strlen($row[$column]) > $maxLength) {
