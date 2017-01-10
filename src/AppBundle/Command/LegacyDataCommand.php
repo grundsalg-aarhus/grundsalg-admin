@@ -2,6 +2,7 @@
 
 namespace AppBundle\Command;
 
+use AppBundle\Entity\Lokalplan;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -26,6 +27,7 @@ class LegacyDataCommand extends ContainerAwareCommand
   }
 
   private $output;
+  private $changeCount;
 
   /**
    * {@inheritdoc}
@@ -58,6 +60,8 @@ class LegacyDataCommand extends ContainerAwareCommand
         }
       }
     }
+
+    $this->printChangeLog();
   }
 
   /**
@@ -68,6 +72,8 @@ class LegacyDataCommand extends ContainerAwareCommand
    *
    * @return array
    *   The data to import.
+   *
+   * @throws \Exception
    */
   private function getData($filename)
   {
@@ -112,11 +118,62 @@ class LegacyDataCommand extends ContainerAwareCommand
     // Clean up data.
     foreach ($data as $table => &$rows) {
       foreach ($rows as &$row) {
+
+        // PostBy
+        if ($table == 'PostBy') {
+          // Ensure that "city" is either null or numeric for safe column type conversion (LONGTEXT -> VARCHAR(100))
+          $this->validateLengthSorterThanOrEqual($table, $row, 'city', 100);
+        }
+
+        // Lokalsamfund
+
+        if ($table == 'Lokalsamfund') {
+          // Ensure that "active" is either null or 0/1 for safe column type conversion (int(11) -> BOOL)
+          if ($row['active'] !== 1 && $row['active'] !== 0) {
+            $this->throwException($table, $row, 'active', 'Cannot be safely converted to bool value');
+          }
+        }
+
+
+        // Lokalplan
+
+        if ($table == 'Lokalplan') {
+          if (!$this->validateIdExists($data['Lokalsamfund'], $row['lsnr'])) {
+            $this->setValue($table, $row, 'lsnr', NULL);
+          }
+
+          // Ensure that "samletAreal" is either null or numeric for safe column type conversion (LONGTEXT -> INT)
+          $this->convertToNumeric($table, $row, 'samletAreal');
+
+          // Ensure that "salgbartAreal" is either null or numeric for safe column type conversion (LONGTEXT -> INT)
+          $this->convertToNumeric($table, $row, 'salgbartAreal');
+        }
+
+
+        // Delomraade
+
         if ($table == 'Delomraade') {
           if (!$this->validateIdExists($data['Lokalplan'], $row['lokalplanId'])) {
             $this->setValue($table, $row, 'lokalplanId', NULL);
           }
         }
+
+
+        // Landinspektoer
+
+        if ($table == 'Landinspektoer') {
+          if (!$this->validateIdExists($data['PostBy'], $row['postnrId'])) {
+            $this->setValue($table, $row, 'postnrId', NULL);
+          }
+
+          // Ensure that "active" is either null or 0/1 for safe column type conversion (int(11) -> BOOL)
+          if ($row['active'] !== 1 && $row['active'] !== 0) {
+            $this->throwException($table, $row, 'active', 'Cannot be safely converted to bool value');
+          }
+        }
+
+
+        // Salgsomraade
 
         if ($table == 'Salgsomraade') {
           if (!$this->validateIdExists($data['Delomraade'], $row['delomraadeId'])) {
@@ -132,6 +189,9 @@ class LegacyDataCommand extends ContainerAwareCommand
             $this->setValue($table, $row, 'postById', NULL);
           }
         }
+
+
+        // Grund
 
         if ($table == 'Grund') {
           if (!$this->validateIdExists($data['PostBy'], $row['koeberPostById'])) {
@@ -157,6 +217,9 @@ class LegacyDataCommand extends ContainerAwareCommand
           $this->convertXToBoolean($table, $row, 'annonceresEj');
         }
 
+
+        // Salgshistorik
+
         if ($table == 'Salgshistorik') {
           if (!$this->validateIdExists($data['Grund'], $row['grundId'])) {
             $this->setValue($table, $row, 'grundId', NULL);
@@ -168,6 +231,9 @@ class LegacyDataCommand extends ContainerAwareCommand
             $this->setValue($table, $row, 'medKoeberPostById', NULL);
           }
         }
+
+
+        // Opkoeb
 
         if ($table == 'Opkoeb') {
           if (!$this->validateIdExists($data['Lokalplan'], $row['lpId'])) {
@@ -184,6 +250,9 @@ class LegacyDataCommand extends ContainerAwareCommand
           $this->convertToNumeric($table, $row, 'procentAfLP');
         }
 
+
+        // Interessent
+
         if ($table == 'Interessent') {
           if (!$this->validateIdExists($data['PostBy'], $row['koeberPostById'])) {
             $this->setValue($table, $row, 'koeberPostById', NULL);
@@ -192,6 +261,9 @@ class LegacyDataCommand extends ContainerAwareCommand
             $this->setValue($table, $row, 'medKoeberPostById', NULL);
           }
         }
+
+
+        // InteressentGrundMapping
 
         if ($table == 'InteressentGrundMapping') {
           if (!$this->validateIdExists($data['Grund'], $row['grundId'])) {
@@ -209,35 +281,6 @@ class LegacyDataCommand extends ContainerAwareCommand
           $this->convertXToBoolean($table, $row, 'annulleret');
         }
 
-        if ($table == 'Landinspektoer') {
-          if (!$this->validateIdExists($data['PostBy'], $row['postnrId'])) {
-            $this->setValue($table, $row, 'postnrId', NULL);
-          }
-
-          // Ensure that "active" is either null or 0/1 for safe column type conversion (int(11) -> BOOL)
-          if ($row['active'] !== 1 && $row['active'] !== 0) {
-            $this->throwException($table, $row, 'active', 'Cannot be safely converted to bool value');
-          }
-        }
-
-        if ($table == 'Lokalsamfund') {
-          // Ensure that "active" is either null or 0/1 for safe column type conversion (int(11) -> BOOL)
-          if ($row['active'] !== 1 && $row['active'] !== 0) {
-            $this->throwException($table, $row, 'active', 'Cannot be safely converted to bool value');
-          }
-        }
-
-        if ($table == 'Lokalplan') {
-          if (!$this->validateIdExists($data['Lokalsamfund'], $row['lsnr'])) {
-            $this->setValue($table, $row, 'lsnr', NULL);
-          }
-
-          // Ensure that "samletAreal" is either null or numeric for safe column type conversion (LONGTEXT -> INT)
-          $this->convertToNumeric($table, $row, 'samletAreal');
-
-          // Ensure that "salgbartAreal" is either null or numeric for safe column type conversion (LONGTEXT -> INT)
-          $this->convertToNumeric($table, $row, 'salgbartAreal');
-        }
       }
     }
 
@@ -258,11 +301,71 @@ class LegacyDataCommand extends ContainerAwareCommand
    */
   private function setValue(string $table, array &$row, string $column, $value)
   {
-    $output = $this->output instanceof ConsoleOutputInterface ? $this->output->getErrorOutput() : $this->output;
+    if($row[$column] !== $value) {
+      $message = sprintf('<comment>Warning: %s#%d.%s: %s -> %s</comment>', $table, $row['id'], $column, var_export($row[$column], TRUE), var_export($value, TRUE));
+      $this->printWarning($table, $row, $column, $message);
 
-    $output->writeln(sprintf('<comment>Warning: %s#%d.%s: %s -> %s</comment>', $table, $row['id'], $column, var_export($row[$column], TRUE), var_export($value, TRUE)));
-    $row[$column] = $value;
+      $this->countChanges($table, $column, $value);
+
+      $row[$column] = $value;
+    }
   }
+
+  /**
+   * Count number of changes by table/column/value
+   *
+   * @param string $table
+   * @param string $column
+   * @param $value
+   */
+  private function countChanges(string $table, string $column, $value) {
+
+    $value = $value === NULL ? 'NULL_NULL' : $value;
+
+    if(!is_array($this->changeCount)) {
+      $this->changeCount = array();
+    }
+
+    if(!array_key_exists($table, $this->changeCount)) {
+      $this->changeCount[$table] = array();
+    }
+
+    if(!array_key_exists($column, $this->changeCount[$table])) {
+      $this->changeCount[$table][$column] = array();
+    }
+
+    if(!array_key_exists($value, $this->changeCount[$table][$column])) {
+      $this->changeCount[$table][$column][$value] = 0;
+    }
+
+    $this->changeCount[$table][$column][$value]++;
+
+  }
+
+  /**
+   * Print formatted summary of changes
+   */
+  private function printChangeLog() {
+
+    $output = $this->output instanceof ConsoleOutputInterface ? $this->output->getErrorOutput() : $this->output;
+    $output->writeln('<comment>Warning: Changes made to the following tables</comment>');
+
+    foreach ($this->changeCount as $tName => $table) {
+      $output->writeln(sprintf('<comment>Table: %s</comment>', $tName));
+
+      foreach ($table as $cName => $column) {
+        $output->writeln(sprintf('<comment>- Column: %s</comment>', $cName));
+
+        foreach ($column as $value => $count) {
+          $value = $value === 'NULL_NULL' ? NULL : $value;
+
+          $output->writeln(sprintf('<comment>-- %s rows set to %s</comment>', $count, var_export($value, TRUE)));
+        }
+      }
+    }
+  }
+
+
 
   /**
    * Convert value in import row to numeric value.
@@ -276,12 +379,14 @@ class LegacyDataCommand extends ContainerAwareCommand
    */
   private function convertToNumeric(string $table, array &$row, string $column)
   {
-    if (is_numeric(trim($row[$column]))) {
-      $this->setValue($table, $row, $column, trim($row[$column]));
-    } else if (empty($row[$column])) {
-      $this->setValue($table, $row, $column, NULL);
-    } else {
-      $this->throwException($table, $row, $column, 'Cannot be safely converted to nummeric value');
+    if(!is_numeric($row[$column])) {
+      if (is_numeric(trim($row[$column]))) {
+        $this->setValue($table, $row, $column, trim($row[$column]));
+      } else if (empty($row[$column])) {
+        $this->setValue($table, $row, $column, NULL);
+      } else {
+        $this->throwException($table, $row, $column, 'Cannot be safely converted to nummeric value');
+      }
     }
   }
 
@@ -356,6 +461,14 @@ class LegacyDataCommand extends ContainerAwareCommand
     }
 
     return false;
+  }
+
+  private function validateLengthSorterThanOrEqual(string $table, array &$row, string $column, $maxLength) {
+    if(!strval($row[$column])) {
+      $this->throwException($table, $row, $column, 'is not a valid string');
+    } else if(strlen($row[$column]) > $maxLength) {
+      $this->throwException($table, $row, $column, 'is longer than '.$maxLength);
+    }
   }
 
 }

@@ -20,45 +20,41 @@ class Version00000000000006 extends AbstractMigration
     // this up() migration is auto-generated, please modify it to your needs
     $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-    // long-text to int conversion - assumes only safe values in DB
+    //  All ALTER statements assumes only safe values in DB
     // "import-legacy-data" command throws exception for non-safe values
+
+    // long-text to int conversion
     $this->addSql('ALTER TABLE Grund CHANGE husNummer husNummer INT DEFAULT NULL');
 
-    // varchar to bool/tinyint conversion - assumes only safe values in DB
-    // "import-legacy-data" command throws exception for non-safe values
+    // varchar to bool/tinyint conversion
     $this->addSql('ALTER TABLE Grund CHANGE annonceresEj annonceresEj BOOLEAN DEFAULT NULL');
 
-    // varchar to bool/tinyint conversion - assumes only safe values in DB
-    // "import-legacy-data" command throws exception for non-safe values
+    // varchar to bool/tinyint conversion
     $this->addSql('ALTER TABLE InteressentGrundMapping CHANGE annulleret annulleret BOOLEAN NOT NULL');
 
-    // int(11) to bool/tinyint conversion - assumes only safe values in DB
-    // "import-legacy-data" command throws exception for non-safe values
+    // int(11) to bool/tinyint conversion
     $this->addSql('ALTER TABLE Landinspektoer CHANGE active active BOOLEAN NOT NULL');
 
-    // int(11) to bool/tinyint conversion - assumes only safe values in DB
-    // "import-legacy-data" command throws exception for non-safe values
+    // int(11) to bool/tinyint conversion
     $this->addSql('ALTER TABLE Lokalsamfund CHANGE active active BOOLEAN NOT NULL');
 
-    // varchar to int conversion - assumes only safe values in DB
-    // "import-legacy-data" command throws exception for non-safe values
+    // varchar to int conversion
     $this->addSql('ALTER TABLE Opkoeb CHANGE m2 m2 INT DEFAULT NULL');
 
-    // varchar to int conversion - assumes only safe values in DB
-    // "import-legacy-data" command throws exception for non-safe values
+    // varchar to int conversion
     $this->addSql('ALTER TABLE Opkoeb CHANGE pris pris DOUBLE PRECISION DEFAULT NULL');
 
-    // varchar to int conversion - assumes only safe values in DB
-    // "import-legacy-data" command throws exception for non-safe values
+    // varchar to int conversion
     $this->addSql('ALTER TABLE Opkoeb CHANGE procentAfLP procentAfLP DOUBLE PRECISION DEFAULT NULL');
 
-    // longtext to int conversion - assumes only safe values in DB
-    // "import-legacy-data" command throws exception for non-safe values
+    // longtext to int conversion
     $this->addSql('ALTER TABLE Lokalplan CHANGE samletAreal samletAreal INT DEFAULT NULL');
 
-    // longtext to int conversion - assumes only safe values in DB
-    // "import-legacy-data" command throws exception for non-safe values
+    // longtext to int conversion
     $this->addSql('ALTER TABLE Lokalplan CHANGE salgbartAreal salgbartAreal INT DEFAULT NULL');
+
+    // longtext to VARCHAR(100) conversion
+    $this->addSql('ALTER TABLE PostBy CHANGE city city VARCHAR(100) NOT NULL');
 
   }
 
