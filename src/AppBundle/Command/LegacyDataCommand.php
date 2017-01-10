@@ -227,6 +227,33 @@ class LegacyDataCommand extends ContainerAwareCommand
           if (!$this->validateIdExists($data['PostBy'], $row['postById'])) {
             $this->setValue($table, $row, 'postById', NULL);
           }
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(255))
+          $this->validateLengthSorterThanOrEqual($table, $row, 'titel', 255);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(30))
+          $this->validateLengthSorterThanOrEqual($table, $row, 'type', 30);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(20))
+          $this->validateLengthSorterThanOrEqual($table, $row, 'matrikkel1', 20);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(20))
+          $this->validateLengthSorterThanOrEqual($table, $row, 'matrikkel2', 20);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(60))
+          $this->validateLengthSorterThanOrEqual($table, $row, 'ejerlav', 60);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(60))
+          $this->validateLengthSorterThanOrEqual($table, $row, 'vej', 60);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(255))
+          $this->validateLengthSorterThanOrEqual($table, $row, 'gisUrl', 255);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthSorterThanOrEqual($table, $row, 'tilsluttet', 50);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthSorterThanOrEqual($table, $row, 'sagsNr', 50);
         }
 
 

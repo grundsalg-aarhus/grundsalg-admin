@@ -37,63 +37,63 @@ class Salgsomraade
   /**
    * @var string
    *
-   * @ORM\Column(name="titel", type="text", nullable=false)
+   * @ORM\Column(name="titel", type="string", length=255, nullable=false)
    */
   private $titel;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="type", type="text", nullable=false)
+   * @ORM\Column(name="type", type="string", length=30, nullable=false)
    */
   private $type;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="matrikkel1", type="text", nullable=false)
+   * @ORM\Column(name="matrikkel1", type="string", length=20, nullable=false)
    */
   private $matrikkel1;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="matrikkel2", type="text", nullable=false)
+   * @ORM\Column(name="matrikkel2", type="string", length=20, nullable=false)
    */
   private $matrikkel2;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="ejerlav", type="text", nullable=false)
+   * @ORM\Column(name="ejerlav", type="string", length=60, nullable=false)
    */
   private $ejerlav;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="vej", type="text", nullable=false)
+   * @ORM\Column(name="vej", type="string", length=60, nullable=false)
    */
   private $vej;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="gisUrl", type="text", nullable=false)
+   * @ORM\Column(name="gisUrl", type="string", length=255, nullable=false)
    */
   private $gisurl;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="tilsluttet", type="text", nullable=false)
+   * @ORM\Column(name="tilsluttet", type="string", length=50, nullable=false)
    */
   private $tilsluttet;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="sagsNr", type="text", nullable=false)
+   * @ORM\Column(name="sagsNr", type="string", length=50, nullable=false)
    */
   private $sagsnr;
 
