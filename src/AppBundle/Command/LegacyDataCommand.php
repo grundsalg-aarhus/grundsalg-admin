@@ -401,6 +401,9 @@ class LegacyDataCommand extends ContainerAwareCommand
 
           // Ensure that "procentAfLP" is either null or numeric for safe column type conversion (varchar(50) -> INT)
           $this->convertToNumeric($table, $row, 'procentAfLP');
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(120))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'ejerlav', 60);
         }
 
 
