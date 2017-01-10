@@ -2,6 +2,7 @@
 
 namespace AppBundle\Command;
 
+use AppBundle\Entity\Lokalplan;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -26,6 +27,7 @@ class LegacyDataCommand extends ContainerAwareCommand
   }
 
   private $output;
+  private $changeCount;
 
   /**
    * {@inheritdoc}
@@ -58,6 +60,8 @@ class LegacyDataCommand extends ContainerAwareCommand
         }
       }
     }
+
+    $this->printChangeLog();
   }
 
   /**
@@ -68,6 +72,8 @@ class LegacyDataCommand extends ContainerAwareCommand
    *
    * @return array
    *   The data to import.
+   *
+   * @throws \Exception
    */
   private function getData($filename)
   {
@@ -112,11 +118,101 @@ class LegacyDataCommand extends ContainerAwareCommand
     // Clean up data.
     foreach ($data as $table => &$rows) {
       foreach ($rows as &$row) {
+
+        // PostBy
+        if ($table == 'PostBy') {
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(100))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'city', 100);
+        }
+
+        // Lokalsamfund
+
+        if ($table == 'Lokalsamfund') {
+          // Ensure that "active" is either null or 0/1 for safe column type conversion (int(11) -> BOOL)
+          if ($row['active'] !== 1 && $row['active'] !== 0) {
+            $this->throwException($table, $row, 'active', 'Cannot be safely converted to bool value');
+          }
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'name', 50);
+        }
+
+
+        // Lokalplan
+
+        if ($table == 'Lokalplan') {
+          if (!$this->validateIdExists($data['Lokalsamfund'], $row['lsnr'])) {
+            $this->setValue($table, $row, 'lsnr', NULL);
+          }
+
+          // Ensure that "samletAreal" is either null or numeric for safe column type conversion (LONGTEXT -> INT)
+          $this->convertToNumeric($table, $row, 'samletAreal');
+
+          // Ensure that "salgbartAreal" is either null or numeric for safe column type conversion (LONGTEXT -> INT)
+          $this->convertToNumeric($table, $row, 'salgbartAreal');
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(255))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'titel', 255);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'projektLeder', 50);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(20))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'telefon', 20);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(255))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'lokalPlanLink', 255);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'nr', 50);
+        }
+
+
+        // Delomraade
+
         if ($table == 'Delomraade') {
           if (!$this->validateIdExists($data['Lokalplan'], $row['lokalplanId'])) {
             $this->setValue($table, $row, 'lokalplanId', NULL);
           }
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'anvendelse', 50);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'mulighedFor', 50);
         }
+
+
+        // Landinspektoer
+
+        if ($table == 'Landinspektoer') {
+          if (!$this->validateIdExists($data['PostBy'], $row['postnrId'])) {
+            $this->setValue($table, $row, 'postnrId', NULL);
+          }
+
+          // Ensure that "active" is either null or 0/1 for safe column type conversion (int(11) -> BOOL)
+          if ($row['active'] !== 1 && $row['active'] !== 0) {
+            $this->throwException($table, $row, 'active', 'Cannot be safely converted to bool value');
+          }
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'adresse', 50);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'email', 50);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(20))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'mobil', 20);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(100))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'navn', 100);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(20))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'telefon', 20);
+        }
+
+
+        // Salgsomraade
 
         if ($table == 'Salgsomraade') {
           if (!$this->validateIdExists($data['Delomraade'], $row['delomraadeId'])) {
@@ -131,7 +227,37 @@ class LegacyDataCommand extends ContainerAwareCommand
           if (!$this->validateIdExists($data['PostBy'], $row['postById'])) {
             $this->setValue($table, $row, 'postById', NULL);
           }
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(255))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'titel', 255);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(30))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'type', 30);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(20))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'matrikkel1', 20);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(20))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'matrikkel2', 20);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(60))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'ejerlav', 60);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(60))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'vej', 60);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(255))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'gisUrl', 255);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'tilsluttet', 50);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'sagsNr', 50);
         }
+
+
+        // Grund
 
         if ($table == 'Grund') {
           if (!$this->validateIdExists($data['PostBy'], $row['koeberPostById'])) {
@@ -155,7 +281,67 @@ class LegacyDataCommand extends ContainerAwareCommand
 
           // Ensure that "annonceresEj" is either null or 0/1 for safe column type conversion (varchar(50) -> BOOL)
           $this->convertXToBoolean($table, $row, 'annonceresEj');
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(20))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'mnr', 20);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(20))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'mnr2', 20);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(60))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'delAreal', 60);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(60))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'ejerlav', 60);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(60))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'vej', 60);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(255))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'urlGIS', 255);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'tilsluttet', 50);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(30))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'prisKorrektion1', 30);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(30))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'prisKorrektion2', 30);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(30))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'prisKorrektion3', 30);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(30))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'salgsType', 30);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(255))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'navn', 255);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(100))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'adresse', 100);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'land', 50);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(120))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'koeberEmail', 120);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(120))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'navn1', 120);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(120))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'adresse1', 120);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'land1', 50);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(120))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'medKoeberEmail', 120);
         }
+
+
+        // Salgshistorik
 
         if ($table == 'Salgshistorik') {
           if (!$this->validateIdExists($data['Grund'], $row['grundId'])) {
@@ -167,7 +353,40 @@ class LegacyDataCommand extends ContainerAwareCommand
           if (!$this->validateIdExists($data['PostBy'], $row['medKoeberPostById'])) {
             $this->setValue($table, $row, 'medKoeberPostById', NULL);
           }
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(30))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'salgsType', 30);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'status', 50);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(255))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'navn', 255);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(100))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'adresse', 100);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'land', 50);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(120))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'koeberEmail', 120);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(120))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'navn1', 120);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(120))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'adresse1', 120);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'land1', 50);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(120))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'medKoeberEmail', 120);
         }
+
+
+        // Opkoeb
 
         if ($table == 'Opkoeb') {
           if (!$this->validateIdExists($data['Lokalplan'], $row['lpId'])) {
@@ -182,7 +401,13 @@ class LegacyDataCommand extends ContainerAwareCommand
 
           // Ensure that "procentAfLP" is either null or numeric for safe column type conversion (varchar(50) -> INT)
           $this->convertToNumeric($table, $row, 'procentAfLP');
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(120))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'ejerlav', 60);
         }
+
+
+        // Interessent
 
         if ($table == 'Interessent') {
           if (!$this->validateIdExists($data['PostBy'], $row['koeberPostById'])) {
@@ -191,7 +416,34 @@ class LegacyDataCommand extends ContainerAwareCommand
           if (!$this->validateIdExists($data['PostBy'], $row['medKoeberPostById'])) {
             $this->setValue($table, $row, 'medKoeberPostById', NULL);
           }
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(255))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'navn', 255);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(100))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'adresse', 100);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'land', 50);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(120))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'koeberEmail', 120);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(120))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'navn1', 120);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(120))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'adresse1', 120);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'land1', 50);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(120))
+          $this->validateLengthShorterThanOrEqual($table, $row, 'medKoeberEmail', 120);
         }
+
+
+        // InteressentGrundMapping
 
         if ($table == 'InteressentGrundMapping') {
           if (!$this->validateIdExists($data['Grund'], $row['grundId'])) {
@@ -209,35 +461,6 @@ class LegacyDataCommand extends ContainerAwareCommand
           $this->convertXToBoolean($table, $row, 'annulleret');
         }
 
-        if ($table == 'Landinspektoer') {
-          if (!$this->validateIdExists($data['PostBy'], $row['postnrId'])) {
-            $this->setValue($table, $row, 'postnrId', NULL);
-          }
-
-          // Ensure that "active" is either null or 0/1 for safe column type conversion (int(11) -> BOOL)
-          if ($row['active'] !== 1 && $row['active'] !== 0) {
-            $this->throwException($table, $row, 'active', 'Cannot be safely converted to bool value');
-          }
-        }
-
-        if ($table == 'Lokalsamfund') {
-          // Ensure that "active" is either null or 0/1 for safe column type conversion (int(11) -> BOOL)
-          if ($row['active'] !== 1 && $row['active'] !== 0) {
-            $this->throwException($table, $row, 'active', 'Cannot be safely converted to bool value');
-          }
-        }
-
-        if ($table == 'Lokalplan') {
-          if (!$this->validateIdExists($data['Lokalsamfund'], $row['lsnr'])) {
-            $this->setValue($table, $row, 'lsnr', NULL);
-          }
-
-          // Ensure that "samletAreal" is either null or numeric for safe column type conversion (LONGTEXT -> INT)
-          $this->convertToNumeric($table, $row, 'samletAreal');
-
-          // Ensure that "salgbartAreal" is either null or numeric for safe column type conversion (LONGTEXT -> INT)
-          $this->convertToNumeric($table, $row, 'salgbartAreal');
-        }
       }
     }
 
@@ -258,11 +481,71 @@ class LegacyDataCommand extends ContainerAwareCommand
    */
   private function setValue(string $table, array &$row, string $column, $value)
   {
-    $output = $this->output instanceof ConsoleOutputInterface ? $this->output->getErrorOutput() : $this->output;
+    if($row[$column] !== $value) {
+      $message = sprintf('<comment>Warning: %s#%d.%s: %s -> %s</comment>', $table, $row['id'], $column, var_export($row[$column], TRUE), var_export($value, TRUE));
+      $this->printWarning($table, $row, $column, $message);
 
-    $output->writeln(sprintf('<comment>Warning: %s#%d.%s: %s -> %s</comment>', $table, $row['id'], $column, var_export($row[$column], TRUE), var_export($value, TRUE)));
-    $row[$column] = $value;
+      $this->countChanges($table, $column, $value);
+
+      $row[$column] = $value;
+    }
   }
+
+  /**
+   * Count number of changes by table/column/value
+   *
+   * @param string $table
+   * @param string $column
+   * @param $value
+   */
+  private function countChanges(string $table, string $column, $value) {
+
+    $value = $value === NULL ? 'NULL_NULL' : $value;
+
+    if(!is_array($this->changeCount)) {
+      $this->changeCount = array();
+    }
+
+    if(!array_key_exists($table, $this->changeCount)) {
+      $this->changeCount[$table] = array();
+    }
+
+    if(!array_key_exists($column, $this->changeCount[$table])) {
+      $this->changeCount[$table][$column] = array();
+    }
+
+    if(!array_key_exists($value, $this->changeCount[$table][$column])) {
+      $this->changeCount[$table][$column][$value] = 0;
+    }
+
+    $this->changeCount[$table][$column][$value]++;
+
+  }
+
+  /**
+   * Print formatted summary of changes
+   */
+  private function printChangeLog() {
+
+    $output = $this->output instanceof ConsoleOutputInterface ? $this->output->getErrorOutput() : $this->output;
+    $output->writeln('<comment>Warning: Changes made to the following tables</comment>');
+
+    foreach ($this->changeCount as $tName => $table) {
+      $output->writeln(sprintf('<comment>Table: %s</comment>', $tName));
+
+      foreach ($table as $cName => $column) {
+        $output->writeln(sprintf('<comment>- Column: %s</comment>', $cName));
+
+        foreach ($column as $value => $count) {
+          $value = $value === 'NULL_NULL' ? NULL : $value;
+
+          $output->writeln(sprintf('<comment>-- %s rows set to %s</comment>', $count, var_export($value, TRUE)));
+        }
+      }
+    }
+  }
+
+
 
   /**
    * Convert value in import row to numeric value.
@@ -276,12 +559,14 @@ class LegacyDataCommand extends ContainerAwareCommand
    */
   private function convertToNumeric(string $table, array &$row, string $column)
   {
-    if (is_numeric(trim($row[$column]))) {
-      $this->setValue($table, $row, $column, trim($row[$column]));
-    } else if (empty($row[$column])) {
-      $this->setValue($table, $row, $column, NULL);
-    } else {
-      $this->throwException($table, $row, $column, 'Cannot be safely converted to nummeric value');
+    if(!is_numeric($row[$column])) {
+      if (is_numeric(trim($row[$column]))) {
+        $this->setValue($table, $row, $column, trim($row[$column]));
+      } else if (empty($row[$column])) {
+        $this->setValue($table, $row, $column, NULL);
+      } else {
+        $this->throwException($table, $row, $column, 'Cannot be safely converted to nummeric value');
+      }
     }
   }
 
@@ -356,6 +641,19 @@ class LegacyDataCommand extends ContainerAwareCommand
     }
 
     return false;
+  }
+
+  private function validateLengthShorterThanOrEqual(string $table, array &$row, string $column, $maxLength) {
+    if(!empty($row[$column]) && !strval($row[$column])) {
+      $this->throwException($table, $row, $column, 'is not a valid string');
+    }
+
+    $value = trim($row[$column]);
+    if(strlen($value) > $maxLength) {
+      $this->throwException($table, $row, $column, 'is longer than '.$maxLength);
+    }
+
+    $this->setValue($table, $row, $column, $value);
   }
 
 }

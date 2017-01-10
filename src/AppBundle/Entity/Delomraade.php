@@ -78,14 +78,14 @@ class Delomraade
   /**
    * @var string
    *
-   * @ORM\Column(name="anvendelse", type="text", nullable=false)
+   * @ORM\Column(name="anvendelse", type="string", length=50, nullable=false)
    */
   private $anvendelse;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="mulighedFor", type="text", nullable=false)
+   * @ORM\Column(name="mulighedFor", type="string", length=50, nullable=false)
    */
   private $mulighedfor;
 

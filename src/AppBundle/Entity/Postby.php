@@ -37,7 +37,7 @@ class Postby
   /**
    * @var string
    *
-   * @ORM\Column(name="city", type="text", nullable=false)
+   * @ORM\Column(name="city", type="string", length=100, nullable=false)
    */
   private $city;
 

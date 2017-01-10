@@ -58,35 +58,35 @@ class Grund
   /**
    * @var string
    *
-   * @ORM\Column(name="mnr", type="text", nullable=true)
+   * @ORM\Column(name="mnr", type="string", length=20, nullable=true)
    */
   private $mnr;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="mnr2", type="text", nullable=true)
+   * @ORM\Column(name="mnr2", type="string", length=20, nullable=true)
    */
   private $mnr2;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="delAreal", type="text", nullable=true)
+   * @ORM\Column(name="delAreal", type="string", length=60, nullable=true)
    */
   private $delareal;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="ejerlav", type="text", nullable=true)
+   * @ORM\Column(name="ejerlav", type="string", length=60, nullable=true)
    */
   private $ejerlav;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="vej", type="text", nullable=true)
+   * @ORM\Column(name="vej", type="string", length=60, nullable=true)
    */
   private $vej;
 
@@ -100,7 +100,7 @@ class Grund
   /**
    * @var string
    *
-   * @ORM\Column(name="bogstav", type="text", nullable=true)
+   * @ORM\Column(name="bogstav", type="string", length=30, nullable=true)
    */
   private $bogstav;
 
@@ -117,14 +117,14 @@ class Grund
   /**
    * @var string
    *
-   * @ORM\Column(name="urlGIS", type="text", nullable=true)
+   * @ORM\Column(name="urlGIS", type="string", length=255, nullable=true)
    */
   private $urlgis;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="salgsType", type="text", nullable=true)
+   * @ORM\Column(name="salgsType", type="string", length=30, nullable=true)
    */
   private $salgstype;
 
@@ -166,7 +166,7 @@ class Grund
   /**
    * @var string
    *
-   * @ORM\Column(name="tilsluttet", type="text", nullable=true)
+   * @ORM\Column(name="tilsluttet", type="string", length=50, nullable=true)
    */
   private $tilsluttet;
 
@@ -222,7 +222,7 @@ class Grund
   /**
    * @var string
    *
-   * @ORM\Column(name="prisKorrektion1", type="text", nullable=true)
+   * @ORM\Column(name="prisKorrektion1", type="string", length=30, nullable=true)
    */
   private $priskorrektion1;
 
@@ -250,7 +250,7 @@ class Grund
   /**
    * @var string
    *
-   * @ORM\Column(name="prisKorrektion2", type="text", nullable=true)
+   * @ORM\Column(name="prisKorrektion2", type="string", length=30, nullable=true)
    */
   private $priskorrektion2;
 
@@ -278,7 +278,7 @@ class Grund
   /**
    * @var string
    *
-   * @ORM\Column(name="prisKorrektion3", type="text", nullable=true)
+   * @ORM\Column(name="prisKorrektion3", type="string", length= 30, nullable=true)
    */
   private $priskorrektion3;
 
@@ -415,21 +415,21 @@ class Grund
   /**
    * @var string
    *
-   * @ORM\Column(name="navn", type="text", nullable=true)
+   * @ORM\Column(name="navn", type="string", length=255, nullable=true)
    */
   private $navn;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="adresse", type="text", nullable=true)
+   * @ORM\Column(name="adresse", type="string", length=100, nullable=true)
    */
   private $adresse;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="land", type="text", nullable=true)
+   * @ORM\Column(name="land", type="string", length=50, nullable=true)
    */
   private $land;
 
@@ -450,28 +450,28 @@ class Grund
   /**
    * @var string
    *
-   * @ORM\Column(name="koeberEmail", type="text", nullable=true)
+   * @ORM\Column(name="koeberEmail", type="string", length=120, nullable=true)
    */
   private $koeberemail;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="navn1", type="text", nullable=true)
+   * @ORM\Column(name="navn1", type="string", length=120, nullable=true)
    */
   private $navn1;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="adresse1", type="text", nullable=true)
+   * @ORM\Column(name="adresse1", type="string", length=120, nullable=true)
    */
   private $adresse1;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="land1", type="text", nullable=true)
+   * @ORM\Column(name="land1", type="string", length=50, nullable=true)
    */
   private $land1;
 
@@ -492,7 +492,7 @@ class Grund
   /**
    * @var string
    *
-   * @ORM\Column(name="medKoeberEmail", type="text", nullable=true)
+   * @ORM\Column(name="medKoeberEmail", type="string", length=120, nullable=true)
    */
   private $medkoeberemail;
 

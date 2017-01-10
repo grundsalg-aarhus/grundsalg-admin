@@ -44,7 +44,7 @@ class Opkoeb
   /**
    * @var string
    *
-   * @ORM\Column(name="ejerlav", type="text", nullable=true)
+   * @ORM\Column(name="ejerlav", type="string", length=60, nullable=true)
    */
   private $ejerlav;
 

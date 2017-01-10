@@ -37,7 +37,7 @@ class Lokalsamfund
   /**
    * @var string
    *
-   * @ORM\Column(name="name", type="text", nullable=false)
+   * @ORM\Column(name="name", type="string", length=50, nullable=false)
    */
   private $name;
 

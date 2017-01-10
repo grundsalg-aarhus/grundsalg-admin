@@ -30,28 +30,28 @@ class Landinspektoer
   /**
    * @var string
    *
-   * @ORM\Column(name="adresse", type="text", nullable=false)
+   * @ORM\Column(name="adresse", type="string", length=50, nullable=false)
    */
   private $adresse;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="email", type="text", nullable=false)
+   * @ORM\Column(name="email", type="string", length=50, nullable=false)
    */
   private $email;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="mobil", type="text", nullable=false)
+   * @ORM\Column(name="mobil", type="string", length=20, nullable=false)
    */
   private $mobil;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="navn", type="text", nullable=false)
+   * @ORM\Column(name="navn", type="string", length=100, nullable=false)
    */
   private $navn;
 
@@ -65,7 +65,7 @@ class Landinspektoer
   /**
    * @var string
    *
-   * @ORM\Column(name="telefon", type="text", nullable=false)
+   * @ORM\Column(name="telefon", type="string", length=20, nullable=false)
    */
   private $telefon;
 
