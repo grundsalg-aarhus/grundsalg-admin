@@ -70,6 +70,10 @@ class Version00000000000006 extends AbstractMigration
     // longtext to VARCHAR conversion
     $this->addSql('ALTER TABLE Lokalplan CHANGE nr nr VARCHAR(50) NOT NULL');
 
+    // longtext to VARCHAR conversion
+    $this->addSql('ALTER TABLE Delomraade CHANGE anvendelse anvendelse VARCHAR(50) NOT NULL');
+    $this->addSql('ALTER TABLE Delomraade CHANGE mulighedFor mulighedFor VARCHAR(50) NOT NULL');
+
   }
 
   /**

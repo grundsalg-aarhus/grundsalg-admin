@@ -174,6 +174,12 @@ class LegacyDataCommand extends ContainerAwareCommand
           if (!$this->validateIdExists($data['Lokalplan'], $row['lokalplanId'])) {
             $this->setValue($table, $row, 'lokalplanId', NULL);
           }
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthSorterThanOrEqual($table, $row, 'anvendelse', 50);
+
+          // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
+          $this->validateLengthSorterThanOrEqual($table, $row, 'mulighedFor', 50);
         }
 
 
