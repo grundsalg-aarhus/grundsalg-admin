@@ -114,6 +114,18 @@ class Version00000000000006 extends AbstractMigration
     $this->addSql('ALTER TABLE Grund CHANGE land1 land1 VARCHAR(50) DEFAULT NULL');
     $this->addSql('ALTER TABLE Grund CHANGE medKoeberEmail medKoeberEmail VARCHAR(120) DEFAULT NULL');
 
+    // longtext to VARCHAR conversion
+    $this->addSql('ALTER TABLE Salgshistorik CHANGE salgsType salgsType VARCHAR(30) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Salgshistorik CHANGE status status VARCHAR(50) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Salgshistorik CHANGE navn navn VARCHAR(255) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Salgshistorik CHANGE adresse adresse VARCHAR(100) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Salgshistorik CHANGE land land VARCHAR(50) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Salgshistorik CHANGE koeberEmail koeberEmail VARCHAR(120) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Salgshistorik CHANGE navn1 navn1 VARCHAR(120) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Salgshistorik CHANGE adresse1 adresse1 VARCHAR(120) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Salgshistorik CHANGE land1 land1 VARCHAR(50) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Salgshistorik CHANGE medKoeberEmail medKoeberEmail VARCHAR(120) DEFAULT NULL');
+
   }
 
   /**
