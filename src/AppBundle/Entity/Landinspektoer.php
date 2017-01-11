@@ -37,14 +37,14 @@ class Landinspektoer
   /**
    * @var string
    *
-   * @ORM\Column(name="email", type="string", length=50, nullable=false)
+   * @ORM\Column(name="email", type="string", length=50, nullable=true)
    */
   private $email;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="mobil", type="string", length=20, nullable=false)
+   * @ORM\Column(name="mobil", type="string", length=20, nullable=true)
    */
   private $mobil;
 

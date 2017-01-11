@@ -8,7 +8,7 @@ use Doctrine\DBAL\Schema\Schema;
 
 /**
  * Migration:
- * - Migrate User tabel to FOSUserBundle
+ * - Alter fields to allow null on columns with empty cells before import
  */
 class Version00000000000002 extends AbstractMigration
 {
@@ -20,7 +20,24 @@ class Version00000000000002 extends AbstractMigration
     // this up() migration is auto-generated, please modify it to your needs
     $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-    $this->addSql('CREATE TABLE fos_user (id INT AUTO_INCREMENT NOT NULL, username VARCHAR(180) NOT NULL, username_canonical VARCHAR(180) NOT NULL, email VARCHAR(180) NOT NULL, email_canonical VARCHAR(180) NOT NULL, enabled TINYINT(1) NOT NULL, salt VARCHAR(255) DEFAULT NULL, password VARCHAR(255) NOT NULL, last_login DATETIME DEFAULT NULL, confirmation_token VARCHAR(180) DEFAULT NULL, password_requested_at DATETIME DEFAULT NULL, roles LONGTEXT NOT NULL COMMENT \'(DC2Type:array)\', name LONGTEXT DEFAULT NULL, created_at DATETIME DEFAULT NULL, updated_at DATETIME DEFAULT NULL, created_by VARCHAR(255) DEFAULT NULL, updated_by VARCHAR(255) DEFAULT NULL, UNIQUE INDEX UNIQ_957A647992FC23A8 (username_canonical), UNIQUE INDEX UNIQ_957A6479A0D96FBF (email_canonical), UNIQUE INDEX UNIQ_957A6479C05FB297 (confirmation_token), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
+    $this->addSql('ALTER TABLE Lokalplan CHANGE lokalPlanLink lokalPlanLink VARCHAR(255) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Lokalplan CHANGE samletAreal samletAreal longtext  DEFAULT NULL');
+    $this->addSql('ALTER TABLE Lokalplan CHANGE salgbartAreal salgbartAreal longtext DEFAULT NULL');
+    
+    $this->addSql('ALTER TABLE Delomraade CHANGE anvendelse anvendelse LONGTEXT NULL');
+    $this->addSql('ALTER TABLE Delomraade CHANGE mulighedFor mulighedFor LONGTEXT NULL');
+
+    $this->addSql('ALTER TABLE Landinspektoer CHANGE mobil mobil LONGTEXT NULL');
+    $this->addSql('ALTER TABLE Landinspektoer CHANGE email email LONGTEXT NULL');
+
+    $this->addSql('ALTER TABLE Salgsomraade CHANGE ejerlav ejerlav LONGTEXT NULL');
+    $this->addSql('ALTER TABLE Salgsomraade CHANGE gisUrl gisUrl LONGTEXT NULL');
+    $this->addSql('ALTER TABLE Salgsomraade CHANGE matrikkel1 matrikkel1 LONGTEXT NULL');
+    $this->addSql('ALTER TABLE Salgsomraade CHANGE matrikkel2 matrikkel2 LONGTEXT NULL');
+    $this->addSql('ALTER TABLE Salgsomraade CHANGE sagsNr sagsNr LONGTEXT NULL');
+    $this->addSql('ALTER TABLE Salgsomraade CHANGE tilsluttet tilsluttet LONGTEXT NULL');
+    $this->addSql('ALTER TABLE Salgsomraade CHANGE vej vej LONGTEXT NULL');
+
   }
 
   /**
@@ -30,8 +47,6 @@ class Version00000000000002 extends AbstractMigration
   {
     // this down() migration is auto-generated, please modify it to your needs
     $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
-    $this->addSql('DROP TABLE fos_user');
 
   }
 

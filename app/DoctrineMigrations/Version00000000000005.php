@@ -8,7 +8,7 @@ use Doctrine\DBAL\Schema\Schema;
 
 /**
  * Migration:
- * - Add indexies and foreign key constraints
+ * - Migrate legacy fields to Symfony format
  */
 class Version00000000000005 extends AbstractMigration
 {
@@ -20,22 +20,40 @@ class Version00000000000005 extends AbstractMigration
     // this up() migration is auto-generated, please modify it to your needs
     $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-    // Set null if id unknown
-    $this->addSql('CREATE INDEX IDX_E5C5280940376CF ON Grund (postbyId)');
-    $this->addSql('ALTER TABLE Grund ADD CONSTRAINT FK_E5C5280940376CF FOREIGN KEY (postbyId) REFERENCES PostBy (id)');
+    $entities = [
+      // Table name, Last Coloumn Name
+      ['Delomraade', 'mulighedFor'],
+      ['Grund', 'notat'],
+      ['Interessent', 'notat'],
+      ['Landinspektoer', 'active'],
+      ['Lokalplan', 'forbrugsAndel'],
+      ['Lokalsamfund', 'active'],
+      ['Opkoeb', 'procentAfLP'],
+      ['PostBy', 'city'],
+      ['Salgshistorik', 'notat'],
+      ['Salgsomraade', 'lokalplanId']
+    ];
 
-    $this->addSql('ALTER TABLE Grund CHANGE landInspektoerId landInspektoerId BIGINT DEFAULT NULL');
-    $this->addSql('ALTER TABLE Grund ADD CONSTRAINT FK_E5C5280E826DFE8 FOREIGN KEY (landInspektoerId) REFERENCES Landinspektoer (id)');
-    $this->addSql('CREATE INDEX IDX_E5C5280E826DFE8 ON Grund (landInspektoerId)');
+    foreach ($entities as $entity) {
+      $this->addSql('ALTER TABLE '.$entity[0].' CHANGE id id BIGINT AUTO_INCREMENT NOT NULL');
+      $this->addSql('ALTER TABLE '.$entity[0].' CHANGE createdDate created_at DATETIME NOT NULL AFTER '.$entity[1]);
+      $this->addSql('ALTER TABLE '.$entity[0].' CHANGE createdBy created_by VARCHAR(255) DEFAULT NULL AFTER created_at');
+      $this->addSql('ALTER TABLE '.$entity[0].' CHANGE modifiedDate updated_at DATETIME NOT NULL AFTER created_by');
+      $this->addSql('ALTER TABLE '.$entity[0].' CHANGE modifiedBy updated_by VARCHAR(255) DEFAULT NULL AFTER updated_at');
+    }
 
-    $this->addSql('ALTER TABLE Landinspektoer ADD CONSTRAINT FK_88949929940376CF FOREIGN KEY (postbyId) REFERENCES PostBy (id)');
-    $this->addSql('CREATE INDEX IDX_88949929940376CF ON Landinspektoer (postbyId)');
+    $this->addSql('ALTER TABLE Grund CHANGE postbyId postbyId BIGINT DEFAULT NULL');
+    $this->addSql('ALTER TABLE Landinspektoer CHANGE postnrId postbyId BIGINT DEFAULT NULL');
+    $this->addSql('ALTER TABLE Lokalplan CHANGE lsnr LokalsamfundId BIGINT DEFAULT NULL');
 
-    $this->addSql('ALTER TABLE Lokalplan ADD CONSTRAINT FK_3DA18C6772834E81 FOREIGN KEY (lokalsamfundId) REFERENCES Lokalsamfund (id)');
-    $this->addSql('CREATE INDEX IDX_3DA18C6772834E81 ON Lokalplan (lokalsamfundId)');
+    // Drop key/index required before rename allowed
+    $this->addSql('ALTER TABLE Opkoeb DROP FOREIGN KEY fk_Opkoeb_lpId');
+    $this->addSql('ALTER TABLE Opkoeb DROP INDEX fk_Opkoeb_lpId');
+    $this->addSql('ALTER TABLE Opkoeb CHANGE lpId lokalplanId BIGINT DEFAULT NULL');
 
-    $this->addSql('ALTER TABLE Opkoeb ADD CONSTRAINT FK_A2849A5C6293C3EF FOREIGN KEY (lokalplanId) REFERENCES Lokalplan (id)');
-    $this->addSql('CREATE INDEX fk_Opkoeb_lokalplanId ON Opkoeb (lokalplanId)');
+    $this->addSql('ALTER TABLE InteressentGrundMapping CHANGE id id BIGINT AUTO_INCREMENT NOT NULL');
+    $this->addSql('ALTER TABLE Keyword CHANGE id id BIGINT AUTO_INCREMENT NOT NULL');
+    $this->addSql('ALTER TABLE KeywordValue CHANGE id id BIGINT AUTO_INCREMENT NOT NULL, CHANGE keywordId keywordId BIGINT DEFAULT NULL');
 
   }
 
@@ -46,6 +64,7 @@ class Version00000000000005 extends AbstractMigration
   {
     // this down() migration is auto-generated, please modify it to your needs
     $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+
   }
 
 }

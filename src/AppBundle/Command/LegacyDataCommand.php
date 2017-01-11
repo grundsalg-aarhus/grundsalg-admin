@@ -28,6 +28,7 @@ class LegacyDataCommand extends ContainerAwareCommand
 
   private $output;
   private $changeCount;
+  private $changeForeignKeyCount;
 
   /**
    * {@inheritdoc}
@@ -61,7 +62,11 @@ class LegacyDataCommand extends ContainerAwareCommand
       }
     }
 
-    $this->printChangeLog();
+    $output->writeln('Conversion summary');
+    $this->printChangeLog($this->changeCount);
+
+    $output->writeln('Foreign Key Nulled summary');
+    $this->printChangeLog($this->changeForeignKeyCount);
   }
 
   /**
@@ -142,7 +147,7 @@ class LegacyDataCommand extends ContainerAwareCommand
 
         if ($table == 'Lokalplan') {
           if (!$this->validateIdExists($data['Lokalsamfund'], $row['lsnr'])) {
-            $this->setValue($table, $row, 'lsnr', NULL);
+            $this->setForeignKeyNull($table, $row, 'lsnr', NULL);
           }
 
           // Ensure that "samletAreal" is either null or numeric for safe column type conversion (LONGTEXT -> INT)
@@ -172,7 +177,7 @@ class LegacyDataCommand extends ContainerAwareCommand
 
         if ($table == 'Delomraade') {
           if (!$this->validateIdExists($data['Lokalplan'], $row['lokalplanId'])) {
-            $this->setValue($table, $row, 'lokalplanId', NULL);
+            $this->setForeignKeyNull($table, $row, 'lokalplanId', NULL);
           }
 
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(50))
@@ -187,7 +192,7 @@ class LegacyDataCommand extends ContainerAwareCommand
 
         if ($table == 'Landinspektoer') {
           if (!$this->validateIdExists($data['PostBy'], $row['postnrId'])) {
-            $this->setValue($table, $row, 'postnrId', NULL);
+            $this->setForeignKeyNull($table, $row, 'postnrId', NULL);
           }
 
           // Ensure that "active" is either null or 0/1 for safe column type conversion (int(11) -> BOOL)
@@ -216,16 +221,16 @@ class LegacyDataCommand extends ContainerAwareCommand
 
         if ($table == 'Salgsomraade') {
           if (!$this->validateIdExists($data['Delomraade'], $row['delomraadeId'])) {
-            $this->setValue($table, $row, 'delomraadeId', NULL);
+            $this->setForeignKeyNull($table, $row, 'delomraadeId', NULL);
           }
           if (!$this->validateIdExists($data['Landinspektoer'], $row['landinspektorId'])) {
-            $this->setValue($table, $row, 'landinspektorId', NULL);
+            $this->setForeignKeyNull($table, $row, 'landinspektorId', NULL);
           }
           if (!$this->validateIdExists($data['Lokalplan'], $row['lokalPlanId'])) {
-            $this->setValue($table, $row, 'lokalPlanId', NULL);
+            $this->setForeignKeyNull($table, $row, 'lokalPlanId', NULL);
           }
           if (!$this->validateIdExists($data['PostBy'], $row['postById'])) {
-            $this->setValue($table, $row, 'postById', NULL);
+            $this->setForeignKeyNull($table, $row, 'postById', NULL);
           }
 
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(255))
@@ -261,19 +266,19 @@ class LegacyDataCommand extends ContainerAwareCommand
 
         if ($table == 'Grund') {
           if (!$this->validateIdExists($data['PostBy'], $row['koeberPostById'])) {
-            $this->setValue($table, $row, 'koeberPostById', NULL);
+            $this->setForeignKeyNull($table, $row, 'koeberPostById', NULL);
           }
           if (!$this->validateIdExists($data['PostBy'], $row['medKoeberPostById'])) {
-            $this->setValue($table, $row, 'medKoeberPostById', NULL);
+            $this->setForeignKeyNull($table, $row, 'medKoeberPostById', NULL);
           }
           if (!$this->validateIdExists($data['PostBy'], $row['postbyId'])) {
-            $this->setValue($table, $row, 'postbyId', NULL);
+            $this->setForeignKeyNull($table, $row, 'postbyId', NULL);
           }
           if (!$this->validateIdExists($data['Salgsomraade'], $row['salgsomraadeId'])) {
-            $this->setValue($table, $row, 'salgsomraadeId', NULL);
+            $this->setForeignKeyNull($table, $row, 'salgsomraadeId', NULL);
           }
           if (!$this->validateIdExists($data['Landinspektoer'], $row['landInspektoerId'])) {
-            $this->setValue($table, $row, 'landInspektoerId', NULL);
+            $this->setForeignKeyNull($table, $row, 'landInspektoerId', NULL);
           }
 
           // Ensure that "husNummer" is either null or numeric for safe column type conversion (longtext -> INT)
@@ -345,13 +350,13 @@ class LegacyDataCommand extends ContainerAwareCommand
 
         if ($table == 'Salgshistorik') {
           if (!$this->validateIdExists($data['Grund'], $row['grundId'])) {
-            $this->setValue($table, $row, 'grundId', NULL);
+            $this->setForeignKeyNull($table, $row, 'grundId', NULL);
           }
           if (!$this->validateIdExists($data['PostBy'], $row['koeberPostById'])) {
-            $this->setValue($table, $row, 'koeberPostById', NULL);
+            $this->setForeignKeyNull($table, $row, 'koeberPostById', NULL);
           }
           if (!$this->validateIdExists($data['PostBy'], $row['medKoeberPostById'])) {
-            $this->setValue($table, $row, 'medKoeberPostById', NULL);
+            $this->setForeignKeyNull($table, $row, 'medKoeberPostById', NULL);
           }
 
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(30))
@@ -390,7 +395,7 @@ class LegacyDataCommand extends ContainerAwareCommand
 
         if ($table == 'Opkoeb') {
           if (!$this->validateIdExists($data['Lokalplan'], $row['lpId'])) {
-            $this->setValue($table, $row, 'lpId', NULL);
+            $this->setForeignKeyNull($table, $row, 'lpId', NULL);
           }
 
           // Ensure that "m2" is either null or numeric for safe column type conversion (varchar(50) -> INT)
@@ -411,10 +416,10 @@ class LegacyDataCommand extends ContainerAwareCommand
 
         if ($table == 'Interessent') {
           if (!$this->validateIdExists($data['PostBy'], $row['koeberPostById'])) {
-            $this->setValue($table, $row, 'koeberPostById', NULL);
+            $this->setForeignKeyNull($table, $row, 'koeberPostById', NULL);
           }
           if (!$this->validateIdExists($data['PostBy'], $row['medKoeberPostById'])) {
-            $this->setValue($table, $row, 'medKoeberPostById', NULL);
+            $this->setForeignKeyNull($table, $row, 'medKoeberPostById', NULL);
           }
 
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(255))
@@ -447,7 +452,7 @@ class LegacyDataCommand extends ContainerAwareCommand
 
         if ($table == 'InteressentGrundMapping') {
           if (!$this->validateIdExists($data['Grund'], $row['grundId'])) {
-            $this->setValue($table, $row, 'grundId', NULL);
+            $this->setForeignKeyNull($table, $row, 'grundId', NULL);
           }
 
           // Warn if either mapping id is empty - redundant row will be deleted
@@ -481,14 +486,36 @@ class LegacyDataCommand extends ContainerAwareCommand
    */
   private function setValue(string $table, array &$row, string $column, $value)
   {
-    if($row[$column] !== $value) {
-      $message = sprintf('<comment>Warning: %s#%d.%s: %s -> %s</comment>', $table, $row['id'], $column, var_export($row[$column], TRUE), var_export($value, TRUE));
-      $this->printWarning($table, $row, $column, $message);
+    $value = ($value === '') ? NULL : $value;
 
-      $this->countChanges($table, $column, $value);
+    if ($row[$column] !== $value) {
+      $this->printWarning($table, $row, $column, $value);
+
+      $this->countChanges($table, $column, $value, $this->changeCount);
 
       $row[$column] = $value;
     }
+  }
+
+  /**
+   * Clear foreign key
+   *
+   * @param string $table
+   *   The table name.
+   * @param array $row
+   *   The row.
+   * @param string $column
+   *   The column name.
+   * @param mixed $value
+   *   The value.
+   */
+  private function setForeignKeyNull(string $table, array &$row, string $column, $value)
+  {
+    $this->printWarning($table, $row, $column, $value, 'foreign key nulled');
+
+    $this->countChanges($table, $column, $value, $this->changeForeignKeyCount);
+
+    $row[$column] = $value;
   }
 
   /**
@@ -498,39 +525,41 @@ class LegacyDataCommand extends ContainerAwareCommand
    * @param string $column
    * @param $value
    */
-  private function countChanges(string $table, string $column, $value) {
+  private function countChanges(string $table, string $column, $value, &$changeCount)
+  {
 
     $value = $value === NULL ? 'NULL_NULL' : $value;
 
-    if(!is_array($this->changeCount)) {
-      $this->changeCount = array();
+    if (!is_array($changeCount)) {
+      $changeCount = array();
     }
 
-    if(!array_key_exists($table, $this->changeCount)) {
-      $this->changeCount[$table] = array();
+    if (!array_key_exists($table, $changeCount)) {
+      $changeCount[$table] = array();
     }
 
-    if(!array_key_exists($column, $this->changeCount[$table])) {
-      $this->changeCount[$table][$column] = array();
+    if (!array_key_exists($column, $changeCount[$table])) {
+      $changeCount[$table][$column] = array();
     }
 
-    if(!array_key_exists($value, $this->changeCount[$table][$column])) {
-      $this->changeCount[$table][$column][$value] = 0;
+    if (!array_key_exists($value, $changeCount[$table][$column])) {
+      $changeCount[$table][$column][$value] = 0;
     }
 
-    $this->changeCount[$table][$column][$value]++;
+    $changeCount[$table][$column][$value]++;
 
   }
 
   /**
    * Print formatted summary of changes
    */
-  private function printChangeLog() {
+  private function printChangeLog($changeCount)
+  {
 
     $output = $this->output instanceof ConsoleOutputInterface ? $this->output->getErrorOutput() : $this->output;
     $output->writeln('<comment>Warning: Changes made to the following tables</comment>');
 
-    foreach ($this->changeCount as $tName => $table) {
+    foreach ($changeCount as $tName => $table) {
       $output->writeln(sprintf('<comment>Table: %s</comment>', $tName));
 
       foreach ($table as $cName => $column) {
@@ -546,7 +575,6 @@ class LegacyDataCommand extends ContainerAwareCommand
   }
 
 
-
   /**
    * Convert value in import row to numeric value.
    *
@@ -559,7 +587,7 @@ class LegacyDataCommand extends ContainerAwareCommand
    */
   private function convertToNumeric(string $table, array &$row, string $column)
   {
-    if(!is_numeric($row[$column])) {
+    if (!is_numeric($row[$column])) {
       if (is_numeric(trim($row[$column]))) {
         $this->setValue($table, $row, $column, trim($row[$column]));
       } else if (empty($row[$column])) {
@@ -603,11 +631,11 @@ class LegacyDataCommand extends ContainerAwareCommand
    * @param string $message
    *   The warning message.
    */
-  private function printWarning(string $table, array &$row, string $column, $message)
+  private function printWarning(string $table, array &$row, string $column, $value, $message = null)
   {
     $output = $this->output instanceof ConsoleOutputInterface ? $this->output->getErrorOutput() : $this->output;
 
-    $output->writeln(sprintf('<comment>Warning: %s#%d.%s: %s -> %s</comment>', $table, $row['id'], $column, var_export($row[$column], TRUE), $message));
+    $output->writeln(sprintf('<comment>Warning: %s#%d.%s: %s -> %s %s</comment>', $table, $row['id'], $column, var_export($row[$column], TRUE), var_export($value, TRUE), $message));
   }
 
   /**
@@ -633,9 +661,10 @@ class LegacyDataCommand extends ContainerAwareCommand
    * @param $id
    * @return bool
    */
-  private function validateIdExists(array &$table, $id) {
+  private function validateIdExists(array &$table, $id)
+  {
     foreach ($table as $row) {
-      if($row['id'] === $id) {
+      if ($row['id'] === $id) {
         return true;
       }
     }
@@ -643,14 +672,15 @@ class LegacyDataCommand extends ContainerAwareCommand
     return false;
   }
 
-  private function validateLengthShorterThanOrEqual(string $table, array &$row, string $column, $maxLength) {
-    if(!empty($row[$column]) && !strval($row[$column])) {
+  private function validateLengthShorterThanOrEqual(string $table, array &$row, string $column, $maxLength)
+  {
+    if (!empty($row[$column]) && !strval($row[$column])) {
       $this->throwException($table, $row, $column, 'is not a valid string');
     }
 
     $value = trim($row[$column]);
-    if(strlen($value) > $maxLength) {
-      $this->throwException($table, $row, $column, 'is longer than '.$maxLength);
+    if (strlen($value) > $maxLength) {
+      $this->throwException($table, $row, $column, 'is longer than ' . $maxLength);
     }
 
     $this->setValue($table, $row, $column, $value);

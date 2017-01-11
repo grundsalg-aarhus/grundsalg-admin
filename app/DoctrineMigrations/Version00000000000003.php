@@ -5,14 +5,12 @@ namespace Application\Migrations;
 use AppBundle\Entity\User;
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Migration:
  * - Migrate User tabel to FOSUserBundle
  */
-class Version00000000000003 extends AbstractMigration implements ContainerAwareInterface
+class Version00000000000003 extends AbstractMigration
 {
   /**
    * @param Schema $schema
@@ -22,37 +20,7 @@ class Version00000000000003 extends AbstractMigration implements ContainerAwareI
     // this up() migration is auto-generated, please modify it to your needs
     $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-    $users = $this->getLegacyUsers();
-
-    $userManager = $this->container->get('fos_user.user_manager');
-
-    foreach ($users as $user) {
-      $newUser = $userManager->createUser();
-
-      $created = \DateTime::createFromFormat('Y-m-d H:i:s', $user['createdDate'].' 00:00:00');
-      $modified = \DateTime::createFromFormat('Y-m-d H:i:s', $user['modifiedDate'].' 00:00:00');
-
-      $newUser->setUsername($user['userName']);
-      $newUser->setEmail('notset_' . $user['userName'] . '@aarhus.dk');
-      $newUser->setName($user['name']);
-      $newUser->setCreatedAt($created);
-      $newUser->setUpdatedAt($modified);
-      $newUser->setCreatedBy($user['createdBy']);
-      $newUser->setUpdatedBy($user['modifiedBy']);
-      $newUser->setPlainPassword($user['password']);
-      $newUser->setEnabled(true);
-
-      $roles = explode('#', $user['roles']);
-
-      foreach ($roles as $role) {
-        $newUser->addRole("ROLE_" . $role);
-      }
-
-      $userManager->updateUser($newUser, true);
-    }
-
-    $this->addSql('DROP TABLE Users');
-
+    $this->addSql('CREATE TABLE fos_user (id INT AUTO_INCREMENT NOT NULL, username VARCHAR(180) NOT NULL, username_canonical VARCHAR(180) NOT NULL, email VARCHAR(180) NOT NULL, email_canonical VARCHAR(180) NOT NULL, enabled TINYINT(1) NOT NULL, salt VARCHAR(255) DEFAULT NULL, password VARCHAR(255) NOT NULL, last_login DATETIME DEFAULT NULL, confirmation_token VARCHAR(180) DEFAULT NULL, password_requested_at DATETIME DEFAULT NULL, roles LONGTEXT NOT NULL COMMENT \'(DC2Type:array)\', name LONGTEXT DEFAULT NULL, created_at DATETIME DEFAULT NULL, updated_at DATETIME DEFAULT NULL, created_by VARCHAR(255) DEFAULT NULL, updated_by VARCHAR(255) DEFAULT NULL, UNIQUE INDEX UNIQ_957A647992FC23A8 (username_canonical), UNIQUE INDEX UNIQ_957A6479A0D96FBF (email_canonical), UNIQUE INDEX UNIQ_957A6479C05FB297 (confirmation_token), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
   }
 
   /**
@@ -63,43 +31,8 @@ class Version00000000000003 extends AbstractMigration implements ContainerAwareI
     // this down() migration is auto-generated, please modify it to your needs
     $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-    $this->addSql('TRUNCATE TABLE fos_user');
+    $this->addSql('DROP TABLE fos_user');
 
-    $this->addSql('
-      CREATE TABLE Users (
-        id bigint(20) NOT NULL,
-        name longtext NOT NULL,
-        userName longtext NOT NULL,
-        password longtext NOT NULL,
-        roles longtext NOT NULL,
-        createdBy longtext NOT NULL,
-        createdDate date NOT NULL,
-        modifiedBy longtext NOT NULL,
-        modifiedDate date NOT NULL,
-        PRIMARY KEY (id)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8
-    ');
-  }
-
-  /**
-   * Implements container aware interface.
-   *
-   * @param \Symfony\Component\DependencyInjection\ContainerInterface|NULL $container
-   *    The container that is injected.
-   */
-  public function setContainer(ContainerInterface $container = NULL)
-  {
-    $this->container = $container;
-  }
-
-  private function getLegacyUsers()
-  {
-    $sql = "SELECT * FROM Users";
-
-    $em = $this->container->get('doctrine')->getManager();
-    $stmt = $em->getConnection()->prepare($sql);
-    $stmt->execute();
-    return $stmt->fetchAll();
   }
 
 }

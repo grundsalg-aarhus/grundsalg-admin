@@ -68,7 +68,7 @@ class Lokalplan
   /**
    * @var string
    *
-   * @ORM\Column(name="lokalPlanLink", type="string", length=255, nullable=false)
+   * @ORM\Column(name="lokalPlanLink", type="string", length=255, nullable=true)
    */
   private $lokalplanlink;
 
