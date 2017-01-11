@@ -21,4 +21,4 @@ services:
 
   grundsalg.communication:
     class: AppBundle\Service\GrundsalgCommunicationService
-    arguments: ['@service_container']
+    arguments: ['%grundsalg_web%']

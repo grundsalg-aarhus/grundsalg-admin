@@ -1,10 +1,12 @@
 <?php
 /**
  * @file
- * Contains the GrundsalgCommunicationService.
+ * Contains the GrundsalgCommunicationService which handles synchronizations from
+ * this system to the Grundsalg presentations web page.
  */
 namespace AppBundle\Service;
-use Symfony\Component\DependencyInjection\Container;
+
+use GuzzleHttp\Client;
 
 /**
  * Class GrundsalgCommunicationService
@@ -12,13 +14,13 @@ use Symfony\Component\DependencyInjection\Container;
  * @package AppBundle
  */
 class GrundsalgCommunicationService {
-  protected $container;
+  private $endpoint;
 
   /**
    * Constructor
    */
-  public function __construct(Container $container) {
-    $this->container = $container;
+  public function __construct($endpoint) {
+    $this->endpoint = $endpoint;
   }
 
   /**
@@ -27,6 +29,8 @@ class GrundsalgCommunicationService {
    * @param $salgsomraade
    */
   public function saveSalgsomraade($salgsomraade) {
-    $client = 1;
+    $client = new Client();
+
+    $client->request('POST', $this->endpoint . "/api/udstykning/" . $salgsomraade->getId() . "/updated");
   }
 }
