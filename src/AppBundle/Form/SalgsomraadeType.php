@@ -30,7 +30,7 @@ class SalgsomraadeType extends AbstractType
             ->add('updatedBy')
             ->add('createdAt', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('updatedAt', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
-            ->add('landinspektor')
+            ->add('landinspektoer')
             ->add('delomraade')
             ->add('lokalplan')
             ->add('postby')
