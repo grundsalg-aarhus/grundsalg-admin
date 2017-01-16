@@ -17,7 +17,7 @@ class KeywordvalueType extends AbstractType
         $builder
             ->add('display')
             ->add('value')
-            ->add('keywordid')
+            ->add('keyword')
         ;
     }
     

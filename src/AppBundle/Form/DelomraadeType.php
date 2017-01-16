@@ -28,7 +28,7 @@ class DelomraadeType extends AbstractType
             ->add('updatedBy')
             ->add('createdAt', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('updatedAt', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
-            ->add('lokalplanid')
+            ->add('lokalplan')
         ;
     }
     

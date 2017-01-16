@@ -47,9 +47,9 @@ class SalgshistorikType extends AbstractType
             ->add('updatedBy')
             ->add('createdAt', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('updatedAt', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
-            ->add('medkoeberpostbyid')
-            ->add('grundid')
-            ->add('koeberpostbyid')
+            ->add('medkoeberpostby')
+            ->add('grund')
+            ->add('koeberpostby')
         ;
     }
     

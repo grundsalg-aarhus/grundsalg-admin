@@ -21,7 +21,7 @@ class LandinspektoerType extends AbstractType
             ->add('navn')
             ->add('notat')
             ->add('telefon')
-            ->add('postnrid')
+            ->add('postnr')
             ->add('active')
             ->add('createdBy')
             ->add('updatedBy')

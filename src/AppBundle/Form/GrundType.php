@@ -57,7 +57,7 @@ class GrundType extends AbstractType
             ->add('fastpris')
             ->add('minbud')
             ->add('note')
-            ->add('landinspektoerid')
+            ->add('landinspektoer')
             ->add('resstart', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('tilbudstart', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('accept', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
@@ -85,11 +85,11 @@ class GrundType extends AbstractType
             ->add('updatedBy')
             ->add('createdAt', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('updatedAt', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
-            ->add('postbyid')
-            ->add('medkoeberpostbyid')
-            ->add('koeberpostbyid')
-            ->add('lokalsamfundid')
-            ->add('salgsomraadeid')
+            ->add('postby')
+            ->add('medkoeberpostby')
+            ->add('koeberpostby')
+            ->add('lokalsamfund')
+            ->add('salgsomraade')
         ;
     }
     

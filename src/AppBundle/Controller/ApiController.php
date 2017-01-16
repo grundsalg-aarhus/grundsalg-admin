@@ -56,8 +56,8 @@ class ApiController extends Controller {
       'id' => $salgsomraade->getId(),
       'type' => $salgsomraade->getType(),
       'title' => $salgsomraade->getTitel(),
-      'city' => $salgsomraade->getPostbyid()->getCity(),
-      'postalCode' => $salgsomraade->getPostbyid()->getPostalcode(),
+      'city' => $salgsomraade->getPostby()->getCity(),
+      'postalCode' => $salgsomraade->getPostby()->getPostalcode(),
     ];
 
     $response = $this->json($data);

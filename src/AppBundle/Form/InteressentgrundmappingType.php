@@ -16,8 +16,8 @@ class InteressentgrundmappingType extends AbstractType
     {
         $builder
             ->add('annulleret')
-            ->add('grundid')
-            ->add('interessentid')
+            ->add('grund')
+            ->add('interessent')
         ;
     }
     

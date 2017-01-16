@@ -16,7 +16,7 @@ class LokalplanType extends AbstractType
     {
         $builder
             ->add('nr')
-            ->add('lsnr')
+            ->add('lokalsamfund')
             ->add('titel')
             ->add('projektleder')
             ->add('telefon')
