@@ -22,9 +22,7 @@ class AppKernel extends Kernel
       new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
       new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
       new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-      new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
 
-new ApiPlatform\Core\Bridge\Symfony\Bundle\ApiPlatformBundle(),
       new AppBundle\AppBundle(),
     ];
 
