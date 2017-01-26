@@ -1,5 +1,10 @@
 # Grundsalg Fagsystem
 
+## 1.0.0-alpha2:
+
+* Removed API Platform
+* Removed JWT Auth
+
 ## 1.0.0-alpha1:
 
 * Import and convert/validate legacy data
