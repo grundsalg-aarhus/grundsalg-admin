@@ -1,0 +1,59 @@
+    {% extends 'AppBundle::base.html.twig' %}
+
+
+    {% block body %}
+
+    <div class="row heading">
+        <div class="col-md-9">
+            <h1>{{ 'lokalsamfund.labels.plural' | trans }}</h1>
+        </div>
+        <div class="col-md-3 text-right">
+                            <a class="btn btn-default" href="{{ path('lokalsamfund_new') }}">
+                    {{ icon('plus') }} {{ 'lokalsamfund.actions.new' | trans }}
+                </a>
+                    </div>
+        <div class="col-md-3 text-right">
+            <h2><small>{% include 'AppBundle:_includes:pagination_count.html.twig' %}</small></h2>
+        </div>
+
+    </div>
+
+    <table class="table table-condensed table-header-rotated">
+        <thead>
+        <tr>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalsamfund.id'|trans, 'id') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalsamfund.number'|trans, 'number') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalsamfund.name'|trans, 'name') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalsamfund.active'|trans, 'active') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalsamfund.createdBy'|trans, 'createdBy') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalsamfund.updatedBy'|trans, 'updatedBy') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalsamfund.createdAt'|trans, 'createdAt') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'lokalsamfund.updatedAt'|trans, 'updatedAt') }}</span></div></th>
+            {{ helper.header() }}
+        </tr>
+        </thead>
+        <tbody>
+        {% for lokalsamfund in pagination %}
+        <tr>
+                    <td><a href="{{ path('lokalsamfund_show', { 'id': lokalsamfund.id }) }}">{{ lokalsamfund.id }}</a></td>
+                    <td>{{ lokalsamfund.number }}</td>
+                    <td>{{ lokalsamfund.name }}</td>
+                    <td>{{ lokalsamfund.active }}</td>
+                    <td>{{ lokalsamfund.createdBy }}</td>
+                    <td>{{ lokalsamfund.updatedBy }}</td>
+                    <td>{% if lokalsamfund.createdAt %}{{ lokalsamfund.createdAt|date('d/m Y H:i:s') }}{% endif %}</td>
+                    <td>{% if lokalsamfund.updatedAt %}{{ lokalsamfund.updatedAt|date('d/m Y H:i:s') }}{% endif %}</td>
+                    <td class="text-right">
+                        <a class="btn btn-default btn-xs" href="{{ path('lokalsamfund_edit', { 'id': lokalsamfund.id }) }}">{{ 'common.edit' | trans }}</a>
+                    </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="row">
+        <div class="col text-center">
+            {{ knp_pagination_render(pagination, "", {}, { "prev_label": "«", "next_label": "»", "first_label": "««", "last_label": "»»"}) }}
+        </div>
+    </div>
+    {% endblock %}

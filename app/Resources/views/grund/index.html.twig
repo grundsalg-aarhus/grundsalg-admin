@@ -1,0 +1,185 @@
+    {% extends 'AppBundle::base.html.twig' %}
+
+
+    {% block body %}
+
+    <div class="row heading">
+        <div class="col-md-9">
+            <h1>{{ 'grund.labels.plural' | trans }}</h1>
+        </div>
+        <div class="col-md-3 text-right">
+                            <a class="btn btn-default" href="{{ path('grund_new') }}">
+                    {{ icon('plus') }} {{ 'grund.actions.new' | trans }}
+                </a>
+                    </div>
+        <div class="col-md-3 text-right">
+            <h2><small>{% include 'AppBundle:_includes:pagination_count.html.twig' %}</small></h2>
+        </div>
+
+    </div>
+
+    <table class="table table-condensed table-header-rotated">
+        <thead>
+        <tr>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.id'|trans, 'id') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.status'|trans, 'status') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.salgstatus'|trans, 'salgstatus') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.gid'|trans, 'gid') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.grundtype'|trans, 'grundtype') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.mnr'|trans, 'mnr') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.mnr2'|trans, 'mnr2') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.delareal'|trans, 'delareal') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.ejerlav'|trans, 'ejerlav') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.vej'|trans, 'vej') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.husnummer'|trans, 'husnummer') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.bogstav'|trans, 'bogstav') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.urlgis'|trans, 'urlgis') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.salgstype'|trans, 'salgstype') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.auktionstartdato'|trans, 'auktionstartdato') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.auktionslutdato'|trans, 'auktionslutdato') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.annonceresej'|trans, 'annonceresej') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.datoannonce'|trans, 'datoannonce') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.datoannonce1'|trans, 'datoannonce1') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.tilsluttet'|trans, 'tilsluttet') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.maxetagem2'|trans, 'maxetagem2') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.areal'|trans, 'areal') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.arealvej'|trans, 'arealvej') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.arealkotelet'|trans, 'arealkotelet') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.bruttoareal'|trans, 'bruttoareal') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.prism2'|trans, 'prism2') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.prisfoerkorrektion'|trans, 'prisfoerkorrektion') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.priskorrektion1'|trans, 'priskorrektion1') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.antalkorr1'|trans, 'antalkorr1') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.akrkorr1'|trans, 'akrkorr1') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.priskoor1'|trans, 'priskoor1') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.priskorrektion2'|trans, 'priskorrektion2') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.antalkorr2'|trans, 'antalkorr2') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.akrkorr2'|trans, 'akrkorr2') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.priskoor2'|trans, 'priskoor2') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.priskorrektion3'|trans, 'priskorrektion3') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.antalkorr3'|trans, 'antalkorr3') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.akrkorr3'|trans, 'akrkorr3') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.priskoor3'|trans, 'priskoor3') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.pris'|trans, 'pris') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.fastpris'|trans, 'fastpris') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.minbud'|trans, 'minbud') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.note'|trans, 'note') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.landinspektoer'|trans, 'landinspektoer') }}</span></div></th>
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.resstart'|trans, 'resstart') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.tilbudstart'|trans, 'tilbudstart') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.accept'|trans, 'accept') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.skoederekv'|trans, 'skoederekv') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.beloebanvist'|trans, 'beloebanvist') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.resslut'|trans, 'resslut') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.tilbudslut'|trans, 'tilbudslut') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.overtagelse'|trans, 'overtagelse') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.antagetbud'|trans, 'antagetbud') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.salgsprisumoms'|trans, 'salgsprisumoms') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.navn'|trans, 'navn') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.adresse'|trans, 'adresse') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.land'|trans, 'land') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.telefon'|trans, 'telefon') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.mobil'|trans, 'mobil') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.koeberemail'|trans, 'koeberemail') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.navn1'|trans, 'navn1') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.adresse1'|trans, 'adresse1') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.land1'|trans, 'land1') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.telefon1'|trans, 'telefon1') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.mobil1'|trans, 'mobil1') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.medkoeberemail'|trans, 'medkoeberemail') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.notat'|trans, 'notat') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.createdBy'|trans, 'createdBy') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.updatedBy'|trans, 'updatedBy') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.createdAt'|trans, 'createdAt') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.updatedAt'|trans, 'updatedAt') }}</span></div></th>
+            {{ helper.header() }}
+        </tr>
+        </thead>
+        <tbody>
+        {% for grund in pagination %}
+        <tr>
+                    <td><a href="{{ path('grund_show', { 'id': grund.id }) }}">{{ grund.id }}</a></td>
+                    <td>{{ grund.status }}</td>
+                    <td>{{ grund.salgstatus }}</td>
+                    <td>{{ grund.gid }}</td>
+                    <td>{{ grund.grundtype }}</td>
+                    <td>{{ grund.mnr }}</td>
+                    <td>{{ grund.mnr2 }}</td>
+                    <td>{{ grund.delareal }}</td>
+                    <td>{{ grund.ejerlav }}</td>
+                    <td>{{ grund.vej }}</td>
+                    <td>{{ grund.husnummer }}</td>
+                    <td>{{ grund.bogstav }}</td>
+                    <td>{{ grund.urlgis }}</td>
+                    <td>{{ grund.salgstype }}</td>
+                    <td>{% if grund.auktionstartdato %}{{ grund.auktionstartdato|date('d/m Y') }}{% endif %}</td>
+                    <td>{% if grund.auktionslutdato %}{{ grund.auktionslutdato|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ grund.annonceresej }}</td>
+                    <td>{% if grund.datoannonce %}{{ grund.datoannonce|date('d/m Y') }}{% endif %}</td>
+                    <td>{% if grund.datoannonce1 %}{{ grund.datoannonce1|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ grund.tilsluttet }}</td>
+                    <td>{{ grund.maxetagem2 }}</td>
+                    <td>{{ grund.areal }}</td>
+                    <td>{{ grund.arealvej }}</td>
+                    <td>{{ grund.arealkotelet }}</td>
+                    <td>{{ grund.bruttoareal }}</td>
+                    <td>{{ grund.prism2 }}</td>
+                    <td>{{ grund.prisfoerkorrektion }}</td>
+                    <td>{{ grund.priskorrektion1 }}</td>
+                    <td>{{ grund.antalkorr1 }}</td>
+                    <td>{{ grund.akrkorr1 }}</td>
+                    <td>{{ grund.priskoor1 }}</td>
+                    <td>{{ grund.priskorrektion2 }}</td>
+                    <td>{{ grund.antalkorr2 }}</td>
+                    <td>{{ grund.akrkorr2 }}</td>
+                    <td>{{ grund.priskoor2 }}</td>
+                    <td>{{ grund.priskorrektion3 }}</td>
+                    <td>{{ grund.antalkorr3 }}</td>
+                    <td>{{ grund.akrkorr3 }}</td>
+                    <td>{{ grund.priskoor3 }}</td>
+                    <td>{{ grund.pris }}</td>
+                    <td>{{ grund.fastpris }}</td>
+                    <td>{{ grund.minbud }}</td>
+                    <td>{{ grund.note }}</td>
+                    <td>{{ grund.landinspektoer }}</td>
+                    <td>{% if grund.resstart %}{{ grund.resstart|date('d/m Y') }}{% endif %}</td>
+                    <td>{% if grund.tilbudstart %}{{ grund.tilbudstart|date('d/m Y') }}{% endif %}</td>
+                    <td>{% if grund.accept %}{{ grund.accept|date('d/m Y') }}{% endif %}</td>
+                    <td>{% if grund.skoederekv %}{{ grund.skoederekv|date('d/m Y') }}{% endif %}</td>
+                    <td>{% if grund.beloebanvist %}{{ grund.beloebanvist|date('d/m Y') }}{% endif %}</td>
+                    <td>{% if grund.resslut %}{{ grund.resslut|date('d/m Y') }}{% endif %}</td>
+                    <td>{% if grund.tilbudslut %}{{ grund.tilbudslut|date('d/m Y') }}{% endif %}</td>
+                    <td>{% if grund.overtagelse %}{{ grund.overtagelse|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ grund.antagetbud }}</td>
+                    <td>{{ grund.salgsprisumoms }}</td>
+                    <td>{{ grund.navn }}</td>
+                    <td>{{ grund.adresse }}</td>
+                    <td>{{ grund.land }}</td>
+                    <td>{{ grund.telefon }}</td>
+                    <td>{{ grund.mobil }}</td>
+                    <td>{{ grund.koeberemail }}</td>
+                    <td>{{ grund.navn1 }}</td>
+                    <td>{{ grund.adresse1 }}</td>
+                    <td>{{ grund.land1 }}</td>
+                    <td>{{ grund.telefon1 }}</td>
+                    <td>{{ grund.mobil1 }}</td>
+                    <td>{{ grund.medkoeberemail }}</td>
+                    <td>{{ grund.notat }}</td>
+                    <td>{{ grund.createdBy }}</td>
+                    <td>{{ grund.updatedBy }}</td>
+                    <td>{% if grund.createdAt %}{{ grund.createdAt|date('d/m Y H:i:s') }}{% endif %}</td>
+                    <td>{% if grund.updatedAt %}{{ grund.updatedAt|date('d/m Y H:i:s') }}{% endif %}</td>
+                    <td class="text-right">
+                        <a class="btn btn-default btn-xs" href="{{ path('grund_edit', { 'id': grund.id }) }}">{{ 'common.edit' | trans }}</a>
+                    </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="row">
+        <div class="col text-center">
+            {{ knp_pagination_render(pagination, "", {}, { "prev_label": "«", "next_label": "»", "first_label": "««", "last_label": "»»"}) }}
+        </div>
+    </div>
+    {% endblock %}

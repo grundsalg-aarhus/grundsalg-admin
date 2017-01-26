@@ -1,0 +1,206 @@
+fos:
+  user:
+    profile:
+      title: Profil
+      form:
+        username: Email
+        email: Email
+        firstname: Fornavn
+        lastname: Efternavn
+        phone: Telefon
+        current:
+          password: Nuværende kodeord
+    resetting:
+      form:
+        plainPassword:
+          first: Indtast nyt kodeord
+          second: Gentag kodeord
+    change:
+      password:
+        form:
+          current:
+            password: Nuværende kodeord
+          plainPassword:
+            first: Indtast nyt kodeord
+            second: Gentag kodeord
+
+security:
+  login:
+    username: Email
+
+common:
+  edit: Rediger
+  delete: Slet
+  new: Opret
+  showing: Viser
+  admin: Administration
+  lokalplan_menu: Lokalplaner m.v.
+
+frontpage:
+  title: Arealudvikling Aarhus
+  welcome: Velkommen til Arealudvikling Aarhus. Her kan du administrere grundsalg i Aarhus Kommune.
+
+delomraade:
+  labels:
+    singular: Delområde
+    plural: Delområder
+  actions:
+    edit: Rediger delområde
+    new: Opret delområde
+  id: ID
+  createdby: Oprettet af
+  createddate: Oprettelsesdato
+  modifiedby: Ændret af
+  modifieddate: Ændringsdato
+  kpl1: kpl1
+  kpl2: kpl2
+  kpl3: kpl3
+  kpl4: kpl4
+  o1: o1
+  o2: o2
+  o3: o2
+  anvendelse: Anvendelse
+  mulighedfor: Mulighed for
+  lokalplanid: Lokalplan
+  lokalplanid.help: Vælg hvilken lokalplan der gælder for delområdet.
+
+grund:
+  labels:
+    singular: Grund
+    plural: Grunde
+  actions:
+    edit: Rediger grund
+    new: Opret grund
+  id: ID
+  createdby: Oprettet af
+  createddate: Oprettelsesdato
+  modifiedby: Ændret af
+  modifieddate: Ændringsdato
+  status: Status
+  salgstatus: Salgsstatus
+  grundtype: Grundtype
+  delareal: Delareal
+  ejerlav: Ejerlav
+  vej: Vej
+  husnummer: Husnummer
+  bogstav: Bogstav
+  postbyid: Postnummer/By ID
+  urlgis: GIS link
+  salgstype: Salgstype
+  auktionstartdato: Auktionens startdato
+  auktionslutdato: Auktionens slutdato
+  datoannonce: Annoncedato
+  datoannonce1: Annoncedato 1
+  tilsluttet: Tilsluttet
+  maxetagem2: Max etage m2
+  areal: Areal
+  bruttoareal: Bruttoareal
+  prism2: Pris pr. m2
+  prisfoerkorrektion: Pris før korrektion
+  priskorrektion1: Priskorrektion 1
+  priskorrektion2: Priskorrektion 2
+  priskorrektion3: Priskorrektion 3
+  pris: Pris
+  fastpris: Fastpris
+  minbud: Minimumsbud
+  note: Note
+  landinspektoerid: Landinspektør ID
+  tilbudstart: Tilbudsstart
+  accept: Accept
+  tilbudslut: Tilbudsafslutning
+  overtagelse: Overtagelsesdato
+  salgsprisumoms: Salgspris uden moms
+  navn: Navn
+  adresse: Adresse
+  land: Land
+  telefon: Telefon
+  mobil: Mobil
+  koeberemail: Købers e-mail
+  navn1: Navn 1
+  adresse1: Adresse 1
+  land1: Land 1
+  telefon1: Telefon 1
+  mobil1: Mobil 1
+  medkoeberemail: Medkøbers e-mail
+  notat: Notat
+  parcelhusgrund: Parcelhusgrund
+  storparcel: Storparcel
+  erhvervsgrund: Erhvervsgrund
+  all: Alle grunde
+
+interessent:
+  labels:
+    singular: Interessent
+    plural: Interessenter
+  id: ID
+  createdby: Oprettet af
+  createddate: Oprettelsesdato
+  modifiedby: Ændret af
+  modifieddate: Ændringsdato
+  navn: Navn
+  adresse: Adresse
+  land: Land
+  telefon: Telefon
+  mobil: Mobil
+  koeberemail: Købers e-mail
+  navn1: Navn 1
+  adresse1: Adresse 1
+  land1: Land 1
+  telefon1: Telefon 1
+  mobil1: Mobil 1
+  medkoeberemail: Medkøbers e-mail
+  notat: Notat
+
+landinspektoer:
+  labels:
+    singular: Landinspektør
+    plural: Landinspektører
+
+lokalplan:
+  labels:
+    singular: Lokalplan
+    plural: Lokalplaner
+  id: ID
+  createdby: Oprettet af
+  createddate: Oprettelsesdato
+  modifiedby: Ændret af
+  modifieddate: Ændringsdato
+  nr: nr
+  titel: Titel
+  projektleder: Projektleder
+  telefon: Telefon
+  lokalplanlink: Link til lokalplan
+  samletareal: Samlet areal
+  salgbartareal: Salgsbart areal
+  forbrugsandel: Forbrugsandel
+
+
+lokalsamfund:
+  labels:
+    singular: Lokalsamfund
+    plural: Lokalsamfund
+
+opkoeb:
+  labels:
+    singular: Opkøb
+    plural: Opkøb
+
+postby:
+  labels:
+    singular: Postnummer/By
+    plural: Postnummer/By
+
+salgshistorik:
+  labels:
+    singular: Salgshistorik
+    plural: Salgshistorik
+
+salgsomraade:
+  labels:
+    singular: Salgsområde
+    plural: Salgsområder
+
+user:
+  labels:
+    singular: Bruger
+    plural: Brugere

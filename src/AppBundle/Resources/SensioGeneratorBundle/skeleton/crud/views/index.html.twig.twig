@@ -1,0 +1,95 @@
+{% block extends %}
+    {{ "{% extends 'AppBundle::base.html.twig' %}" }}
+{% endblock extends %}
+
+{% set class = entity | split('\\') | last | lower %}
+
+{% block body %}
+    {{ "{% block body %}" }}
+
+    <div class="row heading">
+        <div class="col-md-9">
+            <h1>{{ "{{ '" }}{{ class }}{{ ".labels.plural' | trans }}" }}</h1>
+        </div>
+        <div class="col-md-3 text-right">
+            {% if 'new' in actions %}
+                <a class="btn btn-default" href="{{ "{{ path('" ~ route_name_prefix ~ "_new') }}" }}">
+                    {{ "{{ icon('plus') }}" }} {{ "{{ '" }}{{ class }}{{ ".actions.new' | trans }}" }}
+                </a>
+            {% endif %}
+        </div>
+        <div class="col-md-3 text-right">
+            <h2><small>{{ '{% include \'AppBundle:_includes:pagination_count.html.twig\' %}' }}</small></h2>
+        </div>
+
+    </div>
+
+    <table class="table table-condensed table-header-rotated">
+        <thead>
+        <tr>
+            {%- for field, metadata in fields %}
+                {% set class_field = entity_singularized ~ '.' ~ field %}
+
+                <th class="rotate"><div><span>{{ '{{ knp_pagination_sortable(pagination, '}}{{ "'" }}{{ class_field }}{{ "'" }}{{ '|trans, ' }}{{ "'" }}{{ field }}{{ "'" }}{{ ') }}' }}</span></div></th>
+
+            {%- endfor %}
+
+            {{ "{{ helper.header() }}" }}
+        </tr>
+        </thead>
+        <tbody>
+        {{ '{% for ' ~ entity_singularized ~ ' in pagination %}' }}
+        <tr>
+
+            {%- for field, metadata in fields %}
+                {%- if loop.first and ('show' in actions) %}
+
+                    <td><a href="{{ "{{ path('" ~ route_name_prefix ~ "_show', { 'id': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}">{{ '{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' }}' }}</a></td>
+
+                {%- elseif metadata.type in ['datetime'] %}
+
+                    <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'d/m Y H:i:s\') }}{% endif %}' }}</td>
+
+                {%- elseif metadata.type in ['date'] %}
+
+                    <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'d/m Y\') }}{% endif %}' }}</td>
+
+                {%- elseif metadata.type in ['time'] %}
+
+                    <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'H:i:s\') }}{% endif %}' }}</td>
+
+                {%- elseif metadata.type in ['array'] %}
+
+                    <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|join(\', \') }}{% endif %}' }}</td>
+
+                {%- elseif metadata.type in ['boolean'] %}
+
+                    <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ common.true | trans }}{% else %}{{ common.false | trans }}{% endif %}' }}</td>
+
+                {%- else %}
+
+                    <td>{{ '{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' }}' }}</td>
+
+                {%- endif %}
+
+                {%- if loop.last %}
+
+                    <td class="text-right">
+                        <a class="btn btn-default btn-xs" href="{{ "{{ path('" ~ route_name_prefix ~ "_edit', { 'id': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}">{{ "{{ 'common.edit' | trans }}"  }}</a>
+                    </td>
+
+                {%- endif %}
+            {%- endfor %}
+
+        </tr>
+        {{ '{% endfor %}' }}
+        </tbody>
+    </table>
+
+    <div class="row">
+        <div class="col text-center">
+            {{ '{{ knp_pagination_render(pagination, "", {}, { "prev_label": "«", "next_label": "»", "first_label": "««", "last_label": "»»"}) }}' }}
+        </div>
+    </div>
+    {{ "{% endblock %}" }}
+{% endblock body %}

@@ -1,0 +1,78 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+
+{% block body %}
+    <div class="row heading">
+        <div class="col-md-9">
+            <h1>Opkoeb</h1>
+        </div>
+        <div class="col-md-3 text-right">
+            <a class="btn btn-default" href="{{ path('opkoeb_edit', { 'id': opkoeb.id }) }}">{{ 'common.edit' | trans }}</a>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ icon('chevron-right') }} {{ 'opkoeb.labels.singular' | trans }}</div>
+                <table class="table table-condensed">
+                    <tbody>
+                            <tr>
+                                <th>{{ 'opkoeb.id' | trans }}</th>
+                                <td>{{ opkoeb.id }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'opkoeb.matrik1' | trans }}</th>
+                                <td>{{ opkoeb.matrik1 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'opkoeb.matrik2' | trans }}</th>
+                                <td>{{ opkoeb.matrik2 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'opkoeb.ejerlav' | trans }}</th>
+                                <td>{{ opkoeb.ejerlav }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'opkoeb.m2' | trans }}</th>
+                                <td>{{ opkoeb.m2 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'opkoeb.bemaerkning' | trans }}</th>
+                                <td>{{ opkoeb.bemaerkning }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'opkoeb.opkoebdato' | trans }}</th>
+                                <td>{% if opkoeb.opkoebdato %}{{ opkoeb.opkoebdato|date('Y-m-d') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'opkoeb.pris' | trans }}</th>
+                                <td>{{ opkoeb.pris }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'opkoeb.procentaflp' | trans }}</th>
+                                <td>{{ opkoeb.procentaflp }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'opkoeb.createdBy' | trans }}</th>
+                                <td>{{ opkoeb.createdBy }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'opkoeb.updatedBy' | trans }}</th>
+                                <td>{{ opkoeb.updatedBy }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'opkoeb.createdAt' | trans }}</th>
+                                <td>{% if opkoeb.createdAt %}{{ opkoeb.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'opkoeb.updatedAt' | trans }}</th>
+                                <td>{% if opkoeb.updatedAt %}{{ opkoeb.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            </tr>                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

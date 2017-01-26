@@ -1,0 +1,45 @@
+{% block extends %}
+{{ "{% extends 'AppBundle::base.html.twig' %}" }}
+{% endblock extends %}
+
+{% set class = entity | split('\\') | last | lower %}
+
+{% block body %}
+{{ "{% block body %}" }}
+    <div class="row heading">
+        <div class="col-md-9">
+            <h1>{{ "{{ '" }}{{ class }}{{ ".actions.edit' | trans }}" }}</h1>
+        </div>
+        <div class="col-md-3 text-right">
+            {%- if ('delete' in actions) %}
+
+                {{ '{{ form_start(delete_form) }}' }}
+                <input type="submit" class="btn btn-danger" value="{{ "{{ 'common.delete' | trans }}" }}">
+                {{ '{{ form_end(delete_form) }}' }}
+
+            {%- endif %}
+        </div>
+    </div>
+
+    {{ '{% form_theme edit_form "AppBundle::Form/twocol-form.html.twig"  %}' }}
+    {{ '{{ form_start(edit_form) }}' }}
+    {%- for field in fields %}
+        {%- if field | first != 'id'  %}
+        {{ '
+    {{ form_row(edit_form.' }}{{ field | first }}{{ ')}}' }}
+        {%- endif  %}
+    {%- endfor %}
+
+    {{ '{{ form_rest(edit_form) }}' }}
+
+    <div class="row form-actions">
+        <div class="col-lg-12">
+            <input type="submit" class="btn btn-primary" value="{{ "{{ 'common.edit' | trans }}" }}" />
+        </div>
+    </div>
+
+    {{ '{{ form_end(edit_form) }}' }}
+
+
+{{ "{% endblock %}" }}
+{% endblock body %}

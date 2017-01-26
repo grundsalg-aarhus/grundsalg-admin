@@ -1,0 +1,71 @@
+    {% extends 'AppBundle::base.html.twig' %}
+
+
+    {% block body %}
+
+    <div class="row heading">
+        <div class="col-md-9">
+            <h1>{{ 'delomraade.labels.plural' | trans }}</h1>
+        </div>
+        <div class="col-md-3 text-right">
+                            <a class="btn btn-default" href="{{ path('delomraade_new') }}">
+                    {{ icon('plus') }} {{ 'delomraade.actions.new' | trans }}
+                </a>
+                    </div>
+        <div class="col-md-3 text-right">
+            <h2><small>{% include 'AppBundle:_includes:pagination_count.html.twig' %}</small></h2>
+        </div>
+
+    </div>
+
+    <table class="table table-condensed table-header-rotated">
+        <thead>
+        <tr>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'delomraade.id'|trans, 'id') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'delomraade.kpl1'|trans, 'kpl1') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'delomraade.kpl2'|trans, 'kpl2') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'delomraade.kpl3'|trans, 'kpl3') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'delomraade.kpl4'|trans, 'kpl4') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'delomraade.o1'|trans, 'o1') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'delomraade.o2'|trans, 'o2') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'delomraade.o3'|trans, 'o3') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'delomraade.anvendelse'|trans, 'anvendelse') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'delomraade.mulighedfor'|trans, 'mulighedfor') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'delomraade.createdBy'|trans, 'createdBy') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'delomraade.updatedBy'|trans, 'updatedBy') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'delomraade.createdAt'|trans, 'createdAt') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'delomraade.updatedAt'|trans, 'updatedAt') }}</span></div></th>
+            {{ helper.header() }}
+        </tr>
+        </thead>
+        <tbody>
+        {% for delomraade in pagination %}
+        <tr>
+                    <td><a href="{{ path('delomraade_show', { 'id': delomraade.id }) }}">{{ delomraade.id }}</a></td>
+                    <td>{{ delomraade.kpl1 }}</td>
+                    <td>{{ delomraade.kpl2 }}</td>
+                    <td>{{ delomraade.kpl3 }}</td>
+                    <td>{{ delomraade.kpl4 }}</td>
+                    <td>{{ delomraade.o1 }}</td>
+                    <td>{{ delomraade.o2 }}</td>
+                    <td>{{ delomraade.o3 }}</td>
+                    <td>{{ delomraade.anvendelse }}</td>
+                    <td>{{ delomraade.mulighedfor }}</td>
+                    <td>{{ delomraade.createdBy }}</td>
+                    <td>{{ delomraade.updatedBy }}</td>
+                    <td>{% if delomraade.createdAt %}{{ delomraade.createdAt|date('d/m Y H:i:s') }}{% endif %}</td>
+                    <td>{% if delomraade.updatedAt %}{{ delomraade.updatedAt|date('d/m Y H:i:s') }}{% endif %}</td>
+                    <td class="text-right">
+                        <a class="btn btn-default btn-xs" href="{{ path('delomraade_edit', { 'id': delomraade.id }) }}">{{ 'common.edit' | trans }}</a>
+                    </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="row">
+        <div class="col text-center">
+            {{ knp_pagination_render(pagination, "", {}, { "prev_label": "«", "next_label": "»", "first_label": "««", "last_label": "»»"}) }}
+        </div>
+    </div>
+    {% endblock %}

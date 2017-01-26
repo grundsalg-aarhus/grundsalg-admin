@@ -1,0 +1,26 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+
+{% block body %}
+    <div class="row heading">
+        <div class="col-md-9">
+            <h1>{{ 'keyword.actions.new' | trans }}</h1>
+        </div>
+        <div class="col-md-3 text-right"></div>
+    </div>
+
+    {% form_theme form "AppBundle::Form/twocol-form.html.twig"  %}
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+    {{ form_rest(form) }}
+
+    <div class="row form-actions">
+        <div class="col-lg-12">
+            <input type="submit" class="btn btn-primary" value="{{ 'common.new' | trans }}" />
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+
+{% endblock %}

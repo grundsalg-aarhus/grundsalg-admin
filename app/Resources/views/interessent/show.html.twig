@@ -1,0 +1,98 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+
+{% block body %}
+    <div class="row heading">
+        <div class="col-md-9">
+            <h1>Interessent</h1>
+        </div>
+        <div class="col-md-3 text-right">
+            <a class="btn btn-default" href="{{ path('interessent_edit', { 'id': interessent.id }) }}">{{ 'common.edit' | trans }}</a>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ icon('chevron-right') }} {{ 'interessent.labels.singular' | trans }}</div>
+                <table class="table table-condensed">
+                    <tbody>
+                            <tr>
+                                <th>{{ 'interessent.id' | trans }}</th>
+                                <td>{{ interessent.id }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'interessent.navn' | trans }}</th>
+                                <td>{{ interessent.navn }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'interessent.adresse' | trans }}</th>
+                                <td>{{ interessent.adresse }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'interessent.land' | trans }}</th>
+                                <td>{{ interessent.land }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'interessent.telefon' | trans }}</th>
+                                <td>{{ interessent.telefon }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'interessent.mobil' | trans }}</th>
+                                <td>{{ interessent.mobil }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'interessent.koeberemail' | trans }}</th>
+                                <td>{{ interessent.koeberemail }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'interessent.navn1' | trans }}</th>
+                                <td>{{ interessent.navn1 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'interessent.adresse1' | trans }}</th>
+                                <td>{{ interessent.adresse1 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'interessent.land1' | trans }}</th>
+                                <td>{{ interessent.land1 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'interessent.telefon1' | trans }}</th>
+                                <td>{{ interessent.telefon1 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'interessent.mobil1' | trans }}</th>
+                                <td>{{ interessent.mobil1 }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'interessent.medkoeberemail' | trans }}</th>
+                                <td>{{ interessent.medkoeberemail }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'interessent.notat' | trans }}</th>
+                                <td>{{ interessent.notat }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'interessent.createdBy' | trans }}</th>
+                                <td>{{ interessent.createdBy }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'interessent.updatedBy' | trans }}</th>
+                                <td>{{ interessent.updatedBy }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'interessent.createdAt' | trans }}</th>
+                                <td>{% if interessent.createdAt %}{{ interessent.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'interessent.updatedAt' | trans }}</th>
+                                <td>{% if interessent.updatedAt %}{{ interessent.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            </tr>                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

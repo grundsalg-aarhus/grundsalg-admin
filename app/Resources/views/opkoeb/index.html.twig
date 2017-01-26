@@ -1,0 +1,69 @@
+    {% extends 'AppBundle::base.html.twig' %}
+
+
+    {% block body %}
+
+    <div class="row heading">
+        <div class="col-md-9">
+            <h1>{{ 'opkoeb.labels.plural' | trans }}</h1>
+        </div>
+        <div class="col-md-3 text-right">
+                            <a class="btn btn-default" href="{{ path('opkoeb_new') }}">
+                    {{ icon('plus') }} {{ 'opkoeb.actions.new' | trans }}
+                </a>
+                    </div>
+        <div class="col-md-3 text-right">
+            <h2><small>{% include 'AppBundle:_includes:pagination_count.html.twig' %}</small></h2>
+        </div>
+
+    </div>
+
+    <table class="table table-condensed table-header-rotated">
+        <thead>
+        <tr>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.id'|trans, 'id') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.matrik1'|trans, 'matrik1') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.matrik2'|trans, 'matrik2') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.ejerlav'|trans, 'ejerlav') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.m2'|trans, 'm2') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.bemaerkning'|trans, 'bemaerkning') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.opkoebdato'|trans, 'opkoebdato') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.pris'|trans, 'pris') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.procentaflp'|trans, 'procentaflp') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.createdBy'|trans, 'createdBy') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.updatedBy'|trans, 'updatedBy') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.createdAt'|trans, 'createdAt') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'opkoeb.updatedAt'|trans, 'updatedAt') }}</span></div></th>
+            {{ helper.header() }}
+        </tr>
+        </thead>
+        <tbody>
+        {% for opkoeb in pagination %}
+        <tr>
+                    <td><a href="{{ path('opkoeb_show', { 'id': opkoeb.id }) }}">{{ opkoeb.id }}</a></td>
+                    <td>{{ opkoeb.matrik1 }}</td>
+                    <td>{{ opkoeb.matrik2 }}</td>
+                    <td>{{ opkoeb.ejerlav }}</td>
+                    <td>{{ opkoeb.m2 }}</td>
+                    <td>{{ opkoeb.bemaerkning }}</td>
+                    <td>{% if opkoeb.opkoebdato %}{{ opkoeb.opkoebdato|date('d/m Y') }}{% endif %}</td>
+                    <td>{{ opkoeb.pris }}</td>
+                    <td>{{ opkoeb.procentaflp }}</td>
+                    <td>{{ opkoeb.createdBy }}</td>
+                    <td>{{ opkoeb.updatedBy }}</td>
+                    <td>{% if opkoeb.createdAt %}{{ opkoeb.createdAt|date('d/m Y H:i:s') }}{% endif %}</td>
+                    <td>{% if opkoeb.updatedAt %}{{ opkoeb.updatedAt|date('d/m Y H:i:s') }}{% endif %}</td>
+                    <td class="text-right">
+                        <a class="btn btn-default btn-xs" href="{{ path('opkoeb_edit', { 'id': opkoeb.id }) }}">{{ 'common.edit' | trans }}</a>
+                    </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="row">
+        <div class="col text-center">
+            {{ knp_pagination_render(pagination, "", {}, { "prev_label": "«", "next_label": "»", "first_label": "««", "last_label": "»»"}) }}
+        </div>
+    </div>
+    {% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+
+{% block body %}
+    <div class="row heading">
+        <div class="col-md-9">
+            <h1>Lokalsamfund</h1>
+        </div>
+        <div class="col-md-3 text-right">
+            <a class="btn btn-default" href="{{ path('lokalsamfund_edit', { 'id': lokalsamfund.id }) }}">{{ 'common.edit' | trans }}</a>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ icon('chevron-right') }} {{ 'lokalsamfund.labels.singular' | trans }}</div>
+                <table class="table table-condensed">
+                    <tbody>
+                            <tr>
+                                <th>{{ 'lokalsamfund.id' | trans }}</th>
+                                <td>{{ lokalsamfund.id }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalsamfund.number' | trans }}</th>
+                                <td>{{ lokalsamfund.number }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalsamfund.name' | trans }}</th>
+                                <td>{{ lokalsamfund.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalsamfund.active' | trans }}</th>
+                                <td>{{ lokalsamfund.active }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalsamfund.createdBy' | trans }}</th>
+                                <td>{{ lokalsamfund.createdBy }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalsamfund.updatedBy' | trans }}</th>
+                                <td>{{ lokalsamfund.updatedBy }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalsamfund.createdAt' | trans }}</th>
+                                <td>{% if lokalsamfund.createdAt %}{{ lokalsamfund.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'lokalsamfund.updatedAt' | trans }}</th>
+                                <td>{% if lokalsamfund.updatedAt %}{{ lokalsamfund.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            </tr>                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+
+{% block body %}
+    <div class="row heading">
+        <div class="col-md-9">
+            <h1>{{ 'grund.actions.edit' | trans }}</h1>
+        </div>
+        <div class="col-md-3 text-right">
+                {{ form_start(delete_form) }}
+                <input type="submit" class="btn btn-danger" value="{{ 'common.delete' | trans }}">
+                {{ form_end(delete_form) }}        </div>
+    </div>
+
+    {% form_theme edit_form "AppBundle::Form/twocol-form.html.twig"  %}
+    {{ form_start(edit_form) }}        
+    {{ form_row(edit_form.status)}}        
+    {{ form_row(edit_form.salgstatus)}}        
+    {{ form_row(edit_form.gid)}}        
+    {{ form_row(edit_form.grundtype)}}        
+    {{ form_row(edit_form.mnr)}}        
+    {{ form_row(edit_form.mnr2)}}        
+    {{ form_row(edit_form.delareal)}}        
+    {{ form_row(edit_form.ejerlav)}}        
+    {{ form_row(edit_form.vej)}}        
+    {{ form_row(edit_form.husnummer)}}        
+    {{ form_row(edit_form.bogstav)}}        
+    {{ form_row(edit_form.urlgis)}}        
+    {{ form_row(edit_form.salgstype)}}        
+    {{ form_row(edit_form.auktionstartdato)}}        
+    {{ form_row(edit_form.auktionslutdato)}}        
+    {{ form_row(edit_form.annonceresej)}}        
+    {{ form_row(edit_form.datoannonce)}}        
+    {{ form_row(edit_form.datoannonce1)}}        
+    {{ form_row(edit_form.tilsluttet)}}        
+    {{ form_row(edit_form.maxetagem2)}}        
+    {{ form_row(edit_form.areal)}}        
+    {{ form_row(edit_form.arealvej)}}        
+    {{ form_row(edit_form.arealkotelet)}}        
+    {{ form_row(edit_form.bruttoareal)}}        
+    {{ form_row(edit_form.prism2)}}        
+    {{ form_row(edit_form.prisfoerkorrektion)}}        
+    {{ form_row(edit_form.priskorrektion1)}}        
+    {{ form_row(edit_form.antalkorr1)}}        
+    {{ form_row(edit_form.akrkorr1)}}        
+    {{ form_row(edit_form.priskoor1)}}        
+    {{ form_row(edit_form.priskorrektion2)}}        
+    {{ form_row(edit_form.antalkorr2)}}        
+    {{ form_row(edit_form.akrkorr2)}}        
+    {{ form_row(edit_form.priskoor2)}}        
+    {{ form_row(edit_form.priskorrektion3)}}        
+    {{ form_row(edit_form.antalkorr3)}}        
+    {{ form_row(edit_form.akrkorr3)}}        
+    {{ form_row(edit_form.priskoor3)}}        
+    {{ form_row(edit_form.pris)}}        
+    {{ form_row(edit_form.fastpris)}}        
+    {{ form_row(edit_form.minbud)}}        
+    {{ form_row(edit_form.note)}}        
+    {{ form_row(edit_form.landinspektoer)}}
+    {{ form_row(edit_form.resstart)}}        
+    {{ form_row(edit_form.tilbudstart)}}        
+    {{ form_row(edit_form.accept)}}        
+    {{ form_row(edit_form.skoederekv)}}        
+    {{ form_row(edit_form.beloebanvist)}}        
+    {{ form_row(edit_form.resslut)}}        
+    {{ form_row(edit_form.tilbudslut)}}        
+    {{ form_row(edit_form.overtagelse)}}        
+    {{ form_row(edit_form.antagetbud)}}        
+    {{ form_row(edit_form.salgsprisumoms)}}        
+    {{ form_row(edit_form.navn)}}        
+    {{ form_row(edit_form.adresse)}}        
+    {{ form_row(edit_form.land)}}        
+    {{ form_row(edit_form.telefon)}}        
+    {{ form_row(edit_form.mobil)}}        
+    {{ form_row(edit_form.koeberemail)}}        
+    {{ form_row(edit_form.navn1)}}        
+    {{ form_row(edit_form.adresse1)}}        
+    {{ form_row(edit_form.land1)}}        
+    {{ form_row(edit_form.telefon1)}}        
+    {{ form_row(edit_form.mobil1)}}        
+    {{ form_row(edit_form.medkoeberemail)}}        
+    {{ form_row(edit_form.notat)}}        
+    {{ form_row(edit_form.createdBy)}}        
+    {{ form_row(edit_form.updatedBy)}}        
+    {{ form_row(edit_form.createdAt)}}        
+    {{ form_row(edit_form.updatedAt)}}
+    {{ form_rest(edit_form) }}
+
+    <div class="row form-actions">
+        <div class="col-lg-12">
+            <input type="submit" class="btn btn-primary" value="{{ 'common.edit' | trans }}" />
+        </div>
+    </div>
+
+    {{ form_end(edit_form) }}
+
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+
+{% block body %}
+    <div class="row heading">
+        <div class="col-md-9">
+            <h1>Interessentgrundmapping</h1>
+        </div>
+        <div class="col-md-3 text-right">
+            <a class="btn btn-default" href="{{ path('interessentgrundmapping_edit', { 'id': interessentgrundmapping.id }) }}">{{ 'common.edit' | trans }}</a>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ icon('chevron-right') }} {{ 'interessentgrundmapping.labels.singular' | trans }}</div>
+                <table class="table table-condensed">
+                    <tbody>
+                            <tr>
+                                <th>{{ 'interessentgrundmapping.id' | trans }}</th>
+                                <td>{{ interessentgrundmapping.id }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'interessentgrundmapping.annulleret' | trans }}</th>
+                                <td>{{ interessentgrundmapping.annulleret }}</td>
+                            </tr>                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
