@@ -9,7 +9,7 @@ use Doctrine\DBAL\Schema\Schema;
  * Migration:
  * - Create schema matching legacy system
  */
-class Version00000000000001 extends AbstractMigration
+class Version00000000000010 extends AbstractMigration
 {
   /**
    * @param Schema $schema

@@ -10,7 +10,7 @@ use Doctrine\DBAL\Schema\Schema;
  * Migration:
  * - Alter fields to allow null on columns with empty cells before import
  */
-class Version00000000000002 extends AbstractMigration
+class Version00000000000030 extends AbstractMigration
 {
   /**
    * @param Schema $schema

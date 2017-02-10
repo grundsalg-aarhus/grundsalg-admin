@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Migration:
  * - Migrate User tabel to FOSUserBundle
  */
-class Version00000000000004 extends AbstractMigration implements ContainerAwareInterface
+class Version00000000000050 extends AbstractMigration implements ContainerAwareInterface
 {
   /**
    * @param Schema $schema

@@ -10,7 +10,7 @@ use Doctrine\DBAL\Schema\Schema;
  * Migration:
  * - Clean up relation tables
  */
-class Version00000000000008 extends AbstractMigration
+class Version00000000000090 extends AbstractMigration
 {
   /**
    * @param Schema $schema

@@ -10,7 +10,7 @@ use Doctrine\DBAL\Schema\Schema;
  * Migration:
  * - Migrate User tabel to FOSUserBundle
  */
-class Version00000000000003 extends AbstractMigration
+class Version00000000000040 extends AbstractMigration
 {
   /**
    * @param Schema $schema

@@ -10,7 +10,7 @@ use Doctrine\DBAL\Schema\Schema;
  * Migration:
  * - Add indexies and foreign key constraints
  */
-class Version00000000000006 extends AbstractMigration
+class Version00000000000070 extends AbstractMigration
 {
   /**
    * @param Schema $schema

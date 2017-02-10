@@ -10,7 +10,7 @@ use Doctrine\DBAL\Schema\Schema;
  * Migration:
  * - Migrate legacy fields to Symfony format
  */
-class Version00000000000005 extends AbstractMigration
+class Version00000000000060 extends AbstractMigration
 {
   /**
    * @param Schema $schema

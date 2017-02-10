@@ -10,7 +10,7 @@ use Doctrine\DBAL\Schema\Schema;
  * Migration:
  * - Alter fields for better match between datatype <> columntype
  */
-class Version00000000000007 extends AbstractMigration
+class Version00000000000080 extends AbstractMigration
 {
   /**
    * @param Schema $schema
