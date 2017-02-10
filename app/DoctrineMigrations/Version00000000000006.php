@@ -24,7 +24,7 @@ class Version00000000000006 extends AbstractMigration
     $this->addSql('CREATE INDEX IDX_E5C5280940376CF ON Grund (postbyId)');
     $this->addSql('ALTER TABLE Grund ADD CONSTRAINT FK_E5C5280940376CF FOREIGN KEY (postbyId) REFERENCES PostBy (id)');
 
-    $this->addSql('ALTER TABLE Grund CHANGE landInspektoerId landInspektoerId BIGINT DEFAULT NULL');
+    $this->addSql('ALTER TABLE Grund CHANGE landInspektoerId landInspektoerId int(11) DEFAULT NULL');
     $this->addSql('ALTER TABLE Grund ADD CONSTRAINT FK_E5C5280E826DFE8 FOREIGN KEY (landInspektoerId) REFERENCES Landinspektoer (id)');
     $this->addSql('CREATE INDEX IDX_E5C5280E826DFE8 ON Grund (landInspektoerId)');
 

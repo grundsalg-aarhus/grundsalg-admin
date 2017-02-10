@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
+use CrEOF\Spatial\DBAL\Types\Geography\PolygonType;
 
 /**
  * Grund
@@ -21,7 +22,7 @@ class Grund
   /**
    * @var integer
    *
-   * @ORM\Column(name="id", type="bigint", nullable=false)
+   * @ORM\Column(name="id", type="integer", nullable=false)
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="IDENTITY")
    */
@@ -542,6 +543,14 @@ class Grund
    * })
    */
   private $salgsomraade;
+
+
+  /**
+   * @var \CrEOF\Spatial\DBAL\Types\Geography\PolygonType
+   *
+   * @ORM\Column(name="SP_GEOMETRY", type="polygon")
+   */
+//  private $sp_geometry;
 
 
   /**
