@@ -6,6 +6,7 @@ use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
 use CrEOF\Spatial\DBAL\Types\Geography\PolygonType;
+use GeoJson\Geometry\Polygon;
 
 /**
  * Grund
@@ -546,11 +547,11 @@ class Grund
 
 
   /**
-   * @var \CrEOF\Spatial\DBAL\Types\Geography\PolygonType
+   * @var \CrEOF\Spatial\DBAL\Types\Geometry
    *
-   * @ORM\Column(name="SP_GEOMETRY", type="polygon")
+   * @ORM\Column(name="SP_GEOMETRY", type="geometry", nullable=true)
    */
-//  private $sp_geometry;
+  private $sp_geometry;
 
 
   /**
@@ -2265,6 +2266,34 @@ class Grund
   public function getSalgsomraade()
   {
     return $this->salgsomraade;
+  }
+
+  /**
+   * @return \CrEOF\Spatial\DBAL\Types\Geometry
+   */
+  public function getSpGeometry()
+  {
+    return $this->sp_geometry;
+  }
+
+  /**
+   * @param \CrEOF\Spatial\DBAL\Types\Geometry $sp_geometry
+   */
+  public function setSpGeometry(\CrEOF\Spatial\DBAL\Types\Geometry $sp_geometry)
+  {
+    $this->sp_geometry = $sp_geometry;
+  }
+
+  public function getSpGeometryGeoJsonObject() {
+
+    if($this->getSpGeometry()) {
+      $json['type'] = $this->getSpGeometry()->getType();
+      $json['coordinates'] = $this->getSpGeometry()->toArray();
+
+      return $json;
+    }
+
+    return null;
   }
 
   public function __toString()

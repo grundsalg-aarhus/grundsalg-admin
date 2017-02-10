@@ -27,8 +27,7 @@ class GrundRepository extends EntityRepository
         ->setParameter('now', new \DateTime(), \Doctrine\DBAL\Types\Type::DATETIME);
 
     if($salgsomraadeId) {
-      $qb->andWhere('g.salgsomraade = :salgsomraadeid')
-          ->setParameter('salgsomraadeid', $salgsomraadeId);
+      $qb->andWhere('g.salgsomraade = :salgsomraadeid')->setParameter('salgsomraadeid', $salgsomraadeId);
     }
 
     return $qb->getQuery();

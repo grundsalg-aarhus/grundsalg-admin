@@ -16,8 +16,7 @@ class ApiController extends Controller {
    */
   public function grundeAction(Request $request, $udstykningsId) {
     $em = $this->getDoctrine()->getManager();
-    $query = $em->getRepository('AppBundle:Grund')
-      ->getGrundeForSalgsOmraade($udstykningsId);
+    $query = $em->getRepository('AppBundle:Grund')->getGrundeForSalgsOmraade($udstykningsId);
 
     $grunde = $query->getResult();
 
@@ -33,6 +32,7 @@ class ApiController extends Controller {
       // @TODO which fields to map for prices?
       $data['minimum_price'] = $grund->getMinbud();
       $data['sale_price'] = $grund->getPris();
+      $data['geometry'] = $grund->getSpGeometryGeoJsonObject(); // ? $grund->getSpGeometry()->toJson() : null;
       // @TODO add pdf link when access import complete
       $data['pdf_link'] = 'http://todo.com/todo.pdf';
 
