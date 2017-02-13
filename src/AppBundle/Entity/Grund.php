@@ -553,6 +553,12 @@ class Grund
    */
   private $sp_geometry;
 
+  /**
+   * @var integer
+   *
+   * @ORM\Column(name="srid", type="integer", nullable=true)
+   */
+  private $srid;
 
   /**
    * Get id
@@ -2274,6 +2280,22 @@ class Grund
   public function getSpGeometry()
   {
     return $this->sp_geometry;
+  }
+
+  /**
+   * @return int
+   */
+  public function getSrid(): int
+  {
+    return $this->srid;
+  }
+
+  /**
+   * @param int $srid
+   */
+  public function setSrid(int $srid)
+  {
+    $this->srid = $srid;
   }
 
   /**

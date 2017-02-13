@@ -22,6 +22,7 @@ class Version00000000000020 extends AbstractMigration
     $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
     $this->addSql('ALTER TABLE Grund ADD SP_GEOMETRY GEOMETRY NULL COMMENT \'(DC2Type:geometry)\'');
+    $this->addSql('ALTER TABLE Grund ADD srid INT DEFAULT NULL');
   }
 
   /**
