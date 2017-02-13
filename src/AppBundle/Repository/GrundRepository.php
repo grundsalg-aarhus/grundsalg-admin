@@ -21,6 +21,7 @@ class GrundRepository extends EntityRepository
         ->from('AppBundle:Grund', 'g')
         ->where('g.annonceresej != 1')
         ->andWhere('g.datoannonce < :now')
+        ->andWhere('g.sp_geometry IS NOT NULL')
         ->addOrderBy('g.vej', 'ASC')
         ->addOrderBy('g.husnummer', 'ASC')
         ->addOrderBy('g.bogstav', 'ASC')
