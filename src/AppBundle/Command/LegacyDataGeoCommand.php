@@ -4,10 +4,12 @@ namespace AppBundle\Command;
 
 use AppBundle\Entity\Lokalplan;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
+use GuzzleHttp\Exception\ClientException;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use GuzzleHttp\Client;
 
 /**
  * Legacy data command.
@@ -49,19 +51,23 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
           if (isset($row['ID']) && $row['ID'] !== 0) {
             if (strpos($table, 'Grunde') !== false) {
               $fagsystemID = $this->matchToGrund($table, $row['Adresse'], $row['Pris'], $row['Grundpris'], $row['m2'], $row['OmraadeId']);
+              $pdflink = $this->getUrlFromString($row['Adresse_link']);
 
-              try {
-                $sql = 'UPDATE Grund SET SP_GEOMETRY = ST_GEOMFROMTEXT(?, ?), srid = ? WHERE id = ?';
+              if($fagsystemID) {
+                try {
+                  $sql = 'UPDATE Grund SET SP_GEOMETRY = ST_GEOMFROMTEXT(?, ?), srid = ?, pdflink = ? WHERE id = ?';
 
-                $stmt = $connection->prepare($sql);
-                $stmt->bindValue(1, $row['WKT']);
-                $stmt->bindValue(2, $row['srid']);
-                $stmt->bindValue(3, $row['srid']);
-                $stmt->bindValue(4, $fagsystemID);
-                $stmt->execute();
+                  $stmt = $connection->prepare($sql);
+                  $stmt->bindValue(1, $row['WKT']);
+                  $stmt->bindValue(2, $row['srid']);
+                  $stmt->bindValue(3, $row['srid']);
+                  $stmt->bindValue(4, $pdflink);
+                  $stmt->bindValue(5, $fagsystemID);
+                  $stmt->execute();
 
-              } catch (ForeignKeyConstraintViolationException $e) {
-                throw $e;
+                } catch (ForeignKeyConstraintViolationException $e) {
+                  throw $e;
+                }
               }
 
             }
@@ -96,11 +102,54 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
 //    $this->printChangeLog($this->changeForeignKeyCount);
   }
 
+  private function getUrlFromString($str) {
+    if(!empty(trim($str))) {
+      $regex = '/href=([\'"])(.*?)\1/';
+      preg_match_all($regex, $str, $matches);
+
+      if ($matches[2]) {
+        if ($matches[2][0]) {
+          $url = $matches[2][0];
+
+          return $this->validateURL($url) ? $url : null;
+        }
+      }
+
+      $this->printWarning('String: "'.$str.'" is non-empty, but no URL found!');
+    }
+
+    return null;
+  }
+
+  private function validateURL($url) {
+    if(empty($url)) {
+      throw new \Exception('Error: $url cannot be empty');
+    } else if (strlen($url > 255)) {
+      throw new \Exception('Error: $url cannot be longer than 255');
+    }
+
+    $client = new Client();
+
+    try {
+      $client->request('GET', $url);
+    } catch (ClientException $e) {
+      if($e->getCode() === 404) {
+        $this->printWarning('404 - URL not found: ' .$url);
+
+        return false;
+      } else {
+        throw $e;
+      }
+    }
+
+    return true;
+  }
+
   private function matchToOmraade($table, $adresse, $pris, $grundPris, $m2, $omraadeId)
   {
     $connection = $this->getContainer()->get('doctrine.dbal.default_connection');
 
-    $sql = 'SELECT * FROM Grund WHERE bruttoAreal = ? AND pris = ? AND vej LIKE ? ';
+    $sql = 'SELECT * FROM Salgsomraade WHERE bruttoAreal = ? AND pris = ? AND vej LIKE ? ';
 
     try {
       $adresseParts = explode(' ', $adresse);

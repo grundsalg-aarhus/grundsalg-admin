@@ -561,6 +561,13 @@ class Grund
   private $srid;
 
   /**
+   * @var string
+   *
+   * @ORM\Column(name="pdflink", type="string", length=255, nullable=true)
+   */
+  private $pdfLink;
+
+  /**
    * Get id
    *
    * @return integer
@@ -2296,6 +2303,22 @@ class Grund
   public function setSrid(int $srid)
   {
     $this->srid = $srid;
+  }
+
+  /**
+   * @return string
+   */
+  public function getPdfLink(): string
+  {
+    return $this->pdfLink;
+  }
+
+  /**
+   * @param string $pdfLink
+   */
+  public function setPdfLink(string $pdfLink)
+  {
+    $this->pdfLink = $pdfLink;
   }
 
   /**

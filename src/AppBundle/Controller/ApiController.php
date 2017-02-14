@@ -23,20 +23,21 @@ class ApiController extends Controller {
 
     if($format === 'geojson') {
       $list['type'] = 'FeatureCollection';
-      $list['features'] = array();
 
       $crs = array();
       $crs['type'] = 'link';
       $crs['properties']['href'] = 'http://spatialreference.org/ref/epsg/25832/proj4/';
       $crs['properties']['href'] = $this->getParameter('crs_properties_href');
       $crs['properties']['type'] = $this->getParameter('crs_properties_type');
+      $list['crs'] = $crs;
+
+      $list['features'] = array();
 
       foreach ($grunde as $grund) {
         $data = array();
 
         $data['type'] = 'Feature';
         $data['geometry'] = $grund->getSpGeometryGeoJsonObject();
-        $data['crs'] = $crs;
 
         $properties['id'] = $grund->getId();
         $properties['address'] = trim($grund->getVej() . ' ' . $grund->getHusnummer() . $grund->getBogstav());
@@ -45,8 +46,7 @@ class ApiController extends Controller {
         // @TODO which fields to map for prices?
         $properties['minimum_price'] = $grund->getMinbud();
         $properties['sale_price'] = $grund->getPris();
-        // @TODO add pdf link when access import complete
-        $properties['pdf_link'] = 'http://todo.com/todo.pdf';
+        $properties['pdf_link'] = $grund->getPdfLink();
 
         $data['properties'] = $properties;
 
@@ -67,8 +67,7 @@ class ApiController extends Controller {
         // @TODO which fields to map for prices?
         $data['minimum_price'] = $grund->getMinbud();
         $data['sale_price'] = $grund->getPris();
-        // @TODO add pdf link when access import complete
-        $data['pdf_link'] = 'http://todo.com/todo.pdf';
+        $data['pdf_link'] = $grund->getPdfLink();
 
         $list['grunde'][] = $data;
       }

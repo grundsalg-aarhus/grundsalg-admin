@@ -23,6 +23,7 @@ class Version00000000000020 extends AbstractMigration
 
     $this->addSql('ALTER TABLE Grund ADD SP_GEOMETRY GEOMETRY NULL COMMENT \'(DC2Type:geometry)\'');
     $this->addSql('ALTER TABLE Grund ADD srid INT DEFAULT NULL');
+    $this->addSql('ALTER TABLE Grund ADD pdflink VARCHAR(255) DEFAULT NULL');
   }
 
   /**
@@ -34,6 +35,8 @@ class Version00000000000020 extends AbstractMigration
     $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
     $this->addSql('ALTER TABLE Grund DROP SP_GEOMETRY');
+    $this->addSql('ALTER TABLE Grund DROP srid');
+    $this->addSql('ALTER TABLE Grund DROP pdflink');
   }
 
 }
