@@ -2290,6 +2290,14 @@ class Grund
   }
 
   /**
+   * @param \CrEOF\Spatial\DBAL\Types\Geometry $sp_geometry
+   */
+  public function setSpGeometry(\CrEOF\Spatial\DBAL\Types\Geometry $sp_geometry)
+  {
+    $this->sp_geometry = $sp_geometry;
+  }
+
+  /**
    * @return int
    */
   public function getSrid(): int
@@ -2321,13 +2329,6 @@ class Grund
     $this->pdfLink = $pdfLink;
   }
 
-  /**
-   * @param \CrEOF\Spatial\DBAL\Types\Geometry $sp_geometry
-   */
-  public function setSpGeometry(\CrEOF\Spatial\DBAL\Types\Geometry $sp_geometry)
-  {
-    $this->sp_geometry = $sp_geometry;
-  }
 
   public function getSpGeometryGeoJsonObject() {
 

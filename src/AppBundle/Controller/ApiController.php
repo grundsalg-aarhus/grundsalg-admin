@@ -48,6 +48,9 @@ class ApiController extends Controller {
         $properties['sale_price'] = $grund->getPris();
         $properties['pdf_link'] = $grund->getPdfLink();
 
+        // Needed in the frontend/weblayer. If true popup will be enabled for the feature.
+        $properties['markers'] = true;
+
         $data['properties'] = $properties;
 
         $list['features'][] = $data;
