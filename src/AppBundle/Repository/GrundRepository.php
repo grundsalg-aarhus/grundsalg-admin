@@ -21,14 +21,14 @@ class GrundRepository extends EntityRepository
         ->from('AppBundle:Grund', 'g')
         ->where('g.annonceresej != 1')
         ->andWhere('g.datoannonce < :now')
+        ->andWhere('g.sp_geometry IS NOT NULL')
         ->addOrderBy('g.vej', 'ASC')
         ->addOrderBy('g.husnummer', 'ASC')
         ->addOrderBy('g.bogstav', 'ASC')
         ->setParameter('now', new \DateTime(), \Doctrine\DBAL\Types\Type::DATETIME);
 
     if($salgsomraadeId) {
-      $qb->andWhere('g.salgsomraade = :salgsomraadeid')
-          ->setParameter('salgsomraadeid', $salgsomraadeId);
+      $qb->andWhere('g.salgsomraade = :salgsomraadeid')->setParameter('salgsomraadeid', $salgsomraadeId);
     }
 
     return $qb->getQuery();

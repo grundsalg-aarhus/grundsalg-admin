@@ -21,7 +21,7 @@ class Salgsomraade
   /**
    * @var integer
    *
-   * @ORM\Column(name="id", type="bigint", nullable=false)
+   * @ORM\Column(name="id", type="integer", nullable=false)
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="IDENTITY")
    */
@@ -144,6 +144,26 @@ class Salgsomraade
    */
   private $postby;
 
+  /**
+   * @var \CrEOF\Spatial\DBAL\Types\Geography
+   *
+   * @ORM\Column(name="SP_GEOMETRY", type="geometry", nullable=true)
+   */
+  private $sp_geometry;
+
+  /**
+   * @var integer
+   *
+   * @ORM\Column(name="srid", type="integer", nullable=true)
+   */
+  private $srid;
+
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="MI_STYLE", type="string", length=255, nullable=true)
+   */
+  private $miStyle;
 
   /**
    * Get id
@@ -513,6 +533,38 @@ class Salgsomraade
   public function getPostby()
   {
     return $this->postby;
+  }
+
+  /**
+   * @return \CrEOF\Spatial\DBAL\Types\Geography
+   */
+  public function getSpGeometry()
+  {
+    return $this->sp_geometry;
+  }
+
+  /**
+   * @param \CrEOF\Spatial\DBAL\Types\Geography $sp_geometry
+   */
+  public function setSpGeometry($sp_geometry)
+  {
+    $this->sp_geometry = $sp_geometry;
+  }
+
+  /**
+   * @return int
+   */
+  public function getSrid(): int
+  {
+    return $this->srid;
+  }
+
+  /**
+   * @param int $srid
+   */
+  public function setSrid(int $srid)
+  {
+    $this->srid = $srid;
   }
 
   public function __toString()

@@ -36,6 +36,10 @@ class LegacyDataCommand extends ContainerAwareCommand
   protected function execute(InputInterface $input, OutputInterface $output)
   {
     $this->output = $output;
+
+    $output->writeln('------------------');
+    $output->writeln('Starting fagsystem import');
+
     $filename = $input->getArgument('file');
     $data = $this->getData($filename);
 
@@ -283,6 +287,9 @@ class LegacyDataCommand extends ContainerAwareCommand
 
           // Ensure that "husNummer" is either null or numeric for safe column type conversion (longtext -> INT)
           $this->convertToNumeric($table, $row, 'husNummer');
+
+          // Ensure that "bogstav" is either null or safe length (varchar 30)
+          $this->validateLengthShorterThanOrEqual($table, $row, 'bogstav', 30);
 
           // Ensure that "annonceresEj" is either null or 0/1 for safe column type conversion (varchar(50) -> BOOL)
           $this->convertXToBoolean($table, $row, 'annonceresEj');

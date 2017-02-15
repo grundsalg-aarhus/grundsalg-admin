@@ -9,7 +9,7 @@ use Doctrine\DBAL\Schema\Schema;
  * Migration:
  * - Create schema matching legacy system
  */
-class Version00000000000001 extends AbstractMigration
+class Version00000000000010 extends AbstractMigration
 {
   /**
    * @param Schema $schema
@@ -23,8 +23,8 @@ class Version00000000000001 extends AbstractMigration
 
     $this->addSql('
       CREATE TABLE Delomraade (
-        id bigint(20) NOT NULL,
-        lokalplanId bigint(20) DEFAULT NULL,
+        id int(11) NOT NULL AUTO_INCREMENT,
+        lokalplanId int(11) DEFAULT NULL,
         kpl1 varchar(50) NOT NULL,
         kpl2 varchar(50) NOT NULL,
         kpl3 varchar(50) NOT NULL,
@@ -45,14 +45,14 @@ class Version00000000000001 extends AbstractMigration
 
     $this->addSql('
       CREATE TABLE Grund (
-        id bigint(20) NOT NULL,
+        id int(11) NOT NULL AUTO_INCREMENT,
         createdBy longtext NOT NULL,
         createdDate date NOT NULL,
         modifiedBy longtext NOT NULL,
         modifiedDate date NOT NULL,
         status varchar(50) DEFAULT NULL,
         salgStatus varchar(50) DEFAULT NULL,
-        salgsomraadeId bigint(20) DEFAULT NULL,
+        salgsomraadeId int(11) DEFAULT NULL,
         gid varchar(50) DEFAULT NULL,
         grundType varchar(50) DEFAULT NULL,
         mnr longtext,
@@ -63,7 +63,7 @@ class Version00000000000001 extends AbstractMigration
         husNummer longtext,
         bogstav longtext,
         postbyId longtext,
-        lokalsamfundId bigint(20) DEFAULT NULL,
+        lokalsamfundId int(11) DEFAULT NULL,
         urlGIS longtext,
         salgsType longtext,
         auktionStartDato date DEFAULT NULL,
@@ -108,14 +108,14 @@ class Version00000000000001 extends AbstractMigration
         salgsPrisUMoms float DEFAULT NULL,
         navn longtext,
         adresse longtext,
-        koeberPostById bigint(20) DEFAULT NULL,
+        koeberPostById int(11) DEFAULT NULL,
         land longtext,
         telefon varchar(50) DEFAULT NULL,
         mobil varchar(50) DEFAULT NULL,
         koeberEmail longtext,
         navn1 longtext,
         adresse1 longtext,
-        medKoeberPostById bigint(20) DEFAULT NULL,
+        medKoeberPostById int(11) DEFAULT NULL,
         land1 longtext,
         telefon1 varchar(50) DEFAULT NULL,
         mobil1 varchar(50) DEFAULT NULL,
@@ -131,21 +131,21 @@ class Version00000000000001 extends AbstractMigration
 
     $this->addSql('
       CREATE TABLE Interessent (
-        id bigint(20) NOT NULL,
+        id int(11) NOT NULL AUTO_INCREMENT,
         createdBy longtext NOT NULL,
         createdDate date NOT NULL,
         modifiedBy longtext NOT NULL,
         modifiedDate date NOT NULL,
         navn longtext,
         adresse longtext,
-        koeberPostById bigint(20) DEFAULT NULL,
+        koeberPostById int(11) DEFAULT NULL,
         land longtext,
         telefon varchar(50) DEFAULT NULL,
         mobil varchar(50) DEFAULT NULL,
         koeberEmail longtext,
         navn1 longtext,
         adresse1 longtext,
-        medKoeberPostById bigint(20) DEFAULT NULL,
+        medKoeberPostById int(11) DEFAULT NULL,
         land1 longtext,
         telefon1 varchar(50) DEFAULT NULL,
         mobil1 varchar(50) DEFAULT NULL,
@@ -159,9 +159,9 @@ class Version00000000000001 extends AbstractMigration
 
     $this->addSql('
       CREATE TABLE InteressentGrundMapping (
-        id bigint(20) NOT NULL,
-        interessentId bigint(20) DEFAULT NULL,
-        grundId bigint(20) DEFAULT NULL,
+        id int(11) NOT NULL AUTO_INCREMENT,
+        interessentId int(11) DEFAULT NULL,
+        grundId int(11) DEFAULT NULL,
         annulleret varchar(50) NOT NULL,
         PRIMARY KEY (id),
         KEY fk_InteressentGrundMapping_interessentId (interessentId),
@@ -171,7 +171,7 @@ class Version00000000000001 extends AbstractMigration
 
     $this->addSql('
       CREATE TABLE Keyword (
-        id bigint(20) NOT NULL,
+        id int(11) NOT NULL AUTO_INCREMENT,
         title varchar(50) NOT NULL,
         alias varchar(50) NOT NULL,
         description longtext NOT NULL,
@@ -181,8 +181,8 @@ class Version00000000000001 extends AbstractMigration
 
     $this->addSql('
       CREATE TABLE KeywordValue (
-        id bigint(20) NOT NULL,
-        keywordId bigint(20) NOT NULL,
+        id int(11) NOT NULL AUTO_INCREMENT,
+        keywordId int(11) NOT NULL,
         display longtext NOT NULL,
         value longtext NOT NULL,
         PRIMARY KEY (id),
@@ -192,14 +192,14 @@ class Version00000000000001 extends AbstractMigration
 
     $this->addSql('
       CREATE TABLE Landinspektoer (
-        id bigint(20) NOT NULL,
+        id int(11) NOT NULL AUTO_INCREMENT,
         adresse longtext NOT NULL,
         email longtext NOT NULL,
         mobil longtext NOT NULL,
         navn longtext NOT NULL,
         notat longtext NOT NULL,
         telefon longtext NOT NULL,
-        postnrId bigint(20) NOT NULL,
+        postnrId int(11) NOT NULL,
         createdBy longtext NOT NULL,
         createdDate date NOT NULL,
         modifiedBy longtext NOT NULL,
@@ -211,7 +211,7 @@ class Version00000000000001 extends AbstractMigration
 
     $this->addSql('
       CREATE TABLE Lokalplan (
-        id bigint(20) NOT NULL,
+        id int(11) NOT NULL AUTO_INCREMENT,
         nr longtext NOT NULL,
         lsnr longtext NOT NULL,
         titel longtext NOT NULL,
@@ -231,7 +231,7 @@ class Version00000000000001 extends AbstractMigration
 
     $this->addSql('
       CREATE TABLE Lokalsamfund (
-        id bigint(20) NOT NULL,
+        id int(11) NOT NULL AUTO_INCREMENT,
         number varchar(50) NOT NULL,
         name longtext NOT NULL,
         createdBy longtext NOT NULL,
@@ -245,8 +245,8 @@ class Version00000000000001 extends AbstractMigration
 
     $this->addSql('
       CREATE TABLE Opkoeb (
-        id bigint(20) NOT NULL,
-        lpId bigint(20) DEFAULT NULL,
+        id int(11) NOT NULL AUTO_INCREMENT,
+        lpId int(11) DEFAULT NULL,
         matrik1 varchar(50) DEFAULT NULL,
         matrik2 varchar(50) DEFAULT NULL,
         ejerlav longtext,
@@ -266,7 +266,7 @@ class Version00000000000001 extends AbstractMigration
 
     $this->addSql('
       CREATE TABLE PostBy (
-        id bigint(20) NOT NULL,
+        id int(11) NOT NULL AUTO_INCREMENT,
         postalCode int(11) NOT NULL,
         city longtext NOT NULL,
         createdBy longtext NOT NULL,
@@ -279,8 +279,8 @@ class Version00000000000001 extends AbstractMigration
 
     $this->addSql('
       CREATE TABLE Salgshistorik (
-        id bigint(20) NOT NULL,
-        grundId bigint(20) DEFAULT NULL,
+        id int(11) NOT NULL AUTO_INCREMENT,
+        grundId int(11) DEFAULT NULL,
         createdBy longtext NOT NULL,
         createdDate date NOT NULL,
         modifiedBy longtext NOT NULL,
@@ -302,14 +302,14 @@ class Version00000000000001 extends AbstractMigration
         antagetBud float DEFAULT NULL,
         navn longtext,
         adresse longtext,
-        koeberPostById bigint(20) DEFAULT NULL,
+        koeberPostById int(11) DEFAULT NULL,
         land longtext,
         telefon varchar(50) DEFAULT NULL,
         mobil varchar(50) DEFAULT NULL,
         koeberEmail longtext,
         navn1 longtext,
         adresse1 longtext,
-        medKoeberPostById bigint(20) DEFAULT NULL,
+        medKoeberPostById int(11) DEFAULT NULL,
         land1 longtext,
         telefon1 varchar(50) DEFAULT NULL,
         mobil1 varchar(50) DEFAULT NULL,
@@ -324,14 +324,14 @@ class Version00000000000001 extends AbstractMigration
 
     $this->addSql('
       CREATE TABLE Salgsomraade (
-        id bigint(20) NOT NULL,
+        id int(11) NOT NULL AUTO_INCREMENT,
         createdBy longtext NOT NULL,
         createdDate date NOT NULL,
         modifiedBy longtext NOT NULL,
         modifiedDate date NOT NULL,
-        delomraadeId bigint(20) DEFAULT NULL,
-        landinspektorId bigint(20) DEFAULT NULL,
-        postById bigint(20) DEFAULT NULL,
+      delomraadeId int(11) DEFAULT NULL,
+        landinspektorId int(11) DEFAULT NULL,
+        postById int(11) DEFAULT NULL,
         nr varchar(50) NOT NULL,
         titel longtext NOT NULL,
         type longtext NOT NULL,
@@ -343,7 +343,7 @@ class Version00000000000001 extends AbstractMigration
         tilsluttet longtext NOT NULL,
         sagsNr longtext NOT NULL,
         lpLoebeNummer bigint(20) NOT NULL,
-        lokalplanId bigint(20) DEFAULT NULL,
+        lokalplanId int(11) DEFAULT NULL,
         PRIMARY KEY (id),
         KEY fk_Salgsomraade_postById (postById),
         KEY fk_Salgsomraade_delomraadeId (delomraadeId),
@@ -354,7 +354,7 @@ class Version00000000000001 extends AbstractMigration
 
     $this->addSql('
       CREATE TABLE Users (
-        id bigint(20) NOT NULL,
+        id int(11) NOT NULL AUTO_INCREMENT,
         name longtext NOT NULL,
         userName longtext NOT NULL,
         password longtext NOT NULL,

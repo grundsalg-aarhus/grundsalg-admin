@@ -63,11 +63,25 @@ doctrine:
         #   2. Uncomment database_path in parameters.yml.dist
         #   3. Uncomment next line:
         #     path:     "%database_path%"
+        types:
+            geometry:   CrEOF\Spatial\DBAL\Types\GeometryType
+            point:      CrEOF\Spatial\DBAL\Types\Geometry\PointType
+            polygon:    CrEOF\Spatial\DBAL\Types\Geometry\PolygonType
+            linestring: CrEOF\Spatial\DBAL\Types\Geometry\LineStringType
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+        dql:
+            numeric_functions:
+                st_contains:     CrEOF\Spatial\ORM\Query\AST\Functions\MySql\STContains
+                contains:     CrEOF\Spatial\ORM\Query\AST\Functions\MySql\Contains
+                st_area:         CrEOF\Spatial\ORM\Query\AST\Functions\MySql\Area
+                st_geomfromtext: CrEOF\Spatial\ORM\Query\AST\Functions\MySql\GeomFromText
+                st_intersects:     CrEOF\Spatial\ORM\Query\AST\Functions\MySql\STIntersects
+                st_buffer:     CrEOF\Spatial\ORM\Query\AST\Functions\MySql\STBuffer
+                point: CrEOF\Spatial\ORM\Query\AST\Functions\MySql\Point
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -78,6 +92,9 @@ swiftmailer:
     spool:     { type: memory }
 
 fos_user:
+    from_email:
+        address:        noreply@example.com
+        sender_name:    Demo App
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: AppBundle\Entity\User

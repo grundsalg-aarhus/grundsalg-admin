@@ -10,7 +10,7 @@ use Doctrine\DBAL\Schema\Schema;
  * Migration:
  * - Migrate legacy fields to Symfony format
  */
-class Version00000000000005 extends AbstractMigration
+class Version00000000000060 extends AbstractMigration
 {
   /**
    * @param Schema $schema
@@ -35,25 +35,24 @@ class Version00000000000005 extends AbstractMigration
     ];
 
     foreach ($entities as $entity) {
-      $this->addSql('ALTER TABLE '.$entity[0].' CHANGE id id BIGINT AUTO_INCREMENT NOT NULL');
       $this->addSql('ALTER TABLE '.$entity[0].' CHANGE createdDate created_at DATETIME NOT NULL AFTER '.$entity[1]);
       $this->addSql('ALTER TABLE '.$entity[0].' CHANGE createdBy created_by VARCHAR(255) DEFAULT NULL AFTER created_at');
       $this->addSql('ALTER TABLE '.$entity[0].' CHANGE modifiedDate updated_at DATETIME NOT NULL AFTER created_by');
       $this->addSql('ALTER TABLE '.$entity[0].' CHANGE modifiedBy updated_by VARCHAR(255) DEFAULT NULL AFTER updated_at');
     }
 
-    $this->addSql('ALTER TABLE Grund CHANGE postbyId postbyId BIGINT DEFAULT NULL');
-    $this->addSql('ALTER TABLE Landinspektoer CHANGE postnrId postbyId BIGINT DEFAULT NULL');
-    $this->addSql('ALTER TABLE Lokalplan CHANGE lsnr LokalsamfundId BIGINT DEFAULT NULL');
+    $this->addSql('ALTER TABLE Grund CHANGE postbyId postbyId int(11) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Landinspektoer CHANGE postnrId postbyId int(11) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Lokalplan CHANGE lsnr LokalsamfundId int(11) DEFAULT NULL');
 
     // Drop key/index required before rename allowed
     $this->addSql('ALTER TABLE Opkoeb DROP FOREIGN KEY fk_Opkoeb_lpId');
     $this->addSql('ALTER TABLE Opkoeb DROP INDEX fk_Opkoeb_lpId');
-    $this->addSql('ALTER TABLE Opkoeb CHANGE lpId lokalplanId BIGINT DEFAULT NULL');
+    $this->addSql('ALTER TABLE Opkoeb CHANGE lpId lokalplanId int(11) DEFAULT NULL');
 
-    $this->addSql('ALTER TABLE InteressentGrundMapping CHANGE id id BIGINT AUTO_INCREMENT NOT NULL');
-    $this->addSql('ALTER TABLE Keyword CHANGE id id BIGINT AUTO_INCREMENT NOT NULL');
-    $this->addSql('ALTER TABLE KeywordValue CHANGE id id BIGINT AUTO_INCREMENT NOT NULL, CHANGE keywordId keywordId BIGINT DEFAULT NULL');
+    $this->addSql('ALTER TABLE InteressentGrundMapping CHANGE id id int(11) AUTO_INCREMENT NOT NULL');
+    $this->addSql('ALTER TABLE Keyword CHANGE id id int(11) AUTO_INCREMENT NOT NULL');
+    $this->addSql('ALTER TABLE KeywordValue CHANGE id id int(11) AUTO_INCREMENT NOT NULL, CHANGE keywordId keywordId int(11) DEFAULT NULL');
 
   }
 

@@ -21,7 +21,7 @@ class Grund
   /**
    * @var integer
    *
-   * @ORM\Column(name="id", type="bigint", nullable=false)
+   * @ORM\Column(name="id", type="integer", nullable=false)
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="IDENTITY")
    */
@@ -543,6 +543,33 @@ class Grund
    */
   private $salgsomraade;
 
+  /**
+   * @var \CrEOF\Spatial\DBAL\Types\Geography
+   *
+   * @ORM\Column(name="SP_GEOMETRY", type="geometry", nullable=true)
+   */
+  private $sp_geometry;
+
+  /**
+   * @var integer
+   *
+   * @ORM\Column(name="srid", type="integer", nullable=true)
+   */
+  private $srid;
+
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="MI_STYLE", type="string", length=255, nullable=true)
+   */
+  private $miStyle;
+
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="pdflink", type="string", length=255, nullable=true)
+   */
+  private $pdfLink;
 
   /**
    * Get id
@@ -2256,6 +2283,67 @@ class Grund
   public function getSalgsomraade()
   {
     return $this->salgsomraade;
+  }
+
+  /**
+   * @return \CrEOF\Spatial\DBAL\Types\Geography
+   */
+  public function getSpGeometry()
+  {
+    return $this->sp_geometry;
+  }
+
+  /**
+   * @param \CrEOF\Spatial\PHP\Types\Geography\Polygon $sp_geometry
+   */
+  public function setSpGeometry(\CrEOF\Spatial\PHP\Types\Geography\Polygon $sp_geometry)
+  {
+    $this->sp_geometry = $sp_geometry;
+  }
+
+  /**
+   * @return int
+   */
+  public function getSrid(): int
+  {
+    return $this->srid;
+  }
+
+  /**
+   * @param int $srid
+   */
+  public function setSrid(int $srid)
+  {
+    $this->srid = $srid;
+  }
+
+  /**
+   * @return string
+   */
+  public function getPdfLink()
+  {
+    return $this->pdfLink;
+  }
+
+  /**
+   * @param string $pdfLink
+   */
+  public function setPdfLink($pdfLink)
+  {
+    $this->pdfLink = $pdfLink;
+  }
+
+
+  public function getSpGeometryGeoJsonObject() {
+
+    if($this->getSpGeometry()) {
+      $json['type'] = $this->getSpGeometry()->getType();
+      $json['coordinates'] = $this->getSpGeometry()->toArray();
+
+      return $json;
+    }
+
+    return null;
   }
 
   public function __toString()
