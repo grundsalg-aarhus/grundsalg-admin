@@ -545,7 +545,6 @@ class Grund
    */
   private $salgsomraade;
 
-
   /**
    * @var \CrEOF\Spatial\DBAL\Types\Geometry
    *
@@ -559,6 +558,13 @@ class Grund
    * @ORM\Column(name="srid", type="integer", nullable=true)
    */
   private $srid;
+
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="MI_STYLE", type="string", length=255, nullable=true)
+   */
+  private $miStyle;
 
   /**
    * @var string

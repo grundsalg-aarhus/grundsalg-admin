@@ -24,6 +24,11 @@ class Version00000000000020 extends AbstractMigration
     $this->addSql('ALTER TABLE Grund ADD SP_GEOMETRY GEOMETRY NULL COMMENT \'(DC2Type:geometry)\'');
     $this->addSql('ALTER TABLE Grund ADD srid INT DEFAULT NULL');
     $this->addSql('ALTER TABLE Grund ADD pdflink VARCHAR(255) DEFAULT NULL');
+    $this->addSql('ALTER TABLE Grund ADD MI_STYLE VARCHAR(255) DEFAULT NULL');
+
+    $this->addSql('ALTER TABLE Salgsomraade ADD SP_GEOMETRY GEOMETRY DEFAULT NULL COMMENT \'(DC2Type:geometry)\'');
+    $this->addSql('ALTER TABLE Salgsomraade ADD srid INT DEFAULT NULL');
+    $this->addSql('ALTER TABLE Salgsomraade ADD MI_STYLE VARCHAR(255) DEFAULT NULL');
   }
 
   /**
