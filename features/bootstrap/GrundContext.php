@@ -1,6 +1,5 @@
 <?php
 
-use AppBundle\Entity\Tag;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Hook\Scope\AfterScenarioScope;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
@@ -20,6 +19,9 @@ use SebastianBergmann\Diff\Differ;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Sanpi\Behatch\HttpCall\Request;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
+use CrEOF\Spatial\Exception\InvalidValueException;
+use CrEOF\Spatial\PHP\Types\Geography\GeographyInterface;
+use CrEOF\Geo\WKT\Parser as WKTStringParser;
 
 /**
  * Defines user features
@@ -67,7 +69,6 @@ class GrundContext extends BaseContext implements Context, KernelAwareContext
    */
   public function theFollowingGrundeExist(TableNode $table)
   {
-
     $salgsomraader = array();
 
     foreach ($table->getHash() as $row) {
@@ -99,6 +100,9 @@ class GrundContext extends BaseContext implements Context, KernelAwareContext
       $grund->setHusnummer($row['Husnummer']);
       $grund->setBogstav($row['Bogstav']);
 
+      $polygon = $this->hydrateWKT($row['geometry']);
+      $grund->setSpGeometry($polygon);
+
       $grund->setAnnonceresej($row['AnnonceresEj']);
       $grund->setDatoannonce(new DateTime($row['DatoAnnonce']));
 
@@ -112,6 +116,26 @@ class GrundContext extends BaseContext implements Context, KernelAwareContext
 
     $this->manager->flush();
 
+  }
+
+  private function hydrateWKT($value)
+  {
+    $parser = new WKTStringParser($value);
+    $value  = $parser->parse();
+
+    $typeName  = strtoupper($value['type']);
+    $constName = sprintf('CrEOF\Spatial\PHP\Types\Geometry\GeometryInterface::%s', $typeName);
+
+    if (! defined($constName)) {
+      throw new InvalidValueException(sprintf('Unsupported Geography type "%s".', $typeName));
+    }
+
+    $class = sprintf('CrEOF\Spatial\PHP\Types\Geography\%s', constant($constName));
+    if (!class_exists($class)) {
+      throw new InvalidValueException(sprintf('Unsupported Geography type "%s".', $typeName));
+    }
+
+    return new $class($value['value'], $value['srid']);
   }
 
 

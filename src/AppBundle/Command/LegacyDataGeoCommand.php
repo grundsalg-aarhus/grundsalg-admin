@@ -81,13 +81,14 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
               $fagsystemID = $this->matchToOmraade($table, $row['OmraadeNavn'], $row['Info1_overskr']);
 
               try {
-                $sql = 'UPDATE Salgsomraade SET SP_GEOMETRY = ST_GEOMFROMTEXT(?, ?), MI_STYLE = ? WHERE id = ?';
+                $sql = 'UPDATE Salgsomraade SET SP_GEOMETRY = ST_GEOMFROMTEXT(?, ?), srid = ?, MI_STYLE = ? WHERE id = ?';
 
                 $stmt = $connection->prepare($sql);
                 $stmt->bindValue(1, $row['WKT']);
                 $stmt->bindValue(2, $row['srid']);
-                $stmt->bindValue(3, $row['MI_STYLE']);
-                $stmt->bindValue(4, $fagsystemID);
+                $stmt->bindValue(3, $row['srid']);
+                $stmt->bindValue(4, $row['MI_STYLE']);
+                $stmt->bindValue(5, $fagsystemID);
                 $stmt->execute();
 
               } catch (ForeignKeyConstraintViolationException $e) {

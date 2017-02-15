@@ -5,8 +5,6 @@ namespace AppBundle\Entity;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
-use CrEOF\Spatial\DBAL\Types\Geography\PolygonType;
-use GeoJson\Geometry\Polygon;
 
 /**
  * Grund
@@ -546,7 +544,7 @@ class Grund
   private $salgsomraade;
 
   /**
-   * @var \CrEOF\Spatial\DBAL\Types\Geometry
+   * @var \CrEOF\Spatial\DBAL\Types\Geography
    *
    * @ORM\Column(name="SP_GEOMETRY", type="geometry", nullable=true)
    */
@@ -2288,7 +2286,7 @@ class Grund
   }
 
   /**
-   * @return \CrEOF\Spatial\DBAL\Types\Geometry
+   * @return \CrEOF\Spatial\DBAL\Types\Geography
    */
   public function getSpGeometry()
   {
@@ -2296,9 +2294,9 @@ class Grund
   }
 
   /**
-   * @param \CrEOF\Spatial\DBAL\Types\Geometry $sp_geometry
+   * @param \CrEOF\Spatial\PHP\Types\Geography\Polygon $sp_geometry
    */
-  public function setSpGeometry(\CrEOF\Spatial\DBAL\Types\Geometry $sp_geometry)
+  public function setSpGeometry(\CrEOF\Spatial\PHP\Types\Geography\Polygon $sp_geometry)
   {
     $this->sp_geometry = $sp_geometry;
   }
@@ -2322,7 +2320,7 @@ class Grund
   /**
    * @return string
    */
-  public function getPdfLink(): string
+  public function getPdfLink()
   {
     return $this->pdfLink;
   }
@@ -2330,7 +2328,7 @@ class Grund
   /**
    * @param string $pdfLink
    */
-  public function setPdfLink(string $pdfLink)
+  public function setPdfLink($pdfLink)
   {
     $this->pdfLink = $pdfLink;
   }

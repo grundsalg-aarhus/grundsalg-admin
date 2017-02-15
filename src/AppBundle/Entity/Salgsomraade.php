@@ -145,7 +145,7 @@ class Salgsomraade
   private $postby;
 
   /**
-   * @var \CrEOF\Spatial\DBAL\Types\Geometry
+   * @var \CrEOF\Spatial\DBAL\Types\Geography
    *
    * @ORM\Column(name="SP_GEOMETRY", type="geometry", nullable=true)
    */
@@ -536,17 +536,17 @@ class Salgsomraade
   }
 
   /**
-   * @return \CrEOF\Spatial\DBAL\Types\Geometry
+   * @return \CrEOF\Spatial\DBAL\Types\Geography
    */
-  public function getSpGeometry(): \CrEOF\Spatial\DBAL\Types\Geometry
+  public function getSpGeometry()
   {
     return $this->sp_geometry;
   }
 
   /**
-   * @param \CrEOF\Spatial\DBAL\Types\Geometry $sp_geometry
+   * @param \CrEOF\Spatial\DBAL\Types\Geography $sp_geometry
    */
-  public function setSpGeometry(\CrEOF\Spatial\DBAL\Types\Geometry $sp_geometry)
+  public function setSpGeometry($sp_geometry)
   {
     $this->sp_geometry = $sp_geometry;
   }
