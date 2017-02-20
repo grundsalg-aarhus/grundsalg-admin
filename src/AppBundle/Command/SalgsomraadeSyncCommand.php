@@ -34,18 +34,33 @@ class SalgsomraadeSyncCommand extends ContainerAwareCommand
   {
     $this->output = $output;
 
-    $comService = $this->getContainer()->get('grundsalg.communication');
+    $communicationService = $this->getContainer()->get('grundsalg.communication');
 
     $em = $this->getContainer()->get('doctrine')->getManager();
     $salgsomraader = $em->getRepository('AppBundle:Salgsomraade')->findAll();
-    $count = 0;
+    $count = [
+      'created' => 0,
+      'updated' => 0,
+      'error' => 0,
+    ];
+    foreach ($salgsomraader as $area) {
+      $content = $communicationService->saveSalgsomraade($area);
+      $output->writeln('Synced id: ' . $area->getId() . ' Title: "' . $area->getTitel() . '" Message: "' . $content['message'] . '"');
 
-    foreach ($salgsomraader as $salgsomraade) {
-      $comService->saveSalgsomraade($salgsomraade);
-      $output->writeln('Sync ' . $salgsomraade->getId() . ' ' . $salgsomraade->getTitel());
-      $count++;
+      if (isset($content['error']) && $content['error']) {
+        $count['error']++;
+      }
+      else if ($content['message'] == 'updated') {
+        $count['updated']++;
+      }
+      else {
+        $count['created']++;
+      }
     }
 
-    $output->writeln('Synced ' . $count . ' salgsomraader');
+    $output->writeln(str_repeat("=", 20) . ' Synced ' . str_repeat("=", 20));
+    $output->writeln('Created: ' . $count['created']);
+    $output->writeln('Updated: ' . $count['updated']);
+    $output->writeln('Error: ' . $count['error']);
   }
 }

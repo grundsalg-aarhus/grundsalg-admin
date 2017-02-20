@@ -28,6 +28,9 @@ class GrundsalgCommunicationService {
    *
    * @param $salgsomraade
    *
+   * @return array
+   *   The content received as json from the remote system.
+   *
    * @throws \Exception
    *   If error message is return from the remote system.
    */
@@ -35,10 +38,10 @@ class GrundsalgCommunicationService {
     $client = new Client();
 
     $response = $client->request('POST', $this->endpoint . "/api/udstykning/" . $salgsomraade->getId() . "/updated");
+
     $body = $response->getBody()->getContents();
     $content = \GuzzleHttp\json_decode($body);
-    if (isset($content->error)) {
-      throw new \Exception($content->message);
-    }
+
+    return (array)$content;
   }
 }

@@ -77,7 +77,6 @@ class ApiController extends Controller {
 
     }
 
-
     $response = $this->json($list);
     $response->headers->set('Access-Control-Allow-Origin', '*');
 
@@ -91,13 +90,16 @@ class ApiController extends Controller {
     $em = $this->getDoctrine()->getManager();
     $area = $em->getRepository('AppBundle:Salgsomraade')->findOneById($udstykningsId);
 
+    /**
+     * @TODO: Add status to set published state.
+     */
     $data = [
       'id' => $area->getId(),
       'type' => $area->getType(),
       'title' => $area->getTitel(),
       'vej' => $area->getVej(),
-      'city' => $area->getPostby()->getCity(),
-      'postalCode' => $area->getPostby()->getPostalcode(),
+      'city' => $area->getPostby() ? $area->getPostby()->getCity() : null,
+      'postalCode' => $area->getPostby() ? $area->getPostby()->getPostalcode() : null,
       'geometry' => $area->getSpGeometry(),
       'srid' => $area->getSrid(),
     ];
