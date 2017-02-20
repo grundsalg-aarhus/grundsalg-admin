@@ -27,10 +27,18 @@ class GrundsalgCommunicationService {
    * Handle save of salgsomraade.
    *
    * @param $salgsomraade
+   *
+   * @throws \Exception
+   *   If error message is return from the remote system.
    */
   public function saveSalgsomraade($salgsomraade) {
     $client = new Client();
 
-    $client->request('POST', $this->endpoint . "/api/udstykning/" . $salgsomraade->getId() . "/updated");
+    $response = $client->request('POST', $this->endpoint . "/api/udstykning/" . $salgsomraade->getId() . "/updated");
+    $body = $response->getBody()->getContents();
+    $content = \GuzzleHttp\json_decode($body);
+    if (isset($content->error)) {
+      throw new \Exception($content->message);
+    }
   }
 }

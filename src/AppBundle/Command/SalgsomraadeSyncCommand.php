@@ -27,6 +27,8 @@ class SalgsomraadeSyncCommand extends ContainerAwareCommand
 
   /**
    * {@inheritdoc}
+   *
+   * Finds all "Salgsområder" and send update request to the front-end web-site.
    */
   protected function execute(InputInterface $input, OutputInterface $output)
   {
@@ -38,14 +40,12 @@ class SalgsomraadeSyncCommand extends ContainerAwareCommand
     $salgsomraader = $em->getRepository('AppBundle:Salgsomraade')->findAll();
     $count = 0;
 
-      foreach ($salgsomraader as $salgsomraade) {
-        $comService->saveSalgsomraade($salgsomraade);
-        $output->writeln('Sync '.$salgsomraade->getId().' '.$salgsomraade->getTitel());
-        $count++;
-      }
+    foreach ($salgsomraader as $salgsomraade) {
+      $comService->saveSalgsomraade($salgsomraade);
+      $output->writeln('Sync ' . $salgsomraade->getId() . ' ' . $salgsomraade->getTitel());
+      $count++;
+    }
 
-    $output->writeln('Synced '.$count.' salgsomraader');
-
+    $output->writeln('Synced ' . $count . ' salgsomraader');
   }
-
 }

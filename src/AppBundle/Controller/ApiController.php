@@ -89,14 +89,17 @@ class ApiController extends Controller {
    */
   public function salgsomraadeAction(Request $request, $udstykningsId) {
     $em = $this->getDoctrine()->getManager();
-    $salgsomraade = $em->getRepository('AppBundle:Salgsomraade')->findOneById($udstykningsId);
+    $area = $em->getRepository('AppBundle:Salgsomraade')->findOneById($udstykningsId);
 
     $data = [
-      'id' => $salgsomraade->getId(),
-      'type' => $salgsomraade->getType(),
-      'title' => $salgsomraade->getTitel(),
-      'city' => $salgsomraade->getPostby()->getCity(),
-      'postalCode' => $salgsomraade->getPostby()->getPostalcode(),
+      'id' => $area->getId(),
+      'type' => $area->getType(),
+      'title' => $area->getTitel(),
+      'vej' => $area->getVej(),
+      'city' => $area->getPostby()->getCity(),
+      'postalCode' => $area->getPostby()->getPostalcode(),
+      'geometry' => $area->getSpGeometry(),
+      'srid' => $area->getSrid(),
     ];
 
     $response = $this->json($data);
