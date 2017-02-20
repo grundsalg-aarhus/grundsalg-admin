@@ -554,7 +554,7 @@ class Salgsomraade
   /**
    * @return int
    */
-  public function getSrid(): int
+  public function getSrid()
   {
     return $this->srid;
   }
