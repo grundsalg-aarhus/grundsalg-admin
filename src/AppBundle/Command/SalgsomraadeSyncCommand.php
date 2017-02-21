@@ -58,7 +58,7 @@ class SalgsomraadeSyncCommand extends ContainerAwareCommand
       }
     }
 
-    $output->writeln(str_repeat("=", 20) . ' Synced ' . str_repeat("=", 20));
+    $output->writeln(str_repeat("=", 20) . ' Synced completed ' . str_repeat("=", 20));
     $output->writeln('Created: ' . $count['created']);
     $output->writeln('Updated: ' . $count['updated']);
     $output->writeln('Error: ' . $count['error']);

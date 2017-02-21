@@ -37,7 +37,7 @@ class ApiController extends Controller {
         $data = array();
 
         $data['type'] = 'Feature';
-        $data['geometry'] = $grund->getSpGeometryGeoJsonObject();
+        $data['geometry'] = $grund->getSpGeometryArray();
 
         $properties['id'] = $grund->getId();
         $properties['address'] = trim($grund->getVej() . ' ' . $grund->getHusnummer() . $grund->getBogstav());
@@ -100,7 +100,7 @@ class ApiController extends Controller {
       'vej' => $area->getVej(),
       'city' => $area->getPostby() ? $area->getPostby()->getCity() : null,
       'postalCode' => $area->getPostby() ? $area->getPostby()->getPostalcode() : null,
-      'geometry' => $area->getSpGeometry(),
+      'geometry' => $area->getSpGeometryArray(),
       'srid' => $area->getSrid(),
     ];
 

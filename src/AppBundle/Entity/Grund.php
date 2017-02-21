@@ -12,11 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="Grund", indexes={@ORM\Index(name="fk_Grund_lokalsamfundId", columns={"lokalsamfundId"}), @ORM\Index(name="fk_Grund_salgsomraadeId", columns={"salgsomraadeId"}), @ORM\Index(name="fk_Grund_koeberPostById", columns={"koeberPostById"}), @ORM\Index(name="fk_Grund_medKoeberPostById", columns={"medKoeberPostById"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GrundRepository")
  */
-class Grund
-{
+class Grund {
   use BlameableEntity;
   use TimestampableEntity;
-
 
   /**
    * @var integer
@@ -331,9 +329,8 @@ class Grund
    */
   private $note;
 
-
   /**
-   * @var \LandInspektoer
+   * @var \AppBundle\Entity\LandInspektoer
    *
    * @ORM\ManyToOne(targetEntity="Landinspektoer")
    * @ORM\JoinColumns({
@@ -504,7 +501,7 @@ class Grund
   private $notat;
 
   /**
-   * @var \Postby
+   * @var \AppBundle\Entity\Postby
    *
    * @ORM\ManyToOne(targetEntity="Postby")
    * @ORM\JoinColumns({
@@ -514,7 +511,7 @@ class Grund
   private $medkoeberPostby;
 
   /**
-   * @var \Postby
+   * @var \AppBundle\Entity\Postby
    *
    * @ORM\ManyToOne(targetEntity="Postby")
    * @ORM\JoinColumns({
@@ -524,7 +521,7 @@ class Grund
   private $koeberPostby;
 
   /**
-   * @var \Lokalsamfund
+   * @var \AppBundle\Entity\Lokalsamfund
    *
    * @ORM\ManyToOne(targetEntity="Lokalsamfund")
    * @ORM\JoinColumns({
@@ -534,7 +531,7 @@ class Grund
   private $lokalsamfund;
 
   /**
-   * @var \Salgsomraade
+   * @var \AppBundle\Entity\Salgsomraade
    *
    * @ORM\ManyToOne(targetEntity="Salgsomraade")
    * @ORM\JoinColumns({
@@ -576,8 +573,7 @@ class Grund
    *
    * @return integer
    */
-  public function getId()
-  {
+  public function getId() {
     return $this->id;
   }
 
@@ -588,8 +584,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setStatus($status)
-  {
+  public function setStatus($status) {
     $this->status = $status;
 
     return $this;
@@ -600,8 +595,7 @@ class Grund
    *
    * @return string
    */
-  public function getStatus()
-  {
+  public function getStatus() {
     return $this->status;
   }
 
@@ -612,8 +606,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setSalgstatus($salgstatus)
-  {
+  public function setSalgstatus($salgstatus) {
     $this->salgstatus = $salgstatus;
 
     return $this;
@@ -624,8 +617,7 @@ class Grund
    *
    * @return string
    */
-  public function getSalgstatus()
-  {
+  public function getSalgstatus() {
     return $this->salgstatus;
   }
 
@@ -636,8 +628,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setGid($gid)
-  {
+  public function setGid($gid) {
     $this->gid = $gid;
 
     return $this;
@@ -648,8 +639,7 @@ class Grund
    *
    * @return string
    */
-  public function getGid()
-  {
+  public function getGid() {
     return $this->gid;
   }
 
@@ -660,8 +650,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setGrundtype($grundtype)
-  {
+  public function setGrundtype($grundtype) {
     $this->grundtype = $grundtype;
 
     return $this;
@@ -672,8 +661,7 @@ class Grund
    *
    * @return string
    */
-  public function getGrundtype()
-  {
+  public function getGrundtype() {
     return $this->grundtype;
   }
 
@@ -684,8 +672,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setMnr($mnr)
-  {
+  public function setMnr($mnr) {
     $this->mnr = $mnr;
 
     return $this;
@@ -696,8 +683,7 @@ class Grund
    *
    * @return string
    */
-  public function getMnr()
-  {
+  public function getMnr() {
     return $this->mnr;
   }
 
@@ -708,8 +694,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setMnr2($mnr2)
-  {
+  public function setMnr2($mnr2) {
     $this->mnr2 = $mnr2;
 
     return $this;
@@ -720,8 +705,7 @@ class Grund
    *
    * @return string
    */
-  public function getMnr2()
-  {
+  public function getMnr2() {
     return $this->mnr2;
   }
 
@@ -732,8 +716,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setDelareal($delareal)
-  {
+  public function setDelareal($delareal) {
     $this->delareal = $delareal;
 
     return $this;
@@ -744,8 +727,7 @@ class Grund
    *
    * @return string
    */
-  public function getDelareal()
-  {
+  public function getDelareal() {
     return $this->delareal;
   }
 
@@ -756,8 +738,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setEjerlav($ejerlav)
-  {
+  public function setEjerlav($ejerlav) {
     $this->ejerlav = $ejerlav;
 
     return $this;
@@ -768,8 +749,7 @@ class Grund
    *
    * @return string
    */
-  public function getEjerlav()
-  {
+  public function getEjerlav() {
     return $this->ejerlav;
   }
 
@@ -780,8 +760,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setVej($vej)
-  {
+  public function setVej($vej) {
     $this->vej = $vej;
 
     return $this;
@@ -792,8 +771,7 @@ class Grund
    *
    * @return string
    */
-  public function getVej()
-  {
+  public function getVej() {
     return $this->vej;
   }
 
@@ -804,8 +782,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setHusnummer($husnummer)
-  {
+  public function setHusnummer($husnummer) {
     $this->husnummer = $husnummer;
 
     return $this;
@@ -816,8 +793,7 @@ class Grund
    *
    * @return string
    */
-  public function getHusnummer()
-  {
+  public function getHusnummer() {
     return $this->husnummer;
   }
 
@@ -828,8 +804,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setBogstav($bogstav)
-  {
+  public function setBogstav($bogstav) {
     $this->bogstav = $bogstav;
 
     return $this;
@@ -840,8 +815,7 @@ class Grund
    *
    * @return string
    */
-  public function getBogstav()
-  {
+  public function getBogstav() {
     return $this->bogstav;
   }
 
@@ -852,8 +826,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setPostby($postby)
-  {
+  public function setPostby($postby) {
     $this->postby = $postby;
 
     return $this;
@@ -864,8 +837,7 @@ class Grund
    *
    * @return \AppBundle\Entity\Postby
    */
-  public function getPostby()
-  {
+  public function getPostby() {
     return $this->postby;
   }
 
@@ -876,8 +848,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setUrlgis($urlgis)
-  {
+  public function setUrlgis($urlgis) {
     $this->urlgis = $urlgis;
 
     return $this;
@@ -888,8 +859,7 @@ class Grund
    *
    * @return string
    */
-  public function getUrlgis()
-  {
+  public function getUrlgis() {
     return $this->urlgis;
   }
 
@@ -900,8 +870,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setSalgstype($salgstype)
-  {
+  public function setSalgstype($salgstype) {
     $this->salgstype = $salgstype;
 
     return $this;
@@ -912,8 +881,7 @@ class Grund
    *
    * @return string
    */
-  public function getSalgstype()
-  {
+  public function getSalgstype() {
     return $this->salgstype;
   }
 
@@ -924,8 +892,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setAuktionstartdato($auktionstartdato)
-  {
+  public function setAuktionstartdato($auktionstartdato) {
     $this->auktionstartdato = $auktionstartdato;
 
     return $this;
@@ -936,8 +903,7 @@ class Grund
    *
    * @return \DateTime
    */
-  public function getAuktionstartdato()
-  {
+  public function getAuktionstartdato() {
     return $this->auktionstartdato;
   }
 
@@ -948,8 +914,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setAuktionslutdato($auktionslutdato)
-  {
+  public function setAuktionslutdato($auktionslutdato) {
     $this->auktionslutdato = $auktionslutdato;
 
     return $this;
@@ -960,8 +925,7 @@ class Grund
    *
    * @return \DateTime
    */
-  public function getAuktionslutdato()
-  {
+  public function getAuktionslutdato() {
     return $this->auktionslutdato;
   }
 
@@ -972,8 +936,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setAnnonceresej($annonceresej)
-  {
+  public function setAnnonceresej($annonceresej) {
     $this->annonceresej = $annonceresej;
 
     return $this;
@@ -984,8 +947,7 @@ class Grund
    *
    * @return string
    */
-  public function getAnnonceresej()
-  {
+  public function getAnnonceresej() {
     return $this->annonceresej;
   }
 
@@ -996,8 +958,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setDatoannonce($datoannonce)
-  {
+  public function setDatoannonce($datoannonce) {
     $this->datoannonce = $datoannonce;
 
     return $this;
@@ -1008,8 +969,7 @@ class Grund
    *
    * @return \DateTime
    */
-  public function getDatoannonce()
-  {
+  public function getDatoannonce() {
     return $this->datoannonce;
   }
 
@@ -1020,8 +980,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setDatoannonce1($datoannonce1)
-  {
+  public function setDatoannonce1($datoannonce1) {
     $this->datoannonce1 = $datoannonce1;
 
     return $this;
@@ -1032,8 +991,7 @@ class Grund
    *
    * @return \DateTime
    */
-  public function getDatoannonce1()
-  {
+  public function getDatoannonce1() {
     return $this->datoannonce1;
   }
 
@@ -1044,8 +1002,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setTilsluttet($tilsluttet)
-  {
+  public function setTilsluttet($tilsluttet) {
     $this->tilsluttet = $tilsluttet;
 
     return $this;
@@ -1056,8 +1013,7 @@ class Grund
    *
    * @return string
    */
-  public function getTilsluttet()
-  {
+  public function getTilsluttet() {
     return $this->tilsluttet;
   }
 
@@ -1068,8 +1024,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setMaxetagem2($maxetagem2)
-  {
+  public function setMaxetagem2($maxetagem2) {
     $this->maxetagem2 = $maxetagem2;
 
     return $this;
@@ -1080,8 +1035,7 @@ class Grund
    *
    * @return float
    */
-  public function getMaxetagem2()
-  {
+  public function getMaxetagem2() {
     return $this->maxetagem2;
   }
 
@@ -1092,8 +1046,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setAreal($areal)
-  {
+  public function setAreal($areal) {
     $this->areal = $areal;
 
     return $this;
@@ -1104,8 +1057,7 @@ class Grund
    *
    * @return float
    */
-  public function getAreal()
-  {
+  public function getAreal() {
     return $this->areal;
   }
 
@@ -1116,8 +1068,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setArealvej($arealvej)
-  {
+  public function setArealvej($arealvej) {
     $this->arealvej = $arealvej;
 
     return $this;
@@ -1128,8 +1079,7 @@ class Grund
    *
    * @return float
    */
-  public function getArealvej()
-  {
+  public function getArealvej() {
     return $this->arealvej;
   }
 
@@ -1140,8 +1090,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setArealkotelet($arealkotelet)
-  {
+  public function setArealkotelet($arealkotelet) {
     $this->arealkotelet = $arealkotelet;
 
     return $this;
@@ -1152,8 +1101,7 @@ class Grund
    *
    * @return float
    */
-  public function getArealkotelet()
-  {
+  public function getArealkotelet() {
     return $this->arealkotelet;
   }
 
@@ -1164,8 +1112,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setBruttoareal($bruttoareal)
-  {
+  public function setBruttoareal($bruttoareal) {
     $this->bruttoareal = $bruttoareal;
 
     return $this;
@@ -1176,8 +1123,7 @@ class Grund
    *
    * @return float
    */
-  public function getBruttoareal()
-  {
+  public function getBruttoareal() {
     return $this->bruttoareal;
   }
 
@@ -1188,8 +1134,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setPrism2($prism2)
-  {
+  public function setPrism2($prism2) {
     $this->prism2 = $prism2;
 
     return $this;
@@ -1200,8 +1145,7 @@ class Grund
    *
    * @return float
    */
-  public function getPrism2()
-  {
+  public function getPrism2() {
     return $this->prism2;
   }
 
@@ -1212,8 +1156,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setPrisfoerkorrektion($prisfoerkorrektion)
-  {
+  public function setPrisfoerkorrektion($prisfoerkorrektion) {
     $this->prisfoerkorrektion = $prisfoerkorrektion;
 
     return $this;
@@ -1224,8 +1167,7 @@ class Grund
    *
    * @return float
    */
-  public function getPrisfoerkorrektion()
-  {
+  public function getPrisfoerkorrektion() {
     return $this->prisfoerkorrektion;
   }
 
@@ -1236,8 +1178,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setPriskorrektion1($priskorrektion1)
-  {
+  public function setPriskorrektion1($priskorrektion1) {
     $this->priskorrektion1 = $priskorrektion1;
 
     return $this;
@@ -1248,8 +1189,7 @@ class Grund
    *
    * @return string
    */
-  public function getPriskorrektion1()
-  {
+  public function getPriskorrektion1() {
     return $this->priskorrektion1;
   }
 
@@ -1260,8 +1200,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setAntalkorr1($antalkorr1)
-  {
+  public function setAntalkorr1($antalkorr1) {
     $this->antalkorr1 = $antalkorr1;
 
     return $this;
@@ -1272,8 +1211,7 @@ class Grund
    *
    * @return float
    */
-  public function getAntalkorr1()
-  {
+  public function getAntalkorr1() {
     return $this->antalkorr1;
   }
 
@@ -1284,8 +1222,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setAkrkorr1($akrkorr1)
-  {
+  public function setAkrkorr1($akrkorr1) {
     $this->akrkorr1 = $akrkorr1;
 
     return $this;
@@ -1296,8 +1233,7 @@ class Grund
    *
    * @return float
    */
-  public function getAkrkorr1()
-  {
+  public function getAkrkorr1() {
     return $this->akrkorr1;
   }
 
@@ -1308,8 +1244,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setPriskoor1($priskoor1)
-  {
+  public function setPriskoor1($priskoor1) {
     $this->priskoor1 = $priskoor1;
 
     return $this;
@@ -1320,8 +1255,7 @@ class Grund
    *
    * @return float
    */
-  public function getPriskoor1()
-  {
+  public function getPriskoor1() {
     return $this->priskoor1;
   }
 
@@ -1332,8 +1266,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setPriskorrektion2($priskorrektion2)
-  {
+  public function setPriskorrektion2($priskorrektion2) {
     $this->priskorrektion2 = $priskorrektion2;
 
     return $this;
@@ -1344,8 +1277,7 @@ class Grund
    *
    * @return string
    */
-  public function getPriskorrektion2()
-  {
+  public function getPriskorrektion2() {
     return $this->priskorrektion2;
   }
 
@@ -1356,8 +1288,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setAntalkorr2($antalkorr2)
-  {
+  public function setAntalkorr2($antalkorr2) {
     $this->antalkorr2 = $antalkorr2;
 
     return $this;
@@ -1368,8 +1299,7 @@ class Grund
    *
    * @return float
    */
-  public function getAntalkorr2()
-  {
+  public function getAntalkorr2() {
     return $this->antalkorr2;
   }
 
@@ -1380,8 +1310,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setAkrkorr2($akrkorr2)
-  {
+  public function setAkrkorr2($akrkorr2) {
     $this->akrkorr2 = $akrkorr2;
 
     return $this;
@@ -1392,8 +1321,7 @@ class Grund
    *
    * @return float
    */
-  public function getAkrkorr2()
-  {
+  public function getAkrkorr2() {
     return $this->akrkorr2;
   }
 
@@ -1404,8 +1332,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setPriskoor2($priskoor2)
-  {
+  public function setPriskoor2($priskoor2) {
     $this->priskoor2 = $priskoor2;
 
     return $this;
@@ -1416,8 +1343,7 @@ class Grund
    *
    * @return float
    */
-  public function getPriskoor2()
-  {
+  public function getPriskoor2() {
     return $this->priskoor2;
   }
 
@@ -1428,8 +1354,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setPriskorrektion3($priskorrektion3)
-  {
+  public function setPriskorrektion3($priskorrektion3) {
     $this->priskorrektion3 = $priskorrektion3;
 
     return $this;
@@ -1440,8 +1365,7 @@ class Grund
    *
    * @return string
    */
-  public function getPriskorrektion3()
-  {
+  public function getPriskorrektion3() {
     return $this->priskorrektion3;
   }
 
@@ -1452,8 +1376,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setAntalkorr3($antalkorr3)
-  {
+  public function setAntalkorr3($antalkorr3) {
     $this->antalkorr3 = $antalkorr3;
 
     return $this;
@@ -1464,8 +1387,7 @@ class Grund
    *
    * @return float
    */
-  public function getAntalkorr3()
-  {
+  public function getAntalkorr3() {
     return $this->antalkorr3;
   }
 
@@ -1476,8 +1398,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setAkrkorr3($akrkorr3)
-  {
+  public function setAkrkorr3($akrkorr3) {
     $this->akrkorr3 = $akrkorr3;
 
     return $this;
@@ -1488,8 +1409,7 @@ class Grund
    *
    * @return float
    */
-  public function getAkrkorr3()
-  {
+  public function getAkrkorr3() {
     return $this->akrkorr3;
   }
 
@@ -1500,8 +1420,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setPriskoor3($priskoor3)
-  {
+  public function setPriskoor3($priskoor3) {
     $this->priskoor3 = $priskoor3;
 
     return $this;
@@ -1512,8 +1431,7 @@ class Grund
    *
    * @return float
    */
-  public function getPriskoor3()
-  {
+  public function getPriskoor3() {
     return $this->priskoor3;
   }
 
@@ -1524,8 +1442,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setPris($pris)
-  {
+  public function setPris($pris) {
     $this->pris = $pris;
 
     return $this;
@@ -1536,8 +1453,7 @@ class Grund
    *
    * @return float
    */
-  public function getPris()
-  {
+  public function getPris() {
     return $this->pris;
   }
 
@@ -1548,8 +1464,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setFastpris($fastpris)
-  {
+  public function setFastpris($fastpris) {
     $this->fastpris = $fastpris;
 
     return $this;
@@ -1560,8 +1475,7 @@ class Grund
    *
    * @return float
    */
-  public function getFastpris()
-  {
+  public function getFastpris() {
     return $this->fastpris;
   }
 
@@ -1572,8 +1486,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setMinbud($minbud)
-  {
+  public function setMinbud($minbud) {
     $this->minbud = $minbud;
 
     return $this;
@@ -1584,8 +1497,7 @@ class Grund
    *
    * @return float
    */
-  public function getMinbud()
-  {
+  public function getMinbud() {
     return $this->minbud;
   }
 
@@ -1596,8 +1508,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setNote($note)
-  {
+  public function setNote($note) {
     $this->note = $note;
 
     return $this;
@@ -1608,8 +1519,7 @@ class Grund
    *
    * @return string
    */
-  public function getNote()
-  {
+  public function getNote() {
     return $this->note;
   }
 
@@ -1620,8 +1530,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setLandinspektoer($landinspektoer)
-  {
+  public function setLandinspektoer($landinspektoer) {
     $this->landinspektoer = $landinspektoer;
 
     return $this;
@@ -1632,8 +1541,7 @@ class Grund
    *
    * @return string
    */
-  public function getLandinspektoer()
-  {
+  public function getLandinspektoer() {
     return $this->landinspektoer;
   }
 
@@ -1644,8 +1552,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setResstart($resstart)
-  {
+  public function setResstart($resstart) {
     $this->resstart = $resstart;
 
     return $this;
@@ -1656,8 +1563,7 @@ class Grund
    *
    * @return \DateTime
    */
-  public function getResstart()
-  {
+  public function getResstart() {
     return $this->resstart;
   }
 
@@ -1668,8 +1574,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setTilbudstart($tilbudstart)
-  {
+  public function setTilbudstart($tilbudstart) {
     $this->tilbudstart = $tilbudstart;
 
     return $this;
@@ -1680,8 +1585,7 @@ class Grund
    *
    * @return \DateTime
    */
-  public function getTilbudstart()
-  {
+  public function getTilbudstart() {
     return $this->tilbudstart;
   }
 
@@ -1692,8 +1596,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setAccept($accept)
-  {
+  public function setAccept($accept) {
     $this->accept = $accept;
 
     return $this;
@@ -1704,8 +1607,7 @@ class Grund
    *
    * @return \DateTime
    */
-  public function getAccept()
-  {
+  public function getAccept() {
     return $this->accept;
   }
 
@@ -1716,8 +1618,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setSkoederekv($skoederekv)
-  {
+  public function setSkoederekv($skoederekv) {
     $this->skoederekv = $skoederekv;
 
     return $this;
@@ -1728,8 +1629,7 @@ class Grund
    *
    * @return \DateTime
    */
-  public function getSkoederekv()
-  {
+  public function getSkoederekv() {
     return $this->skoederekv;
   }
 
@@ -1740,8 +1640,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setBeloebanvist($beloebanvist)
-  {
+  public function setBeloebanvist($beloebanvist) {
     $this->beloebanvist = $beloebanvist;
 
     return $this;
@@ -1752,8 +1651,7 @@ class Grund
    *
    * @return \DateTime
    */
-  public function getBeloebanvist()
-  {
+  public function getBeloebanvist() {
     return $this->beloebanvist;
   }
 
@@ -1764,8 +1662,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setResslut($resslut)
-  {
+  public function setResslut($resslut) {
     $this->resslut = $resslut;
 
     return $this;
@@ -1776,8 +1673,7 @@ class Grund
    *
    * @return \DateTime
    */
-  public function getResslut()
-  {
+  public function getResslut() {
     return $this->resslut;
   }
 
@@ -1788,8 +1684,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setTilbudslut($tilbudslut)
-  {
+  public function setTilbudslut($tilbudslut) {
     $this->tilbudslut = $tilbudslut;
 
     return $this;
@@ -1800,8 +1695,7 @@ class Grund
    *
    * @return \DateTime
    */
-  public function getTilbudslut()
-  {
+  public function getTilbudslut() {
     return $this->tilbudslut;
   }
 
@@ -1812,8 +1706,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setOvertagelse($overtagelse)
-  {
+  public function setOvertagelse($overtagelse) {
     $this->overtagelse = $overtagelse;
 
     return $this;
@@ -1824,8 +1717,7 @@ class Grund
    *
    * @return \DateTime
    */
-  public function getOvertagelse()
-  {
+  public function getOvertagelse() {
     return $this->overtagelse;
   }
 
@@ -1836,8 +1728,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setAntagetbud($antagetbud)
-  {
+  public function setAntagetbud($antagetbud) {
     $this->antagetbud = $antagetbud;
 
     return $this;
@@ -1848,8 +1739,7 @@ class Grund
    *
    * @return float
    */
-  public function getAntagetbud()
-  {
+  public function getAntagetbud() {
     return $this->antagetbud;
   }
 
@@ -1860,8 +1750,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setSalgsprisumoms($salgsprisumoms)
-  {
+  public function setSalgsprisumoms($salgsprisumoms) {
     $this->salgsprisumoms = $salgsprisumoms;
 
     return $this;
@@ -1872,8 +1761,7 @@ class Grund
    *
    * @return float
    */
-  public function getSalgsprisumoms()
-  {
+  public function getSalgsprisumoms() {
     return $this->salgsprisumoms;
   }
 
@@ -1884,8 +1772,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setNavn($navn)
-  {
+  public function setNavn($navn) {
     $this->navn = $navn;
 
     return $this;
@@ -1896,8 +1783,7 @@ class Grund
    *
    * @return string
    */
-  public function getNavn()
-  {
+  public function getNavn() {
     return $this->navn;
   }
 
@@ -1908,8 +1794,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setAdresse($adresse)
-  {
+  public function setAdresse($adresse) {
     $this->adresse = $adresse;
 
     return $this;
@@ -1920,8 +1805,7 @@ class Grund
    *
    * @return string
    */
-  public function getAdresse()
-  {
+  public function getAdresse() {
     return $this->adresse;
   }
 
@@ -1932,8 +1816,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setLand($land)
-  {
+  public function setLand($land) {
     $this->land = $land;
 
     return $this;
@@ -1944,8 +1827,7 @@ class Grund
    *
    * @return string
    */
-  public function getLand()
-  {
+  public function getLand() {
     return $this->land;
   }
 
@@ -1956,8 +1838,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setTelefon($telefon)
-  {
+  public function setTelefon($telefon) {
     $this->telefon = $telefon;
 
     return $this;
@@ -1968,8 +1849,7 @@ class Grund
    *
    * @return string
    */
-  public function getTelefon()
-  {
+  public function getTelefon() {
     return $this->telefon;
   }
 
@@ -1980,8 +1860,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setMobil($mobil)
-  {
+  public function setMobil($mobil) {
     $this->mobil = $mobil;
 
     return $this;
@@ -1992,8 +1871,7 @@ class Grund
    *
    * @return string
    */
-  public function getMobil()
-  {
+  public function getMobil() {
     return $this->mobil;
   }
 
@@ -2004,8 +1882,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setKoeberemail($koeberemail)
-  {
+  public function setKoeberemail($koeberemail) {
     $this->koeberemail = $koeberemail;
 
     return $this;
@@ -2016,8 +1893,7 @@ class Grund
    *
    * @return string
    */
-  public function getKoeberemail()
-  {
+  public function getKoeberemail() {
     return $this->koeberemail;
   }
 
@@ -2028,8 +1904,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setNavn1($navn1)
-  {
+  public function setNavn1($navn1) {
     $this->navn1 = $navn1;
 
     return $this;
@@ -2040,8 +1915,7 @@ class Grund
    *
    * @return string
    */
-  public function getNavn1()
-  {
+  public function getNavn1() {
     return $this->navn1;
   }
 
@@ -2052,8 +1926,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setAdresse1($adresse1)
-  {
+  public function setAdresse1($adresse1) {
     $this->adresse1 = $adresse1;
 
     return $this;
@@ -2064,8 +1937,7 @@ class Grund
    *
    * @return string
    */
-  public function getAdresse1()
-  {
+  public function getAdresse1() {
     return $this->adresse1;
   }
 
@@ -2076,8 +1948,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setLand1($land1)
-  {
+  public function setLand1($land1) {
     $this->land1 = $land1;
 
     return $this;
@@ -2088,8 +1959,7 @@ class Grund
    *
    * @return string
    */
-  public function getLand1()
-  {
+  public function getLand1() {
     return $this->land1;
   }
 
@@ -2100,8 +1970,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setTelefon1($telefon1)
-  {
+  public function setTelefon1($telefon1) {
     $this->telefon1 = $telefon1;
 
     return $this;
@@ -2112,8 +1981,7 @@ class Grund
    *
    * @return string
    */
-  public function getTelefon1()
-  {
+  public function getTelefon1() {
     return $this->telefon1;
   }
 
@@ -2124,8 +1992,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setMobil1($mobil1)
-  {
+  public function setMobil1($mobil1) {
     $this->mobil1 = $mobil1;
 
     return $this;
@@ -2136,8 +2003,7 @@ class Grund
    *
    * @return string
    */
-  public function getMobil1()
-  {
+  public function getMobil1() {
     return $this->mobil1;
   }
 
@@ -2148,8 +2014,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setMedkoeberemail($medkoeberemail)
-  {
+  public function setMedkoeberemail($medkoeberemail) {
     $this->medkoeberemail = $medkoeberemail;
 
     return $this;
@@ -2160,8 +2025,7 @@ class Grund
    *
    * @return string
    */
-  public function getMedkoeberemail()
-  {
+  public function getMedkoeberemail() {
     return $this->medkoeberemail;
   }
 
@@ -2172,8 +2036,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setNotat($notat)
-  {
+  public function setNotat($notat) {
     $this->notat = $notat;
 
     return $this;
@@ -2184,8 +2047,7 @@ class Grund
    *
    * @return string
    */
-  public function getNotat()
-  {
+  public function getNotat() {
     return $this->notat;
   }
 
@@ -2196,8 +2058,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setMedkoeberPostby(\AppBundle\Entity\Postby $medkoeberPostby = null)
-  {
+  public function setMedkoeberPostby(\AppBundle\Entity\Postby $medkoeberPostby = NULL) {
     $this->medkoeberPostby = $medkoeberPostby;
 
     return $this;
@@ -2208,8 +2069,7 @@ class Grund
    *
    * @return \AppBundle\Entity\Postby
    */
-  public function getMedkoeberPostby()
-  {
+  public function getMedkoeberPostby() {
     return $this->medkoeberPostby;
   }
 
@@ -2220,8 +2080,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setKoeberPostby(\AppBundle\Entity\Postby $koeberPostby = null)
-  {
+  public function setKoeberPostby(\AppBundle\Entity\Postby $koeberPostby = NULL) {
     $this->koeberPostby = $koeberPostby;
 
     return $this;
@@ -2232,8 +2091,7 @@ class Grund
    *
    * @return \AppBundle\Entity\Postby
    */
-  public function getKoeberPostby()
-  {
+  public function getKoeberPostby() {
     return $this->koeberPostby;
   }
 
@@ -2244,8 +2102,7 @@ class Grund
    *
    * @return Grund
    */
-  public function setLokalsamfund(\AppBundle\Entity\Lokalsamfund $lokalsamfund = null)
-  {
+  public function setLokalsamfund(\AppBundle\Entity\Lokalsamfund $lokalsamfund = NULL) {
     $this->lokalsamfund = $lokalsamfund;
 
     return $this;
@@ -2256,8 +2113,7 @@ class Grund
    *
    * @return \AppBundle\Entity\Lokalsamfund
    */
-  public function getLokalsamfund()
-  {
+  public function getLokalsamfund() {
     return $this->lokalsamfund;
   }
 
@@ -2268,86 +2124,86 @@ class Grund
    *
    * @return Grund
    */
-  public function setSalgsomraade(\AppBundle\Entity\Salgsomraade $salgsomraade = null)
-  {
+  public function setSalgsomraade(\AppBundle\Entity\Salgsomraade $salgsomraade = NULL) {
     $this->salgsomraade = $salgsomraade;
 
     return $this;
   }
 
   /**
-   * Get salgsomraadeid
+   * Get salgsomraade entity.
    *
    * @return \AppBundle\Entity\Salgsomraade
    */
-  public function getSalgsomraade()
-  {
+  public function getSalgsomraade() {
     return $this->salgsomraade;
   }
 
   /**
    * @return \CrEOF\Spatial\DBAL\Types\Geography
    */
-  public function getSpGeometry()
-  {
+  public function getSpGeometry() {
     return $this->sp_geometry;
   }
 
   /**
    * @param \CrEOF\Spatial\PHP\Types\Geography\Polygon $sp_geometry
    */
-  public function setSpGeometry(\CrEOF\Spatial\PHP\Types\Geography\Polygon $sp_geometry)
-  {
+  public function setSpGeometry(\CrEOF\Spatial\PHP\Types\Geography\Polygon $sp_geometry) {
     $this->sp_geometry = $sp_geometry;
   }
 
   /**
    * @return int
    */
-  public function getSrid(): int
-  {
+  public function getSrid(): int {
     return $this->srid;
   }
 
   /**
    * @param int $srid
    */
-  public function setSrid(int $srid)
-  {
+  public function setSrid(int $srid) {
     $this->srid = $srid;
   }
 
   /**
    * @return string
    */
-  public function getPdfLink()
-  {
+  public function getPdfLink() {
     return $this->pdfLink;
   }
 
   /**
    * @param string $pdfLink
    */
-  public function setPdfLink($pdfLink)
-  {
+  public function setPdfLink($pdfLink) {
     $this->pdfLink = $pdfLink;
   }
 
-
-  public function getSpGeometryGeoJsonObject() {
-
-    if($this->getSpGeometry()) {
+  /**
+   * Get the spatial data as an array.
+   *
+   * @return null|array
+   *   If spatial data exists on the entity array is returned else null.
+   */
+  public function getSpGeometryArray() {
+    if ($this->getSpGeometry()) {
       $json['type'] = $this->getSpGeometry()->getType();
       $json['coordinates'] = $this->getSpGeometry()->toArray();
 
       return $json;
     }
 
-    return null;
+    return NULL;
   }
 
-  public function __toString()
-  {
-    return $this->vej . ' ' . $this->husnummer . ($this->postby ? ', ' . $this->postby : '');
+  /**
+   * Mainly used in form generation.
+   *
+   * @return string
+   */
+  public function __toString() {
+    return $this->getVej() . ' ' . $this->getHusnummer() . $this->getBogstav() . ($this->getPostby() ? ', ' . $this->getPostby() : '');
   }
 }
