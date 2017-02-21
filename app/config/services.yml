@@ -22,3 +22,8 @@ services:
   grundsalg.communication:
     class: AppBundle\Service\GrundsalgCommunicationService
     arguments: ['%grundsalg_web%']
+
+  app.easyadmin_subscriber:
+      class: AppBundle\EventListener\EasyAdminSubscriber
+      tags:
+          - { name: kernel.event_subscriber }

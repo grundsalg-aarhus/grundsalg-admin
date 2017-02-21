@@ -1,0 +1,77 @@
+easy_admin:
+    site_name: 'Arealudvikling Aarhus'
+
+    list:
+        max_results: 30000
+
+    formats:
+          date:     'd/m/Y'
+          time:     'H:i'
+          datetime: 'd/m/Y H:i:s'
+#        number: '%.2f'
+
+    design:
+        brand_color: '#157fcc'
+        color_scheme: 'light'
+
+        templates:
+            layout: '@App/EasyAdmin/layout.html.twig'
+
+        menu:
+            - label: 'Parcelhusgrunde'
+              icon: 'home'
+              children:
+                - { entity: 'VisParcelhusgrunde', label: 'Vis Parcelhusgrunde' }
+
+    entities:
+        VisParcelhusgrunde:
+            class: AppBundle\Entity\Grund
+            controller: AppBundle\Controller\GrundController
+            templates:
+                # Twig namespace template syntax
+                list: '@App/EasyAdmin/list.html.twig'
+            list:
+                sort: postby
+                dql_filter: entity.grundtype = 'Parcelhusgrund' AND (entity.status='Ledig' OR entity.status='Annonceret') and entity.salgstatus= 'Ledig'
+                fields:
+                    - vej
+                    - {property: husnummer, css_class: 'text-right'}
+                    - {property: postby.postalcode, css_class: 'text-right'}
+                    - postby.city
+                    - salgsomraade.titel
+                    - salgsomraade.lokalplan.nr
+                    - salgstype
+                    - {property: areal, css_class: 'text-right'}
+                    - {property: pris, css_class: 'text-right'}
+
+            form:
+                fields:
+                    - { type: 'group', css_class: 'col-sm-6', label: 'Adresse' }
+                    - { property: 'gid', readonly: true, type_options: { disabled: true } }
+                    - { type: 'section', label: 'Matrikel' }
+                    - { property: 'mnr' }
+                    - { property: 'mnr2' }
+                    - { property: 'delareal' }
+                    - { property: 'ejerlav' }
+                    - { type: 'section', label: 'Adresse' }
+                    - { property: 'vej' }
+                    - { property: 'husnummer' }
+                    - { property: 'bogstav' }
+                    - { property: 'postby' }
+                    - { property: 'lokalsamfund' }
+                    - { property: 'urlgis' }
+
+                    - { type: 'group', css_class: 'col-sm-6', label: 'Status/Type' }
+                    - { property: 'grundtype' }
+                    - { property: 'status', readonly: true, type_options: { disabled: true } }
+                    - { property: 'salgstype' }
+                    - { property: 'tilsluttet' }
+
+                    - { type: 'group', css_class: 'col-sm-6', label: 'Annonceres' }
+                    - { property: 'annonceresej' }
+                    - { property: 'datoAnnonce', type: 'date', type_options: { widget: 'single_text' } }
+                    - { property: 'datoAnnonce1', type: 'date', type_options: { widget: 'single_text' } }
+
+                    - { type: 'group', css_class: 'col-sm-6', label: 'Salgsområde' }
+                    - { property: 'salgsomraade'}
+#                    - { property: salgsomraade.nr}
