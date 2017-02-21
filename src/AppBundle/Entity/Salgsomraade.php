@@ -105,7 +105,7 @@ class Salgsomraade
   private $lploebenummer;
 
   /**
-   * @var \Landinspektoer
+   * @var \AppBundle\Entity\Landinspektoer
    *
    * @ORM\ManyToOne(targetEntity="Landinspektoer")
    * @ORM\JoinColumns({
@@ -115,7 +115,7 @@ class Salgsomraade
   private $landinspektoer;
 
   /**
-   * @var \Delomraade
+   * @var \AppBundle\Entity\Delomraade
    *
    * @ORM\ManyToOne(targetEntity="Delomraade")
    * @ORM\JoinColumns({
@@ -125,7 +125,7 @@ class Salgsomraade
   private $delomraade;
 
   /**
-   * @var \Lokalplan
+   * @var \AppBundle\Entity\Lokalplan
    *
    * @ORM\ManyToOne(targetEntity="Lokalplan")
    * @ORM\JoinColumns({
@@ -135,7 +135,7 @@ class Salgsomraade
   private $lokalplan;
 
   /**
-   * @var \Postby
+   * @var \AppBundle\Entity\Postby
    *
    * @ORM\ManyToOne(targetEntity="Postby")
    * @ORM\JoinColumns({
@@ -143,6 +143,13 @@ class Salgsomraade
    * })
    */
   private $postby;
+
+  /**
+   * @var boolean
+   *
+   * @ORM\Column(name="annonceres", type="boolean", options={"default" = 0})
+   */
+  private $annonceres = false;
 
   /**
    * @var \CrEOF\Spatial\DBAL\Types\Geography
@@ -536,6 +543,23 @@ class Salgsomraade
   }
 
   /**
+   * @return bool
+   */
+  public function isAnnonceres(): bool
+  {
+    return $this->annonceres;
+  }
+
+  /**
+   * @param bool $annonceres
+   */
+  public function setAnnonceres(bool $annonceres)
+  {
+    $this->annonceres = $annonceres;
+  }
+
+
+  /**
    * @return \CrEOF\Spatial\DBAL\Types\Geography
    */
   public function getSpGeometry()
@@ -554,7 +578,7 @@ class Salgsomraade
   /**
    * @return int
    */
-  public function getSrid(): int
+  public function getSrid()
   {
     return $this->srid;
   }
@@ -567,6 +591,27 @@ class Salgsomraade
     $this->srid = $srid;
   }
 
+  /**
+   * Get the spatial data as an array.
+   *
+   * @return null|array
+   *   If spatial data exists on the entity array is returned else null.
+   */
+  public function getSpGeometryArray()
+  {
+    if ($this->getSpGeometry()) {
+      $json['type'] = $this->getSpGeometry()->getType();
+      $json['coordinates'] = $this->getSpGeometry()->toArray();
+
+      return $json;
+    }
+
+    return NULL;
+  }
+
+  /**
+   * @return string
+   */
   public function __toString()
   {
     return $this->titel;

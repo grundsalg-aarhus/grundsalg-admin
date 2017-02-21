@@ -37,7 +37,7 @@
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.salgstype'|trans, 'salgstype') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.auktionstartdato'|trans, 'auktionstartdato') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.auktionslutdato'|trans, 'auktionslutdato') }}</span></div></th>                
-                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.annonceresej'|trans, 'annonceresej') }}</span></div></th>                
+                <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.annonceres'|trans, 'annonceres') }}</span></div></th>
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.datoannonce'|trans, 'datoannonce') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.datoannonce1'|trans, 'datoannonce1') }}</span></div></th>                
                 <th class="rotate"><div><span>{{ knp_pagination_sortable(pagination, 'grund.tilsluttet'|trans, 'tilsluttet') }}</span></div></th>                
@@ -114,7 +114,7 @@
                     <td>{{ grund.salgstype }}</td>
                     <td>{% if grund.auktionstartdato %}{{ grund.auktionstartdato|date('d/m Y') }}{% endif %}</td>
                     <td>{% if grund.auktionslutdato %}{{ grund.auktionslutdato|date('d/m Y') }}{% endif %}</td>
-                    <td>{{ grund.annonceresej }}</td>
+                    <td>{{ grund.annonceres }}</td>
                     <td>{% if grund.datoannonce %}{{ grund.datoannonce|date('d/m Y') }}{% endif %}</td>
                     <td>{% if grund.datoannonce1 %}{{ grund.datoannonce1|date('d/m Y') }}{% endif %}</td>
                     <td>{{ grund.tilsluttet }}</td>
