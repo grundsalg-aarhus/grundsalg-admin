@@ -102,6 +102,7 @@ class ApiController extends Controller {
       'postalCode' => $area->getPostby() ? $area->getPostby()->getPostalcode() : null,
       'geometry' => $area->getSpGeometryArray(),
       'srid' => $area->getSrid(),
+      'publish' => $area->isAnnonceres(),
     ];
 
     $response = $this->json($data);
