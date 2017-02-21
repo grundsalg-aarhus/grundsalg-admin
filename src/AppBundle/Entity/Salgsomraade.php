@@ -145,6 +145,13 @@ class Salgsomraade
   private $postby;
 
   /**
+   * @var boolean
+   *
+   * @ORM\Column(name="annonceres", type="boolean", options={"default" = 0})
+   */
+  private $annonceres = false;
+
+  /**
    * @var \CrEOF\Spatial\DBAL\Types\Geography
    *
    * @ORM\Column(name="SP_GEOMETRY", type="geometry", nullable=true)
@@ -534,6 +541,23 @@ class Salgsomraade
   {
     return $this->postby;
   }
+
+  /**
+   * @return bool
+   */
+  public function isAnnonceres(): bool
+  {
+    return $this->annonceres;
+  }
+
+  /**
+   * @param bool $annonceres
+   */
+  public function setAnnonceres(bool $annonceres)
+  {
+    $this->annonceres = $annonceres;
+  }
+
 
   /**
    * @return \CrEOF\Spatial\DBAL\Types\Geography

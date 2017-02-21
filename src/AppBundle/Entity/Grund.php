@@ -143,9 +143,9 @@ class Grund {
   /**
    * @var boolean
    *
-   * @ORM\Column(name="annonceresEj", type="boolean", nullable=true)
+   * @ORM\Column(name="annonceres", type="boolean", nullable=true)
    */
-  private $annonceresej;
+  private $annonceres;
 
   /**
    * @var \DateTime
@@ -930,25 +930,19 @@ class Grund {
   }
 
   /**
-   * Set annonceresej
-   *
-   * @param string $annonceresej
-   *
-   * @return Grund
+   * @return bool
    */
-  public function setAnnonceresej($annonceresej) {
-    $this->annonceresej = $annonceresej;
-
-    return $this;
+  public function isAnnonceres(): bool
+  {
+    return $this->annonceres;
   }
 
   /**
-   * Get annonceresej
-   *
-   * @return string
+   * @param bool $annonceres
    */
-  public function getAnnonceresej() {
-    return $this->annonceresej;
+  public function setAnnonceres(bool $annonceres)
+  {
+    $this->annonceres = $annonceres;
   }
 
   /**

@@ -19,7 +19,7 @@ class GrundRepository extends EntityRepository
 
     $qb->select('g')
         ->from('AppBundle:Grund', 'g')
-        ->where('g.annonceresej != 1')
+        ->where('g.annonceres = 1')
         ->andWhere('g.datoannonce < :now')
         ->andWhere('g.sp_geometry IS NOT NULL')
         ->addOrderBy('g.vej', 'ASC')

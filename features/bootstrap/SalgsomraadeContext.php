@@ -26,7 +26,7 @@ use CrEOF\Geo\WKT\Parser as WKTStringParser;
 /**
  * Defines user features
  */
-class GrundContext extends BaseContext implements Context, KernelAwareContext
+class SalgsomraadeContext extends BaseContext implements Context, KernelAwareContext
 {
   private $kernel;
   private $container;
@@ -65,68 +65,69 @@ class GrundContext extends BaseContext implements Context, KernelAwareContext
   }
 
   /**
-   * @Given the following grunde exist:
+   * @Given the following salgsomraader exist:
    */
-  public function theFollowingGrundeExist(TableNode $table)
+  public function theFollowingSalgsomraaderExist(TableNode $table)
   {
-    $salgsomraader = array();
+
+    $postBy = new \AppBundle\Entity\Postby();
+    $postBy->setCity('Malling');
+    $postBy->setPostalcode(8340);
+    $postBy->setCreatedAt(new DateTime());
+    $postBy->setUpdatedAt(new DateTime());
+
+    $this->manager->persist($postBy);
 
     foreach ($table->getHash() as $row) {
-      $grund = new \AppBundle\Entity\Grund();
 
-      if(array_key_exists($row['Salgsomraade'], $salgsomraader)) {
-        $salgsomraade = $salgsomraader[$row['Salgsomraade']];
-      } else {
-        $salgsomraade = new \AppBundle\Entity\Salgsomraade();
-        $salgsomraade->setTitel($row['Salgsomraade']);
-        $salgsomraade->setNr(1);
-        $salgsomraade->setType("test");
-        $salgsomraade->setMatrikkel1("M1");
-        $salgsomraade->setMatrikkel2("M2");
-        $salgsomraade->setEjerlav("Ejerlav1");
-        $salgsomraade->setVej("Test");
-        $salgsomraade->setGisurl("http://whatever");
-        $salgsomraade->setTilsluttet("Tilsluttet");
-        $salgsomraade->setSagsnr(4);
-        $salgsomraade->setLploebenummer(4);
-        $salgsomraade->setCreatedAt(new DateTime());
-        $salgsomraade->setUpdatedAt(new DateTime());
+//      $data = [
+//        'id' => $area->getId(),
+//        'type' => $area->getType(),
+//        'title' => $area->getTitel(),
+//        'vej' => $area->getVej(),
+//        'city' => $area->getPostby() ? $area->getPostby()->getCity() : null,
+//        'postalCode' => $area->getPostby() ? $area->getPostby()->getPostalcode() : null,
+//        'geometry' => $area->getSpGeometryArray(),
+//        'srid' => $area->getSrid(),
+//      ];
 
-        $salgsomraader[$row['Salgsomraade']] = $salgsomraade;
-        $this->manager->persist($salgsomraade);
-      }
+      $salgsomraade = new \AppBundle\Entity\Salgsomraade();
+      $salgsomraade->setType($row['Type']);
+      $salgsomraade->setTitel($row['Titel']);
+      $salgsomraade->setVej($row['Vej']);
+      $salgsomraade->setAnnonceres($row['Annonceres']);
+      $salgsomraade->setPostby($postBy);
 
-      $grund->setVej($row['Vej']);
-      $grund->setHusnummer($row['Husnummer']);
-      $grund->setBogstav($row['Bogstav']);
+      // Defaults
+      $salgsomraade->setNr(1);
+      $salgsomraade->setLploebenummer(1);
 
-      $polygon = $this->hydrateWKT($row['geometry']);
-      $grund->setSpGeometry($polygon);
+      // @TODO Add geomatry to omraade
+//      $point = $this->hydrateWKT($row['geometry'], $row['srid']);
+//      $salgsomraade->setSpGeometry($point);
+//      $salgsomraade->setSrid($row['srid']);
 
-      $grund->setAnnonceres($row['Annonceres']);
-      $grund->setDatoannonce(new DateTime($row['DatoAnnonce']));
+      $salgsomraade->setCreatedAt(new DateTime());
+      $salgsomraade->setUpdatedAt(new DateTime());
 
-      $grund->setSalgsomraade($salgsomraade);
+      $this->manager->persist($salgsomraade);
 
-      $grund->setCreatedAt(new DateTime());
-      $grund->setUpdatedAt(new DateTime());
-
-      $this->manager->persist($grund);
     }
 
     $this->manager->flush();
 
   }
 
-  private function hydrateWKT($value)
+  private function hydrateWKT($value, $srid)
   {
     $parser = new WKTStringParser($value);
-    $value  = $parser->parse();
+    $value = $parser->parse();
+    $value['srid'] = $srid;
 
-    $typeName  = strtoupper($value['type']);
+    $typeName = strtoupper($value['type']);
     $constName = sprintf('CrEOF\Spatial\PHP\Types\Geometry\GeometryInterface::%s', $typeName);
 
-    if (! defined($constName)) {
+    if (!defined($constName)) {
       throw new InvalidValueException(sprintf('Unsupported Geography type "%s".', $typeName));
     }
 
@@ -135,9 +136,8 @@ class GrundContext extends BaseContext implements Context, KernelAwareContext
       throw new InvalidValueException(sprintf('Unsupported Geography type "%s".', $typeName));
     }
 
-    return new $class($value['value'], $value['srid']);
+    return new $class($value['value'], $srid);
   }
-
 
 
 }
