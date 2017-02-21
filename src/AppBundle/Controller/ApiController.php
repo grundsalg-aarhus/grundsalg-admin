@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Grund;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -12,6 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ApiController extends Controller {
   /**
+   * @TODO: Missing documentation!
+   *
    * @Route("/udstykning/{udstykningsId}/grunde/{format}", name="pub_api_grunde")
    */
   public function grundeAction(Request $request, $udstykningsId, $format = 'drupal_api') {
@@ -84,15 +87,22 @@ class ApiController extends Controller {
   }
 
   /**
+   * Returns JSON with information about a "Salgsomraad".
+   *
+   * @param Request $request
+   *   Symfony request object.
+   * @param Int $udstykningsId
+   *   The id for the area to load.
+   *
+   * @return JsonResponse
+   *   JSON encode symfony response object.
+   *
    * @Route("/udstykning/{udstykningsId}", name="pub_api_salgsomraade")
    */
   public function salgsomraadeAction(Request $request, $udstykningsId) {
     $em = $this->getDoctrine()->getManager();
     $area = $em->getRepository('AppBundle:Salgsomraade')->findOneById($udstykningsId);
 
-    /**
-     * @TODO: Add status to set published state.
-     */
     $data = [
       'id' => $area->getId(),
       'type' => $area->getType(),
