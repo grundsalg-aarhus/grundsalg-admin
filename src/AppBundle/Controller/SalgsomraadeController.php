@@ -80,7 +80,6 @@ class SalgsomraadeController extends BaseController {
       $em->persist($salgsomraade);
       $em->flush();
 
-      // @TODO: Call service to send data to web page.
       $this->container->get('grundsalg.communication')->saveSalgsomraade($salgsomraade);
 
       return $this->redirectToRoute('salgsomraade_show', array('id' => $salgsomraade->getId()));
@@ -128,7 +127,6 @@ class SalgsomraadeController extends BaseController {
       $em->persist($salgsomraade);
       $em->flush();
 
-      // @TODO: Call service to send data to web page.
       $this->container->get('grundsalg.communication')->saveSalgsomraade($salgsomraade);
 
       return $this->redirectToRoute('salgsomraade_edit', array('id' => $salgsomraade->getId()));
