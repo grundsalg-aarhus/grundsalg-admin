@@ -168,8 +168,8 @@ class Salgsomraade
   /**
    * @var string
    *
-   * @Note: This variable may be need by the remote MapInfo system. Hence it's
-   *        here and should not be removed.
+   * This variable may be need by the remote MapInfo system. Hence it's here
+   * and should not be removed.
    *
    * @ORM\Column(name="MI_STYLE", type="string", length=255, nullable=true)
    */
