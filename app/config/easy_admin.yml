@@ -1,14 +1,15 @@
 easy_admin:
     site_name: 'Arealudvikling Aarhus'
+#    site_name: '<img src="/logos/symfony_white_01.png" /> Arealudvikling Aarhus'
 
     list:
-        max_results: 30000
+        max_results: 100
 
     formats:
-          date:     'd/m/Y'
-          time:     'H:i'
-          datetime: 'd/m/Y H:i:s'
-#        number: '%.2f'
+        date:     'd/m/Y'
+        time:     'H:i'
+        datetime: 'd/m/Y H:i:s'
+#        number: '%.0f'
 
     design:
         brand_color: '#157fcc'
@@ -21,57 +22,45 @@ easy_admin:
             - label: 'Parcelhusgrunde'
               icon: 'home'
               children:
-                - { entity: 'VisParcelhusgrunde', label: 'Vis Parcelhusgrunde' }
+                - { entity: 'vis_parcelhusgrunde', label: 'Vis Parcelhusgrunde' }
+                - { entity: 'parcelhusgrunde', label: 'Alle Parcelhusgrunde' }
+
+
+    # http://stackoverflow.com/questions/8466223/reuse-a-block-of-code-in-yaml
 
     entities:
-        VisParcelhusgrunde:
+        parcelhusgrunde:
             class: AppBundle\Entity\Grund
             controller: AppBundle\Controller\GrundController
             templates:
                 # Twig namespace template syntax
                 list: '@App/EasyAdmin/list.html.twig'
+                edit: '@App/EasyAdmin/grund.html.twig'
             list:
+                title: 'Parcelhusgrunde'
                 sort: postby
-                dql_filter: entity.grundtype = 'Parcelhusgrund' AND (entity.status='Ledig' OR entity.status='Annonceret') and entity.salgstatus= 'Ledig'
+                dql_filter: entity.grundtype = 'Parcelhusgrund'
+#                dql_filter: entity.grundtype = 'Parcelhusgrund' AND (entity.status='Ledig' OR entity.status='Annonceret') and entity.salgstatus= 'Ledig'
                 fields:
                     - vej
-                    - {property: husnummer, css_class: 'text-right'}
+                    - {property: husnummer, css_class: 'text-right', format: '%.0f' }
                     - {property: postby.postalcode, css_class: 'text-right'}
                     - postby.city
+                    - { property: 'annonceres' }
                     - salgsomraade.titel
                     - salgsomraade.lokalplan.nr
                     - salgstype
-                    - {property: areal, css_class: 'text-right'}
-                    - {property: pris, css_class: 'text-right'}
+                    - {property: areal, css_class: 'text-right', format: '%.0f' }
+                    - {property: pris, css_class: 'text-right' }
+            edit:
+                title: 'Ny Grund'
 
             form:
-                fields:
-                    - { type: 'group', css_class: 'col-sm-6', label: 'Adresse' }
-                    - { property: 'gid', readonly: true, type_options: { disabled: true } }
-                    - { type: 'section', label: 'Matrikel' }
-                    - { property: 'mnr' }
-                    - { property: 'mnr2' }
-                    - { property: 'delareal' }
-                    - { property: 'ejerlav' }
-                    - { type: 'section', label: 'Adresse' }
-                    - { property: 'vej' }
-                    - { property: 'husnummer' }
-                    - { property: 'bogstav' }
-                    - { property: 'postby' }
-                    - { property: 'lokalsamfund' }
-                    - { property: 'urlgis' }
+                fields: '%fields%'
 
-                    - { type: 'group', css_class: 'col-sm-6', label: 'Status/Type' }
-                    - { property: 'grundtype' }
-                    - { property: 'status', readonly: true, type_options: { disabled: true } }
-                    - { property: 'salgstype' }
-                    - { property: 'tilsluttet' }
+        vis_parcelhusgrunde:
+            class: AppBundle\Entity\Grund
+            controller: AppBundle\Controller\GrundController
 
-                    - { type: 'group', css_class: 'col-sm-6', label: 'Annonceres' }
-                    - { property: 'annonceresej' }
-                    - { property: 'datoAnnonce', type: 'date', type_options: { widget: 'single_text' } }
-                    - { property: 'datoAnnonce1', type: 'date', type_options: { widget: 'single_text' } }
-
-                    - { type: 'group', css_class: 'col-sm-6', label: 'Salgsområde' }
-                    - { property: 'salgsomraade'}
-#                    - { property: salgsomraade.nr}
+            form:
+                fields: '%fields%'
