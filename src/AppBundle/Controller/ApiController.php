@@ -44,7 +44,7 @@ class ApiController extends Controller {
 
         $properties['id'] = $grund->getId();
         $properties['address'] = trim($grund->getVej() . ' ' . $grund->getHusnummer() . $grund->getBogstav());
-        $properties['status'] = $grund->getStatus();
+        $properties['status'] = $this->getPublicStatus($grund);
         $properties['area_m2'] = $grund->getAreal();
         // @TODO which fields to map for prices?
         $properties['minimum_price'] = $grund->getMinbud();
@@ -68,7 +68,7 @@ class ApiController extends Controller {
         $data = array();
         $data['id'] = $grund->getId();
         $data['address'] = trim($grund->getVej() . ' ' . $grund->getHusnummer() . $grund->getBogstav());
-        $data['status'] = $grund->getStatus();
+        $data['status'] = $this->getPublicStatus($grund);
         $data['area_m2'] = $grund->getAreal();
         // @TODO which fields to map for prices?
         $data['minimum_price'] = $grund->getMinbud();
@@ -119,5 +119,74 @@ class ApiController extends Controller {
     $response->headers->set('Access-Control-Allow-Origin', '*');
 
     return $response;
+  }
+
+  /**
+   * Get the publicly exposed sales status based on a combination
+   * of the internal fields 'status' and 'salgsstatus'.
+   *
+   * Domain rules (status / salgStatus):
+   *    * / Accepteret = solgt
+   *    Fremtidig / Ledig = Fremtidig
+   *    Ledig/Ledig = Ledig
+   *    Solgt / Ledig = Ledig
+   *    Ledig/ Reserveret = Reserveret
+   *    Ledig/ Skøde rekvireret = Solgt
+   *    Auktion slut / Skøde rekvireret = Solgt
+   *    Ledig / Solgt = Solgt
+   *    Auktion slut / Solgt = Solgt
+   *    Annonceret / Ledig = i udbud.
+   *
+   * Valid return values are {"Solgt", "Fremtidig", "Ledig", "Reserveret", "I udbud"}
+   *
+   * @param $grund
+   * @return string
+   */
+  private function getPublicStatus(Grund $grund) {
+    $status = $grund->getStatus();
+    $salgStatus = $grund->getSalgstatus();
+
+    if($salgStatus === 'Accepteret') {
+      return 'Solgt';
+    }
+
+    if($status === 'Fremtidig' && $salgStatus === 'Ledig') {
+      return 'Fremtidig';
+    }
+
+    if($status === 'Ledig' && $salgStatus === 'Ledig') {
+      return 'Ledig';
+    }
+
+    if($status === 'Solgt' && $salgStatus === 'Ledig') {
+      return 'Ledig';
+    }
+
+    if($status === 'Ledig' && $salgStatus === 'Reserveret') {
+      return 'Reserveret';
+    }
+
+    if($status === 'Ledig' && $salgStatus === 'Skøde rekvireret') {
+      return 'Solgt';
+    }
+
+    if($status === 'Auktion slut' && $salgStatus === 'Skøde rekvireret') {
+      return 'Solgt';
+    }
+
+    if($status === 'Ledig' && $salgStatus == 'Solgt') {
+      return 'Solgt';
+    }
+
+    if($status === 'Auktion slut' && $salgStatus === 'Solgt') {
+      return 'Solgt';
+    }
+
+    if($status === 'Annonceret' && $salgStatus === 'Ledig') {
+      return 'I udbud';
+    }
+
+    return 'Solgt';
+
   }
 }
