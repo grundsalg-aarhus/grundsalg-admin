@@ -19,3 +19,14 @@ easy_admin:
 
             edit:
                 title: 'Rediger Salgsområde'
+
+            form:
+                fields:
+                    - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Lokalplan' }
+
+
+                    - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Redigeret' }
+                    - { property: 'createdBy', type: 'text', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true } }
+                    - { property: 'updatedBy', type: 'text', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true } }
+                    - { property: 'createdAt', type: 'date', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true } }
+                    - { property: 'updatedAt', type: 'date', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true } }
