@@ -8,8 +8,8 @@ easy_admin:
             controller: AppBundle\Controller\GrundController
             templates: &default_parcelhus_templates
                 # Twig namespace template syntax
-                list: '@App/EasyAdmin/list.html.twig'
-                edit: '@App/EasyAdmin/grund.html.twig'
+                list: 'easy_admin/list.html.twig'
+                edit: 'easy_admin/grund.html.twig'
             list: &parcelhus_default_list
                 title: 'Alle Parcelhusgrunde'
                 sort: postby

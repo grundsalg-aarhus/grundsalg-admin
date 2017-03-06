@@ -4,7 +4,7 @@ easy_admin:
         color_scheme: 'light'
 
         templates:
-            layout: '@App/EasyAdmin/layout.html.twig'
+            layout: 'easy_admin/layout.html.twig'
 
         menu:
             - label: 'Parcelhusgrunde'
@@ -21,7 +21,7 @@ easy_admin:
                 - { entity: 'parcelhusgrunde', label: 'Alle Parcelhusgrunde' }
                 - { entity: 'opfoelgning_parcelhusgrunde', label: 'Opfølgning' }
             - label: 'Lokalplaner m.v.'
-              icon: 'home'
+              icon: 'map'
               children:
                 - { entity: 'lokalplaner', label: 'Lokalplaner' }
                 - { entity: 'delomraader', label: 'Delområder' }
