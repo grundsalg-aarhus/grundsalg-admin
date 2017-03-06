@@ -1,0 +1,21 @@
+easy_admin:
+
+    # http://stackoverflow.com/questions/8466223/reuse-a-block-of-code-in-yaml
+
+    entities:
+        salgsomraader:
+            class: AppBundle\Entity\Salgsomraade
+            controller:
+            list:
+                title: 'Salgsområder'
+                sort: ['titel', 'ASC']
+                actions: ['edit', 'search', '-delete']
+                fields:
+                    - {property: kpl1234Combined, label: 'KPL'}
+                    - {property: o123Combined, label: 'LP-område'}
+                    - {property: nr, label: 'SONr'}
+                    - type
+                    - titel
+
+            edit:
+                title: 'Rediger Salgsområde'

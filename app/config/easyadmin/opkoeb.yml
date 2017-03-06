@@ -1,0 +1,39 @@
+easy_admin:
+
+    # http://stackoverflow.com/questions/8466223/reuse-a-block-of-code-in-yaml
+
+    entities:
+        opkoeb:
+            class: AppBundle\Entity\Opkoeb
+            controller:
+            list:
+                title: 'Opkøb'
+                sort: ['id', 'ASC']
+                actions: ['edit', 'search', '-delete']
+                fields:
+                    - lokalplan.nr
+                    - matrikel
+                    - ejerlav
+                    - { property: m2, label: 'Størrelse', css_class: 'text-right', format: '%.0f' }
+                    - { property: opkoebdato, label: 'Opkøb dato' }
+                    - { property: pris, label: 'Pris/m2', css_class: 'text-right' }
+                    - { property: procentaflp, label: '% af LP', css_class: 'text-right' }
+                    - { property: bemaerkning, label: 'Bemærkning' }
+
+            edit:
+                title: 'Rediger Opkøb'
+
+            form:
+                fields:
+                    - { type: 'group', css_class: 'col-sm-12', label: 'Opkøb' }
+                    - { property: matrik1, label: 'Matrikel 1' }
+                    - { property: matrik2, label: 'Matrikel 2' }
+                    - ejerlav
+                    - { property: m2, label: 'Størrelse' }
+                    - { property: bemaerkning, label: 'Bemærkning' }
+                    - { property: 'opkoebdato', type: 'date', label: 'Opkøbt dato', type_options: { widget: 'single_text' } }
+                    - { property: pris, label: 'Pris/m2' }
+                    - { property: procentaflp, label: '% af LP', readonly: true, type_options: { disabled: true } }
+
+                    - { type: 'group', css_class: 'col-sm-12', label: 'Lokalplan' }
+                    - { property: 'lokalplan'}

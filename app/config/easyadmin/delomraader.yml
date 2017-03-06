@@ -1,0 +1,21 @@
+easy_admin:
+
+    # http://stackoverflow.com/questions/8466223/reuse-a-block-of-code-in-yaml
+
+    entities:
+        delomraader:
+            class: AppBundle\Entity\Delomraade
+            controller:
+            list:
+                title: 'Delområder'
+                sort: ['id', 'ASC']
+                actions: ['edit', 'search', '-delete']
+                fields:
+                    - {property: kpl1234Combined, label: 'KPL'}
+                    - {property: o123Combined, label: 'Område'}
+                    - anvendelse
+                    - mulighedfor
+                    - lokalplan
+
+            edit:
+                title: 'Rediger Delområde'

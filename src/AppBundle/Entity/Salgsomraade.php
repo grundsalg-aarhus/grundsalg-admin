@@ -613,6 +613,26 @@ class Salgsomraade
   }
 
   /**
+   * Get combined o1, o2, o3 for list display
+   *
+   * @return string
+   */
+  public function getO123Combined()
+  {
+    return empty($this->getDelomraade()) ? '' :  $this->getDelomraade()->getO123Combined();
+  }
+
+  /**
+   * Get combined kpl1 - kpl 4 for list display
+   *
+   * @return string
+   */
+  public function getKpl1234Combined()
+  {
+    return empty($this->getDelomraade()) ? '' : $this->getDelomraade()->getKpl1234Combined();
+  }
+
+  /**
    * @return string
    */
   public function __toString()

@@ -1,0 +1,29 @@
+easy_admin:
+    design:
+        brand_color: '#157fcc'
+        color_scheme: 'light'
+
+        templates:
+            layout: '@App/EasyAdmin/layout.html.twig'
+
+        menu:
+            - label: 'Parcelhusgrunde'
+              icon: 'home'
+              children:
+                - { entity: 'vis_parcelhusgrunde', label: 'Vis Parcelhusgrunde' }
+                - { entity: 'fremtidige_parcelhusgrunde', label: 'Fremtidige Parcelhusgrunde' }
+                - { entity: 'annoncerede_parcelhusgrunde', label: 'Annoncerede Parcelhusgrunde' }
+                - { entity: 'auktionslut_parcelhusgrunde', label: 'Auktion Slut Parcelhusgrunde' }
+                - { entity: 'ledige_parcelhusgrunde', label: 'Ledige Parcelhusgrunde' }
+                - { entity: 'tilbud_parcelhusgrunde', label: 'Tilbud Parcelhusgrunde' }
+                - { entity: 'accepterede_parcelhusgrunde', label: 'Accepterede Parcelhusgrunde' }
+                - { entity: 'betalte_parcelhusgrunde', label: 'Betalte Parcelhusgrunde' }
+                - { entity: 'parcelhusgrunde', label: 'Alle Parcelhusgrunde' }
+                - { entity: 'opfoelgning_parcelhusgrunde', label: 'Opfølgning' }
+            - label: 'Lokalplaner m.v.'
+              icon: 'home'
+              children:
+                - { entity: 'lokalplaner', label: 'Lokalplaner' }
+                - { entity: 'delomraader', label: 'Delområder' }
+                - { entity: 'salgsomraader', label: 'Salgsområder' }
+                - { entity: 'opkoeb', label: 'Opkøb' }

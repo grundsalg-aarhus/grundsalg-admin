@@ -89,7 +89,7 @@ class Lokalplan
   /**
    * @var string
    *
-   * @ORM\Column(name="forbrugsAndel", type="text", nullable=false)
+   * @ORM\Column(name="forbrugsAndel", type="float", precision=18, scale=12, nullable=false)
    */
   private $forbrugsandel;
 
@@ -322,6 +322,6 @@ class Lokalplan
 
   public function __toString()
   {
-    return $this->titel;
+    return $this->getNr() . ' - ' . $this->getTitel();
   }
 }

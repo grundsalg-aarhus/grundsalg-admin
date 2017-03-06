@@ -1,0 +1,22 @@
+easy_admin:
+
+    # http://stackoverflow.com/questions/8466223/reuse-a-block-of-code-in-yaml
+
+    entities:
+        lokalplaner:
+            class: AppBundle\Entity\Lokalplan
+            controller:
+            list:
+                title: 'Lokalplaner'
+                sort: ['titel', 'ASC']
+                actions: ['edit', 'search', '-delete']
+                fields:
+                    - {property: nr, label: 'LPNr'}
+                    - titel
+                    - lokalsamfund
+                    - {property: samletareal, css_class: 'text-right', format: '%.0f', label: 'Samlet Areal' }
+                    - {property: salgbartareal, css_class: 'text-right', format: '%.0f', label: 'Salgbart Areal' }
+                    - {property: forbrugsandel, css_class: 'text-right' }
+
+            edit:
+                title: 'Rediger Lokalplan'
