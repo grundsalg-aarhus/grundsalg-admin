@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Grund;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -12,6 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ApiController extends Controller {
   /**
+   * @TODO: Missing documentation!
+   *
    * @Route("/udstykning/{udstykningsId}/grunde/{format}", name="pub_api_grunde")
    */
   public function grundeAction(Request $request, $udstykningsId, $format = 'drupal_api') {
@@ -41,7 +44,7 @@ class ApiController extends Controller {
 
         $properties['id'] = $grund->getId();
         $properties['address'] = trim($grund->getVej() . ' ' . $grund->getHusnummer() . $grund->getBogstav());
-        $properties['status'] = $grund->getStatus();
+        $properties['status'] = $this->getPublicStatus($grund);
         $properties['area_m2'] = $grund->getAreal();
         // @TODO which fields to map for prices?
         $properties['minimum_price'] = $grund->getMinbud();
@@ -65,7 +68,7 @@ class ApiController extends Controller {
         $data = array();
         $data['id'] = $grund->getId();
         $data['address'] = trim($grund->getVej() . ' ' . $grund->getHusnummer() . $grund->getBogstav());
-        $data['status'] = $grund->getStatus();
+        $data['status'] = $this->getPublicStatus($grund);
         $data['area_m2'] = $grund->getAreal();
         // @TODO which fields to map for prices?
         $data['minimum_price'] = $grund->getMinbud();
@@ -84,15 +87,22 @@ class ApiController extends Controller {
   }
 
   /**
+   * Returns JSON with information about a "Salgsomraad".
+   *
+   * @param Request $request
+   *   Symfony request object.
+   * @param Int $udstykningsId
+   *   The id for the area to load.
+   *
+   * @return JsonResponse
+   *   JSON encode symfony response object.
+   *
    * @Route("/udstykning/{udstykningsId}", name="pub_api_salgsomraade")
    */
   public function salgsomraadeAction(Request $request, $udstykningsId) {
     $em = $this->getDoctrine()->getManager();
     $area = $em->getRepository('AppBundle:Salgsomraade')->findOneById($udstykningsId);
 
-    /**
-     * @TODO: Add status to set published state.
-     */
     $data = [
       'id' => $area->getId(),
       'type' => $area->getType(),
@@ -102,11 +112,81 @@ class ApiController extends Controller {
       'postalCode' => $area->getPostby() ? $area->getPostby()->getPostalcode() : null,
       'geometry' => $area->getSpGeometryArray(),
       'srid' => $area->getSrid(),
+      'publish' => $area->isAnnonceres(),
     ];
 
     $response = $this->json($data);
     $response->headers->set('Access-Control-Allow-Origin', '*');
 
     return $response;
+  }
+
+  /**
+   * Get the publicly exposed sales status based on a combination
+   * of the internal fields 'status' and 'salgsstatus'.
+   *
+   * Domain rules (status / salgStatus):
+   *    * / Accepteret = solgt
+   *    Fremtidig / Ledig = Fremtidig
+   *    Ledig/Ledig = Ledig
+   *    Solgt / Ledig = Ledig
+   *    Ledig/ Reserveret = Reserveret
+   *    Ledig/ Skøde rekvireret = Solgt
+   *    Auktion slut / Skøde rekvireret = Solgt
+   *    Ledig / Solgt = Solgt
+   *    Auktion slut / Solgt = Solgt
+   *    Annonceret / Ledig = i udbud.
+   *
+   * Valid return values are {"Solgt", "Fremtidig", "Ledig", "Reserveret", "I udbud"}
+   *
+   * @param $grund
+   * @return string
+   */
+  private function getPublicStatus(Grund $grund) {
+    $status = $grund->getStatus();
+    $salgStatus = $grund->getSalgstatus();
+
+    if($salgStatus === 'Accepteret') {
+      return 'Solgt';
+    }
+
+    if($status === 'Fremtidig' && $salgStatus === 'Ledig') {
+      return 'Fremtidig';
+    }
+
+    if($status === 'Ledig' && $salgStatus === 'Ledig') {
+      return 'Ledig';
+    }
+
+    if($status === 'Solgt' && $salgStatus === 'Ledig') {
+      return 'Ledig';
+    }
+
+    if($status === 'Ledig' && $salgStatus === 'Reserveret') {
+      return 'Reserveret';
+    }
+
+    if($status === 'Ledig' && $salgStatus === 'Skøde rekvireret') {
+      return 'Solgt';
+    }
+
+    if($status === 'Auktion slut' && $salgStatus === 'Skøde rekvireret') {
+      return 'Solgt';
+    }
+
+    if($status === 'Ledig' && $salgStatus == 'Solgt') {
+      return 'Solgt';
+    }
+
+    if($status === 'Auktion slut' && $salgStatus === 'Solgt') {
+      return 'Solgt';
+    }
+
+    if($status === 'Annonceret' && $salgStatus === 'Ledig') {
+      return 'I udbud';
+    }
+
+    return 'Solgt';
+
   }
 }

@@ -14,6 +14,7 @@ class AppKernel extends Kernel
       new Symfony\Bundle\MonologBundle\MonologBundle(),
       new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
       new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+      new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
       new FOS\UserBundle\FOSUserBundle(),
       new WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),
@@ -28,7 +29,6 @@ class AppKernel extends Kernel
     ];
 
     if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
-      $bundles[] = new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle();
       $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
       $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
       $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
