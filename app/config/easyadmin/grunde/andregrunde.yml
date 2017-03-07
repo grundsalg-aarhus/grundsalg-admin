@@ -14,7 +14,8 @@ easy_admin:
                 title: 'Alle Grunde'
                 sort: postby
                 dql_filter: entity.grundtype = 'Andre'
-                actions: ['edit', 'search', '-delete']
+                actions:
+                    <<: *default_list_actions
                 fields:
                     - vej
                     - {property: husnummer, css_class: 'text-right', format: '%.0f' }

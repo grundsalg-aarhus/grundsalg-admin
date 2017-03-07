@@ -6,7 +6,8 @@ easy_admin:
             list:
                 title: 'Opkøb'
                 sort: ['id', 'ASC']
-                actions: ['edit', 'search', '-delete']
+                actions:
+                    <<: *default_list_actions
                 fields:
                     - lokalplan.nr
                     - matrikel

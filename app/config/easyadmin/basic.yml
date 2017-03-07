@@ -4,6 +4,10 @@ easy_admin:
 
     list:
         max_results: 100
+        actions: &default_list_actions
+            - { name: edit, css_class: 'btn btn-default' }
+            - { name: search }
+            - { name: -delete }
 
     formats:
         date:     'd/m/Y'

@@ -6,7 +6,8 @@ easy_admin:
             list:
                 title: 'Brugere'
                 sort: ['name', 'ASC']
-                actions: ['edit', 'search', '-delete']
+                actions:
+                    <<: *default_list_actions
                 fields:
                     - { property: enabled, label: 'Aktiv' }
 #                    - { property: number, label: 'Nr.', css_class: 'text-right', format: '%.0f' }
