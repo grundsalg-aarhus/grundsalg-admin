@@ -2,6 +2,8 @@ easy_admin:
     design:
         brand_color: '#157fcc'
         color_scheme: 'light'
+        form_theme: 'easy_admin/form/bootstrap_3_horizontal_layout.html.twig'
+#        form_theme: 'easy_admin/form/bootstrap_3_layout.html.twig'
 
         templates:
             layout: 'easy_admin/layout.html.twig'
@@ -20,6 +22,45 @@ easy_admin:
                 - { entity: 'betalte_parcelhusgrunde', label: 'Betalte Parcelhusgrunde' }
                 - { entity: 'parcelhusgrunde', label: 'Alle Parcelhusgrunde' }
                 - { entity: 'opfoelgning_parcelhusgrunde', label: 'Opfølgning' }
+            - label: 'Storparceller'
+              icon: 'sitemap'
+              children:
+                - { entity: 'vis_storparceller', label: 'Vis Storparceller' }
+                - { entity: 'fremtidige_storparceller', label: 'Fremtidige Storparceller' }
+                - { entity: 'annoncerede_storparceller', label: 'Annoncerede Storparceller' }
+                - { entity: 'auktionslut_storparceller', label: 'Auktion Slut Storparceller' }
+                - { entity: 'ledige_storparceller', label: 'Ledige Storparceller' }
+                - { entity: 'tilbud_storparceller', label: 'Tilbud Storparceller' }
+                - { entity: 'accepterede_storparceller', label: 'Accepterede Storparceller' }
+                - { entity: 'betalte_storparceller', label: 'Betalte Storparceller' }
+                - { entity: 'storparceller', label: 'Alle Storparceller' }
+                - { entity: 'opfoelgning_storparceller', label: 'Opfølgning' }
+            - label: 'Erhvervsgrunde'
+              icon: 'industry'
+              children:
+                - { entity: 'vis_erhvervsgrunde', label: 'Vis Erhvervsgrunde' }
+                - { entity: 'fremtidige_erhvervsgrunde', label: 'Fremtidige Erhvervsgrunde' }
+                - { entity: 'annoncerede_erhvervsgrunde', label: 'Annoncerede Erhvervsgrunde' }
+                - { entity: 'auktionslut_erhvervsgrunde', label: 'Auktion Slut Erhvervsgrunde' }
+                - { entity: 'ledige_erhvervsgrunde', label: 'Ledige Erhvervsgrunde' }
+                - { entity: 'tilbud_erhvervsgrunde', label: 'Tilbud Erhvervsgrunde' }
+                - { entity: 'accepterede_erhvervsgrunde', label: 'Accepterede Erhvervsgrunde' }
+                - { entity: 'betalte_erhvervsgrunde', label: 'Betalte Erhvervsgrunde' }
+                - { entity: 'erhvervsgrunde', label: 'Alle Erhvervsgrunde' }
+                - { entity: 'opfoelgning_erhvervsgrunde', label: 'Opfølgning' }
+            - label: 'Andre Grunde'
+              icon: 'building'
+              children:
+                - { entity: 'vis_andregrunde', label: 'Vis Andre Grunde' }
+                - { entity: 'fremtidige_andregrunde', label: 'Fremtidige Andre Grunde' }
+                - { entity: 'annoncerede_andregrunde', label: 'Annoncerede Andre Grunde' }
+                - { entity: 'auktionslut_andregrunde', label: 'Auktion Slut Andre Grunde' }
+                - { entity: 'ledige_andregrunde', label: 'Ledige Andre Grunde' }
+                - { entity: 'tilbud_andregrunde', label: 'Tilbud Andre Grunde' }
+                - { entity: 'accepterede_andregrunde', label: 'Accepterede Andre Grunde' }
+                - { entity: 'betalte_andregrunde', label: 'Betalte Andre Grunde' }
+                - { entity: 'andregrunde', label: 'Alle Andre Grunde' }
+                - { entity: 'opfoelgning_andregrunde', label: 'Opfølgning' }
             - label: 'Lokalplaner m.v.'
               icon: 'map'
               children:

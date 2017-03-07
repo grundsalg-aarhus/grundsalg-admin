@@ -5,6 +5,9 @@ imports:
     - { resource: easyadmin/basic.yml }
     - { resource: easyadmin/design.yml }
     - { resource: easyadmin/parcelhusgrunde.yml }
+    - { resource: easyadmin/storparceller.yml }
+    - { resource: easyadmin/erhvervsgrunde.yml }
+    - { resource: easyadmin/andregrunde.yml }
     - { resource: easyadmin/salgsomraader.yml }
     - { resource: easyadmin/lokalplaner.yml }
     - { resource: easyadmin/delomraader.yml }

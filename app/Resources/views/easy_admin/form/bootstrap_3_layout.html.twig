@@ -1,0 +1,31 @@
+{% extends '@EasyAdmin/form/bootstrap_3_layout.html.twig' %}
+
+{# Rows #}
+
+{% block form_row -%}
+  {% set _field_type = easyadmin.field.fieldType|default('default') %}
+  <div class="form-group {% if (not compound or force_error|default(false)) and not valid %}has-error{% endif %} field-{{ block_prefixes|slice(-2)|first }}">
+    {% set _field_label = easyadmin.field['label']|default(null) %}
+
+    {% if easyadmin.field['label'] is not same as(false) %}
+      {{- form_label(form, _field_label, { translation_domain: easyadmin.entity.translation_domain }) -}}
+    {% endif %}
+    {{- form_widget(form) -}}
+
+    {% if _field_type in ['datetime', 'date', 'time', 'birthday'] and easyadmin.field.nullable|default(false) %}
+      <div class="nullable-control">
+        <label>
+          <input type="checkbox" {% if data is null %}checked="checked"{% endif %}>
+          {{ 'label.nullable_field'|trans({}, 'EasyAdminBundle')}}
+        </label>
+      </div>
+    {% endif %}
+
+    {{- form_errors(form) -}}
+
+    {% if easyadmin.field.help|default('') != '' %}
+      <span class="help-block"><i class="fa fa-info-circle"></i> {{ easyadmin.field.help|trans(domain = easyadmin.entity.translation_domain)|raw }}</span>
+    {% endif %}
+  </div>
+{%- endblock form_row %}
+

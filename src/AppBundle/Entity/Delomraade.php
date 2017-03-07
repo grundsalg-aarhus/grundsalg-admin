@@ -383,6 +383,6 @@ class Delomraade
 
   public function __toString()
   {
-    return $this->kpl1 . "-" . $this->kpl2 . "-" . $this->kpl3 . "-" . $this->kpl4 . " " . $this->o1 . " " . $this->o2 . " " . $this->o3;
+    return $this->getKpl1234Combined() . ' (Område: ' . $this->getO123Combined() . ')';
   }
 }
