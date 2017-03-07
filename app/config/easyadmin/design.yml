@@ -68,3 +68,10 @@ easy_admin:
                 - { entity: 'delomraader', label: 'Delområder' }
                 - { entity: 'salgsomraader', label: 'Salgsområder' }
                 - { entity: 'opkoeb', label: 'Opkøb' }
+            - label: 'Admin'
+              icon: 'wrench'
+              children:
+                - { entity: 'postby', label: 'Postnr / By' }
+                - { entity: 'landinspektoer', label: 'Landinspektør' }
+                - { entity: 'lokalsamfund', label: 'Lokalsamfund' }
+                - { entity: 'users', label: 'Brugere' }

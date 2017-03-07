@@ -4,14 +4,18 @@ imports:
     - { resource: services.yml }
     - { resource: easyadmin/basic.yml }
     - { resource: easyadmin/design.yml }
-    - { resource: easyadmin/parcelhusgrunde.yml }
-    - { resource: easyadmin/storparceller.yml }
-    - { resource: easyadmin/erhvervsgrunde.yml }
-    - { resource: easyadmin/andregrunde.yml }
-    - { resource: easyadmin/salgsomraader.yml }
-    - { resource: easyadmin/lokalplaner.yml }
-    - { resource: easyadmin/delomraader.yml }
-    - { resource: easyadmin/opkoeb.yml }
+    - { resource: easyadmin/grunde/parcelhusgrunde.yml }
+    - { resource: easyadmin/grunde/storparceller.yml }
+    - { resource: easyadmin/grunde/erhvervsgrunde.yml }
+    - { resource: easyadmin/grunde/andregrunde.yml }
+    - { resource: easyadmin/mv/salgsomraader.yml }
+    - { resource: easyadmin/mv/lokalplaner.yml }
+    - { resource: easyadmin/mv/delomraader.yml }
+    - { resource: easyadmin/mv/opkoeb.yml }
+    - { resource: easyadmin/admin/postby.yml }
+    - { resource: easyadmin/admin/landinspektoer.yml }
+    - { resource: easyadmin/admin/lokalsamfund.yml }
+    - { resource: easyadmin/admin/users.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration

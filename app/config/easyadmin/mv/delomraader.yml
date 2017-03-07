@@ -1,7 +1,4 @@
 easy_admin:
-
-    # http://stackoverflow.com/questions/8466223/reuse-a-block-of-code-in-yaml
-
     entities:
         delomraader:
             class: AppBundle\Entity\Delomraade

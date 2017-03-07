@@ -1,0 +1,27 @@
+easy_admin:
+    entities:
+        postby:
+            class: AppBundle\Entity\Postby
+            controller:
+            list:
+                title: 'Postnr. / By'
+                sort: ['postalcode', 'ASC']
+                actions: ['edit', 'search', '-delete']
+                fields:
+                    - { property: postalcode, label: 'Postnr', css_class: 'text-right', format: '%.0f' }
+                    - { property: city, label: 'By' }
+
+            edit:
+                title: 'Rediger Postnr. / By'
+
+            form:
+                fields:
+                    - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Postnr. / By' }
+                    - { property: postalcode, label: 'Postnr', css_class: 'col-sm-6' }
+                    - { property: city, label: 'By', css_class: 'col-sm-6' }
+
+                    - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Redigeret' }
+                    - { property: 'createdBy', type: 'text', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true } }
+                    - { property: 'updatedBy', type: 'text', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true } }
+                    - { property: 'createdAt', type: 'date', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true, widget: 'single_text' } }
+                    - { property: 'updatedAt', type: 'date', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true, widget: 'single_text' } }

@@ -58,7 +58,7 @@ class Landinspektoer
   /**
    * @var string
    *
-   * @ORM\Column(name="notat", type="text", nullable=false)
+   * @ORM\Column(name="notat", type="text", nullable=true)
    */
   private $notat;
 
