@@ -7,6 +7,7 @@ easy_admin:
         actions: &default_list_actions
             - { name: edit, css_class: 'btn btn-default' }
             - { name: search }
+            - { name: new, label: 'Tilføj', icon: 'plus' }
             - { name: -delete }
 
     formats:
