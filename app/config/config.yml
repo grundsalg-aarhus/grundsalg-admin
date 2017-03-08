@@ -20,7 +20,7 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: da
     grundsalg_web: %grundsalg_web_address%
 
 framework:
@@ -52,9 +52,6 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-    form_themes:
-        - AppBundle:Form:grundsalg-bootstrap.html.twig
-        - AppBundle:Form:form_div_layout.html.twig
 
     number_format:
         decimals: 2

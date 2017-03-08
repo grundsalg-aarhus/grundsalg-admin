@@ -1,0 +1,28 @@
+action:
+    delete: Slet
+    edit: Rediger
+    list: Tilbage til oversigten
+    remove_item: Slet element
+    save: Gem
+    search: Søg
+    new: Tilføj %entity_name%
+    show: Vis
+    cancel: Annuller
+
+label:
+    yes: ja
+    no: nej
+    form:
+        empty_value: (tom)
+
+label.null: '–'
+
+# Grund
+Dato annonce: Dato
+Dato annonce1: 1. Dato
+Postby.city: By
+Postby.postalcode: Postnr.
+Salgsomraade: Salgsområde
+Salgsomraade.titel: Salgsområde
+Salgsomraade.lokalplan.nr: Lokalplan
+#vis_andregrunde: Grund
