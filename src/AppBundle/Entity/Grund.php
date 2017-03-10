@@ -2198,39 +2198,7 @@ class Grund {
    * @return string
    */
   public function __toString() {
-    return $this->getVej() . ' ' . $this->getHusnummer() . $this->getBogstav() . ($this->getPostby() ? ', ' . $this->getPostby() : '');
-  }
-
-  /**
-   * @return string
-   */
-  public function getCreatedBy(): string
-  {
-    return $this->createdBy;
-  }
-
-  /**
-   * @return string
-   */
-  public function getUpdatedBy(): string
-  {
-    return $this->updatedBy;
-  }
-
-  /**
-   * @return \DateTime
-   */
-  public function getCreatedAt(): \DateTime
-  {
-    return $this->createdAt;
-  }
-
-  /**
-   * @return \DateTime
-   */
-  public function getUpdatedAt(): \DateTime
-  {
-    return $this->updatedAt;
+    return $this->getVej() . ' ' . $this->getHusnummer() . $this->getBogstav() . ($this->getZipcity() ? ', ' . $this->getZipcity() : '');
   }
 
 }

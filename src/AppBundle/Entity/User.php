@@ -33,20 +33,6 @@ class User extends BaseUser
   protected $name;
 
   /**
-   * @var \DateTime
-   * @Gedmo\Timestampable(on="create")
-   * @ORM\Column(type="datetime", nullable=true)
-   */
-  protected $createdAt;
-
-  /**
-   * @var \DateTime
-   * @Gedmo\Timestampable(on="update")
-   * @ORM\Column(type="datetime", nullable=true)
-   */
-  protected $updatedAt;
-
-  /**
    * User constructor.
    */
   public function __construct()
