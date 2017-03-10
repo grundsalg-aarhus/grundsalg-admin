@@ -5,7 +5,6 @@ easy_admin:
     entities:
         parcelhusgrunde: &parcelhusgrund_default
             class: AppBundle\Entity\Grund
-            controller: AppBundle\Controller\GrundController
             templates: &default_parcelhus_templates
                 # Twig namespace template syntax
                 list: 'easy_admin/list.html.twig'
@@ -81,7 +80,6 @@ easy_admin:
 
         vis_parcelhusgrunde:
             class: AppBundle\Entity\Grund
-            controller: AppBundle\Controller\GrundController
             templates: *default_parcelhus_templates
 
             list:
@@ -96,7 +94,6 @@ easy_admin:
 
         fremtidige_parcelhusgrunde:
             class: AppBundle\Entity\Grund
-            controller: AppBundle\Controller\GrundController
             templates: *default_parcelhus_templates
 
             list:
@@ -111,7 +108,6 @@ easy_admin:
 
         annoncerede_parcelhusgrunde:
             class: AppBundle\Entity\Grund
-            controller: AppBundle\Controller\GrundController
             templates: *default_parcelhus_templates
 
             list:
@@ -126,7 +122,6 @@ easy_admin:
 
         auktionslut_parcelhusgrunde:
             class: AppBundle\Entity\Grund
-            controller: AppBundle\Controller\GrundController
             templates: *default_parcelhus_templates
 
             list:
@@ -141,7 +136,6 @@ easy_admin:
 
         ledige_parcelhusgrunde:
             class: AppBundle\Entity\Grund
-            controller: AppBundle\Controller\GrundController
             templates: *default_parcelhus_templates
 
             list:
@@ -156,7 +150,6 @@ easy_admin:
 
         tilbud_parcelhusgrunde:
             class: AppBundle\Entity\Grund
-            controller: AppBundle\Controller\GrundController
             templates: *default_parcelhus_templates
 
             list:
@@ -171,7 +164,6 @@ easy_admin:
 
         accepterede_parcelhusgrunde:
             class: AppBundle\Entity\Grund
-            controller: AppBundle\Controller\GrundController
             templates: *default_parcelhus_templates
 
             list:
@@ -186,7 +178,6 @@ easy_admin:
 
         betalte_parcelhusgrunde:
             class: AppBundle\Entity\Grund
-            controller: AppBundle\Controller\GrundController
             templates: *default_parcelhus_templates
 
             list:
@@ -202,7 +193,6 @@ easy_admin:
 
         opfoelgning_parcelhusgrunde:
             class: AppBundle\Entity\Grund
-            controller: AppBundle\Controller\GrundController
             templates: *default_parcelhus_templates
 
             list:
