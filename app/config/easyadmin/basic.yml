@@ -1,6 +1,5 @@
 easy_admin:
     site_name: 'Arealudvikling Aarhus'
-#    site_name: '<img src="/logos/symfony_white_01.png" /> Arealudvikling Aarhus'
 
     list:
         max_results: 100
@@ -14,4 +13,3 @@ easy_admin:
         date:     'd/m/Y'
         time:     'H:i'
         datetime: 'd/m/Y H:i:s'
-#        number: '%.0f'
