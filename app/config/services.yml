@@ -13,17 +13,6 @@ services:
     tags:
       - { name: kernel.event_subscriber }
 
-  trans_key_extension:
-    class: AppBundle\Twig\Extension\TransKeyExtension
-    arguments: ['@translator']
-    tags:
-      - {name: "twig.extension"}
-
   grundsalg.communication:
     class: AppBundle\Service\GrundsalgCommunicationService
     arguments: ['%grundsalg_web%']
-
-  app.easyadmin_subscriber:
-      class: AppBundle\EventListener\EasyAdminSubscriber
-      tags:
-          - { name: kernel.event_subscriber }
