@@ -24,14 +24,15 @@ class EasyAdminController extends BaseAdminController {
   {
     $queryBuilder = parent::createListQueryBuilder($entityClass, $sortDirection, $sortField, $dqlFilter);
 
-    // Loop through list fields to add fields in relations
-    foreach ($this->entity['list']['fields'] as $name => $metadata) {
+    // We only care about the sortfield
+    if(!empty($sortField)) {
 
       // Split the sortfield by '.' to get relations
-      $joinParts = explode('.', $name);
+      $joinParts = explode('.', $sortField);
       $countParts = count($joinParts);
 
-      if ($countParts > 1) {
+      // Parent qurebuilder support joins one level deep. We only need to alterthe joins for deeper relations
+      if ($countParts > 2) {
         // To sort on fields in related entities we need to build our own joins
         $queryBuilder->resetDQLPart('join');
 
@@ -58,11 +59,8 @@ class EasyAdminController extends BaseAdminController {
 
         }
 
-        // The parent queryBuilder only supports orderBy on direct relations so we reset and rebuild if it's deeper
-        if ($countParts > 2) {
-          $queryBuilder->resetDQLPart('orderBy');
-          $queryBuilder->orderBy($entityDqlName . '.' . $fieldDqlName, $sortDirection ?: 'DESC');
-        }
+        $queryBuilder->resetDQLPart('orderBy');
+        $queryBuilder->orderBy($entityDqlName . '.' . $fieldDqlName, $sortDirection ?: 'DESC');
 
       }
     }
