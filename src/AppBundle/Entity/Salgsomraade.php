@@ -117,7 +117,7 @@ class Salgsomraade
   /**
    * @var \AppBundle\Entity\Delomraade
    *
-   * @ORM\ManyToOne(targetEntity="Delomraade")
+   * @ORM\ManyToOne(targetEntity="Delomraade", fetch="EAGER")
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="delomraadeId", referencedColumnName="id")
    * })
@@ -127,7 +127,7 @@ class Salgsomraade
   /**
    * @var \AppBundle\Entity\Lokalplan
    *
-   * @ORM\ManyToOne(targetEntity="Lokalplan")
+   * @ORM\ManyToOne(targetEntity="Lokalplan", fetch="EAGER")
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="lokalplanId", referencedColumnName="id")
    * })
@@ -610,6 +610,26 @@ class Salgsomraade
     }
 
     return NULL;
+  }
+
+  /**
+   * Get combined o1, o2, o3 for list display
+   *
+   * @return string
+   */
+  public function getO123Combined()
+  {
+    return empty($this->getDelomraade()) ? '' :  $this->getDelomraade()->getO123Combined();
+  }
+
+  /**
+   * Get combined kpl1 - kpl 4 for list display
+   *
+   * @return string
+   */
+  public function getKpl1234Combined()
+  {
+    return empty($this->getDelomraade()) ? '' : $this->getDelomraade()->getKpl1234Combined();
   }
 
   /**

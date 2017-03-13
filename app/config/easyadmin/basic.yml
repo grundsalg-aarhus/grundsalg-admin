@@ -1,0 +1,15 @@
+easy_admin:
+    site_name: 'Arealudvikling Aarhus'
+
+    list:
+        max_results: 100
+        actions: &default_list_actions
+            - { name: edit, css_class: 'btn btn-default' }
+            - { name: search }
+            - { name: new, label: 'Tilføj', icon: 'plus' }
+            - { name: -delete }
+
+    formats:
+        date:     'd/m/Y'
+        time:     'H:i'
+        datetime: 'd/m/Y H:i:s'

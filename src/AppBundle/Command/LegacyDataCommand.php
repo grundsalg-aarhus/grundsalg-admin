@@ -128,6 +128,10 @@ class LegacyDataCommand extends ContainerAwareCommand
     foreach ($data as $table => &$rows) {
       foreach ($rows as &$row) {
 
+        foreach ($row as $key => &$item) {
+          $item = trim($item);
+        }
+
         // PostBy
         if ($table == 'PostBy') {
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(100))
@@ -137,8 +141,9 @@ class LegacyDataCommand extends ContainerAwareCommand
         // Lokalsamfund
 
         if ($table == 'Lokalsamfund') {
+
           // Ensure that "active" is either null or 0/1 for safe column type conversion (int(11) -> BOOL)
-          if ($row['active'] !== 1 && $row['active'] !== 0) {
+          if (intval($row['active']) !== 1 && intval($row['active']) !== 0) {
             $this->throwException($table, $row, 'active', 'Cannot be safely converted to bool value');
           }
 
@@ -200,7 +205,7 @@ class LegacyDataCommand extends ContainerAwareCommand
           }
 
           // Ensure that "active" is either null or 0/1 for safe column type conversion (int(11) -> BOOL)
-          if ($row['active'] !== 1 && $row['active'] !== 0) {
+          if (intval($row['active']) !== 1 && intval($row['active']) !== 0) {
             $this->throwException($table, $row, 'active', 'Cannot be safely converted to bool value');
           }
 

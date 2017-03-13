@@ -1,21 +1,73 @@
-{% extends 'AppBundle::base.html.twig' %}
+{% extends '@EasyAdmin/default/layout.html.twig' %}
 
-{% block body -%}
+{% trans_default_domain 'FOSUserBundle' %}
 
-    <div class="login--form">
-        {% if app.request.hasPreviousSession %}
-            {% for type, messages in app.session.flashbag.all() %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ type }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endfor %}
-        {% endif %}
+{% block head_stylesheets %}
+  {{ parent() }}
+  <style>
+    /*header.main-header,*/
+    aside.main-sidebar {
+      display: none;
+    }
 
+    .wrapper {
+      background: #F5F5F5;
+    }
 
-        {% block fos_user_content %}
-        {% endblock fos_user_content %}
-    </div>
+    .fixed .content-wrapper {
+      margin-left: 0;
+      padding-top: 0;
+    }
+  </style>
 {% endblock %}
 
+{% block page_title 'Arealudvikling Aarhus' %}
+{% block body_id 'welcome' %}
+{#{% block body_class 'sidebar-collapse' %}#}
+
+{#{% block header '' %}#}
+{% block header_custom_menu '' %}
+{% block sidebar '' %}
+{% block main %}
+  <div class="box box--secondary">
+    <div class="box-body">
+      <div class="col-sm-6 pull-right text-right">
+        <h1>
+          <small>Teknik og Miljø</small>
+          <br>{{ block('page_title') }} </h1>
+      </div>
+      <div class="col-sm-6">
+        <h4>Grundsalg</h4>
+        <p>Bolig og projektudvikling<br>
+          Kalkværksvej 10<br>
+          8000 Aarhus C<br>
+          Telefon: 89 40 45 00<br>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="box box--primary">
+    <div class="box-body">
+      <div class="row">
+        <h3 class="col-sm-12">
+          <i class="fa fa-lock"></i>
+          Fagsystem log ind
+        </h3>
+
+        <div class="col-sm-6">
+
+          {% block fos_user_content %}
+          {% endblock fos_user_content %}
+
+        </div>
+
+        <hr class="visible-xs"/>
+
+        <div class="col-sm-6 login-help">
+
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,41 @@
+easy_admin:
+    entities:
+        lokalplaner:
+            class: AppBundle\Entity\Lokalplan
+            controller:
+            list:
+                title: 'Lokalplaner'
+                sort: ['titel', 'ASC']
+                actions:
+                    <<: *default_list_actions
+                fields:
+                    - { property: nr, label: 'LPNr' }
+                    - titel
+                    - lokalsamfund
+                    - { property: samletareal, css_class: 'text-right', format: '%.0f', label: 'Samlet Areal' }
+                    - { property: salgbartareal, css_class: 'text-right', format: '%.0f', label: 'Salgbart Areal' }
+                    - { property: forbrugsandel, css_class: 'text-right' }
+
+            edit:
+                title: 'Rediger Lokalplan'
+
+            form:
+                fields:
+                    - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Lokalplan' }
+                    - { property: nr, label: 'LP', css_class: 'col-sm-6' }
+                    - { property: lokalsamfund, label: 'Lokalsamfund', css_class: 'col-sm-6' }
+                    - { property: titel, label: 'Titel', css_class: 'col-sm-6' }
+                    - { property: projektleder, label: 'Projektleder', css_class: 'col-sm-6' }
+                    - { property: lokalplanlink, label: 'Link til LP', css_class: 'col-sm-6' }
+                    - { property: telefon, label: 'Tlfnr.', css_class: 'col-sm-6' }
+
+                    - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Lokalplanen indeholder' }
+                    - { property: samletareal, label: 'Samlet Areal' }
+                    - { property: salgbartareal, label: 'Salgbart Areal' }
+                    - { property: forbrugsandel, label: 'Forbrugsandel i %', readonly: true, type_options: { disabled: true } }
+
+                    - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Redigeret' }
+                    - { property: 'createdBy', type: 'text', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true } }
+                    - { property: 'updatedBy', type: 'text', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true } }
+                    - { property: 'createdAt', type: 'date', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true, widget: 'single_text' } }
+                    - { property: 'updatedAt', type: 'date', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true, widget: 'single_text' } }

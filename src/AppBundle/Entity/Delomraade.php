@@ -92,7 +92,7 @@ class Delomraade
   /**
    * @var \Lokalplan
    *
-   * @ORM\ManyToOne(targetEntity="Lokalplan")
+   * @ORM\ManyToOne(targetEntity="Lokalplan", fetch="EAGER")
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="lokalplanId", referencedColumnName="id")
    * })
@@ -279,6 +279,37 @@ class Delomraade
   }
 
   /**
+   * Get combined o1, o2, o3 for list display
+   *
+   * @return string
+   */
+  public function getO123Combined()
+  {
+    $result = '';
+    $result = empty($this->getO1()) ? $result : $result .= $this->getO1() . '-';
+    $result = empty($this->getO2()) ? $result : $result .= $this->getO2();
+    $result = empty($this->getO3()) ? $result : $result .= '.' . $this->getO3();
+
+    return $result;
+  }
+
+  /**
+   * Get combined kpl1 - kpl 4 for list display
+   *
+   * @return string
+   */
+  public function getKpl1234Combined()
+  {
+    $result = '';
+    $result = empty($this->getKpl1()) ? $result : $result .= $this->getKpl1();
+    $result = empty($this->getKpl2()) ? $result : $result .= '.' . $this->getKpl2();
+    $result = empty($this->getKpl3()) ? $result : $result .= '.' . $this->getKpl3();
+    $result = empty($this->getKpl4()) ? $result : $result .= '.' . $this->getKpl4();
+
+    return $result;
+  }
+
+  /**
    * Set anvendelse
    *
    * @param string $anvendelse
@@ -352,6 +383,6 @@ class Delomraade
 
   public function __toString()
   {
-    return $this->kpl1 . "-" . $this->kpl2 . "-" . $this->kpl3 . "-" . $this->kpl4 . " " . $this->o1 . " " . $this->o2 . " " . $this->o3;
+    return $this->getKpl1234Combined() . ' (Område: ' . $this->getO123Combined() . ')';
   }
 }

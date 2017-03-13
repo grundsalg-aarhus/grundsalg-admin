@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OrderBy;
 
 /**
  * Opkoeb
@@ -86,10 +87,11 @@ class Opkoeb
   /**
    * @var \Lokalplan
    *
-   * @ORM\ManyToOne(targetEntity="Lokalplan")
+   * @ORM\ManyToOne(targetEntity="Lokalplan", fetch="EAGER")
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="lokalplanId", referencedColumnName="id")
    * })
+   * @OrderBy({"nr" = "ASC"})
    */
   private $lokalplan;
 
@@ -318,6 +320,11 @@ class Opkoeb
   public function getLokalplan()
   {
     return $this->lokalplan;
+  }
+
+  public function getMatrikel()
+  {
+    return $this->getMatrik1().$this->getMatrik2();
   }
 
   public function __toString()

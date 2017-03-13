@@ -105,7 +105,7 @@ class Grund {
   /**
    * @var \Postby
    *
-   * @ORM\ManyToOne(targetEntity="Postby")
+   * @ORM\ManyToOne(targetEntity="Postby", fetch="EAGER")
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="postbyId", referencedColumnName="id")
    * })
@@ -533,7 +533,7 @@ class Grund {
   /**
    * @var \AppBundle\Entity\Salgsomraade
    *
-   * @ORM\ManyToOne(targetEntity="Salgsomraade")
+   * @ORM\ManyToOne(targetEntity="Salgsomraade", fetch="EAGER")
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="salgsomraadeId", referencedColumnName="id")
    * })
@@ -2198,6 +2198,7 @@ class Grund {
    * @return string
    */
   public function __toString() {
-    return $this->getVej() . ' ' . $this->getHusnummer() . $this->getBogstav() . ($this->getPostby() ? ', ' . $this->getPostby() : '');
+    return $this->getVej() . ' ' . $this->getHusnummer() . $this->getBogstav() . ($this->getZipcity() ? ', ' . $this->getZipcity() : '');
   }
+
 }

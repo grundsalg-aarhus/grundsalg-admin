@@ -1,0 +1,6 @@
+{# app/Resources/views/easy_admin/roles_collection.html.twig #}
+
+{% for role in value|sort %}
+  {% set role_name = role | replace({'ROLE_': ''}) %}
+  <span class="label label-default">{{ role_name }}</span>
+{% endfor %}

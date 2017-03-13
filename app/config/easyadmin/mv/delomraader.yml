@@ -1,0 +1,44 @@
+easy_admin:
+    entities:
+        delomraader:
+            class: AppBundle\Entity\Delomraade
+            controller:
+            list:
+                title: 'Delområder'
+                sort: ['id', 'ASC']
+                actions:
+                    <<: *default_list_actions
+                fields:
+                    - {property: kpl1234Combined, label: 'KPL'}
+                    - {property: o123Combined, label: 'Område'}
+                    - anvendelse
+                    - mulighedFor
+                    - lokalplan
+
+            edit:
+                title: 'Rediger Delområde'
+
+            form:
+                fields:
+                    - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Lokalplan' }
+                    - lokalplan
+
+                    - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Delområde' }
+                    - { type: 'section', label: 'LP-delområde' }
+                    - { property: o1, label: false, css_class: 'col-xs-4' }
+                    - { property: o2, label: false, css_class: 'col-xs-4' }
+                    - { property: o3, label: false, css_class: 'col-xs-4' }
+                    - { type: 'section', label: 'KPL' }
+                    - { property: kpl1, label: false, css_class: 'col-xs-3', readonly: true, type_options: { disabled: true }}
+                    - { property: kpl2, label: false, css_class: 'col-xs-3' }
+                    - { property: kpl3, label: false, css_class: 'col-xs-3' }
+                    - { property: kpl4, label: false, css_class: 'col-xs-3' }
+                    - { type: 'section', label: 'Anvendelse' }
+                    - { property: anvendelse, css_class: 'col-sm-6' }
+                    - { property: mulighedFor, css_class: 'col-sm-6' }
+
+                    - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Redigeret' }
+                    - { property: 'createdBy', type: 'text', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true } }
+                    - { property: 'updatedBy', type: 'text', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true } }
+                    - { property: 'createdAt', type: 'date', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true, widget: 'single_text' } }
+                    - { property: 'updatedAt', type: 'date', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true, widget: 'single_text' } }

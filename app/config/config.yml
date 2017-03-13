@@ -2,6 +2,20 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: easyadmin/basic.yml }
+    - { resource: easyadmin/design.yml }
+    - { resource: easyadmin/grunde/parcelhusgrunde.yml }
+    - { resource: easyadmin/grunde/storparceller.yml }
+    - { resource: easyadmin/grunde/erhvervsgrunde.yml }
+    - { resource: easyadmin/grunde/andregrunde.yml }
+    - { resource: easyadmin/mv/salgsomraader.yml }
+    - { resource: easyadmin/mv/lokalplaner.yml }
+    - { resource: easyadmin/mv/delomraader.yml }
+    - { resource: easyadmin/mv/opkoeb.yml }
+    - { resource: easyadmin/admin/postby.yml }
+    - { resource: easyadmin/admin/landinspektoer.yml }
+    - { resource: easyadmin/admin/lokalsamfund.yml }
+    - { resource: easyadmin/admin/users.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -38,9 +52,11 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-    form_themes:
-        - AppBundle:Form:grundsalg-bootstrap.html.twig
-        - AppBundle:Form:form_div_layout.html.twig
+
+    number_format:
+        decimals: 2
+        decimal_point: ','
+        thousands_separator: '.'
 
 
 # Doctrine Configuration

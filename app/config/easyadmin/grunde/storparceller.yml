@@ -1,0 +1,206 @@
+easy_admin:
+
+    # http://stackoverflow.com/questions/8466223/reuse-a-block-of-code-in-yaml
+
+    entities:
+        storparceller: &storparcel_default
+            class: AppBundle\Entity\Grund
+            templates: &default_parcelhus_templates
+                # Twig namespace template syntax
+                list: 'easy_admin/list.html.twig'
+                edit: 'easy_admin/grund.html.twig'
+            list: &parcelhus_default_list
+                title: 'Alle Storparceller'
+                sort: postby
+                dql_filter: entity.grundtype = 'Storparcel'
+                actions:
+                    <<: *default_list_actions
+                fields:
+                    - vej
+                    - {property: husnummer, css_class: 'text-right', format: '%.0f' }
+                    - {property: postby.postalcode, css_class: 'text-right'}
+                    - postby.city
+                    - { property: 'annonceres' }
+                    - salgsomraade.titel
+                    - salgsomraade.lokalplan.nr
+                    - salgstype
+                    - {property: areal, css_class: 'text-right', format: '%.0f' }
+                    - {property: pris, css_class: 'text-right' }
+
+            edit: &storparcel_default_edit
+                title: 'Rediger Storparcel'
+
+            form: &storparcel_default_form
+                fields:
+                    - { type: 'group', css_class: 'col-sm-6', label: 'Salgsområde' }
+                    - { property: 'salgsomraade'}
+
+                    - { type: 'group', css_class: 'col-sm-6', label: 'Annonceres' }
+                    - { property: 'annonceres' }
+                    - { property: 'datoAnnonce', type: 'date', type_options: { widget: 'single_text' } }
+                    - { property: 'datoAnnonce1', type: 'date', type_options: { widget: 'single_text' } }
+
+                    - { type: 'group', css_class: 'col-sm-6 new-row', label: 'Adresse' }
+                    - { property: 'gid', readonly: true, type_options: { disabled: true } }
+                    - { type: 'section', label: 'Matrikel' }
+                    - { property: 'mnr' }
+                    - { property: 'mnr2' }
+                    - { property: 'delareal' }
+                    - { property: 'ejerlav' }
+                    - { type: 'section', label: 'Adresse' }
+                    - { property: 'vej' }
+                    - { property: 'husnummer' }
+                    - { property: 'bogstav' }
+                    - { property: 'postby' }
+                    - { property: 'lokalsamfund' }
+                    - { property: 'urlgis' }
+
+                    - { type: 'group', css_class: 'col-sm-6', label: 'Status/Type' }
+                    - { property: 'grundtype' }
+                    - { property: 'status', readonly: true, type_options: { disabled: true } }
+                    - { property: 'salgstype' }
+                    - { property: 'tilsluttet' }
+
+                    - { type: 'group', css_class: 'col-sm-6', label: 'Priser' }
+                    - { property: 'areal' }
+                    - { property: 'arealvej' }
+                    - { property: 'arealkotelet' }
+                    - { property: 'arealkotelet' }
+                    - { property: 'bruttoareal', readonly: true, type_options: { disabled: true } }
+                    - { property: 'fastpris' }
+
+                    - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Note' }
+                    - { property: 'note' }
+
+                    - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Redigeret' }
+                    - { property: 'createdBy', type: 'text', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true } }
+                    - { property: 'updatedBy', type: 'text', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true } }
+                    - { property: 'createdAt', type: 'date', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true, widget: 'single_text' } }
+                    - { property: 'updatedAt', type: 'date', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true, widget: 'single_text' } }
+
+        vis_storparceller:
+            class: AppBundle\Entity\Grund
+            templates: *default_parcelhus_templates
+
+            list:
+                title: 'Vis Storparceller'
+                dql_filter: entity.grundtype = 'Storparcel' AND (entity.status='Ledig' OR entity.status='Annonceret') and entity.salgstatus= 'Ledig'
+
+                # Import default values
+                <<: *parcelhus_default_list
+
+            edit: *storparcel_default_edit
+            form: *storparcel_default_form
+
+        fremtidige_storparceller:
+            class: AppBundle\Entity\Grund
+            templates: *default_parcelhus_templates
+
+            list:
+                title: 'Fremtidige Storparceller'
+                dql_filter: entity.grundtype = 'Storparcel' AND (entity.status='Fremtidig')
+
+                # Import default values
+                <<: *parcelhus_default_list
+
+            edit: *storparcel_default_edit
+            form: *storparcel_default_form
+
+        annoncerede_storparceller:
+            class: AppBundle\Entity\Grund
+            templates: *default_parcelhus_templates
+
+            list:
+                title: 'Annoncerede Storparceller'
+                dql_filter: entity.grundtype = 'Storparcel' AND (entity.status='Annoncerede')
+
+                # Import default values
+                <<: *parcelhus_default_list
+
+            edit: *storparcel_default_edit
+            form: *storparcel_default_form
+
+        auktionslut_storparceller:
+            class: AppBundle\Entity\Grund
+            templates: *default_parcelhus_templates
+
+            list:
+                title: 'Auktion slut Storparceller'
+                dql_filter: entity.grundtype = 'Storparcel' AND entity.status='Auktion slut' AND entity.salgstatus != 'Solgt' AND entity.salgstatus != 'Accepteret' AND entity.salgstatus != 'Skøde rekvireret' AND entity.salgstatus != 'Skøde annulleret'
+
+                # Import default values
+                <<: *parcelhus_default_list
+
+            edit: *storparcel_default_edit
+            form: *storparcel_default_form
+
+        ledige_storparceller:
+            class: AppBundle\Entity\Grund
+            templates: *default_parcelhus_templates
+
+            list:
+                title: 'Ledige Storparceller'
+                dql_filter: entity.grundtype = 'Storparcel' AND entity.status='Ledig' AND (entity.salgstatus IS NULL OR entity.salgstatus = 'Ledig')
+
+                # Import default values
+                <<: *parcelhus_default_list
+
+            edit: *storparcel_default_edit
+            form: *storparcel_default_form
+
+        tilbud_storparceller:
+            class: AppBundle\Entity\Grund
+            templates: *default_parcelhus_templates
+
+            list:
+                title: 'Tilbud Storparceller'
+                dql_filter: entity.grundtype = 'Storparcel' AND entity.status='Ledig' AND (entity.salgstatus = 'Reserveret' OR entity.salgstatus = 'Reservation annulleret' OR entity.salgstatus = 'Tilbud sendt' OR entity.salgstatus = 'Tilbud annulleret')
+
+                # Import default values
+                <<: *parcelhus_default_list
+
+            edit: *storparcel_default_edit
+            form: *storparcel_default_form
+
+        accepterede_storparceller:
+            class: AppBundle\Entity\Grund
+            templates: *default_parcelhus_templates
+
+            list:
+                title: 'Accepterede Storparceller'
+                dql_filter: entity.grundtype = 'Storparcel' AND (entity.status='Ledig' OR entity.status='Auktion Slut') AND (entity.salgstatus = 'Accepteret' OR entity.salgstatus = 'Skøde rekvireret' OR entity.salgstatus = 'Skøde annulleret')
+
+                # Import default values
+                <<: *parcelhus_default_list
+
+            edit: *storparcel_default_edit
+            form: *storparcel_default_form
+
+        betalte_storparceller:
+            class: AppBundle\Entity\Grund
+            templates: *default_parcelhus_templates
+
+            list:
+                title: 'Betalte Storparceller'
+                dql_filter: entity.grundtype = 'Storparcel' AND entity.salgstatus = 'Solgt'
+
+                # Import default values
+                <<: *parcelhus_default_list
+
+            edit: *storparcel_default_edit
+            form: *storparcel_default_form
+
+
+        opfoelgning_storparceller:
+            class: AppBundle\Entity\Grund
+            templates: *default_parcelhus_templates
+
+            list:
+                title: 'Opfølgning'
+                dql_filter: entity.grundtype = 'Storparcel' AND ((entity.salgstatus = 'Reserveret' AND entity.resslut < CURRENT_DATE()) OR (entity.salgstatus = 'Tilbud sendt' AND entity.tilbudslut < CURRENT_DATE()))
+
+                # Import default values
+                <<: *parcelhus_default_list
+
+            edit: *storparcel_default_edit
+            form: *storparcel_default_form

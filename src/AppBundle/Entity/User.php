@@ -28,23 +28,9 @@ class User extends BaseUser
   /**
    * @var string
    *
-   * @ORM\Column(name="name", type="text", nullable=true)
+   * @ORM\Column(name="name", type="string", length=255, nullable=true)
    */
   protected $name;
-
-  /**
-   * @var \DateTime
-   * @Gedmo\Timestampable(on="create")
-   * @ORM\Column(type="datetime", nullable=true)
-   */
-  protected $createdAt;
-
-  /**
-   * @var \DateTime
-   * @Gedmo\Timestampable(on="update")
-   * @ORM\Column(type="datetime", nullable=true)
-   */
-  protected $updatedAt;
 
   /**
    * User constructor.
