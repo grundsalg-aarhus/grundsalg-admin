@@ -37,7 +37,7 @@ class Lokalplan
   /**
    * @var \Lokalsamfund
    *
-   * @ORM\ManyToOne(targetEntity="Lokalsamfund")
+   * @ORM\ManyToOne(targetEntity="Lokalsamfund", fetch="EAGER")
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="lokalsamfundId", referencedColumnName="id")
    * })

@@ -117,7 +117,7 @@ class Salgsomraade
   /**
    * @var \AppBundle\Entity\Delomraade
    *
-   * @ORM\ManyToOne(targetEntity="Delomraade")
+   * @ORM\ManyToOne(targetEntity="Delomraade", fetch="EAGER")
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="delomraadeId", referencedColumnName="id")
    * })
@@ -127,7 +127,7 @@ class Salgsomraade
   /**
    * @var \AppBundle\Entity\Lokalplan
    *
-   * @ORM\ManyToOne(targetEntity="Lokalplan")
+   * @ORM\ManyToOne(targetEntity="Lokalplan", fetch="EAGER")
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="lokalplanId", referencedColumnName="id")
    * })
