@@ -1,6 +1,6 @@
 easy_admin:
     entities:
-        users:
+        user:
             class: AppBundle\Entity\User
             controller: AppBundle\Controller\UserController
             list:

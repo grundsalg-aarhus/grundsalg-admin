@@ -1,6 +1,6 @@
 easy_admin:
     entities:
-        delomraader:
+        delomraade:
             class: AppBundle\Entity\Delomraade
             controller:
             list:

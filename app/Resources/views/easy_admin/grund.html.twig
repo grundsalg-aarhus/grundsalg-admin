@@ -43,7 +43,7 @@
                   <dd>{{ entity.salgsomraade.lokalplan.telefon }}</dd>
                   <dd>
                     <br>
-                    <a class="btn btn default" href="{{ path('easyadmin', parameters = {'action': 'edit', 'entity': 'Lokalplan', 'id': entity.salgsomraade.lokalplan.id}) }}">Vis Lokalplan</a>
+                    <a class="btn btn default" href="{{ path('easyadmin', parameters = {'action': 'edit', 'entity': 'lokalplan', 'id': entity.salgsomraade.lokalplan.id}) }}">Vis Lokalplan</a>
                   </dd>
                 </dl>
               </div>
@@ -106,7 +106,7 @@
                   {% if entity.landinspektoer %}
                     <dd>
                       <br>
-                      <a class="btn btn default" href="{{ path('easyadmin', parameters = {'action': 'edit', 'entity': 'Landinspektoer', 'id': entity.landinspektoer.id }) }}">Vis Landinspektør</a>
+                      <a class="btn btn default" href="{{ path('easyadmin', parameters = {'action': 'edit', 'entity': 'landinspektoer', 'id': entity.landinspektoer.id }) }}">Vis Landinspektør</a>
                     </dd>
                   {% endif %}
                 </dl>

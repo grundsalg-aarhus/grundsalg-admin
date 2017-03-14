@@ -1,6 +1,6 @@
 easy_admin:
     entities:
-        lokalplaner:
+        lokalplan:
             class: AppBundle\Entity\Lokalplan
             controller:
             list:

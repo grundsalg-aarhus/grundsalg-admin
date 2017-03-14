@@ -3,16 +3,16 @@ easy_admin:
     # http://stackoverflow.com/questions/8466223/reuse-a-block-of-code-in-yaml
 
     entities:
-        andregrunde: &andregrund_default
+        erhvervsgrund: &erhvervsgrund_default
             class: AppBundle\Entity\Grund
             templates: &default_parcelhus_templates
                 # Twig namespace template syntax
                 list: 'easy_admin/list.html.twig'
                 edit: 'easy_admin/grund.html.twig'
             list: &parcelhus_default_list
-                title: 'Alle Grunde'
+                title: 'Alle Erhvervsgrunde'
                 sort: postby
-                dql_filter: entity.grundtype = 'Andre'
+                dql_filter: entity.grundtype = 'Erhvervsgrund'
                 actions:
                     <<: *default_list_actions
                 fields:
@@ -27,10 +27,10 @@ easy_admin:
                     - {property: areal, css_class: 'text-right', format: '%.0f' }
                     - {property: pris, css_class: 'text-right' }
 
-            edit: &andregrund_default_edit
-                title: 'Rediger Grund'
+            edit: &erhvervsgrund_default_edit
+                title: 'Rediger Erhvervsgrund'
 
-            form: &andregrund_default_form
+            form: &erhvervsgrund_default_form
                 fields:
                     - { type: 'group', css_class: 'col-sm-6', label: 'Salgsområde' }
                     - { property: 'salgsomraade'}
@@ -78,129 +78,129 @@ easy_admin:
                     - { property: 'createdAt', type: 'date', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true, widget: 'single_text' } }
                     - { property: 'updatedAt', type: 'date', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true, widget: 'single_text' } }
 
-        vis_andregrunde:
+        vis_erhvervsgrund:
             class: AppBundle\Entity\Grund
             templates: *default_parcelhus_templates
 
             list:
-                title: 'Vis Andre Grunde'
-                dql_filter: entity.grundtype = 'Andre' AND (entity.status='Ledig' OR entity.status='Annonceret') and entity.salgstatus= 'Ledig'
+                title: 'Vis Erhvervsgrunde'
+                dql_filter: entity.grundtype = 'Erhvervsgrund' AND (entity.status='Ledig' OR entity.status='Annonceret') and entity.salgstatus= 'Ledig'
 
                 # Import default values
                 <<: *parcelhus_default_list
 
-            edit: *andregrund_default_edit
-            form: *andregrund_default_form
+            edit: *erhvervsgrund_default_edit
+            form: *erhvervsgrund_default_form
 
-        fremtidige_andregrunde:
+        fremtidige_erhvervsgrund:
             class: AppBundle\Entity\Grund
             templates: *default_parcelhus_templates
 
             list:
-                title: 'Fremtidige Andre Grunde'
-                dql_filter: entity.grundtype = 'Andre' AND (entity.status='Fremtidig')
+                title: 'Fremtidige Erhvervsgrunde'
+                dql_filter: entity.grundtype = 'Erhvervsgrund' AND (entity.status='Fremtidig')
 
                 # Import default values
                 <<: *parcelhus_default_list
 
-            edit: *andregrund_default_edit
-            form: *andregrund_default_form
+            edit: *erhvervsgrund_default_edit
+            form: *erhvervsgrund_default_form
 
-        annoncerede_andregrunde:
+        annoncerede_erhvervsgrund:
             class: AppBundle\Entity\Grund
             templates: *default_parcelhus_templates
 
             list:
-                title: 'Annoncerede Andre Grunde'
-                dql_filter: entity.grundtype = 'Andre' AND (entity.status='Annoncerede')
+                title: 'Annoncerede Erhvervsgrunde'
+                dql_filter: entity.grundtype = 'Erhvervsgrund' AND (entity.status='Annoncerede')
 
                 # Import default values
                 <<: *parcelhus_default_list
 
-            edit: *andregrund_default_edit
-            form: *andregrund_default_form
+            edit: *erhvervsgrund_default_edit
+            form: *erhvervsgrund_default_form
 
-        auktionslut_andregrunde:
+        auktionslut_erhvervsgrund:
             class: AppBundle\Entity\Grund
             templates: *default_parcelhus_templates
 
             list:
-                title: 'Auktion slut Andre Grunde'
-                dql_filter: entity.grundtype = 'Andre' AND entity.status='Auktion slut' AND entity.salgstatus != 'Solgt' AND entity.salgstatus != 'Accepteret' AND entity.salgstatus != 'Skøde rekvireret' AND entity.salgstatus != 'Skøde annulleret'
+                title: 'Auktion slut Erhvervsgrunde'
+                dql_filter: entity.grundtype = 'Erhvervsgrund' AND entity.status='Auktion slut' AND entity.salgstatus != 'Solgt' AND entity.salgstatus != 'Accepteret' AND entity.salgstatus != 'Skøde rekvireret' AND entity.salgstatus != 'Skøde annulleret'
 
                 # Import default values
                 <<: *parcelhus_default_list
 
-            edit: *andregrund_default_edit
-            form: *andregrund_default_form
+            edit: *erhvervsgrund_default_edit
+            form: *erhvervsgrund_default_form
 
-        ledige_andregrunde:
+        ledige_erhvervsgrund:
             class: AppBundle\Entity\Grund
             templates: *default_parcelhus_templates
 
             list:
-                title: 'Ledige Andre Grunde'
-                dql_filter: entity.grundtype = 'Andre' AND entity.status='Ledig' AND (entity.salgstatus IS NULL OR entity.salgstatus = 'Ledig')
+                title: 'Ledige Erhvervsgrunde'
+                dql_filter: entity.grundtype = 'Erhvervsgrund' AND entity.status='Ledig' AND (entity.salgstatus IS NULL OR entity.salgstatus = 'Ledig')
 
                 # Import default values
                 <<: *parcelhus_default_list
 
-            edit: *andregrund_default_edit
-            form: *andregrund_default_form
+            edit: *erhvervsgrund_default_edit
+            form: *erhvervsgrund_default_form
 
-        tilbud_andregrunde:
+        tilbud_erhvervsgrund:
             class: AppBundle\Entity\Grund
             templates: *default_parcelhus_templates
 
             list:
-                title: 'Tilbud Andre Grunde'
-                dql_filter: entity.grundtype = 'Andre' AND entity.status='Ledig' AND (entity.salgstatus = 'Reserveret' OR entity.salgstatus = 'Reservation annulleret' OR entity.salgstatus = 'Tilbud sendt' OR entity.salgstatus = 'Tilbud annulleret')
+                title: 'Tilbud Erhvervsgrunde'
+                dql_filter: entity.grundtype = 'Erhvervsgrund' AND entity.status='Ledig' AND (entity.salgstatus = 'Reserveret' OR entity.salgstatus = 'Reservation annulleret' OR entity.salgstatus = 'Tilbud sendt' OR entity.salgstatus = 'Tilbud annulleret')
 
                 # Import default values
                 <<: *parcelhus_default_list
 
-            edit: *andregrund_default_edit
-            form: *andregrund_default_form
+            edit: *erhvervsgrund_default_edit
+            form: *erhvervsgrund_default_form
 
-        accepterede_andregrunde:
+        accepterede_erhvervsgrund:
             class: AppBundle\Entity\Grund
             templates: *default_parcelhus_templates
 
             list:
-                title: 'Accepterede Andre Grunde'
-                dql_filter: entity.grundtype = 'Andre' AND (entity.status='Ledig' OR entity.status='Auktion Slut') AND (entity.salgstatus = 'Accepteret' OR entity.salgstatus = 'Skøde rekvireret' OR entity.salgstatus = 'Skøde annulleret')
+                title: 'Accepterede Erhvervsgrunde'
+                dql_filter: entity.grundtype = 'Erhvervsgrund' AND (entity.status='Ledig' OR entity.status='Auktion Slut') AND (entity.salgstatus = 'Accepteret' OR entity.salgstatus = 'Skøde rekvireret' OR entity.salgstatus = 'Skøde annulleret')
 
                 # Import default values
                 <<: *parcelhus_default_list
 
-            edit: *andregrund_default_edit
-            form: *andregrund_default_form
+            edit: *erhvervsgrund_default_edit
+            form: *erhvervsgrund_default_form
 
-        betalte_andregrunde:
+        betalte_erhvervsgrund:
             class: AppBundle\Entity\Grund
             templates: *default_parcelhus_templates
 
             list:
-                title: 'Betalte Andre Grunde'
-                dql_filter: entity.grundtype = 'Andre' AND entity.salgstatus = 'Solgt'
+                title: 'Betalte Erhvervsgrunde'
+                dql_filter: entity.grundtype = 'Erhvervsgrund' AND entity.salgstatus = 'Solgt'
 
                 # Import default values
                 <<: *parcelhus_default_list
 
-            edit: *andregrund_default_edit
-            form: *andregrund_default_form
+            edit: *erhvervsgrund_default_edit
+            form: *erhvervsgrund_default_form
 
 
-        opfoelgning_andregrunde:
+        opfoelgning_erhvervsgrund:
             class: AppBundle\Entity\Grund
             templates: *default_parcelhus_templates
 
             list:
                 title: 'Opfølgning'
-                dql_filter: entity.grundtype = 'Andre' AND ((entity.salgstatus = 'Reserveret' AND entity.resslut < CURRENT_DATE()) OR (entity.salgstatus = 'Tilbud sendt' AND entity.tilbudslut < CURRENT_DATE()))
+                dql_filter: entity.grundtype = 'Erhvervsgrund' AND ((entity.salgstatus = 'Reserveret' AND entity.resslut < CURRENT_DATE()) OR (entity.salgstatus = 'Tilbud sendt' AND entity.tilbudslut < CURRENT_DATE()))
 
                 # Import default values
                 <<: *parcelhus_default_list
 
-            edit: *andregrund_default_edit
-            form: *andregrund_default_form
+            edit: *erhvervsgrund_default_edit
+            form: *erhvervsgrund_default_form

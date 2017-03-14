@@ -1,6 +1,6 @@
 easy_admin:
     entities:
-        salgsomraader:
+        salgsomraade:
             class: AppBundle\Entity\Salgsomraade
             controller:
             list:

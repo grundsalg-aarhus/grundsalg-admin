@@ -3,16 +3,16 @@ easy_admin:
     # http://stackoverflow.com/questions/8466223/reuse-a-block-of-code-in-yaml
 
     entities:
-        storparceller: &storparcel_default
+        parcelhusgrund: &parcelhusgrund_default
             class: AppBundle\Entity\Grund
             templates: &default_parcelhus_templates
                 # Twig namespace template syntax
                 list: 'easy_admin/list.html.twig'
                 edit: 'easy_admin/grund.html.twig'
             list: &parcelhus_default_list
-                title: 'Alle Storparceller'
+                title: 'Alle Parcelhusgrunde'
                 sort: postby
-                dql_filter: entity.grundtype = 'Storparcel'
+                dql_filter: entity.grundtype = 'Parcelhusgrund'
                 actions:
                     <<: *default_list_actions
                 fields:
@@ -27,10 +27,10 @@ easy_admin:
                     - {property: areal, css_class: 'text-right', format: '%.0f' }
                     - {property: pris, css_class: 'text-right' }
 
-            edit: &storparcel_default_edit
-                title: 'Rediger Storparcel'
+            edit: &parcelhusgrund_default_edit
+                title: 'Rediger Parcelhusgrund'
 
-            form: &storparcel_default_form
+            form: &parcelhusgrund_default_form
                 fields:
                     - { type: 'group', css_class: 'col-sm-6', label: 'Salgsområde' }
                     - { property: 'salgsomraade'}
@@ -78,129 +78,129 @@ easy_admin:
                     - { property: 'createdAt', type: 'date', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true, widget: 'single_text' } }
                     - { property: 'updatedAt', type: 'date', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true, widget: 'single_text' } }
 
-        vis_storparceller:
+        vis_parcelhusgrund:
             class: AppBundle\Entity\Grund
             templates: *default_parcelhus_templates
 
             list:
-                title: 'Vis Storparceller'
-                dql_filter: entity.grundtype = 'Storparcel' AND (entity.status='Ledig' OR entity.status='Annonceret') and entity.salgstatus= 'Ledig'
+                title: 'Vis Parcelhusgrunde'
+                dql_filter: entity.grundtype = 'Parcelhusgrund' AND (entity.status='Ledig' OR entity.status='Annonceret') and entity.salgstatus= 'Ledig'
 
                 # Import default values
                 <<: *parcelhus_default_list
 
-            edit: *storparcel_default_edit
-            form: *storparcel_default_form
+            edit: *parcelhusgrund_default_edit
+            form: *parcelhusgrund_default_form
 
-        fremtidige_storparceller:
+        fremtidige_parcelhusgrund:
             class: AppBundle\Entity\Grund
             templates: *default_parcelhus_templates
 
             list:
-                title: 'Fremtidige Storparceller'
-                dql_filter: entity.grundtype = 'Storparcel' AND (entity.status='Fremtidig')
+                title: 'Fremtidige Parcelhusgrunde'
+                dql_filter: entity.grundtype = 'Parcelhusgrund' AND (entity.status='Fremtidig')
 
                 # Import default values
                 <<: *parcelhus_default_list
 
-            edit: *storparcel_default_edit
-            form: *storparcel_default_form
+            edit: *parcelhusgrund_default_edit
+            form: *parcelhusgrund_default_form
 
-        annoncerede_storparceller:
+        annoncerede_parcelhusgrund:
             class: AppBundle\Entity\Grund
             templates: *default_parcelhus_templates
 
             list:
-                title: 'Annoncerede Storparceller'
-                dql_filter: entity.grundtype = 'Storparcel' AND (entity.status='Annoncerede')
+                title: 'Annoncerede Parcelhusgrunde'
+                dql_filter: entity.grundtype = 'Parcelhusgrund' AND (entity.status='Annoncerede')
 
                 # Import default values
                 <<: *parcelhus_default_list
 
-            edit: *storparcel_default_edit
-            form: *storparcel_default_form
+            edit: *parcelhusgrund_default_edit
+            form: *parcelhusgrund_default_form
 
-        auktionslut_storparceller:
+        auktionslut_parcelhusgrund:
             class: AppBundle\Entity\Grund
             templates: *default_parcelhus_templates
 
             list:
-                title: 'Auktion slut Storparceller'
-                dql_filter: entity.grundtype = 'Storparcel' AND entity.status='Auktion slut' AND entity.salgstatus != 'Solgt' AND entity.salgstatus != 'Accepteret' AND entity.salgstatus != 'Skøde rekvireret' AND entity.salgstatus != 'Skøde annulleret'
+                title: 'Auktion slut Parcelhusgrunde'
+                dql_filter: entity.grundtype = 'Parcelhusgrund' AND entity.status='Auktion slut' AND entity.salgstatus != 'Solgt' AND entity.salgstatus != 'Accepteret' AND entity.salgstatus != 'Skøde rekvireret' AND entity.salgstatus != 'Skøde annulleret'
 
                 # Import default values
                 <<: *parcelhus_default_list
 
-            edit: *storparcel_default_edit
-            form: *storparcel_default_form
+            edit: *parcelhusgrund_default_edit
+            form: *parcelhusgrund_default_form
 
-        ledige_storparceller:
+        ledige_parcelhusgrund:
             class: AppBundle\Entity\Grund
             templates: *default_parcelhus_templates
 
             list:
-                title: 'Ledige Storparceller'
-                dql_filter: entity.grundtype = 'Storparcel' AND entity.status='Ledig' AND (entity.salgstatus IS NULL OR entity.salgstatus = 'Ledig')
+                title: 'Ledige Parcelhusgrunde'
+                dql_filter: entity.grundtype = 'Parcelhusgrund' AND entity.status='Ledig' AND (entity.salgstatus IS NULL OR entity.salgstatus = 'Ledig')
 
                 # Import default values
                 <<: *parcelhus_default_list
 
-            edit: *storparcel_default_edit
-            form: *storparcel_default_form
+            edit: *parcelhusgrund_default_edit
+            form: *parcelhusgrund_default_form
 
-        tilbud_storparceller:
+        tilbud_parcelhusgrund:
             class: AppBundle\Entity\Grund
             templates: *default_parcelhus_templates
 
             list:
-                title: 'Tilbud Storparceller'
-                dql_filter: entity.grundtype = 'Storparcel' AND entity.status='Ledig' AND (entity.salgstatus = 'Reserveret' OR entity.salgstatus = 'Reservation annulleret' OR entity.salgstatus = 'Tilbud sendt' OR entity.salgstatus = 'Tilbud annulleret')
+                title: 'Tilbud Parcelhusgrunde'
+                dql_filter: entity.grundtype = 'Parcelhusgrund' AND entity.status='Ledig' AND (entity.salgstatus = 'Reserveret' OR entity.salgstatus = 'Reservation annulleret' OR entity.salgstatus = 'Tilbud sendt' OR entity.salgstatus = 'Tilbud annulleret')
 
                 # Import default values
                 <<: *parcelhus_default_list
 
-            edit: *storparcel_default_edit
-            form: *storparcel_default_form
+            edit: *parcelhusgrund_default_edit
+            form: *parcelhusgrund_default_form
 
-        accepterede_storparceller:
+        accepterede_parcelhusgrund:
             class: AppBundle\Entity\Grund
             templates: *default_parcelhus_templates
 
             list:
-                title: 'Accepterede Storparceller'
-                dql_filter: entity.grundtype = 'Storparcel' AND (entity.status='Ledig' OR entity.status='Auktion Slut') AND (entity.salgstatus = 'Accepteret' OR entity.salgstatus = 'Skøde rekvireret' OR entity.salgstatus = 'Skøde annulleret')
+                title: 'Accepterede Parcelhusgrunde'
+                dql_filter: entity.grundtype = 'Parcelhusgrund' AND (entity.status='Ledig' OR entity.status='Auktion Slut') AND (entity.salgstatus = 'Accepteret' OR entity.salgstatus = 'Skøde rekvireret' OR entity.salgstatus = 'Skøde annulleret')
 
                 # Import default values
                 <<: *parcelhus_default_list
 
-            edit: *storparcel_default_edit
-            form: *storparcel_default_form
+            edit: *parcelhusgrund_default_edit
+            form: *parcelhusgrund_default_form
 
-        betalte_storparceller:
+        betalte_parcelhusgrund:
             class: AppBundle\Entity\Grund
             templates: *default_parcelhus_templates
 
             list:
-                title: 'Betalte Storparceller'
-                dql_filter: entity.grundtype = 'Storparcel' AND entity.salgstatus = 'Solgt'
+                title: 'Betalte Parcelhusgrunde'
+                dql_filter: entity.grundtype = 'Parcelhusgrund' AND entity.salgstatus = 'Solgt'
 
                 # Import default values
                 <<: *parcelhus_default_list
 
-            edit: *storparcel_default_edit
-            form: *storparcel_default_form
+            edit: *parcelhusgrund_default_edit
+            form: *parcelhusgrund_default_form
 
 
-        opfoelgning_storparceller:
+        opfoelgning_parcelhusgrund:
             class: AppBundle\Entity\Grund
             templates: *default_parcelhus_templates
 
             list:
                 title: 'Opfølgning'
-                dql_filter: entity.grundtype = 'Storparcel' AND ((entity.salgstatus = 'Reserveret' AND entity.resslut < CURRENT_DATE()) OR (entity.salgstatus = 'Tilbud sendt' AND entity.tilbudslut < CURRENT_DATE()))
+                dql_filter: entity.grundtype = 'Parcelhusgrund' AND ((entity.salgstatus = 'Reserveret' AND entity.resslut < CURRENT_DATE()) OR (entity.salgstatus = 'Tilbud sendt' AND entity.tilbudslut < CURRENT_DATE()))
 
                 # Import default values
                 <<: *parcelhus_default_list
 
-            edit: *storparcel_default_edit
-            form: *storparcel_default_form
+            edit: *parcelhusgrund_default_edit
+            form: *parcelhusgrund_default_form
