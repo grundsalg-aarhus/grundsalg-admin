@@ -9,6 +9,46 @@ action:
     show: Vis
     cancel: Annuller
 
+app:
+  grund:
+      annonceres: Annonceres
+      areal: Areal
+      arealkotelet: Koteletben
+      arealvej: Heraf vej
+      bruttoareal: Samlet areal
+      datoAnnonce: Annonce-dato
+      datoAnnonce1: 1. Annonce-dato
+      delareal: Delareal
+      ejerlav: Ejerlav
+      fastpris: Fastpris
+      gid: GID
+      grund: Grund
+      grundtype: Grundtype
+      landinspektoer: Landinspektør
+      lokalsamfund: Lokalsamfund
+      note: Note
+      postby: Postnr/By
+      priser: Priser
+      prism2: Pris pr. m²
+      psp: PSP
+      salgsomraade: Salgsomr.
+      salgstatus: Status
+      salgstype: Salgstype
+      tilsluttet: Tilsluttet
+      tilsluttet_header: Prisen indeholder helt eller delvis tilslutning til
+      urlgis: GIS-kort URL
+      vej: Vej
+
+  meta:
+      created_at: Oprettet den
+      created_by: af
+      updated_at: Redigeret den
+      updated_by: af
+
+  salgsomraade:
+      salgsomraade: Salgsområde
+      titel: Titel
+
 label:
     yes: ja
     no: nej
@@ -17,12 +57,7 @@ label:
 
 label.null: '–'
 
-# Grund
-Dato annonce: Dato
-Dato annonce1: 1. Dato
-Postby.city: By
-Postby.postalcode: Postnr.
-Salgsomraade: Salgsområde
-Salgsomraade.titel: Salgsområde
-Salgsomraade.lokalplan.nr: Lokalplan
-#vis_andregrunde: Grund
+# If we use the 'form_label' widget directly the EasyAdmin 'label' value is not used
+Bogstav: Bogst.
+Husnummer: Husnr.
+Urlgis: GIS-kort

@@ -8,6 +8,10 @@ easy_admin:
         templates:
             layout: 'easy_admin/layout.html.twig'
 
+        assets:
+            css:
+                - '/css/grundsalg-styles.css'
+
         menu:
             - label: 'Parcelhusgrunde'
               icon: 'home'

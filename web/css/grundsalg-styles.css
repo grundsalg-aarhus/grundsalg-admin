@@ -1,0 +1,16 @@
+span.form-control, span.form-inline .form-control {
+  border: 1px solid #FFF;
+}
+
+.meta-box {
+  color: #777;
+}
+
+.meta-label {
+  font-weight: bold;
+  padding: 0 1em 0 2em;
+}
+
+.meta-label:first-child {
+  padding: 0 1em 0 0;
+}

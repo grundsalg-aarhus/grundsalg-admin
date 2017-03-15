@@ -8,7 +8,7 @@ easy_admin:
             templates: &default_parcelhus_templates
                 # Twig namespace template syntax
                 list: 'easy_admin/list.html.twig'
-                edit: 'easy_admin/grund.html.twig'
+                edit: 'easy_admin/grund/edit.html.twig'
             list: &parcelhus_default_list
                 title: 'Alle Parcelhusgrunde'
                 sort: postby
@@ -32,51 +32,37 @@ easy_admin:
 
             form: &parcelhusgrund_default_form
                 fields:
-                    - { type: 'group', css_class: 'col-sm-6', label: 'Salgsområde' }
-                    - { property: 'salgsomraade'}
+                    - { property: 'salgsomraade', label: 'app.grund.salgsomraade' }
 
-                    - { type: 'group', css_class: 'col-sm-6', label: 'Annonceres' }
-                    - { property: 'annonceres' }
-                    - { property: 'datoAnnonce', type: 'date', type_options: { widget: 'single_text' } }
-                    - { property: 'datoAnnonce1', type: 'date', type_options: { widget: 'single_text' } }
+                    - { property: 'landinspektoer', label: 'app.grund.landinspektoer' }
 
-                    - { type: 'group', css_class: 'col-sm-6 new-row', label: 'Adresse' }
-                    - { property: 'gid', readonly: true, type_options: { disabled: true } }
-                    - { type: 'section', label: 'Matrikel' }
-                    - { property: 'mnr' }
-                    - { property: 'mnr2' }
-                    - { property: 'delareal' }
-                    - { property: 'ejerlav' }
-                    - { type: 'section', label: 'Adresse' }
-                    - { property: 'vej' }
-                    - { property: 'husnummer' }
-                    - { property: 'bogstav' }
-                    - { property: 'postby' }
-                    - { property: 'lokalsamfund' }
-                    - { property: 'urlgis' }
+                    - { property: 'mnr', label: 'app.grund.mnr' }
+                    - { property: 'mnr2', label: 'app.grund.mnr2' }
+                    - { property: 'delareal', label: 'app.grund.delareal' }
+                    - { property: 'ejerlav', label: 'app.grund.ejerlav' }
+                    - { property: 'vej', label: 'app.grund.vej' }
+                    - { property: 'husnummer', label: 'app.grund.husnummer' }
+                    - { property: 'bogstav', label: 'app.grund.bogstav' }
+                    - { property: 'postby', label: 'app.grund.postby' }
+                    - { property: 'lokalsamfund', label: 'app.grund.lokalsamfund' }
+                    - { property: 'urlgis', label: 'app.grund.urlgis' }
 
-                    - { type: 'group', css_class: 'col-sm-6', label: 'Status/Type' }
-                    - { property: 'grundtype' }
-                    - { property: 'status', readonly: true, type_options: { disabled: true } }
-                    - { property: 'salgstype' }
-                    - { property: 'tilsluttet' }
+                    - { property: 'annonceres', label: 'app.grund.annonceres' }
+                    - { property: 'datoAnnonce', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoAnnonce' }
+                    - { property: 'datoAnnonce1', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoAnnonce1' }
 
-                    - { type: 'group', css_class: 'col-sm-6', label: 'Priser' }
-                    - { property: 'areal' }
-                    - { property: 'arealvej' }
-                    - { property: 'arealkotelet' }
-                    - { property: 'arealkotelet' }
-                    - { property: 'bruttoareal', readonly: true, type_options: { disabled: true } }
-                    - { property: 'fastpris' }
+                    - { property: 'grundtype', label: 'app.grund.grundtype' }
+                    - { property: 'salgstype', label: 'app.grund.salgstype' }
+                    - { property: 'tilsluttet', label: 'app.grund.tilsluttet' }
 
-                    - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Note' }
-                    - { property: 'note' }
+                    - { property: 'areal', label: 'app.grund.areal' }
+                    - { property: 'arealvej', label: 'app.grund.arealvej' }
+                    - { property: 'arealkotelet', label: 'app.grund.arealkotelet' }
+                    - { property: 'bruttoareal', label: 'app.grund.bruttoareal', readonly: true, type_options: { disabled: true } }
+                    - { property: 'prism2', label: 'app.grund.prism2' }
+                    - { property: 'fastpris', label: 'app.grund.fastpris' }
 
-                    - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Redigeret' }
-                    - { property: 'createdBy', type: 'text', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true } }
-                    - { property: 'updatedBy', type: 'text', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true } }
-                    - { property: 'createdAt', type: 'date', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true, widget: 'single_text' } }
-                    - { property: 'updatedAt', type: 'date', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true, widget: 'single_text' } }
+                    - { property: 'note', label: 'app.grund.note' }
 
         vis_parcelhusgrund:
             class: AppBundle\Entity\Grund

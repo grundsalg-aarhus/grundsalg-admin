@@ -1,0 +1,392 @@
+{% extends "@EasyAdmin/default/edit.html.twig" %}
+
+{% macro entity_value(label, field) %}
+  <div class="form-group field-entity">
+    <label class="col-sm-2 control-label">{{ label | trans }}</label>
+    <div class="col-sm-10">
+      <span class="form-control">{{ field }}</span>
+    </div>
+  </div>
+{% endmacro %}
+
+{% macro custom_label(field) %}
+  {% set label_attr = field.vars.label_attr %}
+  {% set translation_domain = field.vars.translation_domain %}
+  {% set label = field.vars.easyadmin.field.label %}
+  <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}</label>
+{% endmacro %}
+
+{% import _self as grundsalg %}
+
+{% block main %}
+
+  {#{{ dump() }}#}
+  {#{{ dump(form) }}#}
+
+  {{ form_start(form) }}
+
+  {# We are bypassing some Easyadmin init functions so we need to set some variables manually #}
+  {% set easyadmin = {'entity': _entity_config, 'view': 'edit', 'item': entity } %}
+  {% set easyadmin_form_groups = form.vars['easyadmin_form_groups'] %}
+
+  {# Begin default widget #}
+  {% set _translation_domain = easyadmin.entity.translation_domain %}
+  {% set _trans_parameters = { '%entity_name%':  easyadmin.entity.name|trans, '%entity_label%': easyadmin.entity.label|trans } %}
+
+  {% if form.vars.errors|length > 0 %}
+    {{ form_errors(form) }}
+  {% endif %}
+
+  <input type="hidden" name="referer" value="{{ app.request.query.get('referer', '') }}"/>
+
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Grundoplysninger</a></li>
+      <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Lokalplan m.v.</a></li>
+      <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">Landinspektør</a></li>
+      <li class=""><a href="#tab_4" data-toggle="tab" aria-expanded="false">Salg</a></li>
+      <li class=""><a href="#tab_5" data-toggle="tab" aria-expanded="false">Venteliste</a></li>
+      <li class=""><a href="#tab_6" data-toggle="tab" aria-expanded="false">Historiske salg</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="tab_1">
+
+        <div class="row">
+
+          <div class="field-group col-xs-12">
+            <div class="box box-default">
+              <div class="box-header with-border">
+                <h3 class="box-title">{{ 'app.salgsomraade.salgsomraade' | trans }}</h3>
+              </div>
+              <div class="box-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    {{ form_row(form.salgsomraade) }}
+                  </div>
+                  <div class="col-md-6">
+                    {{ grundsalg.entity_value('app.grund.psp', entity.salgsomraade.sagsnr ) }}
+                  </div>
+                  <div class="col-md-6">
+                    {{ grundsalg.entity_value('app.salgsomraade.titel', entity.salgsomraade.titel ) }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field-group col-xs-12">
+            <div class="box box-default">
+              <div class="box-header with-border">
+                <h3 class="box-title">{{ 'app.grund.grund' | trans }}</h3>
+              </div>
+              <div class="box-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    {{ grundsalg.entity_value('app.grund.gid', entity.gid ) }}
+                    {{ form_row(form.grundtype) }}
+
+                    <div class="form-group field-text">
+                      {{ form_label(form.mnr) }}
+                      <div class="col-sm-5">{{ form_widget(form.mnr) }}</div>
+                      <div class="col-sm-5">{{ form_widget(form.mnr2) }}</div>
+                    </div>
+
+                    {{ form_row(form.delareal) }}
+                    {{ form_row(form.ejerlav) }}
+                    {{ form_row(form.vej) }}
+
+                    <div class="form-group field-text">
+                      {{ form_label(form.husnummer) }}
+                      <div class="col-sm-3">{{ form_widget(form.husnummer) }}</div>
+                      {{ form_label(form.bogstav) }}
+                      <div class="col-sm-5">{{ form_widget(form.bogstav) }}</div>
+                    </div>
+
+                    {{ form_row(form.postby) }}
+                    {{ form_row(form.lokalsamfund) }}
+                    <div class="form-group field-text">
+                      {{ form_label(form.urlgis) }}
+                      <div class="col-sm-10">{{ form_widget(form.urlgis) }}</div>
+                    </div>
+                    <div class="form-group field-text">
+                      <div class="col-sm-10 col-md-offset-2"><a href="{{ entity.urlgis }}" target="_blank" class="btn btn-default"><i class="fa fa-external-link-square"></i> {{ 'action.show' | trans }}</a></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    {{ grundsalg.entity_value('app.grund.salgstatus', entity.salgstatus ) }}
+                    {{ form_row(form.salgstype) }}
+
+                    <div class="field-section ">
+                      <h2>
+                        {{ 'app.grund.annonceres' | trans }}
+                      </h2>
+                    </div>
+                    {{ form_row(form.annonceres) }}
+                    {{ form_row(form.datoAnnonce) }}
+                    {{ form_row(form.datoAnnonce1) }}
+
+                    <div class="field-section ">
+                      <h2>
+                        {{ 'app.grund.tilsluttet_header' | trans }}
+                      </h2>
+                    </div>
+
+                    {{ form_row(form.tilsluttet) }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field-group col-xs-12">
+            <div class="box box-default">
+              <div class="box-header with-border">
+                <h3 class="box-title">{{ 'app.grund.priser' | trans }}</h3>
+              </div>
+              <div class="box-body">
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="col-xs-3">
+                      <div class="form-group field-text">
+                        {{ grundsalg.custom_label( form.areal ) }}
+                        {{ form_widget(form.areal) }}
+                      </div>
+                    </div>
+                    <div class="col-xs-3">
+                      <div class="form-group field-text">
+                        {{ grundsalg.custom_label( form.arealvej ) }}
+                        {{ form_widget(form.arealvej) }}
+                      </div>
+                    </div>
+                    <div class="col-xs-3">
+                      <div class="form-group field-text">
+                        {{ grundsalg.custom_label( form.arealkotelet ) }}
+                        {{ form_widget(form.arealkotelet) }}
+                      </div>
+                    </div>
+                    <div class="col-xs-3">
+                      <div class="form-group field-text">
+                        {{ grundsalg.custom_label( form.bruttoareal ) }}
+                        {{ form_widget(form.bruttoareal) }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="col-xs-6">
+                      <div class="form-group field-text">
+                        {{ grundsalg.custom_label( form.prism2 ) }}
+                        {{ form_widget(form.prism2) }}
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="form-group field-text">
+                        {{ grundsalg.custom_label( form.fastpris ) }}
+                        {{ form_widget(form.fastpris) }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field-group col-xs-12">
+            <div class="box box-default">
+              <div class="box-header with-border">
+                <h3 class="box-title">{{ 'app.grund.note' | trans }}</h3>
+              </div>
+              <div class="box-body">
+                <div class="row">
+                  <div class="col-xs-12">
+                    {{ form_row( form.note ) }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- /.tab-pane -->
+      <div class="tab-pane" id="tab_2">
+        <div class="row">
+
+          {# Lokalplan #}
+          <div class="field-group col-xs-12 col-sm-6">
+            <div class="box box-default">
+              <div class="box-header with-border">
+                <h3 class="box-title">
+                  Lokalplan
+                </h3>
+              </div>
+
+              <div class="box-body">
+                <dl class="dl-horizontal">
+                  <dt>LP</dt>
+                  <dd>{{ entity.salgsomraade.lokalplan.nr }}</dd>
+                  <dt>Titel</dt>
+                  <dd>{{ entity.salgsomraade.lokalplan.titel }}</dd>
+                  <dt>Projektleder</dt>
+                  <dd>{{ entity.salgsomraade.lokalplan.projektleder }}</dd>
+                  <dt>Tlf. nr.</dt>
+                  <dd>{{ entity.salgsomraade.lokalplan.telefon }}</dd>
+                  <dd>
+                    <br>
+                    <a class="btn btn default" href="{{ path('easyadmin', parameters = {'action': 'edit', 'entity': 'lokalplan', 'id': entity.salgsomraade.lokalplan.id}) }}">Vis Lokalplan</a>
+                  </dd>
+                </dl>
+              </div>
+            </div>
+          </div>
+
+          {# Delomraade #}
+          <div class="field-group col-xs-12 col-sm-6">
+            <div class="box box-default">
+              <div class="box-header with-border">
+                <h3 class="box-title">
+                  Delområde
+                </h3>
+              </div>
+
+              <div class="box-body">
+
+                <dl class="dl-horizontal">
+                  <dt>LP-område</dt>
+                  <dd>{{ entity.salgsomraade.delomraade.o1 }}-{{ entity.salgsomraade.delomraade.o2 }}.{{ entity.salgsomraade.delomraade.o3 }}</dd>
+                  <dt>KPL</dt>
+                  <dd>{{ entity.salgsomraade.delomraade.kpl1 }}.{{ entity.salgsomraade.delomraade.kpl2 }}.{{ entity.salgsomraade.delomraade.kpl3 }}.{{ entity.salgsomraade.delomraade.kpl4 }}</dd>
+                  <dt>Anvendelse</dt>
+                  <dd>{{ entity.salgsomraade.delomraade.anvendelse }}</dd>
+                  <dt>Mulighed for</dt>
+                  <dd>{{ entity.salgsomraade.delomraade.mulighedfor }}</dd>
+                </dl>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- /.tab-pane -->
+      <div class="tab-pane" id="tab_3">
+        <div class="row">'
+          <div class="field-group col-xs-12">
+            <div class="box box-default">
+              <div class="box-header with-border">
+                <h3 class="box-title">
+                  {{ 'app.salgsomraade.salgsomraade' | trans }}
+                </h3>
+              </div>
+
+              <div class="box-body">
+
+                {{ form_row( form.landinspektoer ) }}
+
+                <div class="col-xs-12 ">
+                  <div class="field-divider">
+                    <hr>
+                  </div>
+
+                </div>
+
+                <dl class="dl-horizontal">
+                  <dt>Adresse</dt>
+                  <dd>{{ entity.landinspektoer ? entity.landinspektoer.adresse }}</dd>
+                  <dt>Postnr/By</dt>
+                  <dd>{{ entity.landinspektoer ? entity.landinspektoer.postby }}</dd>
+                  <dt>Tlf. nr.</dt>
+                  <dd>{{ entity.landinspektoer ? entity.landinspektoer.telefon }}</dd>
+                  <dt>Mobil</dt>
+                  <dd>{{ entity.landinspektoer ? entity.landinspektoer.mobil }}</dd>
+                  <dt>Email</dt>
+                  <dd>{{ entity.landinspektoer ? entity.landinspektoer.email }}</dd>
+                  {% if entity.landinspektoer %}
+                    <dd>
+                      <br>
+                      <a class="btn btn default" href="{{ path('easyadmin', parameters = {'action': 'edit', 'entity': 'landinspektoer', 'id': entity.landinspektoer.id }) }}">Vis Landinspektør</a>
+                    </dd>
+                  {% endif %}
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.tab-pane -->
+      <div class="tab-pane" id="tab_4">
+        4
+      </div>
+      <!-- /.tab-pane -->
+      <div class="tab-pane" id="tab_5">
+        5
+      </div>
+      <!-- /.tab-pane -->
+      <div class="tab-pane" id="tab_6">
+        6
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+  </div>
+
+
+  <div class="field-group col-xs-12">
+    <div class="box box-default meta-box">
+      <div class="box-body">
+        <div class="row">
+          <div class="col-sm-6">
+            <p>
+              <span class="meta-label">{{ 'app.meta.created_at' | trans }}:</span> {{ entity.createdAt | date('d-m-Y, H:i') }}
+              <span class="meta-label">{{ 'app.meta.created_by' | trans }}:</span> {{ entity.createdBy }}
+            </p>
+          </div>
+          <div class="col-sm-6">
+            <p>
+              <span class="meta-label">{{ 'app.meta.updated_at' | trans }}:</span> {{ entity.updatedAt | date('d-m-Y, H:i') }}
+              <span class="meta-label">{{ 'app.meta.updated_by' | trans }}:</span> {{ entity.updatedBy }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  {{ form_rest(form) }}
+
+  <div class="row">
+    <div class="col-xs-12 form-actions">
+      <div class="form-group">
+        <div id="form-actions-row">
+          {% block item_actions %}
+            {# the 'save' action is hardcoded for the 'edit' and 'new' views #}
+            <button type="submit" class="btn btn-primary action-save">
+              <i class="fa fa-save"></i> {{ 'action.save'|trans(_trans_parameters, _translation_domain) }}
+            </button>
+
+            {% set _entity_actions = (easyadmin.view == 'new')
+            ? easyadmin_get_actions_for_new_item(easyadmin.entity.name)
+            : easyadmin_get_actions_for_edit_item(easyadmin.entity.name) %}
+
+            {% set _entity_id = (easyadmin.view == 'new')
+            ? null
+            : attribute(easyadmin.item, easyadmin.entity.primary_key_field_name) %}
+
+            {% set _request_parameters = { entity: easyadmin.entity.name, referer: app.request.query.get('referer') } %}
+
+            {{ include('@EasyAdmin/default/includes/_actions.html.twig', {
+              actions: _entity_actions,
+              request_parameters: _request_parameters,
+              translation_domain: _translation_domain,
+              trans_parameters: _trans_parameters,
+              item_id: _entity_id
+            }, with_context = false) }}
+          {% endblock item_actions %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{ form_end(form) }}
+
+{% endblock %}

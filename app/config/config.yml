@@ -53,6 +53,9 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
 
+    date:
+        format: 'd-m-Y'
+
     number_format:
         decimals: 2
         decimal_point: ','

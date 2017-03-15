@@ -637,6 +637,6 @@ class Salgsomraade
    */
   public function __toString()
   {
-    return $this->titel;
+    return $this->nr;
   }
 }
