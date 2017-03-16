@@ -21,7 +21,7 @@
         <div class="{{ block('form_group_class') }}">
             {{ form_widget(form) }}
 
-            {% if _field_type in ['datetime', 'date', 'time', 'birthday'] and easyadmin.field.nullable|default(false) and easyadmin.field.readonly is not same as(true) %}
+            {% if _field_type in ['datetime', 'date', 'time', 'birthday'] and easyadmin.field.nullable|default(false) and easyadmin.field.readonly is defined and easyadmin.field.readonly is not same as(true) %}
                 <div class="nullable-control">
                     <label>
                         <input type="checkbox" {% if data is null %}checked="checked"{% endif %}>
