@@ -53,6 +53,7 @@ app:
       oplysninger: Grundoplysninger
       overtagelse: Overtagelse
       postby: Postnr/By
+      pris: Pris
       priser: Priser
       prism2: Pris pr. m²
       psp: PSP
@@ -78,11 +79,18 @@ app:
       createdAt: Oprettet
       navn: Navn
 
+  lokalplan:
+      nr: Nr.
+
   meta:
       created_at: Oprettet den
       created_by: af
       updated_at: Redigeret den
       updated_by: af
+
+  postby:
+      city: By
+      postalcode: Postnr.
 
   salgshistorik:
       navn: Navn
@@ -90,6 +98,7 @@ app:
       createdAt: Oprettet
 
   salgsomraade:
+      nr: Nr.
       salgsomraade: Salgsområde
       titel: Titel
 

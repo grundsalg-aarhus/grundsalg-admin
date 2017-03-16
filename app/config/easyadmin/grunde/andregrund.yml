@@ -16,16 +16,16 @@ easy_admin:
                 actions:
                     <<: *default_list_actions
                 fields:
-                    - vej
-                    - {property: husnummer, css_class: 'text-right', format: '%.0f' }
-                    - {property: postby.postalcode, css_class: 'text-right'}
-                    - postby.city
-                    - { property: 'annonceres' }
-                    - salgsomraade.titel
-                    - salgsomraade.lokalplan.nr
-                    - salgstype
-                    - {property: areal, css_class: 'text-right', format: '%.0f' }
-                    - {property: pris, css_class: 'text-right' }
+                    - { property: vej, label: 'app.grund.vej' }
+                    - { property: husnummer, label: 'app.grund.husnummer', css_class: 'text-right', format: '%.0f' }
+                    - { property: postby.postalcode, css_class: 'text-right', label: 'app.postby.postalcode' }
+                    - { property: postby.city, label: 'app.postby.city' }
+                    - { property: annonceres, label: 'app.grund.annonceres' }
+                    - { property: salgsomraade.titel, label: 'app.grund.salgsomraade' }
+                    - { property: salgsomraade.lokalplan.nr, label: 'app.lokalplan.nr' }
+                    - { property: salgstype, label: 'app.grund.salgstype' }
+                    - { property: areal, label: 'app.grund.areal', css_class: 'text-right', format: '%.0f' }
+                    - { property: pris, label: 'app.grund.pris', css_class: 'text-right' }
 
             edit: &andregrund_default_edit
                 title: 'Rediger Grund'
