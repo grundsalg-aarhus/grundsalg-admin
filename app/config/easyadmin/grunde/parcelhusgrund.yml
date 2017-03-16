@@ -64,6 +64,33 @@ easy_admin:
 
                     - { property: 'note', label: 'app.grund.note' }
 
+                    - { property: 'resstart', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.resstart' }
+                    - { property: 'resslut', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.resslut' }
+                    - { property: 'tilbudstart', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.tilbudstart' }
+                    - { property: 'tilbudslut', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.tilbudslut' }
+                    - { property: 'accept', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.accept' }
+                    - { property: 'overtagelse', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.overtagelse' }
+                    - { property: 'skoederekv', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.skoederekv' }
+                    - { property: 'beloebanvist', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.beloebanvist' }
+
+                    - { property: 'koeberNavn', label: 'app.grund.koeberNavn' }
+                    - { property: 'koeberAdresse', label: 'app.grund.koeberAdresse' }
+                    - { property: 'koeberPostby', label: 'app.grund.koeberPostby' }
+                    - { property: 'koeberLand', label: 'app.grund.koeberLand' }
+                    - { property: 'koeberTelefon', label: 'app.grund.koeberTelefon' }
+                    - { property: 'koeberMobil', label: 'app.grund.koeberMobil' }
+                    - { property: 'koeberEmail', label: 'app.grund.koeberEmail' }
+
+                    - { property: 'medkoeberNavn', label: 'app.grund.medkoeberNavn' }
+                    - { property: 'medkoeberAdresse', label: 'app.grund.medkoeberAdresse' }
+                    - { property: 'medkoeberPostby', label: 'app.grund.medkoeberPostby' }
+                    - { property: 'medkoeberLand', label: 'app.grund.medkoeberLand' }
+                    - { property: 'medkoeberTelefon', label: 'app.grund.medkoeberTelefon' }
+                    - { property: 'medkoeberMobil', label: 'app.grund.medkoeberMobil' }
+                    - { property: 'medkoeberEmail', label: 'app.grund.medkoeberEmail' }
+
+                    - { property: 'koeberNotat', label: 'app.grund.koeberNotat' }
+
         vis_parcelhusgrund:
             class: AppBundle\Entity\Grund
             templates: *default_parcelhus_templates

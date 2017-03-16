@@ -49,7 +49,7 @@
       <li class=""><a href="#tab_6" data-toggle="tab" aria-expanded="false">Historiske salg</a></li>
     </ul>
     <div class="tab-content">
-      <div class="tab-pane active" id="tab_1">
+      <div class="tab-pane" id="tab_1">
 
         <div class="row">
 
@@ -268,7 +268,7 @@
       </div>
       <!-- /.tab-pane -->
       <div class="tab-pane" id="tab_3">
-        <div class="row">'
+        <div class="row">
           <div class="field-group col-xs-12">
             <div class="box box-default">
               <div class="box-header with-border">
@@ -312,9 +312,120 @@
         </div>
       </div>
       <!-- /.tab-pane -->
-      <div class="tab-pane" id="tab_4">
-        4
+      <div class="tab-pane active" id="tab_4">
+        <div class="row">
+          <div class="field-group col-xs-12">
+            <div class="box box-default">
+              <div class="box-header with-border">
+                <h3 class="box-title">
+                  {{ 'app.grund.salg' | trans }}
+                </h3>
+              </div>
+
+              <div class="box-body">
+
+                <div class="row">
+                  <div class="col-md-6">
+                    {{ form_row(form.resstart) }}
+                  </div>
+                  <div class="col-md-6">
+                    {{ form_row(form.resslut) }}
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    {{ form_row(form.tilbudstart) }}
+                  </div>
+                  <div class="col-md-6">
+                    {{ form_row(form.tilbudslut) }}
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    {{ form_row(form.accept) }}
+                  </div>
+                  <div class="col-md-6">
+                    {{ form_row(form.overtagelse) }}
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    {{ form_row(form.skoederekv) }}
+                    {{ form_row(form.beloebanvist) }}
+                    {{ grundsalg.entity_value('app.grund.salgsprisumoms', entity.salgsprisumoms ) }}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field-group col-md-6">
+            <div class="box box-default">
+              <div class="box-header with-border">
+                <h3 class="box-title">
+                  {{ 'app.grund.koeber' | trans }}
+                </h3>
+              </div>
+
+              <div class="box-body">
+                {{ form_row(form.koeberNavn) }}
+                {{ form_row(form.koeberAdresse) }}
+                {{ form_row(form.koeberPostby) }}
+                {{ form_row(form.koeberLand) }}
+                {{ form_row(form.koeberTelefon) }}
+                {{ form_row(form.koeberMobil) }}
+                {{ form_row(form.koeberEmail) }}
+              </div>
+            </div>
+          </div>
+
+          <div class="field-group col-md-6">
+            <div class="box box-default">
+              <div class="box-header with-border">
+                <h3 class="box-title">
+                  {{ 'app.grund.medkoeber' | trans }}
+                </h3>
+              </div>
+
+              <div class="box-body">
+                {{ form_row(form.medkoeberNavn) }}
+                {{ form_row(form.medkoeberAdresse) }}
+                {{ form_row(form.medkoeberPostby) }}
+                {{ form_row(form.medkoeberLand) }}
+                {{ form_row(form.medkoeberTelefon) }}
+                {{ form_row(form.medkoeberMobil) }}
+                {{ form_row(form.medkoeberEmail) }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="field-group col-xs-12">
+            <div class="box box-default">
+              <div class="box-header with-border">
+                <h3 class="box-title">
+                  {{ 'app.grund.koeberNotat' | trans }}
+                </h3>
+              </div>
+
+              <div class="box-body">
+                {{ form_row(form.koeberNotat) }}
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
+
+
       <!-- /.tab-pane -->
       <div class="tab-pane" id="tab_5">
         5

@@ -11,10 +11,13 @@ action:
 
 app:
   grund:
+      accept: Accept
       annonceres: Annonceres
       areal: Areal
       arealkotelet: Koteletben
       arealvej: Heraf vej
+      beloebanvist: Beløb anvist
+      bogstav: Bogstav
       bruttoareal: Samlet areal
       datoAnnonce: Annonce-dato
       datoAnnonce1: 1. Annonce-dato
@@ -24,16 +27,42 @@ app:
       gid: GID
       grund: Grund
       grundtype: Grundtype
+      husnummer: Husnr.
+      koeber: Køber
+      koeberAdresse: Adresse
+      koeberEmail: Email
+      koeberLand: Land
+      koeberMobil: Mobil
+      koeberNavn: Navn
+      koeberNotat: Notat
+      koeberPostby: Post/By
+      koeberTelefon: Telefon
       landinspektoer: Landinspektør
       lokalsamfund: Lokalsamfund
+      medkoeber: Medkøber
+      medkoeberAdresse: Adresse
+      medkoeberEmail: Email
+      medkoeberLand: Land
+      medkoeberMobil: Mobil
+      medkoeberNavn: Navn
+      medkoeberPostby: Post/By
+      medkoeberTelefon: Telefon
       note: Note
+      overtagelse: Overtagelse
       postby: Postnr/By
       priser: Priser
       prism2: Pris pr. m²
       psp: PSP
+      resslut: til og med
+      resstart: Reservation
+      salg: Salg
       salgsomraade: Salgsomr.
+      salgsprisumoms: Salgspris excl. moms
       salgstatus: Status
       salgstype: Salgstype
+      skoederekv: Skøde rekv.
+      tilbudslut: til og med
+      tilbudstart: Tilbud
       tilsluttet: Tilsluttet
       tilsluttet_header: Prisen indeholder helt eller delvis tilslutning til
       urlgis: GIS-kort URL
