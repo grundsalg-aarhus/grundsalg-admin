@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OneToMany;
 
 /**
  * Grund
@@ -521,6 +522,13 @@ class Grund {
   private $koeberPostby;
 
   /**
+   * @var \AppBundle\Entity\Reservation
+   *
+   * @OneToMany(targetEntity="Reservation", mappedBy="grund")
+   */
+  private $reservationer;
+
+  /**
    * @var \AppBundle\Entity\Lokalsamfund
    *
    * @ORM\ManyToOne(targetEntity="Lokalsamfund")
@@ -567,6 +575,10 @@ class Grund {
    * @ORM\Column(name="pdflink", type="string", length=255, nullable=true)
    */
   private $pdfLink;
+
+  public function __construct() {
+    $this->reservationer = new ArrayCollection();
+  }
 
   /**
    * Get id
@@ -2087,6 +2099,20 @@ class Grund {
    */
   public function getKoeberPostby() {
     return $this->koeberPostby;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getReservationer() {
+    return $this->reservationer;
+  }
+
+  /**
+   * @param mixed $reservationer
+   */
+  public function setReservationer($reservationer) {
+    $this->reservationer = $reservationer;
   }
 
   /**

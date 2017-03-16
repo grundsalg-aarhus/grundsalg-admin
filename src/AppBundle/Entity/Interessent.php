@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OneToMany;
 
 /**
  * Interessent
@@ -138,6 +139,16 @@ class Interessent
    */
   private $koeberPostby;
 
+  /**
+   * @var \AppBundle\Entity\Reservation
+   *
+   * @OneToMany(targetEntity="Reservation", mappedBy="interessent")
+   */
+  private $reservationer;
+
+  public function __construct() {
+    $this->reservationer = new ArrayCollection();
+  }
 
   /**
    * Get id
@@ -513,4 +524,19 @@ class Interessent
   {
     return $this->navn . " / " . $this->navn1;
   }
+
+  /**
+   * @return \AppBundle\Entity\Reservation
+   */
+  public function getReservationer(): \AppBundle\Entity\Reservation {
+    return $this->reservationer;
+  }
+
+  /**
+   * @param \AppBundle\Entity\Reservation $reservationer
+   */
+  public function setReservationer(\AppBundle\Entity\Reservation $reservationer) {
+    $this->reservationer = $reservationer;
+  }
+
 }
