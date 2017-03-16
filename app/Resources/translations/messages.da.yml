@@ -68,6 +68,12 @@ app:
       urlgis: GIS-kort URL
       vej: Vej
 
+  interresent:
+      adresse: Adresse
+      annulleret: Annulleret
+      createdAt: Oprettet
+      navn: Navn
+
   meta:
       created_at: Oprettet den
       created_by: af
@@ -79,8 +85,8 @@ app:
       titel: Titel
 
 label:
-    yes: ja
-    no: nej
+    yes: Ja
+    no: Nej
     form:
         empty_value: (tom)
 

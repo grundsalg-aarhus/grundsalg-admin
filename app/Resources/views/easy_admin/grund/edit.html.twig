@@ -312,7 +312,7 @@
         </div>
       </div>
       <!-- /.tab-pane -->
-      <div class="tab-pane active" id="tab_4">
+      <div class="tab-pane" id="tab_4">
         <div class="row">
           <div class="field-group col-xs-12">
             <div class="box box-default">
@@ -427,8 +427,27 @@
 
 
       <!-- /.tab-pane -->
-      <div class="tab-pane" id="tab_5">
-        5
+      <div class="tab-pane active" id="tab_5">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>{{ 'app.interresent.navn' | trans }}</th>
+            <th>{{ 'app.interresent.adresse' | trans }}</th>
+            <th>{{ 'app.interresent.createdAt' | trans }}</th>
+            <th>{{ 'app.interresent.annulleret' | trans }}</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for reservation in entity.reservationer %}
+          <tr>
+              <td>{{ reservation.interessent.navn }}</td>
+              <td>{{ reservation.interessent.adresse }}</td>
+              <td>{{ reservation.interessent.createdAt | date }}</td>
+              <td>{{ reservation.annulleret ? 'label.yes' | trans }}</td>
+          </tr>
+          {% endfor %}
+          </tbody>
+        </table>
       </div>
       <!-- /.tab-pane -->
       <div class="tab-pane" id="tab_6">
