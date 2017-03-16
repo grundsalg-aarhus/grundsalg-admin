@@ -41,12 +41,12 @@
 
   <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Grundoplysninger</a></li>
-      <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Lokalplan m.v.</a></li>
-      <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">Landinspektør</a></li>
-      <li class=""><a href="#tab_4" data-toggle="tab" aria-expanded="false">Salg</a></li>
-      <li class=""><a href="#tab_5" data-toggle="tab" aria-expanded="false">Venteliste</a></li>
-      <li class=""><a href="#tab_6" data-toggle="tab" aria-expanded="false">Historiske salg</a></li>
+      <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">{{ 'app.grund.oplysninger' | trans }}</a></li>
+      <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">{{ 'app.grund.lokalplan' | trans }}</a></li>
+      <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">{{ 'app.grund.landinspektoer' | trans }}</a></li>
+      <li class=""><a href="#tab_4" data-toggle="tab" aria-expanded="false">{{ 'app.grund.salg' | trans }}</a></li>
+      <li class=""><a href="#tab_5" data-toggle="tab" aria-expanded="false">{{ 'app.grund.venteliste' | trans }} ({{ entity.reservationer | length }})</a></li>
+      <li class=""><a href="#tab_6" data-toggle="tab" aria-expanded="false">{{ 'app.grund.historiskeSalg' | trans }} ({{ entity.salgshistorik | length }})</a></li>
     </ul>
     <div class="tab-content">
       <div class="tab-pane" id="tab_1">
@@ -427,31 +427,56 @@
 
 
       <!-- /.tab-pane -->
-      <div class="tab-pane active" id="tab_5">
-        <table class="table table-striped">
-          <thead>
-          <tr>
-            <th>{{ 'app.interresent.navn' | trans }}</th>
-            <th>{{ 'app.interresent.adresse' | trans }}</th>
-            <th>{{ 'app.interresent.createdAt' | trans }}</th>
-            <th>{{ 'app.interresent.annulleret' | trans }}</th>
-          </tr>
-          </thead>
-          <tbody>
-          {% for reservation in entity.reservationer %}
-          <tr>
-              <td>{{ reservation.interessent.navn }}</td>
-              <td>{{ reservation.interessent.adresse }}</td>
-              <td>{{ reservation.interessent.createdAt | date }}</td>
-              <td>{{ reservation.annulleret ? 'label.yes' | trans }}</td>
-          </tr>
-          {% endfor %}
-          </tbody>
-        </table>
+      <div class="tab-pane" id="tab_5">
+        <div class="row">
+          <div class="field-group col-xs-12">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th>{{ 'app.interresent.navn' | trans }}</th>
+                <th>{{ 'app.interresent.adresse' | trans }}</th>
+                <th>{{ 'app.interresent.createdAt' | trans }}</th>
+                <th>{{ 'app.interresent.annulleret' | trans }}</th>
+              </tr>
+              </thead>
+              <tbody>
+              {% for reservation in entity.reservationer %}
+                <tr>
+                  <td>{{ reservation.interessent.navn }}</td>
+                  <td>{{ reservation.interessent.adresse }}</td>
+                  <td>{{ reservation.interessent.createdAt | date }}</td>
+                  <td>{{ reservation.annulleret ? 'label.yes' | trans }}</td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
       <!-- /.tab-pane -->
-      <div class="tab-pane" id="tab_6">
-        6
+      <div class="tab-pane active" id="tab_6">
+        <div class="row">
+          <div class="field-group col-xs-12">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th>{{ 'app.salgshistorik.navn' | trans }}</th>
+                <th>{{ 'app.salgshistorik.status' | trans }}</th>
+                <th>{{ 'app.salgshistorik.createdAt' | trans }}</th>
+              </tr>
+              </thead>
+              <tbody>
+              {% for salg in entity.salgshistorik %}
+                <tr>
+                  <td>{{ salg.navn }}</td>
+                  <td>{{ salg.status }}</td>
+                  <td>{{ salg.createdAt | date }}</td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
       <!-- /.tab-pane -->
     </div>
@@ -479,8 +504,6 @@
       </div>
     </div>
   </div>
-
-
 
   {{ form_rest(form) }}
 

@@ -27,6 +27,7 @@ app:
       gid: GID
       grund: Grund
       grundtype: Grundtype
+      historiskeSalg: Historiske Salg
       husnummer: Husnr.
       koeber: Køber
       koeberAdresse: Adresse
@@ -38,6 +39,7 @@ app:
       koeberPostby: Post/By
       koeberTelefon: Telefon
       landinspektoer: Landinspektør
+      lokalplan: Lokalplan m.v.
       lokalsamfund: Lokalsamfund
       medkoeber: Medkøber
       medkoeberAdresse: Adresse
@@ -48,6 +50,7 @@ app:
       medkoeberPostby: Post/By
       medkoeberTelefon: Telefon
       note: Note
+      oplysninger: Grundoplysninger
       overtagelse: Overtagelse
       postby: Postnr/By
       priser: Priser
@@ -67,6 +70,7 @@ app:
       tilsluttet_header: Prisen indeholder helt eller delvis tilslutning til
       urlgis: GIS-kort URL
       vej: Vej
+      venteliste: Venteliste
 
   interresent:
       adresse: Adresse
@@ -79,6 +83,11 @@ app:
       created_by: af
       updated_at: Redigeret den
       updated_by: af
+
+  salgshistorik:
+      navn: Navn
+      status: Status
+      createdAt: Oprettet
 
   salgsomraade:
       salgsomraade: Salgsområde

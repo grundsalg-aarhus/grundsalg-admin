@@ -529,6 +529,13 @@ class Grund {
   private $reservationer;
 
   /**
+   * @var \AppBundle\Entity\Salgshistorik
+   *
+   * @OneToMany(targetEntity="Salgshistorik", mappedBy="grund")
+   */
+  private $salgshistorik;
+
+  /**
    * @var \AppBundle\Entity\Lokalsamfund
    *
    * @ORM\ManyToOne(targetEntity="Lokalsamfund")
@@ -578,6 +585,16 @@ class Grund {
 
   public function __construct() {
     $this->reservationer = new ArrayCollection();
+    $this->salgshistorik = new ArrayCollection();
+  }
+
+  /**
+   * Mainly used in form generation.
+   *
+   * @return string
+   */
+  public function __toString() {
+    return $this->getVej() . ' ' . $this->getHusnummer() . $this->getBogstav() . ($this->getZipcity() ? ', ' . $this->getZipcity() : '');
   }
 
   /**
@@ -2116,6 +2133,20 @@ class Grund {
   }
 
   /**
+   * @return mixed
+   */
+  public function getSalgshistorik() {
+    return $this->salgshistorik;
+  }
+
+  /**
+   * @param mixed $salgshistorik
+   */
+  public function setSalgshistorik($salgshistorik) {
+    $this->salgshistorik = $salgshistorik;
+  }
+
+  /**
    * Set lokalsamfund
    *
    * @param \AppBundle\Entity\Lokalsamfund $lokalsamfund
@@ -2216,15 +2247,6 @@ class Grund {
     }
 
     return NULL;
-  }
-
-  /**
-   * Mainly used in form generation.
-   *
-   * @return string
-   */
-  public function __toString() {
-    return $this->getVej() . ' ' . $this->getHusnummer() . $this->getBogstav() . ($this->getZipcity() ? ', ' . $this->getZipcity() : '');
   }
 
 }
