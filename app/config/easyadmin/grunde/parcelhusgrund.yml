@@ -31,6 +31,7 @@ easy_admin:
                 title: 'Rediger Parcelhusgrund'
 
             form: &parcelhusgrund_default_form
+                # Note: The custom edit template used overrides/ignores some of EasyAdmins config features
                 fields:
                     - { property: 'salgsomraade', label: 'app.grund.salgsomraade' }
 

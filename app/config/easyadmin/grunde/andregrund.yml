@@ -8,7 +8,7 @@ easy_admin:
             templates: &default_parcelhus_templates
                 # Twig namespace template syntax
                 list: 'easy_admin/list.html.twig'
-                edit: 'easy_admin/grund.html.twig'
+                edit: 'easy_admin/grund/edit.html.twig'
             list: &parcelhus_default_list
                 title: 'Alle Grunde'
                 sort: postby
@@ -31,52 +31,66 @@ easy_admin:
                 title: 'Rediger Grund'
 
             form: &andregrund_default_form
+                # Note: The custom edit template used overrides/ignores some of EasyAdmins config features
                 fields:
-                    - { type: 'group', css_class: 'col-sm-6', label: 'Salgsområde' }
-                    - { property: 'salgsomraade'}
+                    - { property: 'salgsomraade', label: 'app.grund.salgsomraade' }
 
-                    - { type: 'group', css_class: 'col-sm-6', label: 'Annonceres' }
-                    - { property: 'annonceres' }
-                    - { property: 'datoAnnonce', type: 'date', type_options: { widget: 'single_text' } }
-                    - { property: 'datoAnnonce1', type: 'date', type_options: { widget: 'single_text' } }
+                    - { property: 'landinspektoer', label: 'app.grund.landinspektoer' }
 
-                    - { type: 'group', css_class: 'col-sm-6 new-row', label: 'Adresse' }
-                    - { property: 'gid', readonly: true, type_options: { disabled: true } }
-                    - { type: 'section', label: 'Matrikel' }
-                    - { property: 'mnr' }
-                    - { property: 'mnr2' }
-                    - { property: 'delareal' }
-                    - { property: 'ejerlav' }
-                    - { type: 'section', label: 'Adresse' }
-                    - { property: 'vej' }
-                    - { property: 'husnummer' }
-                    - { property: 'bogstav' }
-                    - { property: 'postby' }
-                    - { property: 'lokalsamfund' }
-                    - { property: 'urlgis' }
+                    - { property: 'mnr', label: 'app.grund.mnr' }
+                    - { property: 'mnr2', label: 'app.grund.mnr2' }
+                    - { property: 'delareal', label: 'app.grund.delareal' }
+                    - { property: 'ejerlav', label: 'app.grund.ejerlav' }
+                    - { property: 'vej', label: 'app.grund.vej' }
+                    - { property: 'husnummer', label: 'app.grund.husnummer' }
+                    - { property: 'bogstav', label: 'app.grund.bogstav' }
+                    - { property: 'postby', label: 'app.grund.postby' }
+                    - { property: 'lokalsamfund', label: 'app.grund.lokalsamfund' }
+                    - { property: 'urlgis', label: 'app.grund.urlgis' }
 
-                    - { type: 'group', css_class: 'col-sm-6', label: 'Status/Type' }
-                    - { property: 'grundtype' }
-                    - { property: 'status', readonly: true, type_options: { disabled: true } }
-                    - { property: 'salgstype' }
-                    - { property: 'tilsluttet' }
+                    - { property: 'annonceres', label: 'app.grund.annonceres' }
+                    - { property: 'datoAnnonce', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoAnnonce' }
+                    - { property: 'datoAnnonce1', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoAnnonce1' }
 
-                    - { type: 'group', css_class: 'col-sm-6', label: 'Priser' }
-                    - { property: 'areal' }
-                    - { property: 'arealvej' }
-                    - { property: 'arealkotelet' }
-                    - { property: 'arealkotelet' }
-                    - { property: 'bruttoareal', readonly: true, type_options: { disabled: true } }
-                    - { property: 'fastpris' }
+                    - { property: 'grundtype', label: 'app.grund.grundtype' }
+                    - { property: 'salgstype', label: 'app.grund.salgstype' }
+                    - { property: 'tilsluttet', label: 'app.grund.tilsluttet' }
 
-                    - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Note' }
-                    - { property: 'note' }
+                    - { property: 'areal', label: 'app.grund.areal' }
+                    - { property: 'arealvej', label: 'app.grund.arealvej' }
+                    - { property: 'arealkotelet', label: 'app.grund.arealkotelet' }
+                    - { property: 'bruttoareal', label: 'app.grund.bruttoareal', readonly: true, type_options: { disabled: true } }
+                    - { property: 'prism2', label: 'app.grund.prism2' }
+                    - { property: 'fastpris', label: 'app.grund.fastpris' }
 
-                    - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Redigeret' }
-                    - { property: 'createdBy', type: 'text', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true } }
-                    - { property: 'updatedBy', type: 'text', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true } }
-                    - { property: 'createdAt', type: 'date', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true, widget: 'single_text' } }
-                    - { property: 'updatedAt', type: 'date', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true, widget: 'single_text' } }
+                    - { property: 'note', label: 'app.grund.note' }
+
+                    - { property: 'resstart', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.resstart' }
+                    - { property: 'resslut', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.resslut' }
+                    - { property: 'tilbudstart', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.tilbudstart' }
+                    - { property: 'tilbudslut', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.tilbudslut' }
+                    - { property: 'accept', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.accept' }
+                    - { property: 'overtagelse', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.overtagelse' }
+                    - { property: 'skoederekv', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.skoederekv' }
+                    - { property: 'beloebanvist', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.beloebanvist' }
+
+                    - { property: 'koeberNavn', label: 'app.grund.koeberNavn' }
+                    - { property: 'koeberAdresse', label: 'app.grund.koeberAdresse' }
+                    - { property: 'koeberPostby', label: 'app.grund.koeberPostby' }
+                    - { property: 'koeberLand', label: 'app.grund.koeberLand' }
+                    - { property: 'koeberTelefon', label: 'app.grund.koeberTelefon' }
+                    - { property: 'koeberMobil', label: 'app.grund.koeberMobil' }
+                    - { property: 'koeberEmail', label: 'app.grund.koeberEmail' }
+
+                    - { property: 'medkoeberNavn', label: 'app.grund.medkoeberNavn' }
+                    - { property: 'medkoeberAdresse', label: 'app.grund.medkoeberAdresse' }
+                    - { property: 'medkoeberPostby', label: 'app.grund.medkoeberPostby' }
+                    - { property: 'medkoeberLand', label: 'app.grund.medkoeberLand' }
+                    - { property: 'medkoeberTelefon', label: 'app.grund.medkoeberTelefon' }
+                    - { property: 'medkoeberMobil', label: 'app.grund.medkoeberMobil' }
+                    - { property: 'medkoeberEmail', label: 'app.grund.medkoeberEmail' }
+
+                    - { property: 'koeberNotat', label: 'app.grund.koeberNotat' }
 
         vis_andregrund:
             class: AppBundle\Entity\Grund
