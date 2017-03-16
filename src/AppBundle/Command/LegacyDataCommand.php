@@ -129,7 +129,7 @@ class LegacyDataCommand extends ContainerAwareCommand
       foreach ($rows as &$row) {
 
         foreach ($row as $key => &$item) {
-          $item = trim($item);
+          $item = is_string($item) ? trim($item) : $item;
         }
 
         // PostBy
