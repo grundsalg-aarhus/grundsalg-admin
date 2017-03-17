@@ -6,6 +6,7 @@ use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Grund
@@ -586,6 +587,7 @@ class Grund {
   public function __construct() {
     $this->reservationer = new ArrayCollection();
     $this->salgshistorik = new ArrayCollection();
+    $this->annonceres = false;
   }
 
   /**

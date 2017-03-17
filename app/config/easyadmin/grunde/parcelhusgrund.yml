@@ -9,6 +9,7 @@ easy_admin:
                 # Twig namespace template syntax
                 list: 'easy_admin/list.html.twig'
                 edit: 'easy_admin/grund/edit.html.twig'
+                new: 'easy_admin/grund/new.html.twig'
             list: &parcelhus_default_list
                 title: 'Alle Parcelhusgrunde'
                 sort: postby
@@ -28,7 +29,10 @@ easy_admin:
                     - { property: pris, label: 'app.grund.pris', css_class: 'text-right' }
 
             edit: &parcelhusgrund_default_edit
-                title: 'Rediger Parcelhusgrund'
+                title: 'Rediger Grund'
+
+            new: &parcelhusgrund_default_new
+                title: 'Opret Grund'
 
             form: &parcelhusgrund_default_form
                 # Note: The custom edit template used overrides/ignores some of EasyAdmins config features
@@ -104,6 +108,7 @@ easy_admin:
                 <<: *parcelhus_default_list
 
             edit: *parcelhusgrund_default_edit
+            new: *parcelhusgrund_default_new
             form: *parcelhusgrund_default_form
 
         fremtidige_parcelhusgrund:
@@ -118,6 +123,7 @@ easy_admin:
                 <<: *parcelhus_default_list
 
             edit: *parcelhusgrund_default_edit
+            new: *parcelhusgrund_default_new
             form: *parcelhusgrund_default_form
 
         annoncerede_parcelhusgrund:
@@ -132,6 +138,7 @@ easy_admin:
                 <<: *parcelhus_default_list
 
             edit: *parcelhusgrund_default_edit
+            new: *parcelhusgrund_default_new
             form: *parcelhusgrund_default_form
 
         auktionslut_parcelhusgrund:
@@ -146,6 +153,7 @@ easy_admin:
                 <<: *parcelhus_default_list
 
             edit: *parcelhusgrund_default_edit
+            new: *parcelhusgrund_default_new
             form: *parcelhusgrund_default_form
 
         ledige_parcelhusgrund:
@@ -160,6 +168,7 @@ easy_admin:
                 <<: *parcelhus_default_list
 
             edit: *parcelhusgrund_default_edit
+            new: *parcelhusgrund_default_new
             form: *parcelhusgrund_default_form
 
         tilbud_parcelhusgrund:
@@ -174,6 +183,7 @@ easy_admin:
                 <<: *parcelhus_default_list
 
             edit: *parcelhusgrund_default_edit
+            new: *parcelhusgrund_default_new
             form: *parcelhusgrund_default_form
 
         accepterede_parcelhusgrund:
@@ -188,6 +198,7 @@ easy_admin:
                 <<: *parcelhus_default_list
 
             edit: *parcelhusgrund_default_edit
+            new: *parcelhusgrund_default_new
             form: *parcelhusgrund_default_form
 
         betalte_parcelhusgrund:
@@ -202,6 +213,7 @@ easy_admin:
                 <<: *parcelhus_default_list
 
             edit: *parcelhusgrund_default_edit
+            new: *parcelhusgrund_default_new
             form: *parcelhusgrund_default_form
 
 
@@ -217,4 +229,5 @@ easy_admin:
                 <<: *parcelhus_default_list
 
             edit: *parcelhusgrund_default_edit
+            new: *parcelhusgrund_default_new
             form: *parcelhusgrund_default_form
