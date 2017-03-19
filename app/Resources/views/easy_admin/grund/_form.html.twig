@@ -521,27 +521,7 @@
   <!-- /.tab-content -->
 </div>
 
-
-<div class="field-group col-xs-12">
-  <div class="box box-default meta-box">
-    <div class="box-body">
-      <div class="row">
-        <div class="col-sm-6">
-          <p>
-            <span class="meta-label">{{ 'app.meta.created_at' | trans }}:</span> {{ entity.createdAt | date('d-m-Y, H:i') }}
-            <span class="meta-label">{{ 'app.meta.created_by' | trans }}:</span> {{ entity.createdBy }}
-          </p>
-        </div>
-        <div class="col-sm-6">
-          <p>
-            <span class="meta-label">{{ 'app.meta.updated_at' | trans }}:</span> {{ entity.updatedAt | date('d-m-Y, H:i') }}
-            <span class="meta-label">{{ 'app.meta.updated_by' | trans }}:</span> {{ entity.updatedBy }}
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+{% include "easy_admin/_includes/_blameable.html.twig" %}
 
 {{ form_rest(form) }}
 
