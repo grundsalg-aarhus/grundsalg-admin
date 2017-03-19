@@ -73,11 +73,14 @@ app:
       vej: Vej
       venteliste: Venteliste
 
-  interresent:
+  interessent:
       adresse: Adresse
       annulleret: Annulleret
       createdAt: Oprettet
+      koeber: Køber
+      medkoeber: Medkøber
       navn: Navn
+      notat: Notat
 
   lokalplan:
       nr: Nr.

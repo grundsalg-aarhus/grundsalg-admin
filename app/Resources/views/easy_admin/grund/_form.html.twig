@@ -65,7 +65,7 @@
                 </div>
                 <div class="col-md-6">
                   {% if entity.salgsomraade %}
-                    {{ grundsalg.entity_value('app.grund.titel', entity.salgsomraade.titel ) }}
+                    {{ grundsalg.entity_value('app.salgsomraade.titel', entity.salgsomraade.titel ) }}
                   {% else %}
                     {{ grundsalg.entity_value('app.salgsomraade.titel' ) }}
                   {% endif %}
@@ -467,19 +467,23 @@
           <table class="table table-striped">
             <thead>
             <tr>
-              <th>{{ 'app.interresent.navn' | trans }}</th>
-              <th>{{ 'app.interresent.adresse' | trans }}</th>
+              <th>{{ 'app.grund.koeberNavn' | trans }}</th>
+              <th>{{ 'app.grund.koeberAdresse' | trans }}</th>
               <th>{{ 'app.interresent.createdAt' | trans }}</th>
               <th>{{ 'app.interresent.annulleret' | trans }}</th>
+              <th></th>
             </tr>
             </thead>
             <tbody>
             {% for reservation in entity.reservationer %}
               <tr>
-                <td>{{ reservation.interessent.navn }}</td>
-                <td>{{ reservation.interessent.adresse }}</td>
+                <td>{{ reservation.interessent.koeberNavn }}</td>
+                <td>{{ reservation.interessent.koeberAdresse }}</td>
                 <td>{{ reservation.interessent.createdAt | date }}</td>
                 <td>{{ reservation.annulleret ? 'label.yes' | trans }}</td>
+                <td>
+                  <a class="btn btn default" href="{{ path('easyadmin', parameters = {'action': 'show', 'entity': 'interessent', 'id': reservation.interessent.id }) }}">{{ 'action.show' | trans }}</a>
+                </td>
               </tr>
             {% endfor %}
             </tbody>
