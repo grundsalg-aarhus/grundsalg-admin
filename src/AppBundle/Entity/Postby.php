@@ -9,7 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Postby
  *
- * @ORM\Table(name="PostBy")
+ * @ORM\Table(name="PostBy", indexes={
+ *   @ORM\Index(name="search_PostBy_postalcode", columns={"postalCode"}),
+ *   @ORM\Index(name="search_PostBy_city", columns={"city"}),
+ * })
  * @ORM\Entity
  */
 class Postby

@@ -9,7 +9,16 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Salgsomraade
  *
- * @ORM\Table(name="Salgsomraade", indexes={@ORM\Index(name="fk_Salgsomraade_postById", columns={"postById"}), @ORM\Index(name="fk_Salgsomraade_delomraadeId", columns={"delomraadeId"}), @ORM\Index(name="fk_Salgsomraade_lokalplanId", columns={"lokalplanId"}), @ORM\Index(name="fk_Salgsomraade_landinspektorId", columns={"landinspektorId"})})
+ * @ORM\Table(name="Salgsomraade", indexes={
+ *   @ORM\Index(name="fk_Salgsomraade_postById", columns={"postById"}),
+ *   @ORM\Index(name="fk_Salgsomraade_delomraadeId", columns={"delomraadeId"}),
+ *   @ORM\Index(name="fk_Salgsomraade_lokalplanId", columns={"lokalplanId"}),
+ *   @ORM\Index(name="fk_Salgsomraade_landinspektorId", columns={"landinspektorId"}),
+ *
+ *   @ORM\Index(name="search_Salgsomraade_titel", columns={"titel"}),
+ *   @ORM\Index(name="search_Salgsomraade_nr", columns={"nr"}),
+ *   @ORM\Index(name="search_Salgsomraade_type", columns={"type"})
+ * })
  * @ORM\Entity
  */
 class Salgsomraade

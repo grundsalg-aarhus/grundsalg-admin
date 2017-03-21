@@ -9,7 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Lokalsamfund
  *
- * @ORM\Table(name="Lokalsamfund")
+ * @ORM\Table(name="Lokalsamfund", indexes={
+ *   @ORM\Index(name="search_Lokalsamfund_active", columns={"active"}),
+ *   @ORM\Index(name="search_Lokalsamfund_number", columns={"number"}),
+ *   @ORM\Index(name="search_Lokalsamfund_name", columns={"name"})
+ * })
  * @ORM\Entity
  */
 class Lokalsamfund

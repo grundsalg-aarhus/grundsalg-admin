@@ -11,7 +11,19 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Grund
  *
- * @ORM\Table(name="Grund", indexes={@ORM\Index(name="fk_Grund_lokalsamfundId", columns={"lokalsamfundId"}), @ORM\Index(name="fk_Grund_salgsomraadeId", columns={"salgsomraadeId"}), @ORM\Index(name="fk_Grund_koeberPostById", columns={"koeberPostById"}), @ORM\Index(name="fk_Grund_medKoeberPostById", columns={"medKoeberPostById"})})
+ * @ORM\Table(name="Grund", indexes={
+ *   @ORM\Index(name="fk_Grund_lokalsamfundId", columns={"lokalsamfundId"}),
+ *   @ORM\Index(name="fk_Grund_salgsomraadeId", columns={"salgsomraadeId"}),
+ *   @ORM\Index(name="fk_Grund_koeberPostById", columns={"koeberPostById"}),
+ *   @ORM\Index(name="fk_Grund_medKoeberPostById", columns={"medKoeberPostById"}),
+ *
+ *   @ORM\Index(name="search_Grund_vej", columns={"vej"}),
+ *   @ORM\Index(name="search_Grund_husnummer", columns={"husnummer"}),
+ *   @ORM\Index(name="search_Grund_bogstav", columns={"bogstav"}),
+ *   @ORM\Index(name="search_Grund_salgsType", columns={"salgsType"}),
+ *   @ORM\Index(name="search_Grund_areal", columns={"areal"}),
+ *   @ORM\Index(name="search_Grund_pris", columns={"pris"}),
+ * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GrundRepository")
  */
 class Grund {

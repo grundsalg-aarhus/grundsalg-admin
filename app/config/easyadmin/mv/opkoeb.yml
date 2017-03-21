@@ -16,7 +16,6 @@ easy_admin:
                     - { property: opkoebdato, label: 'Opkøb dato' }
                     - { property: pris, label: 'Pris/m2', css_class: 'text-right' }
                     - { property: procentaflp, label: '% af LP', css_class: 'text-right' }
-                    - { property: bemaerkning, label: 'Bemærkning' }
 
             edit:
                 title: 'Rediger Opkøb'

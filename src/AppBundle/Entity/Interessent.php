@@ -10,7 +10,14 @@ use Doctrine\ORM\Mapping\OneToMany;
 /**
  * Interessent
  *
- * @ORM\Table(name="Interessent", indexes={@ORM\Index(name="fk_Interessent_koeberPostById", columns={"koeberPostById"}), @ORM\Index(name="fk_Interessent_medKoeberPostById", columns={"medKoeberPostById"})})
+ * @ORM\Table(name="Interessent", indexes={
+ *   @ORM\Index(name="fk_Interessent_koeberPostById", columns={"koeberPostById"}),
+ *   @ORM\Index(name="fk_Interessent_medKoeberPostById", columns={"medKoeberPostById"}),
+ *
+ *   @ORM\Index(name="search_Interessent_koeberNavn", columns={"koeberNavn"}),
+ *   @ORM\Index(name="search_Interessent_koeberEmail", columns={"koeberEmail"}),
+ *   @ORM\Index(name="search_Interessent_koeberLand", columns={"koeberLand"})
+ * })
  * @ORM\Entity
  */
 class Interessent

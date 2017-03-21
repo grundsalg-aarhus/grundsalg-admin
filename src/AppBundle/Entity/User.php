@@ -9,7 +9,12 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="fos_user")
+ * @ORM\Table(name="fos_user", indexes={
+ *   @ORM\Index(name="search_User_enabled", columns={"enabled"}),
+ *   @ORM\Index(name="search_User_username", columns={"username"}),
+ *   @ORM\Index(name="search_User_name", columns={"name"}),
+ *   @ORM\Index(name="search_User_email", columns={"email"})
+ * })
  */
 class User extends BaseUser
 {

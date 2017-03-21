@@ -10,7 +10,15 @@ use Doctrine\ORM\Mapping\OrderBy;
 /**
  * Opkoeb
  *
- * @ORM\Table(name="Opkoeb", indexes={@ORM\Index(name="fk_Opkoeb_lokalplanId", columns={"lokalplanId"})})
+ * @ORM\Table(name="Opkoeb", indexes={
+ *   @ORM\Index(name="fk_Opkoeb_lokalplanId", columns={"lokalplanId"}),
+ *
+ *   @ORM\Index(name="search_Opkoeb_ejerlav", columns={"ejerlav"}),
+ *   @ORM\Index(name="search_Opkoeb_m2", columns={"m2"}),
+ *   @ORM\Index(name="search_Opkoeb_opkoebDato", columns={"opkoebDato"}),
+ *   @ORM\Index(name="search_Opkoeb_pris", columns={"pris"}),
+ *   @ORM\Index(name="search_Opkoeb_procentAfLP", columns={"procentAfLP"})
+ * })
  * @ORM\Entity
  */
 class Opkoeb

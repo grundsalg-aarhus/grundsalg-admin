@@ -9,7 +9,13 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Lokalplan
  *
- * @ORM\Table(name="Lokalplan")
+ * @ORM\Table(name="Lokalplan", indexes={
+ *   @ORM\Index(name="search_Lokalplan_nr", columns={"nr"}),
+ *   @ORM\Index(name="search_Lokalplan_titel", columns={"titel"}),
+ *   @ORM\Index(name="search_Lokalplan_samletAreal", columns={"samletAreal"}),
+ *   @ORM\Index(name="search_Lokalplan_salgbartAreal", columns={"salgbartAreal"}),
+ *   @ORM\Index(name="search_Lokalplan_forbrugsAndel", columns={"forbrugsAndel"})
+ * })
  * @ORM\Entity
  */
 class Lokalplan

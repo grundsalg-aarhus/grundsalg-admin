@@ -9,7 +9,12 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Delomraade
  *
- * @ORM\Table(name="Delomraade", indexes={@ORM\Index(name="fk_Delomraade_lokalplanId", columns={"lokalplanId"})})
+ * @ORM\Table(name="Delomraade", indexes={
+ *   @ORM\Index(name="fk_Delomraade_lokalplanId", columns={"lokalplanId"}),
+ *
+ *   @ORM\Index(name="search_Delomraade_anvendelse", columns={"anvendelse"}),
+ *   @ORM\Index(name="search_Delomraade_mulighedFor", columns={"mulighedFor"})
+ * })
  * @ORM\Entity
  */
 class Delomraade
