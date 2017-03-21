@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Interessentgrundmapping
+ * Reservation
  *
- * @ORM\Table(name="InteressentGrundMapping", indexes={@ORM\Index(name="fk_InteressentGrundMapping_interessentId", columns={"interessentId"}), @ORM\Index(name="fk_InteressentGrundMapping_grundId", columns={"grundId"})})
+ * @ORM\Table(name="Reservation", indexes={@ORM\Index(name="fk_InteressentGrundMapping_interessentId", columns={"interessentId"}), @ORM\Index(name="fk_InteressentGrundMapping_grundId", columns={"grundId"})})
  * @ORM\Entity
  */
-class InteressentGrundMapping
+class Reservation
 {
   /**
    * @var integer
@@ -31,7 +31,7 @@ class InteressentGrundMapping
   /**
    * @var \Grund
    *
-   * @ORM\ManyToOne(targetEntity="Grund")
+   * @ORM\ManyToOne(targetEntity="Grund", inversedBy="reservationer")
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="grundId", referencedColumnName="id")
    * })
@@ -41,7 +41,7 @@ class InteressentGrundMapping
   /**
    * @var \Interessent
    *
-   * @ORM\ManyToOne(targetEntity="Interessent")
+   * @ORM\ManyToOne(targetEntity="Interessent", inversedBy="reservationer")
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="interessentId", referencedColumnName="id")
    * })
@@ -64,7 +64,7 @@ class InteressentGrundMapping
    *
    * @param string $annulleret
    *
-   * @return InteressentGrundMapping
+   * @return Reservation
    */
   public function setAnnulleret($annulleret)
   {
@@ -88,7 +88,7 @@ class InteressentGrundMapping
    *
    * @param \AppBundle\Entity\Grund $grund
    *
-   * @return InteressentGrundMapping
+   * @return Reservation
    */
   public function setGrund(\AppBundle\Entity\Grund $grund = null)
   {
@@ -112,7 +112,7 @@ class InteressentGrundMapping
    *
    * @param \AppBundle\Entity\Interessent $interessent
    *
-   * @return InteressentGrundMapping
+   * @return Reservation
    */
   public function setInteressent(\AppBundle\Entity\Interessent $interessent = null)
   {

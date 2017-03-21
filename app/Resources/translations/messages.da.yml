@@ -9,20 +9,111 @@ action:
     show: Vis
     cancel: Annuller
 
+app:
+  grund:
+      accept: Accept
+      annonceres: Annonceres
+      areal: Areal
+      arealkotelet: Koteletben
+      arealvej: Heraf vej
+      beloebanvist: Beløb anvist
+      bogstav: Bogstav
+      bruttoareal: Samlet areal
+      datoAnnonce: Annonce-dato
+      datoAnnonce1: 1. Annonce-dato
+      delareal: Delareal
+      ejerlav: Ejerlav
+      fastpris: Fastpris
+      gid: GID
+      grund: Grund
+      grundtype: Grundtype
+      historiskeSalg: Historiske Salg
+      husnummer: Husnr.
+      koeber: Køber
+      koeberAdresse: Adresse
+      koeberEmail: Email
+      koeberLand: Land
+      koeberMobil: Mobil
+      koeberNavn: Navn
+      koeberNotat: Notat
+      koeberPostby: Post/By
+      koeberTelefon: Telefon
+      landinspektoer: Landinspektør
+      lokalplan: Lokalplan m.v.
+      lokalsamfund: Lokalsamfund
+      medkoeber: Medkøber
+      medkoeberAdresse: Adresse
+      medkoeberEmail: Email
+      medkoeberLand: Land
+      medkoeberMobil: Mobil
+      medkoeberNavn: Navn
+      medkoeberPostby: Post/By
+      medkoeberTelefon: Telefon
+      note: Note
+      oplysninger: Grundoplysninger
+      overtagelse: Overtagelse
+      postby: Postnr/By
+      pris: Pris
+      priser: Priser
+      prism2: Pris pr. m²
+      psp: PSP
+      resslut: til og med
+      resstart: Reservation
+      salg: Salg
+      salgsomraade: Salgsomr.
+      salgsprisumoms: Salgspris excl. moms
+      salgstatus: Status
+      salgstype: Salgstype
+      skoederekv: Skøde rekv.
+      tilbudslut: til og med
+      tilbudstart: Tilbud
+      tilsluttet: Tilsluttet
+      tilsluttet_header: Prisen indeholder helt eller delvis tilslutning til
+      urlgis: GIS-kort URL
+      vej: Vej
+      venteliste: Venteliste
+
+  interessent:
+      adresse: Adresse
+      annulleret: Annulleret
+      createdAt: Oprettet
+      koeber: Køber
+      medkoeber: Medkøber
+      navn: Navn
+      notat: Notat
+
+  lokalplan:
+      nr: Nr.
+
+  meta:
+      created_at: Oprettet den
+      created_by: af
+      updated_at: Redigeret den
+      updated_by: af
+
+  postby:
+      city: By
+      postalcode: Postnr.
+
+  salgshistorik:
+      navn: Navn
+      status: Status
+      createdAt: Oprettet
+
+  salgsomraade:
+      nr: Nr.
+      salgsomraade: Salgsområde
+      titel: Titel
+
 label:
-    yes: ja
-    no: nej
+    yes: Ja
+    no: Nej
     form:
         empty_value: (tom)
 
 label.null: '–'
 
-# Grund
-Dato annonce: Dato
-Dato annonce1: 1. Dato
-Postby.city: By
-Postby.postalcode: Postnr.
-Salgsomraade: Salgsområde
-Salgsomraade.titel: Salgsområde
-Salgsomraade.lokalplan.nr: Lokalplan
-#vis_andregrunde: Grund
+# If we use the 'form_label' widget directly the EasyAdmin 'label' value is not used
+Bogstav: Bogst.
+Husnummer: Husnr.
+Urlgis: GIS-kort

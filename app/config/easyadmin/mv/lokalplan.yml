@@ -1,6 +1,6 @@
 easy_admin:
     entities:
-        lokalplaner:
+        lokalplan:
             class: AppBundle\Entity\Lokalplan
             controller:
             list:
@@ -33,9 +33,3 @@ easy_admin:
                     - { property: samletareal, label: 'Samlet Areal' }
                     - { property: salgbartareal, label: 'Salgbart Areal' }
                     - { property: forbrugsandel, label: 'Forbrugsandel i %', readonly: true, type_options: { disabled: true } }
-
-                    - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Redigeret' }
-                    - { property: 'createdBy', type: 'text', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true } }
-                    - { property: 'updatedBy', type: 'text', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true } }
-                    - { property: 'createdAt', type: 'date', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true, widget: 'single_text' } }
-                    - { property: 'updatedAt', type: 'date', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true, widget: 'single_text' } }

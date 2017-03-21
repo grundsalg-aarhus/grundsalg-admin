@@ -1,6 +1,6 @@
 easy_admin:
     entities:
-        users:
+        user:
             class: AppBundle\Entity\User
             controller: AppBundle\Controller\UserController
             list:
@@ -32,9 +32,3 @@ easy_admin:
                     - { type: 'section', label: 'Adgang' }
                     - { property: 'plainPassword', label: 'Nyt password', type: 'text', type_options: { required: false } }
                     - { property: 'roles', label: 'Roller', type: 'choice', type_options: { multiple: true, expanded: true, choices: { 'READER': 'ROLE_READER', 'EDITOR': 'ROLE_EDITOR', 'ADMIN': 'ROLE_ADMIN', 'ADMIN CLEANUP ': 'ROLE_CLEANUP' } } }
-
-                    - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Redigeret' }
-                    - { property: 'createdBy', type: 'text', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true } }
-                    - { property: 'updatedBy', type: 'text', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true } }
-                    - { property: 'createdAt', type: 'date', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true, widget: 'single_text' } }
-                    - { property: 'updatedAt', type: 'date', css_class: 'col-sm-6', readonly: true, type_options: { disabled: true, widget: 'single_text' } }

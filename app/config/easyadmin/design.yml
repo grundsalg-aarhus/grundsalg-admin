@@ -8,65 +8,69 @@ easy_admin:
         templates:
             layout: 'easy_admin/layout.html.twig'
 
+        assets:
+            css:
+                - '/css/grundsalg-styles.css'
+
         menu:
             - label: 'Parcelhusgrunde'
               icon: 'home'
               children:
-                - { entity: 'vis_parcelhusgrunde', label: 'Vis Parcelhusgrunde' }
-                - { entity: 'fremtidige_parcelhusgrunde', label: 'Fremtidige Parcelhusgrunde' }
-                - { entity: 'annoncerede_parcelhusgrunde', label: 'Annoncerede Parcelhusgrunde' }
-                - { entity: 'auktionslut_parcelhusgrunde', label: 'Auktion Slut Parcelhusgrunde' }
-                - { entity: 'ledige_parcelhusgrunde', label: 'Ledige Parcelhusgrunde' }
-                - { entity: 'tilbud_parcelhusgrunde', label: 'Tilbud Parcelhusgrunde' }
-                - { entity: 'accepterede_parcelhusgrunde', label: 'Accepterede Parcelhusgrunde' }
-                - { entity: 'betalte_parcelhusgrunde', label: 'Betalte Parcelhusgrunde' }
-                - { entity: 'parcelhusgrunde', label: 'Alle Parcelhusgrunde' }
-                - { entity: 'opfoelgning_parcelhusgrunde', label: 'Opfølgning' }
+                - { entity: 'vis_parcelhusgrund', label: 'Vis Parcelhusgrunde' }
+                - { entity: 'fremtidige_parcelhusgrund', label: 'Fremtidige Parcelhusgrunde' }
+                - { entity: 'annoncerede_parcelhusgrund', label: 'Annoncerede Parcelhusgrunde' }
+                - { entity: 'auktionslut_parcelhusgrund', label: 'Auktion Slut Parcelhusgrunde' }
+                - { entity: 'ledige_parcelhusgrund', label: 'Ledige Parcelhusgrunde' }
+                - { entity: 'tilbud_parcelhusgrund', label: 'Tilbud Parcelhusgrunde' }
+                - { entity: 'accepterede_parcelhusgrund', label: 'Accepterede Parcelhusgrunde' }
+                - { entity: 'betalte_parcelhusgrund', label: 'Betalte Parcelhusgrunde' }
+                - { entity: 'parcelhusgrund', label: 'Alle Parcelhusgrunde' }
+                - { entity: 'opfoelgning_parcelhusgrund', label: 'Opfølgning' }
             - label: 'Storparceller'
               icon: 'sitemap'
               children:
-                - { entity: 'vis_storparceller', label: 'Vis Storparceller' }
-                - { entity: 'fremtidige_storparceller', label: 'Fremtidige Storparceller' }
-                - { entity: 'annoncerede_storparceller', label: 'Annoncerede Storparceller' }
-                - { entity: 'auktionslut_storparceller', label: 'Auktion Slut Storparceller' }
-                - { entity: 'ledige_storparceller', label: 'Ledige Storparceller' }
-                - { entity: 'tilbud_storparceller', label: 'Tilbud Storparceller' }
-                - { entity: 'accepterede_storparceller', label: 'Accepterede Storparceller' }
-                - { entity: 'betalte_storparceller', label: 'Betalte Storparceller' }
-                - { entity: 'storparceller', label: 'Alle Storparceller' }
-                - { entity: 'opfoelgning_storparceller', label: 'Opfølgning' }
+                - { entity: 'vis_storparcel', label: 'Vis Storparceller' }
+                - { entity: 'fremtidige_storparcel', label: 'Fremtidige Storparceller' }
+                - { entity: 'annoncerede_storparcel', label: 'Annoncerede Storparceller' }
+                - { entity: 'auktionslut_storparcel', label: 'Auktion Slut Storparceller' }
+                - { entity: 'ledige_storparcel', label: 'Ledige Storparceller' }
+                - { entity: 'tilbud_storparcel', label: 'Tilbud Storparceller' }
+                - { entity: 'accepterede_storparcel', label: 'Accepterede Storparceller' }
+                - { entity: 'betalte_storparcel', label: 'Betalte Storparceller' }
+                - { entity: 'storparcel', label: 'Alle Storparceller' }
+                - { entity: 'opfoelgning_storparcel', label: 'Opfølgning' }
             - label: 'Erhvervsgrunde'
               icon: 'industry'
               children:
-                - { entity: 'vis_erhvervsgrunde', label: 'Vis Erhvervsgrunde' }
-                - { entity: 'fremtidige_erhvervsgrunde', label: 'Fremtidige Erhvervsgrunde' }
-                - { entity: 'annoncerede_erhvervsgrunde', label: 'Annoncerede Erhvervsgrunde' }
-                - { entity: 'auktionslut_erhvervsgrunde', label: 'Auktion Slut Erhvervsgrunde' }
-                - { entity: 'ledige_erhvervsgrunde', label: 'Ledige Erhvervsgrunde' }
-                - { entity: 'tilbud_erhvervsgrunde', label: 'Tilbud Erhvervsgrunde' }
-                - { entity: 'accepterede_erhvervsgrunde', label: 'Accepterede Erhvervsgrunde' }
-                - { entity: 'betalte_erhvervsgrunde', label: 'Betalte Erhvervsgrunde' }
-                - { entity: 'erhvervsgrunde', label: 'Alle Erhvervsgrunde' }
-                - { entity: 'opfoelgning_erhvervsgrunde', label: 'Opfølgning' }
+                - { entity: 'vis_erhvervsgrund', label: 'Vis Erhvervsgrunde' }
+                - { entity: 'fremtidige_erhvervsgrund', label: 'Fremtidige Erhvervsgrunde' }
+                - { entity: 'annoncerede_erhvervsgrund', label: 'Annoncerede Erhvervsgrunde' }
+                - { entity: 'auktionslut_erhvervsgrund', label: 'Auktion Slut Erhvervsgrunde' }
+                - { entity: 'ledige_erhvervsgrund', label: 'Ledige Erhvervsgrunde' }
+                - { entity: 'tilbud_erhvervsgrund', label: 'Tilbud Erhvervsgrunde' }
+                - { entity: 'accepterede_erhvervsgrund', label: 'Accepterede Erhvervsgrunde' }
+                - { entity: 'betalte_erhvervsgrund', label: 'Betalte Erhvervsgrunde' }
+                - { entity: 'erhvervsgrund', label: 'Alle Erhvervsgrunde' }
+                - { entity: 'opfoelgning_erhvervsgrund', label: 'Opfølgning' }
             - label: 'Andre Grunde'
               icon: 'building'
               children:
-                - { entity: 'vis_andregrunde', label: 'Vis Andre Grunde' }
-                - { entity: 'fremtidige_andregrunde', label: 'Fremtidige Andre Grunde' }
-                - { entity: 'annoncerede_andregrunde', label: 'Annoncerede Andre Grunde' }
-                - { entity: 'auktionslut_andregrunde', label: 'Auktion Slut Andre Grunde' }
-                - { entity: 'ledige_andregrunde', label: 'Ledige Andre Grunde' }
-                - { entity: 'tilbud_andregrunde', label: 'Tilbud Andre Grunde' }
-                - { entity: 'accepterede_andregrunde', label: 'Accepterede Andre Grunde' }
-                - { entity: 'betalte_andregrunde', label: 'Betalte Andre Grunde' }
-                - { entity: 'andregrunde', label: 'Alle Andre Grunde' }
-                - { entity: 'opfoelgning_andregrunde', label: 'Opfølgning' }
+                - { entity: 'vis_andregrund', label: 'Vis Andre Grunde' }
+                - { entity: 'fremtidige_andregrund', label: 'Fremtidige Andre Grunde' }
+                - { entity: 'annoncerede_andregrund', label: 'Annoncerede Andre Grunde' }
+                - { entity: 'auktionslut_andregrund', label: 'Auktion Slut Andre Grunde' }
+                - { entity: 'ledige_andregrund', label: 'Ledige Andre Grunde' }
+                - { entity: 'tilbud_andregrund', label: 'Tilbud Andre Grunde' }
+                - { entity: 'accepterede_andregrund', label: 'Accepterede Andre Grunde' }
+                - { entity: 'betalte_andregrund', label: 'Betalte Andre Grunde' }
+                - { entity: 'andregrund', label: 'Alle Andre Grunde' }
+                - { entity: 'opfoelgning_andregrund', label: 'Opfølgning' }
             - label: 'Lokalplaner m.v.'
               icon: 'map'
               children:
-                - { entity: 'lokalplaner', label: 'Lokalplaner' }
-                - { entity: 'delomraader', label: 'Delområder' }
-                - { entity: 'salgsomraader', label: 'Salgsområder' }
+                - { entity: 'lokalplan', label: 'Lokalplaner' }
+                - { entity: 'delomraade', label: 'Delområder' }
+                - { entity: 'salgsomraade', label: 'Salgsområder' }
                 - { entity: 'opkoeb', label: 'Opkøb' }
             - label: 'Admin'
               icon: 'wrench'
@@ -74,7 +78,7 @@ easy_admin:
                 - { entity: 'postby', label: 'Postnr / By' }
                 - { entity: 'landinspektoer', label: 'Landinspektør' }
                 - { entity: 'lokalsamfund', label: 'Lokalsamfund' }
-                - { entity: 'users', label: 'Brugere' }
+                - { entity: 'user', label: 'Brugere' }
             - label: 'Log ud'
               icon: 'sign-out'
               route: 'fos_user_security_logout'

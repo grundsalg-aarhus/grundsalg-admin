@@ -1,0 +1,233 @@
+easy_admin:
+
+    # http://stackoverflow.com/questions/8466223/reuse-a-block-of-code-in-yaml
+
+    entities:
+        andregrund: &andregrund_default
+            class: AppBundle\Entity\Grund
+            templates: &default_parcelhus_templates
+                # Twig namespace template syntax
+                list: 'easy_admin/list.html.twig'
+                edit: 'easy_admin/grund/edit.html.twig'
+                new: 'easy_admin/grund/new.html.twig'
+            list: &parcelhus_default_list
+                title: 'Alle Grunde'
+                sort: postby
+                dql_filter: entity.grundtype = 'Andre'
+                actions:
+                    <<: *default_list_actions
+                fields:
+                    - { property: vej, label: 'app.grund.vej' }
+                    - { property: husnummer, label: 'app.grund.husnummer', css_class: 'text-right', format: '%.0f' }
+                    - { property: postby.postalcode, css_class: 'text-right', label: 'app.postby.postalcode' }
+                    - { property: postby.city, label: 'app.postby.city' }
+                    - { property: annonceres, label: 'app.grund.annonceres' }
+                    - { property: salgsomraade.titel, label: 'app.grund.salgsomraade' }
+                    - { property: salgsomraade.lokalplan.nr, label: 'app.lokalplan.nr' }
+                    - { property: salgstype, label: 'app.grund.salgstype' }
+                    - { property: areal, label: 'app.grund.areal', css_class: 'text-right', format: '%.0f' }
+                    - { property: pris, label: 'app.grund.pris', css_class: 'text-right' }
+
+            edit: &andregrund_default_edit
+                title: 'Rediger Grund'
+
+            new: &andregrund_default_new
+                title: 'Opret Grund'
+
+            form: &andregrund_default_form
+                # Note: The custom edit template used overrides/ignores some of EasyAdmins config features
+                fields:
+                    - { property: 'salgsomraade', label: 'app.grund.salgsomraade' }
+
+                    - { property: 'landinspektoer', label: 'app.grund.landinspektoer' }
+
+                    - { property: 'mnr', label: 'app.grund.mnr' }
+                    - { property: 'mnr2', label: 'app.grund.mnr2' }
+                    - { property: 'delareal', label: 'app.grund.delareal' }
+                    - { property: 'ejerlav', label: 'app.grund.ejerlav' }
+                    - { property: 'vej', label: 'app.grund.vej' }
+                    - { property: 'husnummer', label: 'app.grund.husnummer' }
+                    - { property: 'bogstav', label: 'app.grund.bogstav' }
+                    - { property: 'postby', label: 'app.grund.postby' }
+                    - { property: 'lokalsamfund', label: 'app.grund.lokalsamfund' }
+                    - { property: 'urlgis', label: 'app.grund.urlgis' }
+
+                    - { property: 'annonceres', label: 'app.grund.annonceres' }
+                    - { property: 'datoAnnonce', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoAnnonce' }
+                    - { property: 'datoAnnonce1', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoAnnonce1' }
+
+                    - { property: 'grundtype', label: 'app.grund.grundtype' }
+                    - { property: 'salgstype', label: 'app.grund.salgstype' }
+                    - { property: 'tilsluttet', label: 'app.grund.tilsluttet' }
+
+                    - { property: 'areal', label: 'app.grund.areal' }
+                    - { property: 'arealvej', label: 'app.grund.arealvej' }
+                    - { property: 'arealkotelet', label: 'app.grund.arealkotelet' }
+                    - { property: 'bruttoareal', label: 'app.grund.bruttoareal', readonly: true, type_options: { disabled: true } }
+                    - { property: 'prism2', label: 'app.grund.prism2' }
+                    - { property: 'fastpris', label: 'app.grund.fastpris' }
+
+                    - { property: 'note', label: 'app.grund.note' }
+
+                    - { property: 'resstart', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.resstart' }
+                    - { property: 'resslut', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.resslut' }
+                    - { property: 'tilbudstart', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.tilbudstart' }
+                    - { property: 'tilbudslut', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.tilbudslut' }
+                    - { property: 'accept', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.accept' }
+                    - { property: 'overtagelse', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.overtagelse' }
+                    - { property: 'skoederekv', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.skoederekv' }
+                    - { property: 'beloebanvist', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.beloebanvist' }
+
+                    - { property: 'koeberNavn', label: 'app.grund.koeberNavn' }
+                    - { property: 'koeberAdresse', label: 'app.grund.koeberAdresse' }
+                    - { property: 'koeberPostby', label: 'app.grund.koeberPostby' }
+                    - { property: 'koeberLand', label: 'app.grund.koeberLand' }
+                    - { property: 'koeberTelefon', label: 'app.grund.koeberTelefon' }
+                    - { property: 'koeberMobil', label: 'app.grund.koeberMobil' }
+                    - { property: 'koeberEmail', label: 'app.grund.koeberEmail' }
+
+                    - { property: 'medkoeberNavn', label: 'app.grund.medkoeberNavn' }
+                    - { property: 'medkoeberAdresse', label: 'app.grund.medkoeberAdresse' }
+                    - { property: 'medkoeberPostby', label: 'app.grund.medkoeberPostby' }
+                    - { property: 'medkoeberLand', label: 'app.grund.medkoeberLand' }
+                    - { property: 'medkoeberTelefon', label: 'app.grund.medkoeberTelefon' }
+                    - { property: 'medkoeberMobil', label: 'app.grund.medkoeberMobil' }
+                    - { property: 'medkoeberEmail', label: 'app.grund.medkoeberEmail' }
+
+                    - { property: 'koeberNotat', label: 'app.grund.koeberNotat' }
+
+        vis_andregrund:
+            class: AppBundle\Entity\Grund
+            templates: *default_parcelhus_templates
+
+            list:
+                title: 'Vis Andre Grunde'
+                dql_filter: entity.grundtype = 'Andre' AND (entity.status='Ledig' OR entity.status='Annonceret') and entity.salgstatus= 'Ledig'
+
+                # Import default values
+                <<: *parcelhus_default_list
+
+            edit: *andregrund_default_edit
+            new: *andregrund_default_new
+            form: *andregrund_default_form
+
+        fremtidige_andregrund:
+            class: AppBundle\Entity\Grund
+            templates: *default_parcelhus_templates
+
+            list:
+                title: 'Fremtidige Andre Grunde'
+                dql_filter: entity.grundtype = 'Andre' AND (entity.status='Fremtidig')
+
+                # Import default values
+                <<: *parcelhus_default_list
+
+            edit: *andregrund_default_edit
+            new: *andregrund_default_new
+            form: *andregrund_default_form
+
+        annoncerede_andregrund:
+            class: AppBundle\Entity\Grund
+            templates: *default_parcelhus_templates
+
+            list:
+                title: 'Annoncerede Andre Grunde'
+                dql_filter: entity.grundtype = 'Andre' AND (entity.status='Annoncerede')
+
+                # Import default values
+                <<: *parcelhus_default_list
+
+            edit: *andregrund_default_edit
+            new: *andregrund_default_new
+            form: *andregrund_default_form
+
+        auktionslut_andregrund:
+            class: AppBundle\Entity\Grund
+            templates: *default_parcelhus_templates
+
+            list:
+                title: 'Auktion slut Andre Grunde'
+                dql_filter: entity.grundtype = 'Andre' AND entity.status='Auktion slut' AND entity.salgstatus != 'Solgt' AND entity.salgstatus != 'Accepteret' AND entity.salgstatus != 'Skøde rekvireret' AND entity.salgstatus != 'Skøde annulleret'
+
+                # Import default values
+                <<: *parcelhus_default_list
+
+            edit: *andregrund_default_edit
+            new: *andregrund_default_new
+            form: *andregrund_default_form
+
+        ledige_andregrund:
+            class: AppBundle\Entity\Grund
+            templates: *default_parcelhus_templates
+
+            list:
+                title: 'Ledige Andre Grunde'
+                dql_filter: entity.grundtype = 'Andre' AND entity.status='Ledig' AND (entity.salgstatus IS NULL OR entity.salgstatus = 'Ledig')
+
+                # Import default values
+                <<: *parcelhus_default_list
+
+            edit: *andregrund_default_edit
+            new: *andregrund_default_new
+            form: *andregrund_default_form
+
+        tilbud_andregrund:
+            class: AppBundle\Entity\Grund
+            templates: *default_parcelhus_templates
+
+            list:
+                title: 'Tilbud Andre Grunde'
+                dql_filter: entity.grundtype = 'Andre' AND entity.status='Ledig' AND (entity.salgstatus = 'Reserveret' OR entity.salgstatus = 'Reservation annulleret' OR entity.salgstatus = 'Tilbud sendt' OR entity.salgstatus = 'Tilbud annulleret')
+
+                # Import default values
+                <<: *parcelhus_default_list
+
+            edit: *andregrund_default_edit
+            new: *andregrund_default_new
+            form: *andregrund_default_form
+
+        accepterede_andregrund:
+            class: AppBundle\Entity\Grund
+            templates: *default_parcelhus_templates
+
+            list:
+                title: 'Accepterede Andre Grunde'
+                dql_filter: entity.grundtype = 'Andre' AND (entity.status='Ledig' OR entity.status='Auktion Slut') AND (entity.salgstatus = 'Accepteret' OR entity.salgstatus = 'Skøde rekvireret' OR entity.salgstatus = 'Skøde annulleret')
+
+                # Import default values
+                <<: *parcelhus_default_list
+
+            edit: *andregrund_default_edit
+            new: *andregrund_default_new
+            form: *andregrund_default_form
+
+        betalte_andregrund:
+            class: AppBundle\Entity\Grund
+            templates: *default_parcelhus_templates
+
+            list:
+                title: 'Betalte Andre Grunde'
+                dql_filter: entity.grundtype = 'Andre' AND entity.salgstatus = 'Solgt'
+
+                # Import default values
+                <<: *parcelhus_default_list
+
+            edit: *andregrund_default_edit
+            new: *andregrund_default_new
+            form: *andregrund_default_form
+
+
+        opfoelgning_andregrund:
+            class: AppBundle\Entity\Grund
+            templates: *default_parcelhus_templates
+
+            list:
+                title: 'Opfølgning'
+                dql_filter: entity.grundtype = 'Andre' AND ((entity.salgstatus = 'Reserveret' AND entity.resslut < CURRENT_DATE()) OR (entity.salgstatus = 'Tilbud sendt' AND entity.tilbudslut < CURRENT_DATE()))
+
+                # Import default values
+                <<: *parcelhus_default_list
+
+            edit: *andregrund_default_edit
+            new: *andregrund_default_new
+            form: *andregrund_default_form

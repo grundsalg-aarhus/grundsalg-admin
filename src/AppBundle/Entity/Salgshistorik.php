@@ -236,7 +236,7 @@ class Salgshistorik
   /**
    * @var \Grund
    *
-   * @ORM\ManyToOne(targetEntity="Grund")
+   * @ORM\ManyToOne(targetEntity="Grund", inversedBy="salgshistorik")
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="grundId", referencedColumnName="id")
    * })

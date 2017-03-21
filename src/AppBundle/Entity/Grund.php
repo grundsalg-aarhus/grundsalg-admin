@@ -5,6 +5,8 @@ namespace AppBundle\Entity;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Grund
@@ -412,93 +414,93 @@ class Grund {
   /**
    * @var string
    *
-   * @ORM\Column(name="navn", type="string", length=255, nullable=true)
+   * @ORM\Column(name="koeberNavn", type="string", length=255, nullable=true)
    */
-  private $navn;
+  private $koeberNavn;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="adresse", type="string", length=100, nullable=true)
+   * @ORM\Column(name="koeberAdresse", type="string", length=120, nullable=true)
    */
-  private $adresse;
+  private $koeberAdresse;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="land", type="string", length=50, nullable=true)
+   * @ORM\Column(name="koeberLand", type="string", length=50, nullable=true)
    */
-  private $land;
+  private $koeberLand;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="telefon", type="string", length=50, nullable=true)
+   * @ORM\Column(name="koeberTelefon", type="string", length=50, nullable=true)
    */
-  private $telefon;
+  private $koeberTelefon;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="mobil", type="string", length=50, nullable=true)
+   * @ORM\Column(name="koeberMobil", type="string", length=50, nullable=true)
    */
-  private $mobil;
+  private $koeberMobil;
 
   /**
    * @var string
    *
    * @ORM\Column(name="koeberEmail", type="string", length=120, nullable=true)
    */
-  private $koeberemail;
+  private $koeberEmail;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="navn1", type="string", length=120, nullable=true)
+   * @ORM\Column(name="medkoeberNavn", type="string", length=255, nullable=true)
    */
-  private $navn1;
+  private $medkoeberNavn;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="adresse1", type="string", length=120, nullable=true)
+   * @ORM\Column(name="medkoeberAdresse", type="string", length=120, nullable=true)
    */
-  private $adresse1;
+  private $medkoeberAdresse;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="land1", type="string", length=50, nullable=true)
+   * @ORM\Column(name="medkoeberLand", type="string", length=50, nullable=true)
    */
-  private $land1;
+  private $medkoeberLand;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="telefon1", type="string", length=50, nullable=true)
+   * @ORM\Column(name="medkoeberTelefon", type="string", length=50, nullable=true)
    */
-  private $telefon1;
+  private $medkoeberTelefon;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="mobil1", type="string", length=50, nullable=true)
+   * @ORM\Column(name="medkoeberMobil", type="string", length=50, nullable=true)
    */
-  private $mobil1;
+  private $medkoeberMobil;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="medKoeberEmail", type="string", length=120, nullable=true)
+   * @ORM\Column(name="medkoeberEmail", type="string", length=120, nullable=true)
    */
-  private $medkoeberemail;
+  private $medkoeberEmail;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="notat", type="text", nullable=true)
+   * @ORM\Column(name="koeberNotat", type="text", nullable=true)
    */
-  private $notat;
+  private $koeberNotat;
 
   /**
    * @var \AppBundle\Entity\Postby
@@ -519,6 +521,20 @@ class Grund {
    * })
    */
   private $koeberPostby;
+
+  /**
+   * @var \AppBundle\Entity\Reservation
+   *
+   * @OneToMany(targetEntity="Reservation", mappedBy="grund")
+   */
+  private $reservationer;
+
+  /**
+   * @var \AppBundle\Entity\Salgshistorik
+   *
+   * @OneToMany(targetEntity="Salgshistorik", mappedBy="grund")
+   */
+  private $salgshistorik;
 
   /**
    * @var \AppBundle\Entity\Lokalsamfund
@@ -567,6 +583,21 @@ class Grund {
    * @ORM\Column(name="pdflink", type="string", length=255, nullable=true)
    */
   private $pdfLink;
+
+  public function __construct() {
+    $this->reservationer = new ArrayCollection();
+    $this->salgshistorik = new ArrayCollection();
+    $this->annonceres = false;
+  }
+
+  /**
+   * Mainly used in form generation.
+   *
+   * @return string
+   */
+  public function __toString() {
+    return $this->getVej() . ' ' . $this->getHusnummer() . $this->getBogstav() . ($this->getZipcity() ? ', ' . $this->getZipcity() : '');
+  }
 
   /**
    * Get id
@@ -1762,12 +1793,12 @@ class Grund {
   /**
    * Set navn
    *
-   * @param string $navn
+   * @param string $koeberNavn
    *
    * @return Grund
    */
-  public function setNavn($navn) {
-    $this->navn = $navn;
+  public function setKoeberNavn($koeberNavn) {
+    $this->koeberNavn = $koeberNavn;
 
     return $this;
   }
@@ -1777,19 +1808,19 @@ class Grund {
    *
    * @return string
    */
-  public function getNavn() {
-    return $this->navn;
+  public function getKoeberNavn() {
+    return $this->koeberNavn;
   }
 
   /**
    * Set adresse
    *
-   * @param string $adresse
+   * @param string $koeberAdresse
    *
    * @return Grund
    */
-  public function setAdresse($adresse) {
-    $this->adresse = $adresse;
+  public function setKoeberAdresse($koeberAdresse) {
+    $this->koeberAdresse = $koeberAdresse;
 
     return $this;
   }
@@ -1799,19 +1830,19 @@ class Grund {
    *
    * @return string
    */
-  public function getAdresse() {
-    return $this->adresse;
+  public function getKoeberAdresse() {
+    return $this->koeberAdresse;
   }
 
   /**
    * Set land
    *
-   * @param string $land
+   * @param string $koeberLand
    *
    * @return Grund
    */
-  public function setLand($land) {
-    $this->land = $land;
+  public function setKoeberLand($koeberLand) {
+    $this->koeberLand = $koeberLand;
 
     return $this;
   }
@@ -1821,19 +1852,19 @@ class Grund {
    *
    * @return string
    */
-  public function getLand() {
-    return $this->land;
+  public function getKoeberLand() {
+    return $this->koeberLand;
   }
 
   /**
    * Set telefon
    *
-   * @param string $telefon
+   * @param string $koeberTelefon
    *
    * @return Grund
    */
-  public function setTelefon($telefon) {
-    $this->telefon = $telefon;
+  public function setKoeberTelefon($koeberTelefon) {
+    $this->koeberTelefon = $koeberTelefon;
 
     return $this;
   }
@@ -1843,19 +1874,19 @@ class Grund {
    *
    * @return string
    */
-  public function getTelefon() {
-    return $this->telefon;
+  public function getKoeberTelefon() {
+    return $this->koeberTelefon;
   }
 
   /**
    * Set mobil
    *
-   * @param string $mobil
+   * @param string $koeberMobil
    *
    * @return Grund
    */
-  public function setMobil($mobil) {
-    $this->mobil = $mobil;
+  public function setKoeberMobil($koeberMobil) {
+    $this->koeberMobil = $koeberMobil;
 
     return $this;
   }
@@ -1865,19 +1896,19 @@ class Grund {
    *
    * @return string
    */
-  public function getMobil() {
-    return $this->mobil;
+  public function getKoeberMobil() {
+    return $this->koeberMobil;
   }
 
   /**
    * Set koeberemail
    *
-   * @param string $koeberemail
+   * @param string $koeberEmail
    *
    * @return Grund
    */
-  public function setKoeberemail($koeberemail) {
-    $this->koeberemail = $koeberemail;
+  public function setKoeberEmail($koeberEmail) {
+    $this->koeberEmail = $koeberEmail;
 
     return $this;
   }
@@ -1887,19 +1918,19 @@ class Grund {
    *
    * @return string
    */
-  public function getKoeberemail() {
-    return $this->koeberemail;
+  public function getKoeberEmail() {
+    return $this->koeberEmail;
   }
 
   /**
    * Set navn1
    *
-   * @param string $navn1
+   * @param string $medkoeberNavn
    *
    * @return Grund
    */
-  public function setNavn1($navn1) {
-    $this->navn1 = $navn1;
+  public function setMedkoeberNavn($medkoeberNavn) {
+    $this->medkoeberNavn = $medkoeberNavn;
 
     return $this;
   }
@@ -1909,19 +1940,19 @@ class Grund {
    *
    * @return string
    */
-  public function getNavn1() {
-    return $this->navn1;
+  public function getMedkoeberNavn() {
+    return $this->medkoeberNavn;
   }
 
   /**
    * Set adresse1
    *
-   * @param string $adresse1
+   * @param string $medkoeberAdresse
    *
    * @return Grund
    */
-  public function setAdresse1($adresse1) {
-    $this->adresse1 = $adresse1;
+  public function setMedkoeberAdresse($medkoeberAdresse) {
+    $this->medkoeberAdresse = $medkoeberAdresse;
 
     return $this;
   }
@@ -1931,19 +1962,19 @@ class Grund {
    *
    * @return string
    */
-  public function getAdresse1() {
-    return $this->adresse1;
+  public function getMedkoeberAdresse() {
+    return $this->medkoeberAdresse;
   }
 
   /**
    * Set land1
    *
-   * @param string $land1
+   * @param string $medkoeberLand
    *
    * @return Grund
    */
-  public function setLand1($land1) {
-    $this->land1 = $land1;
+  public function setMedkoeberLand($medkoeberLand) {
+    $this->medkoeberLand = $medkoeberLand;
 
     return $this;
   }
@@ -1953,19 +1984,19 @@ class Grund {
    *
    * @return string
    */
-  public function getLand1() {
-    return $this->land1;
+  public function getMedkoeberLand() {
+    return $this->medkoeberLand;
   }
 
   /**
    * Set telefon1
    *
-   * @param string $telefon1
+   * @param string $medkoeberTelefon
    *
    * @return Grund
    */
-  public function setTelefon1($telefon1) {
-    $this->telefon1 = $telefon1;
+  public function setMedkoeberTelefon($medkoeberTelefon) {
+    $this->medkoeberTelefon = $medkoeberTelefon;
 
     return $this;
   }
@@ -1975,19 +2006,19 @@ class Grund {
    *
    * @return string
    */
-  public function getTelefon1() {
-    return $this->telefon1;
+  public function getMedkoeberTelefon() {
+    return $this->medkoeberTelefon;
   }
 
   /**
    * Set mobil1
    *
-   * @param string $mobil1
+   * @param string $medkoeberMobil
    *
    * @return Grund
    */
-  public function setMobil1($mobil1) {
-    $this->mobil1 = $mobil1;
+  public function setMedkoeberMobil($medkoeberMobil) {
+    $this->medkoeberMobil = $medkoeberMobil;
 
     return $this;
   }
@@ -1997,19 +2028,19 @@ class Grund {
    *
    * @return string
    */
-  public function getMobil1() {
-    return $this->mobil1;
+  public function getMedkoeberMobil() {
+    return $this->medkoeberMobil;
   }
 
   /**
    * Set medkoeberemail
    *
-   * @param string $medkoeberemail
+   * @param string $medkoeberEmail
    *
    * @return Grund
    */
-  public function setMedkoeberemail($medkoeberemail) {
-    $this->medkoeberemail = $medkoeberemail;
+  public function setMedkoeberEmail($medkoeberEmail) {
+    $this->medkoeberEmail = $medkoeberEmail;
 
     return $this;
   }
@@ -2019,19 +2050,19 @@ class Grund {
    *
    * @return string
    */
-  public function getMedkoeberemail() {
-    return $this->medkoeberemail;
+  public function getMedkoeberEmail() {
+    return $this->medkoeberEmail;
   }
 
   /**
    * Set notat
    *
-   * @param string $notat
+   * @param string $koeberNotat
    *
    * @return Grund
    */
-  public function setNotat($notat) {
-    $this->notat = $notat;
+  public function setKoeberNotat($koeberNotat) {
+    $this->koeberNotat = $koeberNotat;
 
     return $this;
   }
@@ -2041,8 +2072,8 @@ class Grund {
    *
    * @return string
    */
-  public function getNotat() {
-    return $this->notat;
+  public function getKoeberNotat() {
+    return $this->koeberNotat;
   }
 
   /**
@@ -2087,6 +2118,34 @@ class Grund {
    */
   public function getKoeberPostby() {
     return $this->koeberPostby;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getReservationer() {
+    return $this->reservationer;
+  }
+
+  /**
+   * @param mixed $reservationer
+   */
+  public function setReservationer($reservationer) {
+    $this->reservationer = $reservationer;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getSalgshistorik() {
+    return $this->salgshistorik;
+  }
+
+  /**
+   * @param mixed $salgshistorik
+   */
+  public function setSalgshistorik($salgshistorik) {
+    $this->salgshistorik = $salgshistorik;
   }
 
   /**
@@ -2190,15 +2249,6 @@ class Grund {
     }
 
     return NULL;
-  }
-
-  /**
-   * Mainly used in form generation.
-   *
-   * @return string
-   */
-  public function __toString() {
-    return $this->getVej() . ' ' . $this->getHusnummer() . $this->getBogstav() . ($this->getZipcity() ? ', ' . $this->getZipcity() : '');
   }
 
 }
