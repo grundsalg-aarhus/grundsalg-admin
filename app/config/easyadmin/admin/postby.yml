@@ -16,7 +16,12 @@ easy_admin:
                 title: 'Rediger Postnr. / By'
 
             form:
-                fields:
+                fields: &postby_form_fields
                     - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Postnr. / By' }
                     - { property: postalcode, label: 'Postnr', css_class: 'col-sm-6' }
                     - { property: city, label: 'By', css_class: 'col-sm-6' }
+
+            show:
+                title: 'Postnr. / By'
+                fields:
+                    <<: *postby_form_fields

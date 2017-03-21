@@ -38,7 +38,7 @@
             <div class="row">
 
               {% for field, metadata in fields if metadata.form_group == group_name %}
-                <div class="col-xs-12 {{ field.vars.easyadmin.field.css_class|default('') }}">
+                <div class="col-xs-12 {{ metadata.css_class|default('') }}">
                   {% if metadata.type == 'divider' %}
                     <div class="field-divider">
                       <hr>
@@ -57,7 +57,7 @@
                       {% endif %}
                     </div>
                   {% else %}
-                    <div class="form-group field-{{ metadata.type|default('default')|lower }} {{ metadata.css_class|default('') }}">
+                    <div class="form-group field-{{ metadata.type|default('default')|lower }}">
                       <label class="col-sm-2 control-label">
                         {{ (metadata.label ?: field|humanize)|trans(_trans_parameters)|raw }}
                       </label>

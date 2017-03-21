@@ -22,7 +22,7 @@ easy_admin:
                 title: 'Rediger Opkøb'
 
             form:
-                fields:
+                fields: &opkoeb_form_fields
                     - { type: 'group', css_class: 'col-sm-12', label: 'Opkøb' }
                     - { property: matrik1, label: 'Matrikel 1' }
                     - { property: matrik2, label: 'Matrikel 2' }
@@ -35,3 +35,8 @@ easy_admin:
 
                     - { type: 'group', css_class: 'col-sm-12', label: 'Lokalplan' }
                     - { property: 'lokalplan'}
+
+            show:
+                title: 'Opkøb'
+                fields:
+                    <<: *opkoeb_form_fields

@@ -20,7 +20,7 @@ easy_admin:
                 title: 'Rediger Bruger'
 
             form:
-                fields:
+                fields: &user_form_fields
                     - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Bruger' }
                     - { property: enabled, label: 'Aktiv' }
                     - { property: username, label: 'Brugernavn' }
@@ -32,3 +32,8 @@ easy_admin:
                     - { type: 'section', label: 'Adgang' }
                     - { property: 'plainPassword', label: 'Nyt password', type: 'text', type_options: { required: false } }
                     - { property: 'roles', label: 'Roller', type: 'choice', type_options: { multiple: true, expanded: true, choices: { 'READER': 'ROLE_READER', 'EDITOR': 'ROLE_EDITOR', 'ADMIN': 'ROLE_ADMIN', 'ADMIN CLEANUP ': 'ROLE_CLEANUP' } } }
+
+            show:
+                title: 'Bruger'
+                fields:
+                    <<: *user_form_fields

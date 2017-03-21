@@ -1,6 +1,7 @@
 .easyadmin-list td:last-child {
   width: 1em;
   text-align: right;
+  white-space: nowrap;
 }
 
 body.show .form-control {

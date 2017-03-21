@@ -19,7 +19,7 @@ easy_admin:
                 title: 'Rediger Salgsområde'
 
             form:
-                fields:
+                fields: &salgsomraade_form_fields
                     - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Salgsområde' }
                     - { property: nr, label: 'Nr', css_class: 'col-sm-4', readonly: true, type_options: { disabled: true }}
                     - { property: matrikkel1, label: 'Matr.nr', css_class: 'col-sm-4' }
@@ -37,3 +37,8 @@ easy_admin:
                     - { type: 'divider' }
                     - { property: delomraade, label: 'KPL', css_class: 'col-sm-12', readonly: true, type_options: { disabled: true }}
                     - { property: tilsluttet, label: 'Tilsluttet', css_class: 'col-sm-12', help: 'Prisen indeholder helt eller delvis tilslutning til følgende' }
+
+            show:
+                title: 'Salgsområde'
+                fields:
+                    <<: *salgsomraade_form_fields

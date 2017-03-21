@@ -79,6 +79,7 @@ easy_admin:
                 - { entity: 'landinspektoer', label: 'Landinspektør' }
                 - { entity: 'lokalsamfund', label: 'Lokalsamfund' }
                 - { entity: 'user', label: 'Brugere' }
+            - { entity: 'interessent', label: 'Interessenter', icon: 'user-circle' }
             - label: 'Log ud'
               icon: 'sign-out'
               route: 'fos_user_security_logout'

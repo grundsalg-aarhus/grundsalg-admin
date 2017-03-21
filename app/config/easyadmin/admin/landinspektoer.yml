@@ -4,7 +4,7 @@ easy_admin:
             class: AppBundle\Entity\Landinspektoer
             controller:
             list:
-                title: 'Landinspektør'
+                title: 'Landinspektører'
                 sort: ['navn', 'ASC']
                 actions:
                     <<: *default_list_actions
@@ -18,7 +18,7 @@ easy_admin:
                 title: 'Rediger Landinspektør'
 
             form:
-                fields:
+                fields: &landinspektoer_form_fields
                     - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Landinspektør' }
                     - { property: active, label: 'Aktiv' }
                     - { property: navn }
@@ -29,3 +29,8 @@ easy_admin:
                     - { property: email }
                     - { type: 'divider' }
                     - { property: notat }
+
+            show:
+                title: 'Landinspektør'
+                fields:
+                    <<: *landinspektoer_form_fields

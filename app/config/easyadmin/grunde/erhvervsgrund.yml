@@ -9,6 +9,7 @@ easy_admin:
                 # Twig namespace template syntax
                 list: 'easy_admin/list.html.twig'
                 edit: 'easy_admin/grund/edit.html.twig'
+                show: 'easy_admin/grund/show.html.twig'
                 new: 'easy_admin/grund/new.html.twig'
             list: &parcelhus_default_list
                 title: 'Alle Erhvervsgrunde'
@@ -30,6 +31,9 @@ easy_admin:
 
             edit: &erhvervsgrund_default_edit
                 title: 'Rediger Erhvervsgrund'
+
+            show: &erhvervsgrund_default_show
+                title: 'Erhvervsgrund'
 
             new: &erhvervsgrund_default_new
                 title: 'Opret Grund'
@@ -108,6 +112,7 @@ easy_admin:
                 <<: *parcelhus_default_list
 
             edit: *erhvervsgrund_default_edit
+            show: *erhvervsgrund_default_show
             new: *erhvervsgrund_default_new
             form: *erhvervsgrund_default_form
 
@@ -123,6 +128,7 @@ easy_admin:
                 <<: *parcelhus_default_list
 
             edit: *erhvervsgrund_default_edit
+            show: *erhvervsgrund_default_show
             new: *erhvervsgrund_default_new
             form: *erhvervsgrund_default_form
 
@@ -138,6 +144,7 @@ easy_admin:
                 <<: *parcelhus_default_list
 
             edit: *erhvervsgrund_default_edit
+            show: *erhvervsgrund_default_show
             new: *erhvervsgrund_default_new
             form: *erhvervsgrund_default_form
 
@@ -153,6 +160,7 @@ easy_admin:
                 <<: *parcelhus_default_list
 
             edit: *erhvervsgrund_default_edit
+            show: *erhvervsgrund_default_show
             new: *erhvervsgrund_default_new
             form: *erhvervsgrund_default_form
 
@@ -168,6 +176,7 @@ easy_admin:
                 <<: *parcelhus_default_list
 
             edit: *erhvervsgrund_default_edit
+            show: *erhvervsgrund_default_show
             new: *erhvervsgrund_default_new
             form: *erhvervsgrund_default_form
 
@@ -183,6 +192,7 @@ easy_admin:
                 <<: *parcelhus_default_list
 
             edit: *erhvervsgrund_default_edit
+            show: *erhvervsgrund_default_show
             new: *erhvervsgrund_default_new
             form: *erhvervsgrund_default_form
 
@@ -198,6 +208,7 @@ easy_admin:
                 <<: *parcelhus_default_list
 
             edit: *erhvervsgrund_default_edit
+            show: *erhvervsgrund_default_show
             new: *erhvervsgrund_default_new
             form: *erhvervsgrund_default_form
 
@@ -213,6 +224,7 @@ easy_admin:
                 <<: *parcelhus_default_list
 
             edit: *erhvervsgrund_default_edit
+            show: *erhvervsgrund_default_show
             new: *erhvervsgrund_default_new
             form: *erhvervsgrund_default_form
 
@@ -229,5 +241,6 @@ easy_admin:
                 <<: *parcelhus_default_list
 
             edit: *erhvervsgrund_default_edit
+            show: *erhvervsgrund_default_show
             new: *erhvervsgrund_default_new
             form: *erhvervsgrund_default_form

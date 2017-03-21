@@ -19,7 +19,7 @@ easy_admin:
                 title: 'Rediger Delområde'
 
             form:
-                fields:
+                fields: &delomraade_form_fields
                     - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Lokalplan' }
                     - lokalplan
 
@@ -36,3 +36,8 @@ easy_admin:
                     - { type: 'section', label: 'Anvendelse' }
                     - { property: anvendelse, css_class: 'col-sm-6' }
                     - { property: mulighedFor, css_class: 'col-sm-6' }
+
+            show:
+                title: 'Delområde'
+                fields:
+                    <<: *delomraade_form_fields

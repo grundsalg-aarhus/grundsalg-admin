@@ -4,6 +4,7 @@ easy_admin:
     list:
         max_results: 100
         actions: &default_list_actions
+            - { name: show, css_class: 'btn btn-default' }
             - { name: edit, css_class: 'btn btn-default' }
             - { name: search }
             - { name: new, label: 'Tilføj', icon: 'plus' }

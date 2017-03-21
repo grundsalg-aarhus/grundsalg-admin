@@ -20,7 +20,7 @@ easy_admin:
                 title: 'Rediger Lokalplan'
 
             form:
-                fields:
+                fields: &lokalplan_form_fields
                     - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Lokalplan' }
                     - { property: nr, label: 'LP', css_class: 'col-sm-6' }
                     - { property: lokalsamfund, label: 'Lokalsamfund', css_class: 'col-sm-6' }
@@ -33,3 +33,8 @@ easy_admin:
                     - { property: samletareal, label: 'Samlet Areal' }
                     - { property: salgbartareal, label: 'Salgbart Areal' }
                     - { property: forbrugsandel, label: 'Forbrugsandel i %', readonly: true, type_options: { disabled: true } }
+
+            show:
+                title: 'Lokalplan'
+                fields:
+                    <<: *lokalplan_form_fields

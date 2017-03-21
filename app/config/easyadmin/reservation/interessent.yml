@@ -40,5 +40,6 @@ easy_admin:
                 title: 'Rediger Interessent'
 
             show:
+                title: 'Interessent'
                 fields:
                     <<: *interessent_form_fields
