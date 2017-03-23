@@ -22,6 +22,8 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
 use CrEOF\Spatial\Exception\InvalidValueException;
 use CrEOF\Spatial\PHP\Types\Geography\GeographyInterface;
 use CrEOF\Geo\WKT\Parser as WKTStringParser;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+
 
 /**
  * Defines user features
@@ -65,110 +67,54 @@ class GrundContext extends BaseContext implements Context, KernelAwareContext
   }
 
   /**
-   * @Given the following grunde with status exist:
+   * @Given the following grunde exist:
    */
-  public function theFollowingGrundeWithStatusExist(TableNode $table)
+  public function theFollowingGrundeExist(TableNode $table)
   {
-    $salgsomraader = array();
 
-    foreach ($table->getHash() as $row) {
-      if(array_key_exists($row['Salgsomraade'], $salgsomraader)) {
-        $salgsomraade = $salgsomraader[$row['Salgsomraade']];
-      } else {
-        $salgsomraade = $this->hydrateSalgsomraade($row['Salgsomraade']);
+    $rows = $table->getHash();
+    $count = count($rows);
 
-        $salgsomraader[$row['Salgsomraade']] = $salgsomraade;
-        $this->manager->persist($salgsomraade);
+    $generator = \Faker\Factory::create('da_DK');
+    $populator = new Faker\ORM\Doctrine\Populator($generator, $this->manager);
+    $populator->addEntity('AppBundle\Entity\Lokalplan', 10);
+    $populator->addEntity('AppBundle\Entity\Salgsomraade', 10);
+    $populator->addEntity('AppBundle\Entity\Grund', $count);
+    $populator->execute();
+
+    $accessor = PropertyAccess::createPropertyAccessor();
+
+    for ($i = 0; $i < $count; $i++) {
+      $row = $rows[$i];
+      $grund = $this->manager->getRepository('AppBundle:Grund')->find($i + 1);
+
+      foreach ($row as $field => $value) {
+
+        switch ($field) {
+          case 'DatoAnnonce':
+            $value = new DateTime($row['DatoAnnonce']);
+            $accessor->setValue($grund, $field, $value);
+            break;
+          case 'Salgsomraade':
+            $value = $this->manager->getRepository('AppBundle:Salgsomraade')->find($value);
+            $accessor->setValue($grund, $field, $value);
+            break;
+          case 'Geometry':
+            $grund->setSpGeometry($this->hydrateWKT($value));
+            break;
+          default:
+            $accessor->setValue($grund, $field, $value);
+        }
+
       }
 
-      $grund = $this->hydrateGrund($row, $salgsomraade);
+      if (!$grund->getSpGeometry()) {
+        $grund->setSpGeometry($this->hydrateWKT());
+      }
 
-      $grund->setStatus($row['Status']);
-      $grund->setSalgstatus($row['SalgStatus']);
-
-      $this->manager->persist($grund);
     }
 
     $this->manager->flush();
-  }
-
-  /**
-   * @Given the following grunde with geometry exist:
-   */
-  public function theFollowingGrundeWithGeometryExist(TableNode $table)
-  {
-    $salgsomraader = array();
-
-    foreach ($table->getHash() as $row) {
-      if(array_key_exists($row['Salgsomraade'], $salgsomraader)) {
-        $salgsomraade = $salgsomraader[$row['Salgsomraade']];
-      } else {
-        $salgsomraade = $this->hydrateSalgsomraade($row['Salgsomraade']);
-
-        $salgsomraader[$row['Salgsomraade']] = $salgsomraade;
-        $this->manager->persist($salgsomraade);
-      }
-
-      $grund = $this->hydrateGrund($row, $salgsomraade);
-
-      $this->manager->persist($grund);
-    }
-
-    $this->manager->flush();
-
-  }
-
-  /**
-   * Hydrate a new 'Grund' from a table row
-   *
-   * @param array $row
-   * @param \AppBundle\Entity\Salgsomraade $salgsomraade
-   * @return \AppBundle\Entity\Grund
-   */
-  private function hydrateGrund(array $row, \AppBundle\Entity\Salgsomraade $salgsomraade) {
-    $grund = new \AppBundle\Entity\Grund();
-
-    $grund->setVej($row['Vej']);
-    $grund->setHusnummer($row['Husnummer']);
-    $grund->setBogstav($row['Bogstav']);
-
-    $grund->setAnnonceres($row['Annonceres']);
-    $grund->setDatoannonce(new DateTime($row['DatoAnnonce']));
-
-    $grund->setSalgsomraade($salgsomraade);
-
-    $polygon = $this->hydrateWKT($row['geometry']);
-    $grund->setSpGeometry($polygon);
-
-    $grund->setCreatedAt(new DateTime());
-    $grund->setUpdatedAt(new DateTime());
-
-    return $grund;
-  }
-
-  /**
-   * Given a titel, get a 'Salgsomraade' with fake data
-   *
-   * @param String $titel
-   * @return \AppBundle\Entity\Salgsomraade
-   */
-  private function hydrateSalgsomraade(String $titel) {
-    $salgsomraade = new \AppBundle\Entity\Salgsomraade();
-    $salgsomraade->setTitel($titel);
-    $salgsomraade->setNr(1);
-    $salgsomraade->setType("test");
-    $salgsomraade->setMatrikkel1("M1");
-    $salgsomraade->setMatrikkel2("M2");
-    $salgsomraade->setEjerlav("Ejerlav1");
-    $salgsomraade->setVej("Test");
-    $salgsomraade->setGisurl("http://whatever");
-    $salgsomraade->setTilsluttet("Tilsluttet");
-    $salgsomraade->setSagsnr(4);
-    $salgsomraade->setLploebenummer(4);
-    $salgsomraade->setCreatedAt(new DateTime());
-    $salgsomraade->setUpdatedAt(new DateTime());
-
-    return $salgsomraade;
   }
 
   /**
@@ -178,7 +124,7 @@ class GrundContext extends BaseContext implements Context, KernelAwareContext
    * @return mixed
    * @throws InvalidValueException
    */
-  private function hydrateWKT(string $wktString)
+  private function hydrateWKT(string $wktString = 'POLYGON((561503.4602595221 6222216.785767948,561656.8824384945 6222220.055102484,561656.5690964112 6222266.055739188,561646.6081165016 6222272.61440419,561503.1799008161 6222269.555026918,561503.4602595221 6222216.785767948)),25832')
   {
     $parser = new WKTStringParser($wktString);
     $wktString  = $parser->parse();

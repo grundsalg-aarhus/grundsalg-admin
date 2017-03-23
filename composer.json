@@ -39,12 +39,13 @@
         "stof/doctrine-extensions-bundle": "~1.2",
         "guzzlehttp/guzzle": "^6.2",
         "javiereguiluz/easyadmin-bundle": "^1.16",
-        "behatch/contexts": "^2.6"
     },
     "require-dev": {
+        "behatch/contexts": "^2.6"
         "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^3.0",
         "behat/behat": "^3.1",
+        "fzaninotto/faker": "^1.6",
         "behat/symfony2-extension": "^2.1",
         "behat/mink": "^1.7",
         "behat/mink-extension": "^2.2",
