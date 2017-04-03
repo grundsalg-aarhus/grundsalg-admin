@@ -21,7 +21,7 @@ class Salgshistorik
   /**
    * @var integer
    *
-   * @ORM\Column(name="id", type="bigint", nullable=false)
+   * @ORM\Column(name="id", type="integer", nullable=false)
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="IDENTITY")
    */
@@ -236,7 +236,7 @@ class Salgshistorik
   /**
    * @var \Grund
    *
-   * @ORM\ManyToOne(targetEntity="Grund")
+   * @ORM\ManyToOne(targetEntity="Grund", inversedBy="salgshistorik")
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="grundId", referencedColumnName="id")
    * })

@@ -9,7 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Lokalsamfund
  *
- * @ORM\Table(name="Lokalsamfund")
+ * @ORM\Table(name="Lokalsamfund", indexes={
+ *   @ORM\Index(name="search_Lokalsamfund_active", columns={"active"}),
+ *   @ORM\Index(name="search_Lokalsamfund_number", columns={"number"}),
+ *   @ORM\Index(name="search_Lokalsamfund_name", columns={"name"})
+ * })
  * @ORM\Entity
  */
 class Lokalsamfund
@@ -21,7 +25,7 @@ class Lokalsamfund
   /**
    * @var integer
    *
-   * @ORM\Column(name="id", type="bigint", nullable=false)
+   * @ORM\Column(name="id", type="integer", nullable=false)
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="IDENTITY")
    */
@@ -133,6 +137,6 @@ class Lokalsamfund
 
   public function __toString()
   {
-    return $this->name;
+    return $this->getNumber() . ' - ' . $this->getName();
   }
 }

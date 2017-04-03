@@ -1,0 +1,29 @@
+easy_admin:
+    entities:
+        lokalsamfund:
+            class: AppBundle\Entity\Lokalsamfund
+            controller:
+            list:
+                title: 'Lokalsamfund'
+                sort: ['name', 'ASC']
+                actions:
+                    <<: *default_list_actions
+                fields:
+                    - { property: active, label: 'Aktiv' }
+                    - { property: number, label: 'Nr.', css_class: 'text-right', format: '%.0f' }
+                    - { property: name, label: 'Navn' }
+
+            edit:
+                title: 'Rediger Lokalsamfund'
+
+            form:
+                fields: &lokalsamfund_form_fields
+                    - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Lokalsamfund' }
+                    - { property: active, label: 'Aktiv' }
+                    - { property: number, label: 'Nr.' }
+                    - { property: name, label: 'Navn' }
+
+            show:
+                title: 'Lokalsamfund'
+                fields:
+                    <<: *lokalsamfund_form_fields

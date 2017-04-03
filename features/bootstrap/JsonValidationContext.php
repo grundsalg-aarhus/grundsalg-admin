@@ -14,11 +14,11 @@ use Doctrine\DBAL\Exception\TableNotFoundException;
 use Doctrine\ORM\Tools\SchemaTool;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Group;
-use Sanpi\Behatch\Context\BaseContext;
-use Sanpi\Behatch\Json\Json;
+use Behatch\Context\BaseContext;
+use Behatch\Json\Json;
 use SebastianBergmann\Diff\Differ;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Sanpi\Behatch\HttpCall\Request;
+use Behatch\HttpCall\Request;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 /**

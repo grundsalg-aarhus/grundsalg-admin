@@ -9,7 +9,12 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Landinspektoer
  *
- * @ORM\Table(name="Landinspektoer")
+ * @ORM\Table(name="Landinspektoer", indexes={
+ *   @ORM\Index(name="search_Landinspektoer_active", columns={"active"}),
+ *   @ORM\Index(name="search_Landinspektoer_navn", columns={"navn"}),
+ *   @ORM\Index(name="search_Landinspektoer_email", columns={"email"}),
+ *   @ORM\Index(name="search_Landinspektoer_telefon", columns={"telefon"})
+ * })
  * @ORM\Entity
  */
 class Landinspektoer
@@ -21,7 +26,7 @@ class Landinspektoer
   /**
    * @var integer
    *
-   * @ORM\Column(name="id", type="bigint", nullable=false)
+   * @ORM\Column(name="id", type="integer", nullable=false)
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="IDENTITY")
    */
@@ -58,7 +63,7 @@ class Landinspektoer
   /**
    * @var string
    *
-   * @ORM\Column(name="notat", type="text", nullable=false)
+   * @ORM\Column(name="notat", type="text", nullable=true)
    */
   private $notat;
 

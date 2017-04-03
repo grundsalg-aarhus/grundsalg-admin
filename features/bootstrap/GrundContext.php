@@ -1,6 +1,5 @@
 <?php
 
-use AppBundle\Entity\Tag;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Hook\Scope\AfterScenarioScope;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
@@ -14,12 +13,17 @@ use Doctrine\DBAL\Exception\TableNotFoundException;
 use Doctrine\ORM\Tools\SchemaTool;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Group;
-use Sanpi\Behatch\Context\BaseContext;
-use Sanpi\Behatch\Json\Json;
+use Behatch\Context\BaseContext;
+use Behatch\Json\Json;
 use SebastianBergmann\Diff\Differ;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Sanpi\Behatch\HttpCall\Request;
+use Behatch\HttpCall\Request;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
+use CrEOF\Spatial\Exception\InvalidValueException;
+use CrEOF\Spatial\PHP\Types\Geography\GeographyInterface;
+use CrEOF\Geo\WKT\Parser as WKTStringParser;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+
 
 /**
  * Defines user features
@@ -68,50 +72,76 @@ class GrundContext extends BaseContext implements Context, KernelAwareContext
   public function theFollowingGrundeExist(TableNode $table)
   {
 
-    $salgsomraader = array();
+    $rows = $table->getHash();
+    $count = count($rows);
 
-    foreach ($table->getHash() as $row) {
-      $grund = new \AppBundle\Entity\Grund();
+    $generator = \Faker\Factory::create('da_DK');
+    $populator = new Faker\ORM\Doctrine\Populator($generator, $this->manager);
+    $populator->addEntity('AppBundle\Entity\Lokalplan', 10);
+    $populator->addEntity('AppBundle\Entity\Salgsomraade', 10);
+    $populator->addEntity('AppBundle\Entity\Grund', $count);
+    $populator->execute();
 
-      if(array_key_exists($row['Salgsomraade'], $salgsomraader)) {
-        $salgsomraade = $salgsomraader[$row['Salgsomraade']];
-      } else {
-        $salgsomraade = new \AppBundle\Entity\Salgsomraade();
-        $salgsomraade->setTitel($row['Salgsomraade']);
-        $salgsomraade->setNr(1);
-        $salgsomraade->setType("test");
-        $salgsomraade->setMatrikkel1("M1");
-        $salgsomraade->setMatrikkel2("M2");
-        $salgsomraade->setEjerlav("Ejerlav1");
-        $salgsomraade->setVej("Test");
-        $salgsomraade->setGisurl("http://whatever");
-        $salgsomraade->setTilsluttet("Tilsluttet");
-        $salgsomraade->setSagsnr(4);
-        $salgsomraade->setLploebenummer(4);
-        $salgsomraade->setCreatedAt(new DateTime());
-        $salgsomraade->setUpdatedAt(new DateTime());
+    $accessor = PropertyAccess::createPropertyAccessor();
 
-        $salgsomraader[$row['Salgsomraade']] = $salgsomraade;
-        $this->manager->persist($salgsomraade);
+    for ($i = 0; $i < $count; $i++) {
+      $row = $rows[$i];
+      $grund = $this->manager->getRepository('AppBundle:Grund')->find($i + 1);
+
+      foreach ($row as $field => $value) {
+
+        switch ($field) {
+          case 'DatoAnnonce':
+            $value = new DateTime($row['DatoAnnonce']);
+            $accessor->setValue($grund, $field, $value);
+            break;
+          case 'Salgsomraade':
+            $value = $this->manager->getRepository('AppBundle:Salgsomraade')->find($value);
+            $accessor->setValue($grund, $field, $value);
+            break;
+          case 'Geometry':
+            $grund->setSpGeometry($this->hydrateWKT($value));
+            break;
+          default:
+            $accessor->setValue($grund, $field, $value);
+        }
+
       }
 
-      $grund->setVej($row['Vej']);
-      $grund->setHusnummer($row['Husnummer']);
-      $grund->setBogstav($row['Bogstav']);
+      if (!$grund->getSpGeometry()) {
+        $grund->setSpGeometry($this->hydrateWKT());
+      }
 
-      $grund->setAnnonceresej($row['AnnonceresEj']);
-      $grund->setDatoannonce(new DateTime($row['DatoAnnonce']));
-
-      $grund->setSalgsomraade($salgsomraade);
-
-      $grund->setCreatedAt(new DateTime());
-      $grund->setUpdatedAt(new DateTime());
-
-      $this->manager->persist($grund);
     }
 
     $this->manager->flush();
+  }
 
+  /**
+   * Get a geometry object from a WKT string
+   *
+   * @param $wktString
+   * @return mixed
+   * @throws InvalidValueException
+   */
+  private function hydrateWKT(string $wktString = 'POLYGON((561503.4602595221 6222216.785767948,561656.8824384945 6222220.055102484,561656.5690964112 6222266.055739188,561646.6081165016 6222272.61440419,561503.1799008161 6222269.555026918,561503.4602595221 6222216.785767948)),25832')
+  {
+    $parser = new WKTStringParser($wktString);
+    $wktString  = $parser->parse();
+
+    $typeName  = strtoupper($wktString['type']);
+    $constName = sprintf('CrEOF\Spatial\PHP\Types\Geometry\GeometryInterface::%s', $typeName);
+
+    if (! defined($constName)) {
+      throw new InvalidValueException(sprintf('Unsupported Geography type "%s".', $typeName));
+    }
+
+    $class = sprintf('CrEOF\Spatial\PHP\Types\Geography\%s', constant($constName));
+    if (!class_exists($class)) {
+      throw new InvalidValueException(sprintf('Unsupported Geography type "%s".', $typeName));
+    }
+
+    return new $class($wktString['value'], $wktString['srid']);
   }
 
 

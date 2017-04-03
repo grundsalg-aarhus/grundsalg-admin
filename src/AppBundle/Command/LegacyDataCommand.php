@@ -36,6 +36,10 @@ class LegacyDataCommand extends ContainerAwareCommand
   protected function execute(InputInterface $input, OutputInterface $output)
   {
     $this->output = $output;
+
+    $output->writeln('------------------');
+    $output->writeln('Starting fagsystem import');
+
     $filename = $input->getArgument('file');
     $data = $this->getData($filename);
 
@@ -124,6 +128,10 @@ class LegacyDataCommand extends ContainerAwareCommand
     foreach ($data as $table => &$rows) {
       foreach ($rows as &$row) {
 
+        foreach ($row as $key => &$item) {
+          $item = is_string($item) ? trim($item) : $item;
+        }
+
         // PostBy
         if ($table == 'PostBy') {
           // Ensure field doesn't exceed safe maxlength for safe column type conversion (LONGTEXT -> VARCHAR(100))
@@ -133,8 +141,9 @@ class LegacyDataCommand extends ContainerAwareCommand
         // Lokalsamfund
 
         if ($table == 'Lokalsamfund') {
+
           // Ensure that "active" is either null or 0/1 for safe column type conversion (int(11) -> BOOL)
-          if ($row['active'] !== 1 && $row['active'] !== 0) {
+          if (intval($row['active']) !== 1 && intval($row['active']) !== 0) {
             $this->throwException($table, $row, 'active', 'Cannot be safely converted to bool value');
           }
 
@@ -196,7 +205,7 @@ class LegacyDataCommand extends ContainerAwareCommand
           }
 
           // Ensure that "active" is either null or 0/1 for safe column type conversion (int(11) -> BOOL)
-          if ($row['active'] !== 1 && $row['active'] !== 0) {
+          if (intval($row['active']) !== 1 && intval($row['active']) !== 0) {
             $this->throwException($table, $row, 'active', 'Cannot be safely converted to bool value');
           }
 
@@ -283,6 +292,9 @@ class LegacyDataCommand extends ContainerAwareCommand
 
           // Ensure that "husNummer" is either null or numeric for safe column type conversion (longtext -> INT)
           $this->convertToNumeric($table, $row, 'husNummer');
+
+          // Ensure that "bogstav" is either null or safe length (varchar 30)
+          $this->validateLengthShorterThanOrEqual($table, $row, 'bogstav', 30);
 
           // Ensure that "annonceresEj" is either null or 0/1 for safe column type conversion (varchar(50) -> BOOL)
           $this->convertXToBoolean($table, $row, 'annonceresEj');

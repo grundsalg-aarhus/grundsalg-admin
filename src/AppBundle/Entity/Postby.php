@@ -9,7 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Postby
  *
- * @ORM\Table(name="PostBy")
+ * @ORM\Table(name="PostBy", indexes={
+ *   @ORM\Index(name="search_PostBy_postalcode", columns={"postalCode"}),
+ *   @ORM\Index(name="search_PostBy_city", columns={"city"}),
+ * })
  * @ORM\Entity
  */
 class Postby
@@ -21,7 +24,7 @@ class Postby
   /**
    * @var integer
    *
-   * @ORM\Column(name="id", type="bigint", nullable=false)
+   * @ORM\Column(name="id", type="integer", nullable=false)
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="IDENTITY")
    */

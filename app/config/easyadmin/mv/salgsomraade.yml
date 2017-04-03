@@ -1,0 +1,44 @@
+easy_admin:
+    entities:
+        salgsomraade:
+            class: AppBundle\Entity\Salgsomraade
+            controller:
+            list:
+                title: 'Salgsområder'
+                sort: ['titel', 'ASC']
+                actions:
+                    <<: *default_list_actions
+                fields:
+                    - {property: kpl1234Combined, label: 'KPL'}
+                    - {property: o123Combined, label: 'LP-område'}
+                    - {property: nr, label: 'SONr'}
+                    - type
+                    - titel
+
+            edit:
+                title: 'Rediger Salgsområde'
+
+            form:
+                fields: &salgsomraade_form_fields
+                    - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Salgsområde' }
+                    - { property: nr, label: 'Nr', css_class: 'col-sm-4', readonly: true, type_options: { disabled: true }}
+                    - { property: matrikkel1, label: 'Matr.nr', css_class: 'col-sm-4' }
+                    - { property: matrikkel2, label: false, css_class: 'col-sm-4' }
+                    - { type: 'divider' }
+                    - { property: titel, label: 'Titel', css_class: 'col-sm-6' }
+                    - { property: ejerlav, css_class: 'col-sm-6' }
+                    - { property: type, css_class: 'col-sm-6' }
+                    - { property: postby, css_class: 'col-sm-6' }
+                    - { property: sagsnr, label: 'PSP', css_class: 'col-sm-6' }
+                    - { property: vej, css_class: 'col-sm-6' }
+                    - { property: landinspektoer, label: 'Landinsp.', css_class: 'col-sm-6' }
+                    - { property: gisurl, label: 'URL t. GIS.', css_class: 'col-sm-6' }
+
+                    - { type: 'divider' }
+                    - { property: delomraade, label: 'KPL', css_class: 'col-sm-12', readonly: true, type_options: { disabled: true }}
+                    - { property: tilsluttet, label: 'Tilsluttet', css_class: 'col-sm-12', help: 'Prisen indeholder helt eller delvis tilslutning til følgende' }
+
+            show:
+                title: 'Salgsområde'
+                fields:
+                    <<: *salgsomraade_form_fields

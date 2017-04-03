@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Grund;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -12,31 +13,71 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ApiController extends Controller {
   /**
-   * @Route("/udstykning/{udstykningsId}/grunde", name="pub_api_grunde")
+   * @TODO: Missing documentation!
+   *
+   * @Route("/udstykning/{udstykningsId}/grunde/{format}", name="pub_api_grunde")
    */
-  public function grundeAction(Request $request, $udstykningsId) {
+  public function grundeAction(Request $request, $udstykningsId, $format = 'drupal_api') {
     $em = $this->getDoctrine()->getManager();
-    $query = $em->getRepository('AppBundle:Grund')
-      ->getGrundeForSalgsOmraade($udstykningsId);
+    $query = $em->getRepository('AppBundle:Grund')->getGrundeForSalgsOmraade($udstykningsId);
 
     $grunde = $query->getResult();
+    $list = array();
 
-    $list['count'] = count($grunde);
-    $list['grunde'] = array();
+    if($format === 'geojson') {
+      $list['type'] = 'FeatureCollection';
 
-    foreach ($grunde as $grund) {
-      $data = array();
-      $data['id'] = $grund->getId();
-      $data['address'] = trim($grund->getVej() . ' ' . $grund->getHusnummer() . $grund->getBogstav());
-      $data['status'] = $grund->getStatus();
-      $data['area_m2'] = $grund->getAreal();
-      // @TODO which fields to map for prices?
-      $data['minimum_price'] = $grund->getMinbud();
-      $data['sale_price'] = $grund->getPris();
-      // @TODO add pdf link when access import complete
-      $data['pdf_link'] = 'http://todo.com/todo.pdf';
+      $crs = array();
+      $crs['type'] = 'link';
+      $crs['properties']['href'] = 'http://spatialreference.org/ref/epsg/25832/proj4/';
+      $crs['properties']['href'] = $this->getParameter('crs_properties_href');
+      $crs['properties']['type'] = $this->getParameter('crs_properties_type');
+      $list['crs'] = $crs;
 
-      $list['grunde'][] = $data;
+      $list['features'] = array();
+
+      foreach ($grunde as $grund) {
+        $data = array();
+
+        $data['type'] = 'Feature';
+        $data['geometry'] = $grund->getSpGeometryArray();
+
+        $properties['id'] = $grund->getId();
+        $properties['address'] = trim($grund->getVej() . ' ' . $grund->getHusnummer() . $grund->getBogstav());
+        $properties['status'] = $this->getPublicStatus($grund);
+        $properties['area_m2'] = $grund->getAreal();
+        // @TODO which fields to map for prices?
+        $properties['minimum_price'] = $grund->getMinbud();
+        $properties['sale_price'] = $grund->getPris();
+        $properties['pdf_link'] = $grund->getPdfLink();
+
+        // Needed in the frontend/weblayer. If true popup will be enabled for the feature.
+        $properties['markers'] = true;
+
+        $data['properties'] = $properties;
+
+        $list['features'][] = $data;
+      }
+
+    } else {
+
+      $list['count'] = count($grunde);
+      $list['grunde'] = array();
+
+      foreach ($grunde as $grund) {
+        $data = array();
+        $data['id'] = $grund->getId();
+        $data['address'] = trim($grund->getVej() . ' ' . $grund->getHusnummer() . $grund->getBogstav());
+        $data['status'] = $this->getPublicStatus($grund);
+        $data['area_m2'] = $grund->getAreal();
+        // @TODO which fields to map for prices?
+        $data['minimum_price'] = $grund->getMinbud();
+        $data['sale_price'] = $grund->getPris();
+        $data['pdf_link'] = $grund->getPdfLink();
+
+        $list['grunde'][] = $data;
+      }
+
     }
 
     $response = $this->json($list);
@@ -46,23 +87,106 @@ class ApiController extends Controller {
   }
 
   /**
+   * Returns JSON with information about a "Salgsomraad".
+   *
+   * @param Request $request
+   *   Symfony request object.
+   * @param Int $udstykningsId
+   *   The id for the area to load.
+   *
+   * @return JsonResponse
+   *   JSON encode symfony response object.
+   *
    * @Route("/udstykning/{udstykningsId}", name="pub_api_salgsomraade")
    */
   public function salgsomraadeAction(Request $request, $udstykningsId) {
     $em = $this->getDoctrine()->getManager();
-    $salgsomraade = $em->getRepository('AppBundle:Salgsomraade')->findOneById($udstykningsId);
+    $area = $em->getRepository('AppBundle:Salgsomraade')->findOneById($udstykningsId);
 
     $data = [
-      'id' => $salgsomraade->getId(),
-      'type' => $salgsomraade->getType(),
-      'title' => $salgsomraade->getTitel(),
-      'city' => $salgsomraade->getPostby()->getCity(),
-      'postalCode' => $salgsomraade->getPostby()->getPostalcode(),
+      'id' => $area->getId(),
+      'type' => $area->getType(),
+      'title' => $area->getTitel(),
+      'vej' => $area->getVej(),
+      'city' => $area->getPostby() ? $area->getPostby()->getCity() : null,
+      'postalCode' => $area->getPostby() ? $area->getPostby()->getPostalcode() : null,
+      'geometry' => $area->getSpGeometryArray(),
+      'srid' => $area->getSrid(),
+      'publish' => $area->isAnnonceres(),
     ];
 
     $response = $this->json($data);
     $response->headers->set('Access-Control-Allow-Origin', '*');
 
     return $response;
+  }
+
+  /**
+   * Get the publicly exposed sales status based on a combination
+   * of the internal fields 'status' and 'salgsstatus'.
+   *
+   * Domain rules (status / salgStatus):
+   *    * / Accepteret = solgt
+   *    Fremtidig / Ledig = Fremtidig
+   *    Ledig/Ledig = Ledig
+   *    Solgt / Ledig = Ledig
+   *    Ledig/ Reserveret = Reserveret
+   *    Ledig/ Skøde rekvireret = Solgt
+   *    Auktion slut / Skøde rekvireret = Solgt
+   *    Ledig / Solgt = Solgt
+   *    Auktion slut / Solgt = Solgt
+   *    Annonceret / Ledig = i udbud.
+   *
+   * Valid return values are {"Solgt", "Fremtidig", "Ledig", "Reserveret", "I udbud"}
+   *
+   * @param $grund
+   * @return string
+   */
+  private function getPublicStatus(Grund $grund) {
+    $status = $grund->getStatus();
+    $salgStatus = $grund->getSalgstatus();
+
+    if($salgStatus === 'Accepteret') {
+      return 'Solgt';
+    }
+
+    if($status === 'Fremtidig' && $salgStatus === 'Ledig') {
+      return 'Fremtidig';
+    }
+
+    if($status === 'Ledig' && $salgStatus === 'Ledig') {
+      return 'Ledig';
+    }
+
+    if($status === 'Solgt' && $salgStatus === 'Ledig') {
+      return 'Ledig';
+    }
+
+    if($status === 'Ledig' && $salgStatus === 'Reserveret') {
+      return 'Reserveret';
+    }
+
+    if($status === 'Ledig' && $salgStatus === 'Skøde rekvireret') {
+      return 'Solgt';
+    }
+
+    if($status === 'Auktion slut' && $salgStatus === 'Skøde rekvireret') {
+      return 'Solgt';
+    }
+
+    if($status === 'Ledig' && $salgStatus == 'Solgt') {
+      return 'Solgt';
+    }
+
+    if($status === 'Auktion slut' && $salgStatus === 'Solgt') {
+      return 'Solgt';
+    }
+
+    if($status === 'Annonceret' && $salgStatus === 'Ledig') {
+      return 'I udbud';
+    }
+
+    return 'Solgt';
+
   }
 }

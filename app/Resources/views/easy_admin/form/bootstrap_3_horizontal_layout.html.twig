@@ -1,0 +1,142 @@
+{% extends '@EasyAdmin/form/bootstrap_3_horizontal_layout.html.twig' %}
+
+{#
+ - Added check if label === false, then don't output
+ - Added check if field disabled, then don't output nullable control
+#}
+
+{# Rows #}
+
+{% block form_row -%}
+{% spaceless %}
+
+    {% set _field_type = easyadmin.field.fieldType|default('default') %}
+    <div class="form-group {% if (not compound or force_error|default(false)) and not valid %}has-error{% endif %} field-{{ block_prefixes|slice(-2)|first }}">
+        {% set _field_label = easyadmin.field['label']|default(null) %}
+
+        {% if easyadmin.field['label'] is not same as(false) %}
+          {{ form_label(form, _field_label, { translation_domain: easyadmin.entity.translation_domain }) }}
+        {% endif %}
+
+        <div class="{{ block('form_group_class') }}">
+            {{ form_widget(form) }}
+
+            {% if _field_type in ['datetime', 'date', 'time', 'birthday'] and easyadmin.field.nullable|default(false) and easyadmin.field.readonly is defined and easyadmin.field.readonly is not same as(true) %}
+                <div class="nullable-control">
+                    <label>
+                        <input type="checkbox" {% if data is null %}checked="checked"{% endif %}>
+                        {{ 'label.nullable_field'|trans({}, 'EasyAdminBundle')}}
+                    </label>
+                </div>
+            {% endif %}
+
+            {{ form_errors(form) }}
+
+            {% if easyadmin.field.help|default('') != '' %}
+                <span class="help-block"><i class="fa fa-info-circle"></i> {{ easyadmin.field.help|trans(domain = easyadmin.entity.translation_domain)|raw }}</span>
+            {% endif %}
+        </div>
+    </div>
+{% endspaceless %}
+{%- endblock form_row %}
+
+{% block form_group_class -%}
+  {% if easyadmin.field['label'] is not same as(false) %}
+    col-sm-10
+  {% else %}
+    col-sm-12
+  {% endif %}
+{% endblock form_group_class %}
+
+
+
+{#
+ - Added 'blameable block
+#}
+
+{# EasyAdmin form type #}
+{% block easyadmin_widget %}
+  {% set _translation_domain = easyadmin.entity.translation_domain %}
+  {% set _trans_parameters = { '%entity_name%':  easyadmin.entity.name|trans, '%entity_label%': easyadmin.entity.label|trans } %}
+
+  {% if form.vars.errors|length > 0 %}
+    {{ form_errors(form) }}
+  {% endif %}
+
+  <input type="hidden" name="referer" value="{{ app.request.query.get('referer', '') }}"/>
+
+  <div class="row">
+    {% for group_name, group_config in easyadmin_form_groups %}
+      <div class="field-group col-xs-12 {{ group_config.css_class|default('') }}">
+        <div class="box box-default">
+          {% if group_config.label|default(false) or group_config.icon|default(false) %}
+            <div class="box-header with-border">
+              <h3 class="box-title">
+                {% if group_config.icon|default(false) %}
+                  <i class="fa fa-{{ group_config.icon }}"></i>
+                {% endif %}
+                {{ group_config.label|trans(domain = _translation_domain)|raw }}
+              </h3>
+            </div>
+          {% endif %}
+
+          <div class="box-body">
+            {% if group_config.help|default(false) %}
+              <p class="help-block">{{ group_config.help|trans(domain = _translation_domain)|nl2br|raw }}</p>
+            {% endif %}
+
+            <div class="row">
+              {% for field in form.children if 'hidden' not in field.vars.block_prefixes and field.vars.easyadmin.form_group == group_name %}
+                <div class="col-xs-12 {{ field.vars.easyadmin.field.css_class|default('') }}">
+                  {{ form_row(field) }}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      {% for field in form.children if 'hidden' not in field.vars.block_prefixes %}
+        <div class="col-xs-12 {{ field.vars.easyadmin.field.css_class|default('') }}">
+          {{ form_row(field) }}
+        </div>
+      {% endfor %}
+    {% endfor %}
+  </div>
+
+  {# Added 'blameable block #}
+  {% include "easy_admin/_includes/_blameable.html.twig" with { 'entity': value } %}
+
+  <div class="row">
+    <div class="col-xs-12 form-actions">
+      <div class="form-group">
+        <div id="form-actions-row">
+          {% block item_actions %}
+            {# the 'save' action is hardcoded for the 'edit' and 'new' views #}
+            <button type="submit" class="btn btn-primary action-save">
+              <i class="fa fa-save"></i> {{ 'action.save'|trans(_trans_parameters, _translation_domain) }}
+            </button>
+
+            {% set _entity_actions = (easyadmin.view == 'new')
+            ? easyadmin_get_actions_for_new_item(easyadmin.entity.name)
+            : easyadmin_get_actions_for_edit_item(easyadmin.entity.name) %}
+
+            {% set _entity_id = (easyadmin.view == 'new')
+            ? null
+            : attribute(easyadmin.item, easyadmin.entity.primary_key_field_name) %}
+
+            {% set _request_parameters = { entity: easyadmin.entity.name, referer: app.request.query.get('referer') } %}
+
+            {{ include('@EasyAdmin/default/includes/_actions.html.twig', {
+              actions: _entity_actions,
+              request_parameters: _request_parameters,
+              translation_domain: _translation_domain,
+              trans_parameters: _trans_parameters,
+              item_id: _entity_id
+            }, with_context = false) }}
+          {% endblock item_actions %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock easyadmin_widget %}

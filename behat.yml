@@ -7,6 +7,7 @@ default:
         - AuthenticationContext: { doctrine: "@doctrine" }
         - DatabaseSetupContext: { doctrine: "@doctrine" }
         - GrundContext: { doctrine: "@doctrine" }
+        - SalgsomraadeContext: { doctrine: "@doctrine" }
         - JsonValidationContext
         - UserContext: { doctrine: "@doctrine" }
         - Behat\MinkExtension\Context\MinkContext

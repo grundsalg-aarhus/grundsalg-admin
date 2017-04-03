@@ -9,7 +9,12 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="fos_user")
+ * @ORM\Table(name="fos_user", indexes={
+ *   @ORM\Index(name="search_User_enabled", columns={"enabled"}),
+ *   @ORM\Index(name="search_User_username", columns={"username"}),
+ *   @ORM\Index(name="search_User_name", columns={"name"}),
+ *   @ORM\Index(name="search_User_email", columns={"email"})
+ * })
  */
 class User extends BaseUser
 {
@@ -28,23 +33,9 @@ class User extends BaseUser
   /**
    * @var string
    *
-   * @ORM\Column(name="name", type="text", nullable=true)
+   * @ORM\Column(name="name", type="string", length=255, nullable=true)
    */
   protected $name;
-
-  /**
-   * @var \DateTime
-   * @Gedmo\Timestampable(on="create")
-   * @ORM\Column(type="datetime", nullable=true)
-   */
-  protected $createdAt;
-
-  /**
-   * @var \DateTime
-   * @Gedmo\Timestampable(on="update")
-   * @ORM\Column(type="datetime", nullable=true)
-   */
-  protected $updatedAt;
 
   /**
    * User constructor.

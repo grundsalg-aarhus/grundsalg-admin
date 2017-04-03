@@ -9,7 +9,13 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Lokalplan
  *
- * @ORM\Table(name="Lokalplan")
+ * @ORM\Table(name="Lokalplan", indexes={
+ *   @ORM\Index(name="search_Lokalplan_nr", columns={"nr"}),
+ *   @ORM\Index(name="search_Lokalplan_titel", columns={"titel"}),
+ *   @ORM\Index(name="search_Lokalplan_samletAreal", columns={"samletAreal"}),
+ *   @ORM\Index(name="search_Lokalplan_salgbartAreal", columns={"salgbartAreal"}),
+ *   @ORM\Index(name="search_Lokalplan_forbrugsAndel", columns={"forbrugsAndel"})
+ * })
  * @ORM\Entity
  */
 class Lokalplan
@@ -21,7 +27,7 @@ class Lokalplan
   /**
    * @var integer
    *
-   * @ORM\Column(name="id", type="bigint", nullable=false)
+   * @ORM\Column(name="id", type="integer", nullable=false)
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="IDENTITY")
    */
@@ -37,7 +43,7 @@ class Lokalplan
   /**
    * @var \Lokalsamfund
    *
-   * @ORM\ManyToOne(targetEntity="Lokalsamfund")
+   * @ORM\ManyToOne(targetEntity="Lokalsamfund", fetch="EAGER")
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="lokalsamfundId", referencedColumnName="id")
    * })
@@ -89,7 +95,7 @@ class Lokalplan
   /**
    * @var string
    *
-   * @ORM\Column(name="forbrugsAndel", type="text", nullable=false)
+   * @ORM\Column(name="forbrugsAndel", type="float", precision=18, scale=12, nullable=false)
    */
   private $forbrugsandel;
 
@@ -322,6 +328,6 @@ class Lokalplan
 
   public function __toString()
   {
-    return $this->titel;
+    return $this->getNr() . ' - ' . $this->getTitel();
   }
 }

@@ -1,0 +1,30 @@
+.easyadmin-list td:last-child {
+  width: 1em;
+  text-align: right;
+  white-space: nowrap;
+}
+
+body.show .form-control {
+  height: 34px;
+}
+
+span.form-control, span.form-inline .form-control {
+  background: #FAFAFA;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  height: 34px;
+}
+
+.meta-box {
+  color: #777;
+}
+
+.meta-label {
+  font-weight: bold;
+  padding: 0 1em 0 2em;
+}
+
+.meta-label:first-child {
+  padding: 0 1em 0 0;
+}

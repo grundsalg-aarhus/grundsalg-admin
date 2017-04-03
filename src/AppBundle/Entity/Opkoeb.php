@@ -5,11 +5,20 @@ namespace AppBundle\Entity;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OrderBy;
 
 /**
  * Opkoeb
  *
- * @ORM\Table(name="Opkoeb", indexes={@ORM\Index(name="fk_Opkoeb_lokalplanId", columns={"lokalplanId"})})
+ * @ORM\Table(name="Opkoeb", indexes={
+ *   @ORM\Index(name="fk_Opkoeb_lokalplanId", columns={"lokalplanId"}),
+ *
+ *   @ORM\Index(name="search_Opkoeb_ejerlav", columns={"ejerlav"}),
+ *   @ORM\Index(name="search_Opkoeb_m2", columns={"m2"}),
+ *   @ORM\Index(name="search_Opkoeb_opkoebDato", columns={"opkoebDato"}),
+ *   @ORM\Index(name="search_Opkoeb_pris", columns={"pris"}),
+ *   @ORM\Index(name="search_Opkoeb_procentAfLP", columns={"procentAfLP"})
+ * })
  * @ORM\Entity
  */
 class Opkoeb
@@ -21,7 +30,7 @@ class Opkoeb
   /**
    * @var integer
    *
-   * @ORM\Column(name="id", type="bigint", nullable=false)
+   * @ORM\Column(name="id", type="integer", nullable=false)
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="IDENTITY")
    */
@@ -86,10 +95,11 @@ class Opkoeb
   /**
    * @var \Lokalplan
    *
-   * @ORM\ManyToOne(targetEntity="Lokalplan")
+   * @ORM\ManyToOne(targetEntity="Lokalplan", fetch="EAGER")
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="lokalplanId", referencedColumnName="id")
    * })
+   * @OrderBy({"nr" = "ASC"})
    */
   private $lokalplan;
 
@@ -318,6 +328,11 @@ class Opkoeb
   public function getLokalplan()
   {
     return $this->lokalplan;
+  }
+
+  public function getMatrikel()
+  {
+    return $this->getMatrik1().$this->getMatrik2();
   }
 
   public function __toString()

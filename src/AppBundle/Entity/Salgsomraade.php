@@ -9,7 +9,16 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Salgsomraade
  *
- * @ORM\Table(name="Salgsomraade", indexes={@ORM\Index(name="fk_Salgsomraade_postById", columns={"postById"}), @ORM\Index(name="fk_Salgsomraade_delomraadeId", columns={"delomraadeId"}), @ORM\Index(name="fk_Salgsomraade_lokalplanId", columns={"lokalplanId"}), @ORM\Index(name="fk_Salgsomraade_landinspektorId", columns={"landinspektorId"})})
+ * @ORM\Table(name="Salgsomraade", indexes={
+ *   @ORM\Index(name="fk_Salgsomraade_postById", columns={"postById"}),
+ *   @ORM\Index(name="fk_Salgsomraade_delomraadeId", columns={"delomraadeId"}),
+ *   @ORM\Index(name="fk_Salgsomraade_lokalplanId", columns={"lokalplanId"}),
+ *   @ORM\Index(name="fk_Salgsomraade_landinspektorId", columns={"landinspektorId"}),
+ *
+ *   @ORM\Index(name="search_Salgsomraade_titel", columns={"titel"}),
+ *   @ORM\Index(name="search_Salgsomraade_nr", columns={"nr"}),
+ *   @ORM\Index(name="search_Salgsomraade_type", columns={"type"})
+ * })
  * @ORM\Entity
  */
 class Salgsomraade
@@ -21,7 +30,7 @@ class Salgsomraade
   /**
    * @var integer
    *
-   * @ORM\Column(name="id", type="bigint", nullable=false)
+   * @ORM\Column(name="id", type="integer", nullable=false)
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="IDENTITY")
    */
@@ -105,7 +114,7 @@ class Salgsomraade
   private $lploebenummer;
 
   /**
-   * @var \Landinspektoer
+   * @var \AppBundle\Entity\Landinspektoer
    *
    * @ORM\ManyToOne(targetEntity="Landinspektoer")
    * @ORM\JoinColumns({
@@ -115,9 +124,9 @@ class Salgsomraade
   private $landinspektoer;
 
   /**
-   * @var \Delomraade
+   * @var \AppBundle\Entity\Delomraade
    *
-   * @ORM\ManyToOne(targetEntity="Delomraade")
+   * @ORM\ManyToOne(targetEntity="Delomraade", fetch="EAGER")
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="delomraadeId", referencedColumnName="id")
    * })
@@ -125,9 +134,9 @@ class Salgsomraade
   private $delomraade;
 
   /**
-   * @var \Lokalplan
+   * @var \AppBundle\Entity\Lokalplan
    *
-   * @ORM\ManyToOne(targetEntity="Lokalplan")
+   * @ORM\ManyToOne(targetEntity="Lokalplan", fetch="EAGER")
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="lokalplanId", referencedColumnName="id")
    * })
@@ -135,7 +144,7 @@ class Salgsomraade
   private $lokalplan;
 
   /**
-   * @var \Postby
+   * @var \AppBundle\Entity\Postby
    *
    * @ORM\ManyToOne(targetEntity="Postby")
    * @ORM\JoinColumns({
@@ -144,6 +153,36 @@ class Salgsomraade
    */
   private $postby;
 
+  /**
+   * @var boolean
+   *
+   * @ORM\Column(name="annonceres", type="boolean", options={"default" = 0})
+   */
+  private $annonceres = false;
+
+  /**
+   * @var \CrEOF\Spatial\DBAL\Types\Geography
+   *
+   * @ORM\Column(name="SP_GEOMETRY", type="geometry", nullable=true)
+   */
+  private $sp_geometry;
+
+  /**
+   * @var integer
+   *
+   * @ORM\Column(name="srid", type="integer", nullable=true)
+   */
+  private $srid;
+
+  /**
+   * @var string
+   *
+   * This variable may be need by the remote MapInfo system. Hence it's here
+   * and should not be removed.
+   *
+   * @ORM\Column(name="MI_STYLE", type="string", length=255, nullable=true)
+   */
+  private $miStyle;
 
   /**
    * Get id
@@ -515,8 +554,98 @@ class Salgsomraade
     return $this->postby;
   }
 
+  /**
+   * @return bool
+   */
+  public function isAnnonceres(): bool
+  {
+    return $this->annonceres;
+  }
+
+  /**
+   * @param bool $annonceres
+   */
+  public function setAnnonceres(bool $annonceres)
+  {
+    $this->annonceres = $annonceres;
+  }
+
+
+  /**
+   * @return \CrEOF\Spatial\DBAL\Types\Geography
+   */
+  public function getSpGeometry()
+  {
+    return $this->sp_geometry;
+  }
+
+  /**
+   * @param \CrEOF\Spatial\DBAL\Types\Geography $sp_geometry
+   */
+  public function setSpGeometry($sp_geometry)
+  {
+    $this->sp_geometry = $sp_geometry;
+  }
+
+  /**
+   * @return int
+   */
+  public function getSrid()
+  {
+    return $this->srid;
+  }
+
+  /**
+   * @param int $srid
+   */
+  public function setSrid(int $srid)
+  {
+    $this->srid = $srid;
+  }
+
+  /**
+   * Get the spatial data as an array.
+   *
+   * @return null|array
+   *   If spatial data exists on the entity array is returned else null.
+   */
+  public function getSpGeometryArray()
+  {
+    if ($this->getSpGeometry()) {
+      $json['type'] = $this->getSpGeometry()->getType();
+      $json['coordinates'] = $this->getSpGeometry()->toArray();
+
+      return $json;
+    }
+
+    return NULL;
+  }
+
+  /**
+   * Get combined o1, o2, o3 for list display
+   *
+   * @return string
+   */
+  public function getO123Combined()
+  {
+    return empty($this->getDelomraade()) ? '' :  $this->getDelomraade()->getO123Combined();
+  }
+
+  /**
+   * Get combined kpl1 - kpl 4 for list display
+   *
+   * @return string
+   */
+  public function getKpl1234Combined()
+  {
+    return empty($this->getDelomraade()) ? '' : $this->getDelomraade()->getKpl1234Combined();
+  }
+
+  /**
+   * @return string
+   */
   public function __toString()
   {
-    return $this->titel;
+    return $this->getNr() . ' - ' . $this->getTitel();
   }
 }

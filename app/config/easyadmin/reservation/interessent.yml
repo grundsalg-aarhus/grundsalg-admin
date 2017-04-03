@@ -1,0 +1,45 @@
+easy_admin:
+    entities:
+        interessent:
+            class: AppBundle\Entity\Interessent
+            controller:
+            list:
+                title: 'Interessenter'
+                sort: [koeberNavn, 'ASC']
+                actions:
+                    <<: *default_list_actions
+                fields:
+                    - koeberNavn
+                    - koeberEmail
+                    - koeberLand
+
+            form:
+                fields: &interessent_form_fields
+                    - { type: 'group', css_class: 'col-md-6', label: 'app.interessent.koeber' }
+                    - { property: koeberNavn, label: 'app.grund.koeberNavn' }
+                    - { property: koeberAdresse, label: 'app.grund.koeberAdresse' }
+                    - { property: koeberPostby, label: 'app.grund.koeberPostby' }
+                    - { property: koeberLand, label: 'app.grund.koeberLand' }
+                    - { property: koeberTelefon, label: 'app.grund.koeberTelefon' }
+                    - { property: koeberMobil, label: 'app.grund.koeberMobil' }
+                    - { property: koeberEmail, label: 'app.grund.koeberEmail' }
+
+                    - { type: 'group', css_class: 'col-md-6', label: 'app.interessent.medkoeber' }
+                    - { property: medkoeberNavn, label: 'app.grund.medkoeberNavn' }
+                    - { property: medkoeberAdresse, label: 'app.grund.medkoeberAdresse' }
+                    - { property: medkoeberPostby, label: 'app.grund.medkoeberPostby' }
+                    - { property: medkoeberLand, label: 'app.grund.medkoeberLand' }
+                    - { property: medkoeberTelefon, label: 'app.grund.medkoeberTelefon' }
+                    - { property: medkoeberMobil, label: 'app.grund.medkoeberMobil' }
+                    - { property: medkoeberEmail, label: 'app.grund.medkoeberEmail' }
+
+                    - { type: 'group', css_class: 'col-xs-12', label: 'app.interessent.notat' }
+                    - { property: koeberNotat, label: 'app.interessent.notat' }
+
+            edit:
+                title: 'Rediger Interessent'
+
+            show:
+                title: 'Interessent'
+                fields:
+                    <<: *interessent_form_fields

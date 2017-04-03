@@ -14,6 +14,7 @@ class AppKernel extends Kernel
       new Symfony\Bundle\MonologBundle\MonologBundle(),
       new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
       new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+      new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
       new FOS\UserBundle\FOSUserBundle(),
       new WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),
@@ -22,6 +23,8 @@ class AppKernel extends Kernel
       new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
       new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
       new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+
+      new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
 
       new AppBundle\AppBundle(),
     ];

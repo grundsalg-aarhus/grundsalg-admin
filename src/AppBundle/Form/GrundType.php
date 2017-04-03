@@ -30,7 +30,7 @@ class GrundType extends AbstractType
             ->add('salgstype')
             ->add('auktionstartdato', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('auktionslutdato', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
-            ->add('annonceresej')
+            ->add('annonceres')
             ->add('datoannonce', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('datoannonce1', \Symfony\Component\Form\Extension\Core\Type\DateType::class)
             ->add('tilsluttet')
