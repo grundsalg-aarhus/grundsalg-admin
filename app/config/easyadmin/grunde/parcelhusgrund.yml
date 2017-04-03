@@ -62,7 +62,7 @@ easy_admin:
 
                     - { property: 'type', label: 'app.grund.type', type: 'AppBundle\Form\Field\GrundType' }
                     - { property: 'salgstype', label: 'app.grund.salgstype', type: 'AppBundle\Form\Field\SalgsType' }
-                    - { property: 'tilsluttet', label: 'app.grund.tilsluttet' }
+                    - { property: 'tilsluttet', label: 'app.grund.tilsluttet', type: 'AppBundle\Form\Field\TilslutningsType', type_options: { expanded : true, multiple : true } }
 
                     - { property: 'areal', label: 'app.grund.areal' }
                     - { property: 'arealvej', label: 'app.grund.arealvej' }

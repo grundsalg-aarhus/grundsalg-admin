@@ -181,9 +181,9 @@ class Grund {
   private $datoannonce1;
 
   /**
-   * @var string
+   * @var array
    *
-   * @ORM\Column(name="tilsluttet", type="string", length=50, nullable=true)
+   * @ORM\Column(name="tilsluttet", type="array", nullable=true)
    */
   private $tilsluttet;
 
@@ -604,6 +604,7 @@ class Grund {
   public function __construct() {
     $this->reservationer = new ArrayCollection();
     $this->salgshistorik = new ArrayCollection();
+    $this->tilsluttet = new ArrayCollection();
     $this->annonceres = false;
   }
 
@@ -1038,25 +1039,17 @@ class Grund {
   }
 
   /**
-   * Set tilsluttet
-   *
-   * @param string $tilsluttet
-   *
-   * @return Grund
-   */
-  public function setTilsluttet($tilsluttet) {
-    $this->tilsluttet = $tilsluttet;
-
-    return $this;
-  }
-
-  /**
-   * Get tilsluttet
-   *
-   * @return string
+   * @return array
    */
   public function getTilsluttet() {
     return $this->tilsluttet;
+  }
+
+  /**
+   * @param array $tilsluttet
+   */
+  public function setTilsluttet(array $tilsluttet) {
+    $this->tilsluttet = $tilsluttet;
   }
 
   /**
