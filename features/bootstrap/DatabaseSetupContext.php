@@ -64,15 +64,16 @@ class DatabaseSetupContext extends BaseContext implements Context, KernelAwareCo
   }
 
   /**
-   * @BeforeScenario @createSchema
+   * @BeforeScenario
    */
   public function createDatabase()
   {
+    $this->schemaTool->dropSchema($this->classes);
     $this->schemaTool->createSchema($this->classes);
   }
 
   /**
-   * @AfterScenario @dropSchema
+   * @AfterScenario
    */
   public function dropDatabase()
   {
