@@ -22,6 +22,7 @@ class AppKernel extends Kernel
       new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
       new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
       new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+      new Fresh\DoctrineEnumBundle\FreshDoctrineEnumBundle(),
 
       new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
 

@@ -14,7 +14,7 @@ easy_admin:
             list: &parcelhus_default_list
                 title: 'Alle Storparceller'
                 sort: postby
-                dql_filter: entity.grundtype = 'Storparcel'
+                dql_filter: entity.type = 'Storparcel'
                 actions:
                     <<: *default_list_actions
                 fields:
@@ -60,7 +60,7 @@ easy_admin:
                     - { property: 'datoAnnonce', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoAnnonce' }
                     - { property: 'datoAnnonce1', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoAnnonce1' }
 
-                    - { property: 'grundtype', label: 'app.grund.grundtype' }
+                    - { property: 'type', label: 'app.grund.type' }
                     - { property: 'salgstype', label: 'app.grund.salgstype' }
                     - { property: 'tilsluttet', label: 'app.grund.tilsluttet' }
 
@@ -106,7 +106,7 @@ easy_admin:
 
             list:
                 title: 'Vis Storparceller'
-                dql_filter: entity.grundtype = 'Storparcel' AND (entity.status='Ledig' OR entity.status='Annonceret') and entity.salgstatus= 'Ledig'
+                dql_filter: entity.type = 'Storparcel' AND (entity.status='Ledig' OR entity.status='Annonceret') and entity.salgstatus= 'Ledig'
 
                 # Import default values
                 <<: *parcelhus_default_list
@@ -122,7 +122,7 @@ easy_admin:
 
             list:
                 title: 'Fremtidige Storparceller'
-                dql_filter: entity.grundtype = 'Storparcel' AND (entity.status='Fremtidig')
+                dql_filter: entity.type = 'Storparcel' AND (entity.status='Fremtidig')
 
                 # Import default values
                 <<: *parcelhus_default_list
@@ -138,7 +138,7 @@ easy_admin:
 
             list:
                 title: 'Annoncerede Storparceller'
-                dql_filter: entity.grundtype = 'Storparcel' AND (entity.status='Annoncerede')
+                dql_filter: entity.type = 'Storparcel' AND (entity.status='Annoncerede')
 
                 # Import default values
                 <<: *parcelhus_default_list
@@ -154,7 +154,7 @@ easy_admin:
 
             list:
                 title: 'Auktion slut Storparceller'
-                dql_filter: entity.grundtype = 'Storparcel' AND entity.status='Auktion slut' AND entity.salgstatus != 'Solgt' AND entity.salgstatus != 'Accepteret' AND entity.salgstatus != 'Skøde rekvireret' AND entity.salgstatus != 'Skøde annulleret'
+                dql_filter: entity.type = 'Storparcel' AND entity.status='Auktion slut' AND entity.salgstatus != 'Solgt' AND entity.salgstatus != 'Accepteret' AND entity.salgstatus != 'Skøde rekvireret' AND entity.salgstatus != 'Skøde annulleret'
 
                 # Import default values
                 <<: *parcelhus_default_list
@@ -170,7 +170,7 @@ easy_admin:
 
             list:
                 title: 'Ledige Storparceller'
-                dql_filter: entity.grundtype = 'Storparcel' AND entity.status='Ledig' AND (entity.salgstatus IS NULL OR entity.salgstatus = 'Ledig')
+                dql_filter: entity.type = 'Storparcel' AND entity.status='Ledig' AND (entity.salgstatus IS NULL OR entity.salgstatus = 'Ledig')
 
                 # Import default values
                 <<: *parcelhus_default_list
@@ -186,7 +186,7 @@ easy_admin:
 
             list:
                 title: 'Tilbud Storparceller'
-                dql_filter: entity.grundtype = 'Storparcel' AND entity.status='Ledig' AND (entity.salgstatus = 'Reserveret' OR entity.salgstatus = 'Reservation annulleret' OR entity.salgstatus = 'Tilbud sendt' OR entity.salgstatus = 'Tilbud annulleret')
+                dql_filter: entity.type = 'Storparcel' AND entity.status='Ledig' AND (entity.salgstatus = 'Reserveret' OR entity.salgstatus = 'Reservation annulleret' OR entity.salgstatus = 'Tilbud sendt' OR entity.salgstatus = 'Tilbud annulleret')
 
                 # Import default values
                 <<: *parcelhus_default_list
@@ -202,7 +202,7 @@ easy_admin:
 
             list:
                 title: 'Accepterede Storparceller'
-                dql_filter: entity.grundtype = 'Storparcel' AND (entity.status='Ledig' OR entity.status='Auktion Slut') AND (entity.salgstatus = 'Accepteret' OR entity.salgstatus = 'Skøde rekvireret' OR entity.salgstatus = 'Skøde annulleret')
+                dql_filter: entity.type = 'Storparcel' AND (entity.status='Ledig' OR entity.status='Auktion Slut') AND (entity.salgstatus = 'Accepteret' OR entity.salgstatus = 'Skøde rekvireret' OR entity.salgstatus = 'Skøde annulleret')
 
                 # Import default values
                 <<: *parcelhus_default_list
@@ -218,7 +218,7 @@ easy_admin:
 
             list:
                 title: 'Betalte Storparceller'
-                dql_filter: entity.grundtype = 'Storparcel' AND entity.salgstatus = 'Solgt'
+                dql_filter: entity.type = 'Storparcel' AND entity.salgstatus = 'Solgt'
 
                 # Import default values
                 <<: *parcelhus_default_list
@@ -235,7 +235,7 @@ easy_admin:
 
             list:
                 title: 'Opfølgning'
-                dql_filter: entity.grundtype = 'Storparcel' AND ((entity.salgstatus = 'Reserveret' AND entity.resslut < CURRENT_DATE()) OR (entity.salgstatus = 'Tilbud sendt' AND entity.tilbudslut < CURRENT_DATE()))
+                dql_filter: entity.type = 'Storparcel' AND ((entity.salgstatus = 'Reserveret' AND entity.resslut < CURRENT_DATE()) OR (entity.salgstatus = 'Tilbud sendt' AND entity.tilbudslut < CURRENT_DATE()))
 
                 # Import default values
                 <<: *parcelhus_default_list

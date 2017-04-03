@@ -7,6 +7,8 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\Common\Collections\ArrayCollection;
+use AppBundle\DBAL\Types\GrundType;
+use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 
 /**
  * Grund
@@ -63,9 +65,10 @@ class Grund {
   /**
    * @var string
    *
-   * @ORM\Column(name="grundType", type="string", length=50, nullable=true)
+   * @ORM\Column(name="type", type="GrundType", nullable=true)
+   * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GrundType")
    */
-  private $grundtype;
+  private $type;
 
   /**
    * @var string
@@ -689,12 +692,12 @@ class Grund {
   /**
    * Set grundtype
    *
-   * @param string $grundtype
+   * @param Type $type
    *
    * @return Grund
    */
-  public function setGrundtype($grundtype) {
-    $this->grundtype = $grundtype;
+  public function setType($type) {
+    $this->type = $type;
 
     return $this;
   }
@@ -702,10 +705,10 @@ class Grund {
   /**
    * Get grundtype
    *
-   * @return string
+   * @return Type
    */
-  public function getGrundtype() {
-    return $this->grundtype;
+  public function getType() {
+    return $this->type;
   }
 
   /**
