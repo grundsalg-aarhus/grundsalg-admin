@@ -61,7 +61,7 @@ easy_admin:
                     - { property: 'datoAnnonce1', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoAnnonce1' }
 
                     - { property: 'type', label: 'app.grund.type', type: 'AppBundle\Form\Field\GrundType' }
-                    - { property: 'salgstype', label: 'app.grund.salgstype' }
+                    - { property: 'salgstype', label: 'app.grund.salgstype', type: 'AppBundle\Form\Field\SalgsType' }
                     - { property: 'tilsluttet', label: 'app.grund.tilsluttet' }
 
                     - { property: 'areal', label: 'app.grund.areal' }

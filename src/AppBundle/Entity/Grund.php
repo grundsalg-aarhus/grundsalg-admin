@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\Common\Collections\ArrayCollection;
 use AppBundle\DBAL\Types\GrundType;
+use AppBundle\DBAL\Types\SalgsType;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 
 /**
@@ -63,7 +64,7 @@ class Grund {
   private $gid;
 
   /**
-   * @var string
+   * @var GrundType
    *
    * @ORM\Column(name="type", type="GrundType", nullable=true)
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GrundType")
@@ -137,9 +138,10 @@ class Grund {
   private $urlgis;
 
   /**
-   * @var string
+   * @var SalgsType
    *
-   * @ORM\Column(name="salgsType", type="string", length=30, nullable=true)
+   * @ORM\Column(name="salgsType", type="SalgsType", nullable=true)
+   * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\SalgsType")
    */
   private $salgstype;
 

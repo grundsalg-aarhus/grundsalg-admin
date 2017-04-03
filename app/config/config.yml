@@ -89,6 +89,7 @@ doctrine:
             polygon:    CrEOF\Spatial\DBAL\Types\Geometry\PolygonType
             linestring: CrEOF\Spatial\DBAL\Types\Geometry\LineStringType
             GrundType:  AppBundle\DBAL\Types\GrundType
+            SalgsType:  AppBundle\DBAL\Types\SalgsType
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
