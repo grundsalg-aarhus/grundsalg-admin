@@ -88,8 +88,13 @@ doctrine:
             point:      CrEOF\Spatial\DBAL\Types\Geometry\PointType
             polygon:    CrEOF\Spatial\DBAL\Types\Geometry\PolygonType
             linestring: CrEOF\Spatial\DBAL\Types\Geometry\LineStringType
-            GrundType:  AppBundle\DBAL\Types\GrundType
-            SalgsType:  AppBundle\DBAL\Types\SalgsType
+
+            GrundStatus:        AppBundle\DBAL\Types\GrundStatus
+            GrundSalgStatus:    AppBundle\DBAL\Types\GrundSalgStatus
+            GrundPublicStatus:    AppBundle\DBAL\Types\GrundPublicStatus
+            GrundType:          AppBundle\DBAL\Types\GrundType
+            SalgsType:          AppBundle\DBAL\Types\SalgsType
+            TilslutningsType:   AppBundle\DBAL\Types\TilslutningsType
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"

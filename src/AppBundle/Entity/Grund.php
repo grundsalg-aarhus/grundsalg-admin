@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\Common\Collections\ArrayCollection;
 use AppBundle\DBAL\Types\GrundType;
 use AppBundle\DBAL\Types\SalgsType;
+use AppBundle\DBAL\Types\GrundStatus;
+use AppBundle\DBAL\Types\GrundSalgStatus;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 
 /**
@@ -43,16 +45,18 @@ class Grund {
   private $id;
 
   /**
-   * @var string
+   * @var GrundStatus
    *
-   * @ORM\Column(name="status", type="string", length=50, nullable=true)
+   * @ORM\Column(name="status", type="GrundStatus", nullable=true)
+   * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GrundStatus")
    */
   private $status;
 
   /**
-   * @var string
+   * @var GrundSalgStatus
    *
-   * @ORM\Column(name="salgStatus", type="string", length=50, nullable=true)
+   * @ORM\Column(name="salgStatus", type="GrundSalgStatus", nullable=true)
+   * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GrundSalgStatus")
    */
   private $salgstatus;
 
@@ -629,7 +633,7 @@ class Grund {
   /**
    * Set status
    *
-   * @param string $status
+   * @param GrundStatus $status
    *
    * @return Grund
    */
@@ -642,7 +646,7 @@ class Grund {
   /**
    * Get status
    *
-   * @return string
+   * @return GrundStatus
    */
   public function getStatus() {
     return $this->status;
@@ -651,7 +655,7 @@ class Grund {
   /**
    * Set salgstatus
    *
-   * @param string $salgstatus
+   * @param GrundSalgStatus $salgstatus
    *
    * @return Grund
    */
@@ -664,7 +668,7 @@ class Grund {
   /**
    * Get salgstatus
    *
-   * @return string
+   * @return GrundSalgStatus
    */
   public function getSalgstatus() {
     return $this->salgstatus;

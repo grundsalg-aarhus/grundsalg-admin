@@ -7,6 +7,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\DBAL\Types\GrundStatus as Status;
+use AppBundle\DBAL\Types\GrundSalgStatus as SalgStatus;
+use AppBundle\DBAL\Types\GrundPublicStatus as PublicStatus;
 
 /**
  * @Route("/public/api")
@@ -126,7 +129,7 @@ class ApiController extends Controller {
    * of the internal fields 'status' and 'salgsstatus'.
    *
    * Domain rules (status / salgStatus):
-   *    * / Accepteret = solgt
+   *    Accepteret = solgt
    *    Fremtidig / Ledig = Fremtidig
    *    Ledig/Ledig = Ledig
    *    Solgt / Ledig = Ledig
@@ -146,47 +149,47 @@ class ApiController extends Controller {
     $status = $grund->getStatus();
     $salgStatus = $grund->getSalgstatus();
 
-    if($salgStatus === 'Accepteret') {
-      return 'Solgt';
+    if($salgStatus === SalgStatus::ACCEPTERET) {
+      return PublicStatus::SOLGT;
     }
 
-    if($status === 'Fremtidig' && $salgStatus === 'Ledig') {
-      return 'Fremtidig';
+    if($status === Status::FREMTIDIG && $salgStatus === SalgStatus::LEDIG) {
+      return PublicStatus::FREMTIDIG;
     }
 
-    if($status === 'Ledig' && $salgStatus === 'Ledig') {
-      return 'Ledig';
+    if($status === Status::LEDIG && $salgStatus === SalgStatus::LEDIG) {
+      return PublicStatus::LEDIG;
     }
 
-    if($status === 'Solgt' && $salgStatus === 'Ledig') {
-      return 'Ledig';
+    if($status === Status::SOLGT && $salgStatus === SalgStatus::LEDIG) {
+      return PublicStatus::LEDIG;
     }
 
-    if($status === 'Ledig' && $salgStatus === 'Reserveret') {
-      return 'Reserveret';
+    if($status === Status::LEDIG && $salgStatus === SalgStatus::RESERVERET) {
+      return PublicStatus::RESERVERET;
     }
 
-    if($status === 'Ledig' && $salgStatus === 'Skøde rekvireret') {
-      return 'Solgt';
+    if($status === Status::LEDIG && $salgStatus === SalgStatus::SKOEDE_REKVIRERET) {
+      return PublicStatus::SOLGT;
     }
 
-    if($status === 'Auktion slut' && $salgStatus === 'Skøde rekvireret') {
-      return 'Solgt';
+    if($status === Status::AUKTION_SLUT && $salgStatus === SalgStatus::SKOEDE_REKVIRERET) {
+      return PublicStatus::SOLGT;
     }
 
-    if($status === 'Ledig' && $salgStatus == 'Solgt') {
-      return 'Solgt';
+    if($status === Status::LEDIG && $salgStatus == SalgStatus::SOLGT) {
+      return PublicStatus::SOLGT;
     }
 
-    if($status === 'Auktion slut' && $salgStatus === 'Solgt') {
-      return 'Solgt';
+    if($status === Status::AUKTION_SLUT && $salgStatus === SalgStatus::SOLGT) {
+      return PublicStatus::SOLGT;
     }
 
-    if($status === 'Annonceret' && $salgStatus === 'Ledig') {
-      return 'I udbud';
+    if($status === Status::ANNONCERET && $salgStatus === SalgStatus::LEDIG) {
+      return PublicStatus::I_UDBUD;
     }
 
-    return 'Solgt';
+    return PublicStatus::SOLGT;
 
   }
 }
