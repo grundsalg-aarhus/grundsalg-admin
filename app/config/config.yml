@@ -89,10 +89,13 @@ doctrine:
             polygon:    CrEOF\Spatial\DBAL\Types\Geometry\PolygonType
             linestring: CrEOF\Spatial\DBAL\Types\Geometry\LineStringType
 
+            Anvendelse:         AppBundle\DBAL\Types\Anvendelse
             GrundStatus:        AppBundle\DBAL\Types\GrundStatus
             GrundSalgStatus:    AppBundle\DBAL\Types\GrundSalgStatus
-            GrundPublicStatus:    AppBundle\DBAL\Types\GrundPublicStatus
+            GrundPublicStatus:  AppBundle\DBAL\Types\GrundPublicStatus
             GrundType:          AppBundle\DBAL\Types\GrundType
+            Kpl4:               AppBundle\DBAL\Types\Kpl4
+            Mulighed:           AppBundle\DBAL\Types\Mulighed
             SalgsType:          AppBundle\DBAL\Types\SalgsType
             TilslutningsType:   AppBundle\DBAL\Types\TilslutningsType
 
