@@ -699,7 +699,7 @@ class Grund {
   /**
    * Set grundtype
    *
-   * @param Type $type
+   * @param GrundType $type
    *
    * @return Grund
    */
@@ -712,7 +712,7 @@ class Grund {
   /**
    * Get grundtype
    *
-   * @return Type
+   * @return GrundType
    */
   public function getType() {
     return $this->type;
