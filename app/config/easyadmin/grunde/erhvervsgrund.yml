@@ -54,7 +54,7 @@ easy_admin:
                     - { property: 'bogstav', label: 'app.grund.bogstav' }
                     - { property: 'postby', label: 'app.grund.postby' }
                     - { property: 'lokalsamfund', label: 'app.grund.lokalsamfund' }
-                    - { property: 'urlgis', label: 'app.grund.urlgis' }
+                    - { property: 'urlgis', label: 'app.grund.urlgis', type: url }
 
                     - { property: 'annonceres', label: 'app.grund.annonceres' }
                     - { property: 'datoAnnonce', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoAnnonce' }

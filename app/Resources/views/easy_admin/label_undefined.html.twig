@@ -1,0 +1,10 @@
+{#
+  This template is rendered when an error or exception occurs while trying to get the value of the field (by EasyAdmin default nothing is displayed)
+  Override to output custom fields
+#}
+
+{% if value is iterable %}
+  {{ value | join(', ') }}
+{% else %}
+  {{ value }}
+{% endif %}
