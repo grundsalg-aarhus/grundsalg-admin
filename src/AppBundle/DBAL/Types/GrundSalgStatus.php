@@ -5,24 +5,32 @@ use Fresh\DoctrineEnumBundle\DBAL\Types\AbstractEnumType;
 
 final class GrundSalgStatus extends AbstractEnumType
 {
-  const SOLGT = 'Solgt';
-  const LEDIG = 'Ledig';
-  const SKOEDE_REKVIRERET = 'Skøde rekvireret';
-  const RESERVERET = 'Reserveret';
-  const TILBUD_SENDT = 'Tilbud sendt';
+  const ACCEPTERET = 'Accepteret';
+  const AUKTION_ANNULLERET = 'Auktion annulleret';
   const AUKTION_IGANG = 'Auktion igang';
   const AUKTION_SLUT = 'Auktion slut';
-  const ACCEPTERET = 'Accepteret';
-
+  const LEDIG = 'Ledig';
+  const RESERVATION_ANNULLERET = 'Reservation annulleret';
+  const RESERVERET = 'Reserveret';
+  const SOLGT = 'Solgt';
+  const SKOEDE_ANNULLERET = 'Skøde annulleret';
+  const SKOEDE_REKVIRERET = 'Skøde rekvireret';
+  const TILBUD_ANNULLERET = 'Tilbud annulleret';
+  const TILBUD_SENDT = 'Tilbud sendt';
 
   protected static $choices = [
-    self::SOLGT => 'Solgt',
-    self::LEDIG => 'Ledig',
-    self::SKOEDE_REKVIRERET => 'Skøde rekvireret',
-    self::RESERVERET => 'Reserveret',
-    self::TILBUD_SENDT => 'Tilbud sendt',
+    self::ACCEPTERET => 'Accepteret',
+    self::AUKTION_ANNULLERET => 'Auktion annulleret',
     self::AUKTION_IGANG => 'Auktion igang',
     self::AUKTION_SLUT => 'Auktion slut',
-    self::ACCEPTERET => 'Accepteret'
+    self::LEDIG => 'Ledig',
+    self::RESERVATION_ANNULLERET => 'Reservation annulleret',
+    self::RESERVERET => 'Reserveret',
+    self::SKOEDE_ANNULLERET => 'Skøde annulleret',
+    self::SKOEDE_REKVIRERET => 'Skøde rekvireret',
+    self::SOLGT => 'Solgt',
+    self::TILBUD_SENDT => 'Tilbud sendt',
+    self::TILBUD_ANNULLERET => 'Tilbud annulleret',
+
   ];
 }
