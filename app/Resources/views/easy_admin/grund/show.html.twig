@@ -7,6 +7,8 @@
       <div class="form-control">
         {% if field.date is defined %}
           {{ field | date }}
+        {% elseif field is iterable %}
+          {{ field | join(', ') }}
         {% else %}
           {{ field }}
         {% endif %}
