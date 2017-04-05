@@ -141,7 +141,7 @@
                     </div>
                   </div>
                   <div class="col-md-6">
-                    {{ grundsalg.entity_row('app.grund.salgstatus', entity.salgstatus ) }}
+                    {{ grundsalg.entity_row('app.grund.salgstatus', entity.visStatus ) }}
                     {{ grundsalg.entity_row('app.grund.salgstype', entity.salgstype ) }}
 
                     <div class="field-section ">
@@ -302,7 +302,13 @@
                     <dt>Anvendelse</dt>
                     <dd>{{ entity.salgsomraade.delomraade.anvendelse }}</dd>
                     <dt>Mulighed for</dt>
-                    <dd>{{ entity.salgsomraade.delomraade.mulighedfor }}</dd>
+                    <dd>
+                      {% if entity.salgsomraade.delomraade.mulighedfor is iterable %}
+                        {{ entity.salgsomraade.delomraade.mulighedfor | join(', ') }}
+                      {% else %}
+                        {{ entity.salgsomraade.delomraade.mulighedfor }}
+                      {% endif %}
+                    </dd>
                   </dl>
                 {% else %}
                   <dl class="dl-horizontal">

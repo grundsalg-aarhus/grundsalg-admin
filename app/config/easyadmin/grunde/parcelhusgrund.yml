@@ -138,7 +138,7 @@ easy_admin:
 
             list:
                 title: 'Annoncerede Parcelhusgrunde'
-                dql_filter: entity.type = 'Parcelhusgrund' AND (entity.status='Annoncerede')
+                dql_filter: entity.type = 'Parcelhusgrund' AND (entity.status='Annonceret')
 
                 # Import default values
                 <<: *parcelhus_default_list

@@ -30,6 +30,7 @@ use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
  *   @ORM\Index(name="search_Grund_pris", columns={"pris"}),
  * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GrundRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Grund {
   use BlameableEntity;
@@ -919,7 +920,7 @@ class Grund {
   /**
    * Set salgstype
    *
-   * @param string $salgstype
+   * @param SalgsType $salgstype
    *
    * @return Grund
    */
@@ -932,7 +933,7 @@ class Grund {
   /**
    * Get salgstype
    *
-   * @return string
+   * @return SalgsType
    */
   public function getSalgstype() {
     return $this->salgstype;
@@ -2263,6 +2264,184 @@ class Grund {
     }
 
     return NULL;
+  }
+
+  /**
+   * Get the status to show in the admin interface
+   *
+   * "Copy-paste" from legacy system
+   *
+   * @return string
+   */
+  public function getVisStatus() {
+    if($this->getSalgstatus() === GrundSalgStatus::LEDIG) {
+      return strval($this->getStatus());
+    } else {
+      return strval($this->getSalgstatus());
+    }
+  }
+
+  /**
+   * Update status base on dates for auktion, reserveret, etc.
+   *
+   * "Copy-paste" from legacy system
+   *
+   * @ORM\PreUpdate
+   */
+  public function updateStatus()
+  {
+    $today = new \DateTime();
+    $today->setTime(12,0);
+
+    if($this->getSalgstype() === SalgsType::AUKTION) {
+
+      // Auktion slut dato i fortid: Auktion slut
+      if($this->getAuktionslutdato() && $this->getAuktionslutdato() < $today) {
+        $this->setStatus(GrundStatus::AUKTION_SLUT);
+      }
+
+      // Ny ell. 'Fremtidig'/'Annonceret' grund - annonce dato i fortiden: Annonceret
+      elseif(($this->getStatus() === GrundStatus::FREMTIDIG || $this->getStatus() === GrundStatus::ANNONCERET) && $this->getDatoannonce() && $this->getDatoannonce() <= $today) {
+        $this->setStatus(GrundStatus::ANNONCERET);
+      }
+
+      // Auktion slut dato i fremtid: Fremtidig
+      elseif($this->getAuktionslutdato() && $this->getAuktionslutdato() > $today) {
+        $this->setStatus(GrundStatus::FREMTIDIG);
+      }
+
+      // Ingen auktion start dato: Fremtidig
+      elseif(!$this->getAuktionstartdato()) {
+        $this->setStatus(GrundStatus::FREMTIDIG);
+      }
+
+      // 'Annonceret' grund - annoncedato i fremtiden: Fremtidig
+      elseif($this->getStatus() === GrundStatus::ANNONCERET && $this->getDatoannonce() && $this->getDatoannonce() > $today) {
+        $this->setStatus(GrundStatus::FREMTIDIG);
+      }
+
+    } else {
+
+      // 'Fremtidig'/'Annonceret' grund - annonce dato i fortiden: Annonceret
+      if(($this->getStatus() === GrundStatus::FREMTIDIG || $this->getStatus() === GrundStatus::ANNONCERET) && $this->getDatoannonce() && $this->getDatoannonce() <= $today) {
+        $this->setStatus(GrundStatus::ANNONCERET);
+      }
+
+      // 'Skal-annonceres' grund - ingen annonce dato endnu: Fremtidig
+      elseif ($this->isAnnonceres() && !$this->getDatoannonce()) {
+        $this->setStatus(GrundStatus::FREMTIDIG);
+      }
+
+      // 'Annonceret' grund - annoncedato i fremtiden: Fremtidig
+      elseif ($this->getStatus() === GrundStatus::ANNONCERET && $this->getDatoannonce() && $this->getDatoannonce() > $today) {
+        $this->setStatus(GrundStatus::FREMTIDIG);
+      }
+    }
+  }
+
+  /**
+   * Update status base on dates for auktion, reserveret, etc.
+   *
+   * "Copy-paste" from legacy system
+   *
+   * @ORM\PrePersist
+   */
+  public function persistStatus()
+  {
+    $today = new \DateTime();
+    $today->setTime(12,0);
+
+    if($this->getSalgstype() === SalgsType::AUKTION) {
+
+      // Ny - annonce dato i fortiden: Annonceret
+      if($this->getDatoannonce() && $this->getDatoannonce() <= $today) {
+        $this->setStatus(GrundStatus::ANNONCERET);
+      }
+
+      // Ny - ingen annonce dato: Fremtidig
+      elseif(!$this->getDatoannonce()) {
+        $this->setStatus(GrundStatus::FREMTIDIG);
+      }
+
+      // Ny - annoncedato i fremtiden: Fremtidig
+      elseif($this->getDatoannonce() && $this->getDatoannonce() > $today) {
+        $this->setStatus(GrundStatus::FREMTIDIG);
+      }
+
+    } else {
+
+      // Ny - annonce dato i fortiden: Annonceret
+      if($this->getDatoannonce() && $this->getDatoannonce() <= $today) {
+        $this->setStatus(GrundStatus::ANNONCERET);
+      }
+
+      // Ny - ingen annonce dato endnu: Fremtidig
+      elseif ($this->isAnnonceres() && !$this->getDatoannonce()) {
+        $this->setStatus(GrundStatus::FREMTIDIG);
+      }
+
+      // Ny - annoncedato i fremtiden: Fremtidig
+      elseif ($this->getDatoannonce() && $this->getDatoannonce() > $today) {
+        $this->setStatus(GrundStatus::FREMTIDIG);
+      }
+    }
+  }
+
+  /**
+   * Update salgstatus base on dates for auktion, reserveret, etc.
+   *
+   * "Copy-paste" from legacy system
+   *
+   * @ORM\PreUpdate
+   * @ORM\PrePersist
+   */
+  public function persistSalgstatus() {
+    $today = new \DateTime();
+    $today->setTime(12,0);
+
+    if($this->getBeloebanvist()) {
+      $this->setSalgstatus(GrundSalgStatus::SOLGT);
+    } elseif ($this->getSkoederekv()) {
+      $this->setSalgstatus(GrundSalgStatus::SKOEDE_REKVIRERET);
+    } elseif ($this->getAccept()) {
+      $this->setSalgstatus(GrundSalgStatus::ACCEPTERET);
+    } elseif ($this->getAuktionstartdato() && $this->getAuktionslutdato() && $this->getAuktionslutdato() < $today) {
+      $this->setSalgstatus(GrundSalgStatus::AUKTION_SLUT);
+    } elseif ($this->getTilbudstart()) {
+      $this->setSalgstatus(GrundSalgStatus::TILBUD_SENDT);
+    } elseif ($this->getResstart()) {
+      $this->setSalgstatus(GrundSalgStatus::RESERVERET);
+    } else {
+      $this->setSalgstatus(GrundSalgStatus::LEDIG);
+    }
+  }
+
+  /**
+   * If the are not set, update 'til og med' dates base on their respective 'fra' dates
+   *
+   * "Copy-paste" from legacy system
+   *
+   * @ORM\PreUpdate
+   * @ORM\PrePersist
+   */
+  public function persistToDates() {
+
+    // Default reservation is 14 days
+    if($this->getResstart() && !$this->getResslut()) {
+      $endDay = clone $this->getResstart();
+      $endDay->add(new \DateInterval('P14D'));
+
+      $this->setResslut($endDay);
+    }
+
+    // Default 'tilbud' is 28 days
+    if($this->getTilbudstart() && !$this->getTilbudslut()) {
+      $endDay = clone $this->getTilbudstart();
+      $endDay->add(new \DateInterval('P28D'));
+
+      $this->setTilbudslut($endDay);
+    }
+
   }
 
 }
