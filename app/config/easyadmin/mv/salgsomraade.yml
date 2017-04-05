@@ -27,16 +27,16 @@ easy_admin:
                     - { type: 'divider' }
                     - { property: titel, label: 'Titel', css_class: 'col-sm-6' }
                     - { property: ejerlav, css_class: 'col-sm-6' }
-                    - { property: type, css_class: 'col-sm-6' }
+                    - { property: type, css_class: 'col-sm-6', type: 'AppBundle\Form\Field\GrundType' }
                     - { property: postby, css_class: 'col-sm-6' }
                     - { property: sagsnr, label: 'PSP', css_class: 'col-sm-6' }
                     - { property: vej, css_class: 'col-sm-6' }
                     - { property: landinspektoer, label: 'Landinsp.', css_class: 'col-sm-6' }
-                    - { property: gisurl, label: 'URL t. GIS.', css_class: 'col-sm-6' }
+                    - { property: gisurl, label: 'URL t. GIS.', css_class: 'col-sm-6', type: url }
 
                     - { type: 'divider' }
                     - { property: delomraade, label: 'KPL', css_class: 'col-sm-12', readonly: true, type_options: { disabled: true }}
-                    - { property: tilsluttet, label: 'Tilsluttet', css_class: 'col-sm-12', help: 'Prisen indeholder helt eller delvis tilslutning til følgende' }
+                    - { property: tilsluttet, label: 'Tilsluttet', css_class: 'col-sm-12', type: 'AppBundle\Form\Field\TilslutningsType', type_options: { expanded : true, multiple : true }, help: 'Prisen indeholder helt eller delvis tilslutning til ovenstående' }
 
             show:
                 title: 'Salgsområde'

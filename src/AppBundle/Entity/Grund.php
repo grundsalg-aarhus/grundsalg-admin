@@ -7,6 +7,11 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\Common\Collections\ArrayCollection;
+use AppBundle\DBAL\Types\GrundType;
+use AppBundle\DBAL\Types\SalgsType;
+use AppBundle\DBAL\Types\GrundStatus;
+use AppBundle\DBAL\Types\GrundSalgStatus;
+use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 
 /**
  * Grund
@@ -25,6 +30,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *   @ORM\Index(name="search_Grund_pris", columns={"pris"}),
  * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GrundRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Grund {
   use BlameableEntity;
@@ -40,16 +46,18 @@ class Grund {
   private $id;
 
   /**
-   * @var string
+   * @var GrundStatus
    *
-   * @ORM\Column(name="status", type="string", length=50, nullable=true)
+   * @ORM\Column(name="status", type="GrundStatus", nullable=true)
+   * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GrundStatus")
    */
   private $status;
 
   /**
-   * @var string
+   * @var GrundSalgStatus
    *
-   * @ORM\Column(name="salgStatus", type="string", length=50, nullable=true)
+   * @ORM\Column(name="salgStatus", type="GrundSalgStatus", nullable=true)
+   * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GrundSalgStatus")
    */
   private $salgstatus;
 
@@ -61,11 +69,12 @@ class Grund {
   private $gid;
 
   /**
-   * @var string
+   * @var GrundType
    *
-   * @ORM\Column(name="grundType", type="string", length=50, nullable=true)
+   * @ORM\Column(name="type", type="GrundType", nullable=true)
+   * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GrundType")
    */
-  private $grundtype;
+  private $type;
 
   /**
    * @var string
@@ -134,9 +143,10 @@ class Grund {
   private $urlgis;
 
   /**
-   * @var string
+   * @var SalgsType
    *
-   * @ORM\Column(name="salgsType", type="string", length=30, nullable=true)
+   * @ORM\Column(name="salgsType", type="SalgsType", nullable=true)
+   * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\SalgsType")
    */
   private $salgstype;
 
@@ -176,9 +186,9 @@ class Grund {
   private $datoannonce1;
 
   /**
-   * @var string
+   * @var array
    *
-   * @ORM\Column(name="tilsluttet", type="string", length=50, nullable=true)
+   * @ORM\Column(name="tilsluttet", type="array", nullable=true)
    */
   private $tilsluttet;
 
@@ -599,6 +609,7 @@ class Grund {
   public function __construct() {
     $this->reservationer = new ArrayCollection();
     $this->salgshistorik = new ArrayCollection();
+    $this->tilsluttet = new ArrayCollection();
     $this->annonceres = false;
   }
 
@@ -623,7 +634,7 @@ class Grund {
   /**
    * Set status
    *
-   * @param string $status
+   * @param GrundStatus $status
    *
    * @return Grund
    */
@@ -636,7 +647,7 @@ class Grund {
   /**
    * Get status
    *
-   * @return string
+   * @return GrundStatus
    */
   public function getStatus() {
     return $this->status;
@@ -645,7 +656,7 @@ class Grund {
   /**
    * Set salgstatus
    *
-   * @param string $salgstatus
+   * @param GrundSalgStatus $salgstatus
    *
    * @return Grund
    */
@@ -658,7 +669,7 @@ class Grund {
   /**
    * Get salgstatus
    *
-   * @return string
+   * @return GrundSalgStatus
    */
   public function getSalgstatus() {
     return $this->salgstatus;
@@ -689,12 +700,12 @@ class Grund {
   /**
    * Set grundtype
    *
-   * @param string $grundtype
+   * @param GrundType $type
    *
    * @return Grund
    */
-  public function setGrundtype($grundtype) {
-    $this->grundtype = $grundtype;
+  public function setType($type) {
+    $this->type = $type;
 
     return $this;
   }
@@ -702,10 +713,10 @@ class Grund {
   /**
    * Get grundtype
    *
-   * @return string
+   * @return GrundType
    */
-  public function getGrundtype() {
-    return $this->grundtype;
+  public function getType() {
+    return $this->type;
   }
 
   /**
@@ -909,7 +920,7 @@ class Grund {
   /**
    * Set salgstype
    *
-   * @param string $salgstype
+   * @param SalgsType $salgstype
    *
    * @return Grund
    */
@@ -922,7 +933,7 @@ class Grund {
   /**
    * Get salgstype
    *
-   * @return string
+   * @return SalgsType
    */
   public function getSalgstype() {
     return $this->salgstype;
@@ -1033,25 +1044,17 @@ class Grund {
   }
 
   /**
-   * Set tilsluttet
-   *
-   * @param string $tilsluttet
-   *
-   * @return Grund
-   */
-  public function setTilsluttet($tilsluttet) {
-    $this->tilsluttet = $tilsluttet;
-
-    return $this;
-  }
-
-  /**
-   * Get tilsluttet
-   *
-   * @return string
+   * @return array
    */
   public function getTilsluttet() {
     return $this->tilsluttet;
+  }
+
+  /**
+   * @param array $tilsluttet
+   */
+  public function setTilsluttet(array $tilsluttet) {
+    $this->tilsluttet = $tilsluttet;
   }
 
   /**
@@ -2261,6 +2264,184 @@ class Grund {
     }
 
     return NULL;
+  }
+
+  /**
+   * Get the status to show in the admin interface
+   *
+   * "Copy-paste" from legacy system
+   *
+   * @return string
+   */
+  public function getVisStatus() {
+    if($this->getSalgstatus() === GrundSalgStatus::LEDIG) {
+      return strval($this->getStatus());
+    } else {
+      return strval($this->getSalgstatus());
+    }
+  }
+
+  /**
+   * Update status base on dates for auktion, reserveret, etc.
+   *
+   * "Copy-paste" from legacy system
+   *
+   * @ORM\PreUpdate
+   */
+  public function updateStatus()
+  {
+    $today = new \DateTime();
+    $today->setTime(12,0);
+
+    if($this->getSalgstype() === SalgsType::AUKTION) {
+
+      // Auktion slut dato i fortid: Auktion slut
+      if($this->getAuktionslutdato() && $this->getAuktionslutdato() < $today) {
+        $this->setStatus(GrundStatus::AUKTION_SLUT);
+      }
+
+      // Ny ell. 'Fremtidig'/'Annonceret' grund - annonce dato i fortiden: Annonceret
+      elseif(($this->getStatus() === GrundStatus::FREMTIDIG || $this->getStatus() === GrundStatus::ANNONCERET) && $this->getDatoannonce() && $this->getDatoannonce() <= $today) {
+        $this->setStatus(GrundStatus::ANNONCERET);
+      }
+
+      // Auktion slut dato i fremtid: Fremtidig
+      elseif($this->getAuktionslutdato() && $this->getAuktionslutdato() > $today) {
+        $this->setStatus(GrundStatus::FREMTIDIG);
+      }
+
+      // Ingen auktion start dato: Fremtidig
+      elseif(!$this->getAuktionstartdato()) {
+        $this->setStatus(GrundStatus::FREMTIDIG);
+      }
+
+      // 'Annonceret' grund - annoncedato i fremtiden: Fremtidig
+      elseif($this->getStatus() === GrundStatus::ANNONCERET && $this->getDatoannonce() && $this->getDatoannonce() > $today) {
+        $this->setStatus(GrundStatus::FREMTIDIG);
+      }
+
+    } else {
+
+      // 'Fremtidig'/'Annonceret' grund - annonce dato i fortiden: Annonceret
+      if(($this->getStatus() === GrundStatus::FREMTIDIG || $this->getStatus() === GrundStatus::ANNONCERET) && $this->getDatoannonce() && $this->getDatoannonce() <= $today) {
+        $this->setStatus(GrundStatus::ANNONCERET);
+      }
+
+      // 'Skal-annonceres' grund - ingen annonce dato endnu: Fremtidig
+      elseif ($this->isAnnonceres() && !$this->getDatoannonce()) {
+        $this->setStatus(GrundStatus::FREMTIDIG);
+      }
+
+      // 'Annonceret' grund - annoncedato i fremtiden: Fremtidig
+      elseif ($this->getStatus() === GrundStatus::ANNONCERET && $this->getDatoannonce() && $this->getDatoannonce() > $today) {
+        $this->setStatus(GrundStatus::FREMTIDIG);
+      }
+    }
+  }
+
+  /**
+   * Update status base on dates for auktion, reserveret, etc.
+   *
+   * "Copy-paste" from legacy system
+   *
+   * @ORM\PrePersist
+   */
+  public function persistStatus()
+  {
+    $today = new \DateTime();
+    $today->setTime(12,0);
+
+    if($this->getSalgstype() === SalgsType::AUKTION) {
+
+      // Ny - annonce dato i fortiden: Annonceret
+      if($this->getDatoannonce() && $this->getDatoannonce() <= $today) {
+        $this->setStatus(GrundStatus::ANNONCERET);
+      }
+
+      // Ny - ingen annonce dato: Fremtidig
+      elseif(!$this->getDatoannonce()) {
+        $this->setStatus(GrundStatus::FREMTIDIG);
+      }
+
+      // Ny - annoncedato i fremtiden: Fremtidig
+      elseif($this->getDatoannonce() && $this->getDatoannonce() > $today) {
+        $this->setStatus(GrundStatus::FREMTIDIG);
+      }
+
+    } else {
+
+      // Ny - annonce dato i fortiden: Annonceret
+      if($this->getDatoannonce() && $this->getDatoannonce() <= $today) {
+        $this->setStatus(GrundStatus::ANNONCERET);
+      }
+
+      // Ny - ingen annonce dato endnu: Fremtidig
+      elseif ($this->isAnnonceres() && !$this->getDatoannonce()) {
+        $this->setStatus(GrundStatus::FREMTIDIG);
+      }
+
+      // Ny - annoncedato i fremtiden: Fremtidig
+      elseif ($this->getDatoannonce() && $this->getDatoannonce() > $today) {
+        $this->setStatus(GrundStatus::FREMTIDIG);
+      }
+    }
+  }
+
+  /**
+   * Update salgstatus base on dates for auktion, reserveret, etc.
+   *
+   * "Copy-paste" from legacy system
+   *
+   * @ORM\PreUpdate
+   * @ORM\PrePersist
+   */
+  public function persistSalgstatus() {
+    $today = new \DateTime();
+    $today->setTime(12,0);
+
+    if($this->getBeloebanvist()) {
+      $this->setSalgstatus(GrundSalgStatus::SOLGT);
+    } elseif ($this->getSkoederekv()) {
+      $this->setSalgstatus(GrundSalgStatus::SKOEDE_REKVIRERET);
+    } elseif ($this->getAccept()) {
+      $this->setSalgstatus(GrundSalgStatus::ACCEPTERET);
+    } elseif ($this->getAuktionstartdato() && $this->getAuktionslutdato() && $this->getAuktionslutdato() < $today) {
+      $this->setSalgstatus(GrundSalgStatus::AUKTION_SLUT);
+    } elseif ($this->getTilbudstart()) {
+      $this->setSalgstatus(GrundSalgStatus::TILBUD_SENDT);
+    } elseif ($this->getResstart()) {
+      $this->setSalgstatus(GrundSalgStatus::RESERVERET);
+    } else {
+      $this->setSalgstatus(GrundSalgStatus::LEDIG);
+    }
+  }
+
+  /**
+   * If the are not set, update 'til og med' dates base on their respective 'fra' dates
+   *
+   * "Copy-paste" from legacy system
+   *
+   * @ORM\PreUpdate
+   * @ORM\PrePersist
+   */
+  public function persistToDates() {
+
+    // Default reservation is 14 days
+    if($this->getResstart() && !$this->getResslut()) {
+      $endDay = clone $this->getResstart();
+      $endDay->add(new \DateInterval('P14D'));
+
+      $this->setResslut($endDay);
+    }
+
+    // Default 'tilbud' is 28 days
+    if($this->getTilbudstart() && !$this->getTilbudslut()) {
+      $endDay = clone $this->getTilbudstart();
+      $endDay->add(new \DateInterval('P28D'));
+
+      $this->setTilbudslut($endDay);
+    }
+
   }
 
 }

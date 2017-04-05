@@ -4,6 +4,10 @@
   white-space: nowrap;
 }
 
+.easyadmin-list td.no-results {
+  text-align: center;
+}
+
 body.show .form-control {
   height: 34px;
 }

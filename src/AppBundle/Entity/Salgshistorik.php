@@ -5,6 +5,9 @@ namespace AppBundle\Entity;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\DBAL\Types\SalgsType;
+use AppBundle\DBAL\Types\GrundSalgStatus;
+use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 
 /**
  * Salgshistorik
@@ -35,18 +38,20 @@ class Salgshistorik
   private $aarsag;
 
   /**
-   * @var string
+   * @var SalgsType
    *
-   * @ORM\Column(name="salgsType", type="string", length=30, nullable=true)
+   * @ORM\Column(name="salgsType", type="SalgsType", nullable=true)
+   * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\SalgsType")
    */
   private $salgstype;
 
   /**
-   * @var string
+   * @var GrundSalgStatus
    *
-   * @ORM\Column(name="status", type="string", length=50, nullable=true)
+   * @ORM\Column(name="salgStatus", type="GrundSalgStatus", nullable=true)
+   * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GrundSalgStatus")
    */
-  private $status;
+  private $salgStatus;
 
   /**
    * @var \DateTime
@@ -293,10 +298,9 @@ class Salgshistorik
    *
    * @param string $salgstype
    *
-   * @return Salgshistorik
+   * @return Grund
    */
-  public function setSalgstype($salgstype)
-  {
+  public function setSalgstype($salgstype) {
     $this->salgstype = $salgstype;
 
     return $this;
@@ -307,21 +311,19 @@ class Salgshistorik
    *
    * @return string
    */
-  public function getSalgstype()
-  {
+  public function getSalgstype() {
     return $this->salgstype;
   }
 
   /**
    * Set status
    *
-   * @param string $status
+   * @param GrundSalgStatus $salgStatus
    *
-   * @return Salgshistorik
+   * @return Grund
    */
-  public function setStatus($status)
-  {
-    $this->status = $status;
+  public function setSalgStatus($salgStatus) {
+    $this->salgStatus = $salgStatus;
 
     return $this;
   }
@@ -329,11 +331,10 @@ class Salgshistorik
   /**
    * Get status
    *
-   * @return string
+   * @return GrundSalgStatus
    */
-  public function getStatus()
-  {
-    return $this->status;
+  public function getSalgStatus() {
+    return $this->salgStatus;
   }
 
   /**

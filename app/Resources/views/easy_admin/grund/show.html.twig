@@ -7,6 +7,8 @@
       <div class="form-control">
         {% if field.date is defined %}
           {{ field | date }}
+        {% elseif field is iterable %}
+          {{ field | join(', ') }}
         {% else %}
           {{ field }}
         {% endif %}
@@ -109,7 +111,7 @@
                 <div class="row">
                   <div class="col-md-6">
                     {{ grundsalg.entity_row('app.grund.gid', entity.gid ) }}
-                    {{ grundsalg.entity_row('app.grund.grundtype', entity.grundtype ) }}
+                    {{ grundsalg.entity_row('app.grund.type', entity.type ) }}
 
                     <div class="form-group field-text">
                       {{ grundsalg.entity_label('app.grund.mnr' ) }}
@@ -139,7 +141,7 @@
                     </div>
                   </div>
                   <div class="col-md-6">
-                    {{ grundsalg.entity_row('app.grund.salgstatus', entity.salgstatus ) }}
+                    {{ grundsalg.entity_row('app.grund.salgstatus', entity.visStatus ) }}
                     {{ grundsalg.entity_row('app.grund.salgstype', entity.salgstype ) }}
 
                     <div class="field-section ">
@@ -300,7 +302,13 @@
                     <dt>Anvendelse</dt>
                     <dd>{{ entity.salgsomraade.delomraade.anvendelse }}</dd>
                     <dt>Mulighed for</dt>
-                    <dd>{{ entity.salgsomraade.delomraade.mulighedfor }}</dd>
+                    <dd>
+                      {% if entity.salgsomraade.delomraade.mulighedfor is iterable %}
+                        {{ entity.salgsomraade.delomraade.mulighedfor | join(', ') }}
+                      {% else %}
+                        {{ entity.salgsomraade.delomraade.mulighedfor }}
+                      {% endif %}
+                    </dd>
                   </dl>
                 {% else %}
                   <dl class="dl-horizontal">

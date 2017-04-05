@@ -9,8 +9,8 @@ easy_admin:
                 actions:
                     <<: *default_list_actions
                 fields:
-                    - {property: kpl1234Combined, label: 'KPL'}
-                    - {property: o123Combined, label: 'Område'}
+                    - { property: kpl1234Combined, label: 'KPL' }
+                    - { property: o123Combined, label: 'Område' }
                     - anvendelse
                     - mulighedFor
                     - lokalplan
@@ -32,10 +32,10 @@ easy_admin:
                     - { property: kpl1, label: false, css_class: 'col-xs-3', readonly: true, type_options: { disabled: true }}
                     - { property: kpl2, label: false, css_class: 'col-xs-3' }
                     - { property: kpl3, label: false, css_class: 'col-xs-3' }
-                    - { property: kpl4, label: false, css_class: 'col-xs-3' }
+                    - { property: kpl4, label: false, css_class: 'col-xs-3', type: 'AppBundle\Form\Field\Kpl4' }
                     - { type: 'section', label: 'Anvendelse' }
-                    - { property: anvendelse, css_class: 'col-sm-6' }
-                    - { property: mulighedFor, css_class: 'col-sm-6' }
+                    - { property: anvendelse, css_class: 'col-sm-6', type: 'AppBundle\Form\Field\Anvendelse' }
+                    - { property: mulighedFor, css_class: 'col-sm-6', type: 'AppBundle\Form\Field\Mulighed', type_options: { expanded : true, multiple : true } }
 
             show:
                 title: 'Delområde'

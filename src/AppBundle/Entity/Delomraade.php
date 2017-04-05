@@ -5,6 +5,9 @@ namespace AppBundle\Entity;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\DBAL\Types\Anvendelse;
+use AppBundle\DBAL\Types\Kpl4;
+use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 
 /**
  * Delomraade
@@ -13,7 +16,6 @@ use Doctrine\ORM\Mapping as ORM;
  *   @ORM\Index(name="fk_Delomraade_lokalplanId", columns={"lokalplanId"}),
  *
  *   @ORM\Index(name="search_Delomraade_anvendelse", columns={"anvendelse"}),
- *   @ORM\Index(name="search_Delomraade_mulighedFor", columns={"mulighedFor"})
  * })
  * @ORM\Entity
  */
@@ -53,9 +55,10 @@ class Delomraade
   private $kpl3;
 
   /**
-   * @var string
+   * @var Kpl4
    *
-   * @ORM\Column(name="kpl4", type="string", length=50, nullable=false)
+   * @ORM\Column(name="kpl4", type="Kpl4", nullable=true)
+   * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\Kpl4")
    */
   private $kpl4;
 
@@ -81,16 +84,17 @@ class Delomraade
   private $o3;
 
   /**
-   * @var string
+   * @var Anvendelse
    *
-   * @ORM\Column(name="anvendelse", type="string", length=50, nullable=true)
+   * @ORM\Column(name="anvendelse", type="Anvendelse", nullable=true)
+   * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\Anvendelse")
    */
   private $anvendelse;
 
   /**
-   * @var string
+   * @var array
    *
-   * @ORM\Column(name="mulighedFor", type="string", length=50, nullable=true)
+   * @ORM\Column(name="mulighedFor", type="array", nullable=true)
    */
   private $mulighedfor;
 
@@ -190,7 +194,7 @@ class Delomraade
   /**
    * Set kpl4
    *
-   * @param string $kpl4
+   * @param Kpl4 $kpl4
    *
    * @return Delomraade
    */
@@ -204,7 +208,7 @@ class Delomraade
   /**
    * Get kpl4
    *
-   * @return string
+   * @return Kpl4
    */
   public function getKpl4()
   {
@@ -317,7 +321,7 @@ class Delomraade
   /**
    * Set anvendelse
    *
-   * @param string $anvendelse
+   * @param Anvendelse $anvendelse
    *
    * @return Delomraade
    */
@@ -331,7 +335,7 @@ class Delomraade
   /**
    * Get anvendelse
    *
-   * @return string
+   * @return Anvendelse
    */
   public function getAnvendelse()
   {
@@ -341,7 +345,7 @@ class Delomraade
   /**
    * Set mulighedfor
    *
-   * @param string $mulighedfor
+   * @param array $mulighedfor
    *
    * @return Delomraade
    */
@@ -355,7 +359,7 @@ class Delomraade
   /**
    * Get mulighedfor
    *
-   * @return string
+   * @return array
    */
   public function getMulighedfor()
   {

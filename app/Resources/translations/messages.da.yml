@@ -26,7 +26,7 @@ app:
       fastpris: Fastpris
       gid: GID
       grund: Grund
-      grundtype: Grundtype
+      type: Grundtype
       historiskeSalg: Historiske Salg
       husnummer: Husnr.
       koeber: Køber
