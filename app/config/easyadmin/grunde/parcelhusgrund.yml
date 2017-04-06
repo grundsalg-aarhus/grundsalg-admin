@@ -11,7 +11,7 @@ easy_admin:
                 edit: 'easy_admin/grund/edit.html.twig'
                 show: 'easy_admin/grund/show.html.twig'
                 new: 'easy_admin/grund/new.html.twig'
-            list: &parcelhus_default_list
+            list: &parcelhusgrund_default_list
                 title: 'Alle Parcelhusgrunde'
                 sort: postby
                 dql_filter: entity.type = 'Parcelhusgrund'
@@ -28,6 +28,18 @@ easy_admin:
                     - { property: salgstype, label: 'app.grund.salgstype' }
                     - { property: areal, label: 'app.grund.areal', css_class: 'text-right', format: '%.0f' }
                     - { property: pris, label: 'app.grund.pris', css_class: 'text-right' }
+
+            search: &parcelhusgrund_default_search
+                fields:
+                    - vej
+                    - husnummer
+                    - postby.postalcode
+                    - postby.city
+                    - salgsomraade.titel
+                    - salgsomraade.lokalplan.nr
+                    - salgstype
+                    - areal
+                    - pris
 
             edit: &parcelhusgrund_default_edit
                 title: 'Rediger Parcelhusgrund'
@@ -109,8 +121,9 @@ easy_admin:
                 dql_filter: entity.type = 'Parcelhusgrund' AND (entity.status='Ledig' OR entity.status='Annonceret') and entity.salgstatus= 'Ledig'
 
                 # Import default values
-                <<: *parcelhus_default_list
+                <<: *parcelhusgrund_default_list
 
+            search: *parcelhusgrund_default_search
             edit: *parcelhusgrund_default_edit
             show: *parcelhusgrund_default_show
             new: *parcelhusgrund_default_new
@@ -125,8 +138,9 @@ easy_admin:
                 dql_filter: entity.type = 'Parcelhusgrund' AND (entity.status='Fremtidig')
 
                 # Import default values
-                <<: *parcelhus_default_list
+                <<: *parcelhusgrund_default_list
 
+            search: *parcelhusgrund_default_search
             edit: *parcelhusgrund_default_edit
             show: *parcelhusgrund_default_show
             new: *parcelhusgrund_default_new
@@ -141,8 +155,9 @@ easy_admin:
                 dql_filter: entity.type = 'Parcelhusgrund' AND (entity.status='Annonceret')
 
                 # Import default values
-                <<: *parcelhus_default_list
+                <<: *parcelhusgrund_default_list
 
+            search: *parcelhusgrund_default_search
             edit: *parcelhusgrund_default_edit
             show: *parcelhusgrund_default_show
             new: *parcelhusgrund_default_new
@@ -157,8 +172,9 @@ easy_admin:
                 dql_filter: entity.type = 'Parcelhusgrund' AND entity.status='Auktion slut' AND entity.salgstatus != 'Solgt' AND entity.salgstatus != 'Accepteret' AND entity.salgstatus != 'Skøde rekvireret' AND entity.salgstatus != 'Skøde annulleret'
 
                 # Import default values
-                <<: *parcelhus_default_list
+                <<: *parcelhusgrund_default_list
 
+            search: *parcelhusgrund_default_search
             edit: *parcelhusgrund_default_edit
             show: *parcelhusgrund_default_show
             new: *parcelhusgrund_default_new
@@ -173,8 +189,9 @@ easy_admin:
                 dql_filter: entity.type = 'Parcelhusgrund' AND entity.status='Ledig' AND (entity.salgstatus IS NULL OR entity.salgstatus = 'Ledig')
 
                 # Import default values
-                <<: *parcelhus_default_list
+                <<: *parcelhusgrund_default_list
 
+            search: *parcelhusgrund_default_search
             edit: *parcelhusgrund_default_edit
             show: *parcelhusgrund_default_show
             new: *parcelhusgrund_default_new
@@ -189,8 +206,9 @@ easy_admin:
                 dql_filter: entity.type = 'Parcelhusgrund' AND entity.status='Ledig' AND (entity.salgstatus = 'Reserveret' OR entity.salgstatus = 'Reservation annulleret' OR entity.salgstatus = 'Tilbud sendt' OR entity.salgstatus = 'Tilbud annulleret')
 
                 # Import default values
-                <<: *parcelhus_default_list
+                <<: *parcelhusgrund_default_list
 
+            search: *parcelhusgrund_default_search
             edit: *parcelhusgrund_default_edit
             show: *parcelhusgrund_default_show
             new: *parcelhusgrund_default_new
@@ -205,8 +223,9 @@ easy_admin:
                 dql_filter: entity.type = 'Parcelhusgrund' AND (entity.status='Ledig' OR entity.status='Auktion Slut') AND (entity.salgstatus = 'Accepteret' OR entity.salgstatus = 'Skøde rekvireret' OR entity.salgstatus = 'Skøde annulleret')
 
                 # Import default values
-                <<: *parcelhus_default_list
+                <<: *parcelhusgrund_default_list
 
+            search: *parcelhusgrund_default_search
             edit: *parcelhusgrund_default_edit
             show: *parcelhusgrund_default_show
             new: *parcelhusgrund_default_new
@@ -221,8 +240,9 @@ easy_admin:
                 dql_filter: entity.type = 'Parcelhusgrund' AND entity.salgstatus = 'Solgt'
 
                 # Import default values
-                <<: *parcelhus_default_list
+                <<: *parcelhusgrund_default_list
 
+            search: *parcelhusgrund_default_search
             edit: *parcelhusgrund_default_edit
             show: *parcelhusgrund_default_show
             new: *parcelhusgrund_default_new
@@ -238,8 +258,9 @@ easy_admin:
                 dql_filter: entity.type = 'Parcelhusgrund' AND ((entity.salgstatus = 'Reserveret' AND entity.resslut < CURRENT_DATE()) OR (entity.salgstatus = 'Tilbud sendt' AND entity.tilbudslut < CURRENT_DATE()))
 
                 # Import default values
-                <<: *parcelhus_default_list
+                <<: *parcelhusgrund_default_list
 
+            search: *parcelhusgrund_default_search
             edit: *parcelhusgrund_default_edit
             show: *parcelhusgrund_default_show
             new: *parcelhusgrund_default_new

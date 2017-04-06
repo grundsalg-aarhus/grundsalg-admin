@@ -13,6 +13,11 @@ easy_admin:
                     - { property: number, label: 'Nr.', css_class: 'text-right', format: '%.0f' }
                     - { property: name, label: 'Navn' }
 
+            search:
+                fields:
+                    - number
+                    - name
+
             edit:
                 title: 'Rediger Lokalsamfund'
 

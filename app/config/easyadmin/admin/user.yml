@@ -10,11 +10,17 @@ easy_admin:
                     <<: *default_list_actions
                 fields:
                     - { property: enabled, label: 'Aktiv' }
-#                    - { property: number, label: 'Nr.', css_class: 'text-right', format: '%.0f' }
                     - { property: username, label: 'Brugernavn' }
                     - { property: name, label: 'Navn' }
                     - { property: email, label: 'Email' }
                     - { property: roles, label: 'Roller', template: 'roles_collection.html.twig' }
+
+            search:
+                fields:
+                    - username
+                    - name
+                    - email
+                    - roles
 
             edit:
                 title: 'Rediger Bruger'

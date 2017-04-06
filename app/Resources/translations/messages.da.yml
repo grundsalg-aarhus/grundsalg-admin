@@ -101,6 +101,7 @@ app:
       createdAt: Oprettet
 
   salgsomraade:
+      annonceres: Annonceres
       nr: Nr.
       salgsomraade: Salgsområde
       titel: Titel

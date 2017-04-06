@@ -30,7 +30,7 @@ class EasyAdminController extends BaseAdminController {
       $joinParts = explode('.', $sortField);
       $countParts = count($joinParts);
 
-      // Parent qurebuilder support joins one level deep. We only need to alterthe joins for deeper relations
+      // Parent qurebuilder support joins one level deep. We only need to alter the joins for deeper relations
       if ($countParts > 2) {
         // To sort on fields in related entities we need to build our own joins
         $queryBuilder->resetDQLPart('join');
@@ -72,7 +72,6 @@ class EasyAdminController extends BaseAdminController {
    * Creates Query Builder instance for search query.
    *
    * Modified to:
-   * - Exclude fields not used in list view
    * - Include listed fields from relations
    *
    * @param string $entityClass
@@ -85,16 +84,8 @@ class EasyAdminController extends BaseAdminController {
    * @return QueryBuilder The Query Builder instance
    */
   protected function createSearchQueryBuilder($entityClass, $searchQuery, array $searchableFields, $sortField = NULL, $sortDirection = NULL, $dqlFilter = NULL) {
-    // 'search' contains all searchable fields - excluding relations
-    // 'list' contains all list fields - including relations and virtual (non-searchable) fields
-    //
-    // We only want to search in fields shown in list view.
-    // Filter on fields that are in both 'list' and 'search' to exclude non-searchable fields.
-    $this->entity['search']['fields'] = array_filter($this->entity['search']['fields'], function ($key) {
-      return isset($this->entity['list']['fields'][$key]);
-    }, ARRAY_FILTER_USE_KEY);
 
-    // Get the deafult query based on the list fields (- but missing relations)
+    // Get the deafult query based on the search fields (- but missing relations)
     $queryBuilder = parent::createSearchQueryBuilder($entityClass, $searchQuery, $searchableFields, $sortField, $sortDirection, $dqlFilter);
 
     // To search in fields in related entities we need to build our own joins and where
@@ -104,9 +95,9 @@ class EasyAdminController extends BaseAdminController {
     // Maintain a list of added joins to avoid adding duplicates
     $joins = array();
 
-    // Loop through list fields to add fields in relations
+    // Loop through search fields to add fields in relations
     $queryParameters = array();
-    foreach ($this->entity['list']['fields'] as $name => $metadata) {
+    foreach ($this->entity['search']['fields'] as $name => $metadata) {
 
       // Split the field name by '.' to get relations
       $joinParts = explode('.', $name);
@@ -116,7 +107,7 @@ class EasyAdminController extends BaseAdminController {
       $entityDqlName = 'entity';
       $fieldDqlName = $name;
 
-      // Only process relations
+      // Building joins - Only process relations
       if ($countParts > 1) {
 
         // We don't know the depth of the relations, so loop through the parts and add joins for all
@@ -145,6 +136,7 @@ class EasyAdminController extends BaseAdminController {
       }
 
       // Add 'where' clauses based on field type - largely identical to logic in parent logic
+      // 'text' search made default to catch 'enum' types
       $isNumericField = in_array($metadata['dataType'], array(
         'integer',
         'number',
@@ -153,11 +145,7 @@ class EasyAdminController extends BaseAdminController {
         'decimal',
         'float'
       ));
-      $isTextField = in_array($metadata['dataType'], array(
-        'string',
-        'text',
-        'guid'
-      ));
+
       $isGuidField = 'guid' === $metadata['dataType'];
 
       if ($isNumericField && is_numeric($searchQuery)) {
@@ -169,8 +157,8 @@ class EasyAdminController extends BaseAdminController {
         // some databases don't support LOWER() on UUID fields
         $queryBuilder->orWhere(sprintf('%s.%s IN (:words_query)', $entityDqlName, $fieldDqlName));
         $queryBuilder->setParameter('words_query', explode(' ', $searchQuery));
-      }
-      elseif ($isTextField) {
+      } else {
+        // Default: text search
         $searchQuery = mb_strtolower($searchQuery);
 
         $queryBuilder->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', $entityDqlName, $fieldDqlName));
@@ -179,9 +167,6 @@ class EasyAdminController extends BaseAdminController {
         $queryBuilder->orWhere(sprintf('LOWER(%s.%s) IN (:words_query)', $entityDqlName, $fieldDqlName));
         $queryBuilder->setParameter('words_query', explode(' ', $searchQuery));
       }
-
-      // Add the field to list of search fields
-      $this->entity['search']['fields'][$name] = $metadata;
 
       // The parent queryBuilder only supports orderBy on direct relations so we reset and rebuild if it's deeper
       if ($countParts > 2 && $name === $sortField) {

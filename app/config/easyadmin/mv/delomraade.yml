@@ -12,8 +12,14 @@ easy_admin:
                     - { property: kpl1234Combined, label: 'KPL' }
                     - { property: o123Combined, label: 'Område' }
                     - anvendelse
-                    - mulighedFor
+                    - mulighedfor
                     - lokalplan
+
+            search:
+                fields:
+                    - anvendelse
+                    - mulighedfor
+                    - lokalplan.titel
 
             edit:
                 title: 'Rediger Delområde'

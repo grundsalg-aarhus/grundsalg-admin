@@ -13,10 +13,21 @@ easy_admin:
                     - {property: o123Combined, label: 'LP-område'}
                     - {property: nr, label: 'SONr'}
                     - type
+                    - { property: annonceres, label: 'app.grund.annonceres' }
+                    - titel
+
+            search:
+                fields:
+                    - nr
+                    - type
                     - titel
 
             edit:
                 title: 'Rediger Salgsområde'
+
+            search:
+                fields:
+                    - titel
 
             form:
                 fields: &salgsomraade_form_fields
@@ -35,6 +46,7 @@ easy_admin:
                     - { property: gisurl, label: 'URL t. GIS.', css_class: 'col-sm-6', type: url }
 
                     - { type: 'divider' }
+                    - { property: annonceres, label: 'Annonceres', css_class: 'col-sm-12' }
                     - { property: delomraade, label: 'KPL', css_class: 'col-sm-12', readonly: true, type_options: { disabled: true }}
                     - { property: tilsluttet, label: 'Tilsluttet', css_class: 'col-sm-12', type: 'AppBundle\Form\Field\TilslutningsType', type_options: { expanded : true, multiple : true }, help: 'Prisen indeholder helt eller delvis tilslutning til ovenstående' }
 

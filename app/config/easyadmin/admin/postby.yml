@@ -12,6 +12,11 @@ easy_admin:
                     - { property: postalcode, label: 'Postnr', css_class: 'text-right', format: '%.0f' }
                     - { property: city, label: 'By' }
 
+            search:
+                fields:
+                    - postalcode
+                    - city
+
             edit:
                 title: 'Rediger Postnr. / By'
 
