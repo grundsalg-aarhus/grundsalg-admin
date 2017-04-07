@@ -2,10 +2,67 @@
 
 namespace AppBundle\Controller;
 
-use JavierEguiluz\Bundle\EasyAdminBundle\Event\EasyAdminEvents;
 use JavierEguiluz\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 class EasyAdminController extends BaseAdminController {
+  /**
+   * @Route("/", name="easyadmin")
+   *
+   * @param Request $request
+   *
+   * @return RedirectResponse|Response
+   */
+  public function indexAction(Request $request)
+  {
+    $this->initialize($request);
+    if (null === $request->query->get('entity')) {
+      $frontPageUrl = $this->getFrontPageUrl();
+      if ($frontPageUrl) {
+        return $this->redirect($frontPageUrl);
+      }
+    }
+
+    return parent::indexAction($request);
+  }
+
+  private function getFrontPageUrl() {
+    // Redirect to first "entity" entry in menu.
+    $menu = $this->get('easyadmin.config.manager')->getBackendConfig('design.menu');
+    $item = $this->getEntityItem($menu);
+    if ($item) {
+      $parameters = [
+          'entity' => $item['entity'],
+          'action' => 'list',
+          'menuIndex' => $item['menu_index'],
+          'submenuIndex' => $item['submenu_index'],
+        ] + $item['params'];
+      return $this->generateUrl('easyadmin', $parameters);
+    }
+  }
+
+  /**
+   * Get first (depth first) menu item of type "entity".
+   *
+   * @param array $menu
+   * @return mixed|null
+   */
+  private function getEntityItem(array $menu) {
+    foreach ($menu as $item) {
+      if ($item['type'] === 'entity') {
+        return $item;
+      }
+      if (isset($item['children'])) {
+        $subitem = $this->getEntityItem($item['children']);
+        if ($subitem) {
+          return $subitem;
+        }
+      }
+    }
+
+    return null;
+  }
 
   /**
    * Creates Query Builder instance for all the records.
