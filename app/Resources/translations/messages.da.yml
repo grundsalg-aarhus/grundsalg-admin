@@ -106,6 +106,14 @@ app:
       salgsomraade: Salgsområde
       titel: Titel
 
+  stats:
+      betalte: Betalte
+      grund: Grund
+      koeber: Navn
+      koeberAdresse: Opr. adresse
+      quarter: Kvartal
+      thecount: Antal
+
 label:
     yes: Ja
     no: Nej
@@ -113,6 +121,9 @@ label:
         empty_value: (tom)
 
 label.null: '–'
+
+plural:
+    parcelhusgrund: parcelhusgrunde
 
 # If we use the 'form_label' widget directly the EasyAdmin 'label' value is not used
 Bogstav: Bogst.

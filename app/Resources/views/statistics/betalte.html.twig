@@ -1,0 +1,54 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+
+{% block main %}
+  <div class="box box--primary">
+    <div class="box-body">
+      <div class="row">
+        <h3 class="col-sm-12">
+          <i class="fa fa-bar-chart"></i> {{ 'app.stats.betalte' | trans }} {{ ('plural.' ~ type) | trans }} {{ year }}
+        </h3>
+
+        <div class="col-sm-12">
+
+          <table class="table table-striped">
+            <tr>
+              <th>{{ 'app.stats.quarter' | trans }}</th>
+              <th>{{ 'app.stats.grund' | trans }}</th>
+              <th>{{ 'app.stats.koeber' | trans }}</th>
+              <th>{{ 'app.stats.koeberAdresse' | trans }}</th>
+              <th>{{ 'app.grund.pris' | trans }}</th>
+              <th>{{ 'app.grund.salgsprisumoms' | trans }}</th>
+              <th>{{ 'app.stats.thecount' | trans }}</th>
+            </tr>
+            {% for q, r in result %}
+              <tr>
+                <th class="text-left">{{ q }}. {{ 'app.stats.quarter' | trans }}</th>
+                <th class="text-left"></th>
+                <th class="text-left"></th>
+                <th class="text-left"></th>
+                <th class="text-right">{{ r['pris'] | number_format }}</th>
+                <th class="text-right">{{ r['salgspris'] | number_format }}</th>
+                <th class="text-right">{{ r['thecount'] }}</th>
+              </tr>
+              {% for g in grunde[q] %}
+                <tr>
+                  <td class="text-left"></td>
+                  <td class="text-left">{{ g.vej }}, {{ g.husnummer }}{{ g.bogstav }}, {{ g.postby }}</td>
+                  <td class="text-left">{{ g.koeberNavn }}</td>
+                  <td class="text-left">{{ g.koeberAdresse }}, {{ g.koeberPostby }}</td>
+                  <td class="text-right">{{ g.pris | number_format }}</td>
+                  <td class="text-right">{{ g.salgsprisumoms | number_format }}</td>
+                  <td class="text-right"></td>
+                </tr>
+              {% endfor %}
+            {% endfor %}
+          </table>
+
+          {{ dump(result) }}
+          {{ dump(grunde) }}
+
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
