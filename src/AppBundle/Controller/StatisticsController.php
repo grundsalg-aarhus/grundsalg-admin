@@ -13,39 +13,63 @@ class StatisticsController extends BaseAdminController
 {
 
   /**
-   * @Route(path = "/statistics/betalte/{type}/{year}", name = "grundsalg_statistics_betalte")
+   * @Route(path = "/statistics/betalte/{type}/{showYear}", name = "grundsalg_statistics_betalte")
    */
-  public function betalteAction(Request $request, $type = GrundType::PARCELHUS, $year=null)
+  public function betalteAction(Request $request, $type, $showYear)
   {
-    $year = ($year === null) ? date('Y') : $year;
+    $menuIndex = $request->query->get('menuIndex');
+    $submenuIndex = $request->query->get('submenuIndex');
+
+    $firstYear = $this->getParameter('grundsalg_first_year');
+    $currentYear = date('Y');
+    $showYear = ($showYear === null) ? $currentYear : $showYear;
 
     $repository = $this->get('doctrine')->getRepository('AppBundle:Grund');
-    $result = $repository->getStatsBetalte($type, $year);
+    $result = $repository->getStatsBetalteByQuarter($type, $showYear);
+    $total = $repository->getStatsBetalte($type, $showYear);
+
     $grundeByQuarter = array();
     for($i = 1; $i <= 4; $i++) {
-      $grundeByQuarter[$i] = $repository->getGrundeByTypeYear($type, $year, $i);
+      $grundeByQuarter[$i] = $repository->getGrundeByTypeYear($type, $showYear, $i);
     }
 
     return $this->render('statistics/betalte.html.twig', array(
       'result' => $result,
+      'total' => $total,
       'grunde' => $grundeByQuarter,
       'type' => $type,
-      'year' => $year
+      'first_year' => $firstYear,
+      'current_year' => $currentYear,
+      'show_year' => $showYear,
+      'menuIndex' => $menuIndex,
+      'submenuIndex' => $submenuIndex,
     ));
 
   }
 
   /**
-   * @Route(path = "/statistics", name = "grundsalg_statistics")
+   * @Route(path = "/statistics/betalte/{type}", name = "grundsalg_statistics")
    */
-  public function statisticsAction(Request $request)
+  public function statisticsAction(Request $request, $type = GrundType::PARCELHUS)
   {
+    $menuIndex = $request->query->get('menuIndex');
+    $submenuIndex = $request->query->get('submenuIndex');
+
+    $firstYear = $this->getParameter('grundsalg_first_year');
+    $currentYear = date('Y');
+    $showYear = null;
 
     $repository = $this->get('doctrine')->getRepository('AppBundle:Grund');
-    $result = $repository->getBetalteIalt(GrundType::PARCELHUS);
+    $result = $repository->getStatsBetalteIalt($type);
 
     return $this->render('statistics/index.html.twig', array(
       'result' => $result,
+      'type' => $type,
+      'first_year' => $firstYear,
+      'current_year' => $currentYear,
+      'show_year' => $showYear,
+      'menuIndex' => $menuIndex,
+      'submenuIndex' => $submenuIndex,
     ));
 
   }

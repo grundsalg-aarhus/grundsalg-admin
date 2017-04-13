@@ -1,0 +1,18 @@
+<div class="col-sm-4">
+  <div class="global-actions">
+    <div class="form-action">
+      <form class="form-horizontal  edit-form">
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="grundsalg_statistics_betalte">År</label>
+          <div class="col-sm-10">
+            <select onchange="if (this.value) window.location.href=this.value" name="grundsalg_statistics_betalte" class="form-control">
+              <option value="{{ path('grundsalg_statistics', {'type': type, 'menuIndex': menuIndex, 'submenuIndex': submenuIndex }) }}" {{ show_year is null ? 'selected="selected"' : '' }}>{{ 'app.stats.overview' | trans }}</option>
+              {% for year in first_year..current_year %}
+                <option value="{{ path('grundsalg_statistics_betalte', {'type': type, 'showYear': year, 'menuIndex': menuIndex, 'submenuIndex': submenuIndex }) }}" {{ year == show_year ? 'selected="selected"' : '' }}>{{ year }}</option>
+              {% endfor %}
+            </select>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>

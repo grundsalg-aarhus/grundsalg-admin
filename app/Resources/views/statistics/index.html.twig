@@ -1,34 +1,48 @@
 {% extends '@EasyAdmin/default/layout.html.twig' %}
 
-{% block main %}
-  <div class="box box--primary">
-    <div class="box-body">
-      <div class="row">
-        <h3 class="col-sm-12">
-          <i class="fa fa-bar-chart"></i> {{ 'app.stats.statistik' | trans }}
-        </h3>
+{% block body_class %}list{% endblock %}
 
-        <div class="col-sm-12">
+{% block content_title %}
+  {% spaceless %}
+    {{ 'app.stats.betalte' | trans }} {{ ('plural.' ~ type) | trans }} {{ 'app.stats.total' | trans }}
+  {% endspaceless %}
+{% endblock %}
 
-          <table class="table table-striped">
-            <tr>
-              <th>{{ 'app.stats.year' | trans }}</th>
-              <th>{{ 'app.stats.pris' | trans }}</th>
-              <th>{{ 'app.stats.salgspris' | trans }}</th>
-              <th>{{ 'app.stats.thecount' | trans }}</th>
-            </tr>
-            {% for r in result %}
-              <tr>
-                <td class="text-left">{{ r['year'] }}</td>
-                <td class="text-right">{{ r['pris'] | number_format }}</td>
-                <td class="text-right">{{ r['salgspris'] | number_format }}</td>
-                <td class="text-right">{{ r['thecount'] }}</td>
-              </tr>
-            {% endfor %}
-          </table>
-
-        </div>
-      </div>
+{% block content_header %}
+  <div class="row">
+    <div class="col-sm-8">
+      {% block content_title_wrapper %}
+        <h1 class="title">{{ 'app.stats.betalte' | trans }} {{ ('plural.' ~ type) | trans }}</h1>
+      {% endblock %}
     </div>
+
+    {% include 'statistics/_year_select.html.twig' %}
+  </div>
+{% endblock content_header %}
+
+{% block main %}
+  <div class="table-responsive">
+
+    <table class="table easyadmin-list">
+      <thead>
+      <tr>
+        <th><span>{{ 'app.stats.year' | trans }}</span></th>
+        <th><span>{{ 'app.grund.pris' | trans }}</span></th>
+        <th><span>{{ 'app.grund.salgsprisumoms' | trans }}</span></th>
+        <th><span>{{ 'app.stats.thecount' | trans }}</span></th>
+        <th><span></span></th>
+      </tr>
+      </thead>
+      {% for r in result %}
+        <tr>
+          <td class="text-left">{{ r['year'] }}</td>
+          <td class="text-right">{{ r['pris'] | number_format }}</td>
+          <td class="text-right">{{ r['salgspris'] | number_format }}</td>
+          <td class="text-right">{{ r['thecount'] }}</td>
+          <td><a href="{{ path('grundsalg_statistics_betalte', {'type': type, 'showYear': r['year'], 'menuIndex': menuIndex, 'submenuIndex': submenuIndex }) }}" class="btn btn-default">{{ 'action.show' | trans }}</a></td>
+        </tr>
+      {% endfor %}
+    </table>
+
   </div>
 {% endblock %}

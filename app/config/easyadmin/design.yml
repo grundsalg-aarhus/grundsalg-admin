@@ -79,6 +79,14 @@ easy_admin:
                 - { entity: 'landinspektoer', label: 'Landinspektør' }
                 - { entity: 'lokalsamfund', label: 'Lokalsamfund' }
                 - { entity: 'user', label: 'Brugere' }
+            - label: 'Statistik'
+              icon: 'bar-chart'
+              children:
+                - { label: 'Betalte i alt' }
+                - { label: 'Betalte Parcelhusgrunde', route: 'grundsalg_statistics', params: { type: 'Parcelhusgrund' } }
+                - { label: 'Betalte Storparceller', route: 'grundsalg_statistics', params: { type: 'Storparcel' } }
+                - { label: 'Betalte Erhvervsgrunde', route: 'grundsalg_statistics', params: { type: 'Erhvervsgrund' } }
+                - { label: 'Betalte Andre grunde', route: 'grundsalg_statistics', params: { type: 'Andre' } }
             - { entity: 'interessent', label: 'Interessenter', icon: 'user-circle' }
             - label: 'Log ud'
               icon: 'sign-out'

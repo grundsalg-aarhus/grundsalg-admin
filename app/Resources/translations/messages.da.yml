@@ -108,11 +108,17 @@ app:
 
   stats:
       betalte: Betalte
+      bruttoareal: Areal i m²
       grund: Grund
       koeber: Navn
       koeberAdresse: Opr. adresse
+      kvt: Kvt.
+      matnr: Mat.nr
+      overview: Oversigt
       quarter: Kvartal
       thecount: Antal
+      total: i alt
+      year: År
 
 label:
     yes: Ja
@@ -123,7 +129,10 @@ label:
 label.null: '–'
 
 plural:
-    parcelhusgrund: parcelhusgrunde
+    Andre: Andre grunde
+    Erhvervsgrund: erhvervsgrunde
+    Parcelhusgrund: parcelhusgrunde
+    Storparcel: storparceller
 
 # If we use the 'form_label' widget directly the EasyAdmin 'label' value is not used
 Bogstav: Bogst.
