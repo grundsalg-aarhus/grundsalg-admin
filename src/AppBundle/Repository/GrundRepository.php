@@ -4,6 +4,7 @@ namespace AppBundle\Repository;
 
 use AppBundle\DBAL\Types\GrundSalgStatus;
 use AppBundle\DBAL\Types\GrundType;
+use AppBundle\Entity\Salgsomraade;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\DBAL\Connection;
 
@@ -35,6 +36,14 @@ class GrundRepository extends EntityRepository {
     return $qb->getQuery()->getResult();
   }
 
+  /**
+   * Get list of 'Grund' of 'type' sold in 'year'
+   *
+   * @param $type
+   * @param $year
+   * @param bool $quarter
+   * @return array
+   */
   public function getGrundeByTypeYear($type, $year, $quarter = NULL) {
     $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -62,23 +71,59 @@ class GrundRepository extends EntityRepository {
   }
 
   /**
-   * Get Stats for 'betalte' Grunde by type, grouped by year sold
+   * Get list of 'Grund' of 'type' belonging to 'salgsomaraade'
    *
-   * @param \AppBundle\DBAL\Types\GrundType $grundType
+   * @param $type
+   * @param \AppBundle\Entity\Salgsomraade $salgsomraade
+   * @param bool $year
    * @return array
    */
-  public function getStatsBetalteIalt($grundType) {
+  public function getGrundeByTypeSalgsomraade($type, Salgsomraade $salgsomraade, $year = NULL) {
+    $qb = $this->getEntityManager()->createQueryBuilder();
+
+    $qb->select('g', 'pb', 'kpb')
+      ->from('AppBundle:Grund', 'g')
+      ->leftJoin('g.postby', 'pb')
+      ->leftJoin('g.koeberPostby', 'kpb')
+      ->where('g.type = :type')
+      ->andWhere('g.salgstatus = :salgstatus')
+      ->andWhere('g.salgsomraade = :salgsomraade')
+      ->addOrderBy('g.vej', 'ASC')
+      ->addOrderBy('g.husnummer', 'ASC')
+      ->addOrderBy('g.bogstav', 'ASC')
+      ->setParameter('type', $type)
+      ->setParameter('salgstatus', GrundSalgStatus::SOLGT)
+      ->setParameter('salgsomraade', $salgsomraade);
+
+    if ($year) {
+      $qb->andWhere('YEAR(COALESCE(g.beloebanvist, g.accept)) = :year')
+        ->setParameter('year', $year);
+    }
+
+    return $qb->getQuery()->getResult();
+  }
+
+  /**
+   * Get Stats for 'betalte' Grunde by type, if 'group' grouped by year sold else in total
+   *
+   * @param $grundType
+   * @param bool $group
+   * @return array
+   */
+  public function getStatsBetalteIalt($grundType, $group = TRUE) {
 
     $sql = "SELECT YEAR(COALESCE(beloebAnvist,accept)) as year, COUNT(YEAR(COALESCE(beloebAnvist,accept))) as thecount, SUM(pris) as pris, SUM(salgsPrisUMoms) as salgspris ";
     $sql .= "FROM Grund WHERE type = ? AND salgStatus = '" . GrundSalgStatus::SOLGT . "' ";
-    $sql .= "GROUP BY YEAR(COALESCE(beloebAnvist,accept)) ";
-    $sql .= "ORDER BY YEAR(COALESCE(beloebAnvist,accept)) DESC";
+    if($group) {
+      $sql .= "GROUP BY YEAR(COALESCE(beloebAnvist,accept)) ";
+      $sql .= "ORDER BY YEAR(COALESCE(beloebAnvist,accept)) DESC";
+    }
 
     $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
     $stmt->bindValue(1, $grundType);
     $stmt->execute();
 
-    return $stmt->fetchAll();
+    return $group ? $stmt->fetchAll() : $stmt->fetch(\PDO::FETCH_ASSOC);
 
   }
 
@@ -95,6 +140,26 @@ class GrundRepository extends EntityRepository {
     $sql .= "AND YEAR(COALESCE(beloebAnvist,accept)) = ? ";
 
     $values = [$grundType, $year];
+    $types = [\PDO::PARAM_STR, \PDO::PARAM_INT];
+    $stmt = $this->getEntityManager()->getConnection()->executeQuery($sql, $values, $types);
+
+    return $stmt->fetch(\PDO::FETCH_ASSOC);
+  }
+
+  /**
+   * Get Stats for 'betalte' Grunde by type, year
+   *
+   * @param \AppBundle\DBAL\Types\GrundType $grundType
+   * @param \AppBundle\Entity\Salgsomraade $salgsomraade
+   * @return array
+   */
+  public function getStatsOmraade($grundType, $salgsomraade) {
+
+    $sql = "SELECT SUM(pris) as pris,SUM(salgsPrisUMoms) as salgspris, count(pris) as thecount ";
+    $sql .= "FROM Grund WHERE type = ? AND salgStatus = '" . GrundSalgStatus::SOLGT . "' ";
+    $sql .= "AND salgsomraadeId = ? ";
+
+    $values = [$grundType, $salgsomraade->getId()];
     $types = [\PDO::PARAM_STR, \PDO::PARAM_INT];
     $stmt = $this->getEntityManager()->getConnection()->executeQuery($sql, $values, $types);
 
@@ -131,5 +196,51 @@ class GrundRepository extends EntityRepository {
     }
 
     return $result;
+  }
+
+  /**
+   * Get Stats for 'betalte' Grunde by type, grouped by 'salgsOmraade'
+   *
+   * @param \AppBundle\DBAL\Types\GrundType $grundType
+   * @return array
+   */
+  public function getStatsOmraadeIalt($grundType, $group = true) {
+
+    $sql = "SELECT COUNT(YEAR(COALESCE(beloebAnvist,accept))) as thecount, SUM(pris) as pris, SUM(salgsPrisUMoms) as salgspris, s.titel AS salgsomraadeTitel, s.id AS salgsomraadeId, s.titel AS salgsomraadeTitel ";
+    $sql .= "FROM Grund g ";
+    $sql .= "LEFT JOIN Salgsomraade s ON g.salgsomraadeId = s.id ";
+    $sql .= "WHERE g.type = ? AND g.salgStatus = '" . GrundSalgStatus::SOLGT . "' ";
+    if($group) {
+      $sql .= "GROUP BY salgsomraadeId ";
+      $sql .= "ORDER BY s.titel ASC ";
+    }
+
+    $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+    $stmt->bindValue(1, $grundType);
+    $stmt->execute();
+
+    return $group ? $stmt->fetchAll() : $stmt->fetch(\PDO::FETCH_ASSOC);
+
+  }
+
+  /**
+   * Get Stats for 'betalte' Grunde by type, salgsomraade
+   *
+   * @param $grundType
+   * @param \AppBundle\Entity\Salgsomraade $salgsomraade
+   * @return mixed
+   */
+  public function getStatsOmraadeByType($grundType, Salgsomraade $salgsomraade) {
+
+    $sql = "SELECT YEAR(COALESCE(beloebAnvist,accept)) as year, COUNT(YEAR(COALESCE(beloebAnvist,accept))) as thecount, SUM(pris) as pris, SUM(salgsPrisUMoms) as salgspris ";
+    $sql .= "FROM Grund WHERE type = ? AND salgStatus = '" . GrundSalgStatus::SOLGT . "' ";
+    $sql .= "AND salgsomraadeId = ? ";
+    $sql .= "GROUP BY year ";
+
+    $values = [$grundType, $salgsomraade->getId()];
+    $types = [\PDO::PARAM_STR, \PDO::PARAM_INT];
+    $stmt = $this->getEntityManager()->getConnection()->executeQuery($sql, $values, $types);
+
+    return $stmt->fetchAll();
   }
 }

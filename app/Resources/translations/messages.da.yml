@@ -110,12 +110,15 @@ app:
       betalte: Betalte
       bruttoareal: Areal i m²
       grund: Grund
+      ikke_angivet: <Område ikke angivet>
       koeber: Navn
       koeberAdresse: Opr. adresse
       kvt: Kvt.
       matnr: Mat.nr
+      omraade: pr. område
       overview: Oversigt
       quarter: Kvartal
+      salgsomraade: Salgsområde
       thecount: Antal
       total: i alt
       year: År

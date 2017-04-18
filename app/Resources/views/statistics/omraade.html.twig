@@ -4,7 +4,7 @@
 
 {% block content_title %}
   {% spaceless %}
-    {{ 'app.stats.betalte' | trans }} {{ ('plural.' ~ type) | trans }} {{ show_year }}
+    {{ ('plural.' ~ type) | trans | capitalize }}: {{ salgsomraade }}
   {% endspaceless %}
 {% endblock %}
 
@@ -12,11 +12,11 @@
   <div class="row">
     <div class="col-sm-8">
       {% block content_title_wrapper %}
-        <h1 class="title">{{ 'app.stats.betalte' | trans }} {{ ('plural.' ~ type) | trans }} {{ show_year }}</h1>
+        <h1 class="title">{{ ('plural.' ~ type) | trans | capitalize }}: {{ salgsomraade }}</h1>
       {% endblock %}
     </div>
 
-    {% include 'statistics/_year_select.html.twig' %}
+    {% include 'statistics/_omraade_select.html.twig' %}
   </div>
 {% endblock content_header %}
 
@@ -27,7 +27,7 @@
     <table class="table easyadmin-list">
       <thead>
       <tr>
-        <th><span>{{ 'app.stats.quarter' | trans }}</span></th>
+        <th><span>{{ 'app.stats.year' | trans }}</span></th>
         <th><span>{{ 'app.stats.grund' | trans }}</span></th>
         <th><span>{{ 'app.stats.koeber' | trans }}</span></th>
         <th><span>{{ 'app.stats.koeberAdresse' | trans }}</span></th>
@@ -39,9 +39,9 @@
         <th><span></span></th>
       </tr>
       </thead>
-      {% for q, r in result %}
+      {% for q, r in stats %}
         <tr>
-          <th class="text-left">{{ q }}. {{ 'app.stats.kvt' | trans }}</th>
+          <th class="text-left">{{ r['year'] }}</th>
           <th class="text-left"></th>
           <th class="text-left"></th>
           <th class="text-left"></th>
@@ -52,7 +52,7 @@
           <th class="text-right">{{ r['thecount'] }}</th>
           <th class="text-right"></th>
         </tr>
-        {% for g in grunde[q] %}
+        {% for g in grunde[r['year']] %}
           <tr>
             <td class="text-left"></td>
             <td class="text-left">{{ g.vej }} {{ g.husnummer }}{{ g.bogstav }}, {{ g.postby }}</td>

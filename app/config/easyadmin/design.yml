@@ -83,10 +83,15 @@ easy_admin:
               icon: 'bar-chart'
               children:
                 - { label: 'Betalte i alt' }
-                - { label: 'Betalte Parcelhusgrunde', route: 'grundsalg_statistics', params: { type: 'Parcelhusgrund' } }
-                - { label: 'Betalte Storparceller', route: 'grundsalg_statistics', params: { type: 'Storparcel' } }
-                - { label: 'Betalte Erhvervsgrunde', route: 'grundsalg_statistics', params: { type: 'Erhvervsgrund' } }
-                - { label: 'Betalte Andre grunde', route: 'grundsalg_statistics', params: { type: 'Andre' } }
+                - { label: 'Betalte Parcelhusgrunde', route: 'grundsalg_statistics_betalte_overview', params: { type: 'Parcelhusgrund' } }
+                - { label: 'Betalte Storparceller', route: 'grundsalg_statistics_betalte_overview', params: { type: 'Storparcel' } }
+                - { label: 'Betalte Erhvervsgrunde', route: 'grundsalg_statistics_betalte_overview', params: { type: 'Erhvervsgrund' } }
+                - { label: 'Betalte Andre grunde', route: 'grundsalg_statistics_betalte_overview', params: { type: 'Andre' } }
+                - { label: 'Betalte Pr. område' }
+                - { label: 'Parcelhusgrunde pr. område', route: 'grundsalg_statistics_omraade_overview', params: { type: 'Parcelhusgrund' } }
+                - { label: 'Storparceller pr. område', route: 'grundsalg_statistics_omraade_overview', params: { type: 'Storparcel' } }
+                - { label: 'Erhvervsgrunde pr. område', route: 'grundsalg_statistics_omraade_overview', params: { type: 'Erhvervsgrund' } }
+                - { label: 'Andre grunde pr. område', route: 'grundsalg_statistics_omraade_overview', params: { type: 'Andre' } }
             - { entity: 'interessent', label: 'Interessenter', icon: 'user-circle' }
             - label: 'Log ud'
               icon: 'sign-out'

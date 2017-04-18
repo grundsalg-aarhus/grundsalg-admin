@@ -42,6 +42,15 @@
           <td><a href="{{ path('grundsalg_statistics_betalte', {'type': type, 'showYear': r['year'], 'menuIndex': menuIndex, 'submenuIndex': submenuIndex }) }}" class="btn btn-default">{{ 'action.show' | trans }}</a></td>
         </tr>
       {% endfor %}
+      <tfoot>
+      <tr>
+        <th class="text-left">{{ 'app.stats.total' | trans | capitalize }}</th>
+        <th class="text-right">{{ total['pris'] | number_format }}</th>
+        <th class="text-right">{{ total['salgspris'] | number_format }}</th>
+        <th class="text-right">{{ total['thecount'] }}</th>
+        <th></th>
+      </tr>
+      </tfoot>
     </table>
 
   </div>
