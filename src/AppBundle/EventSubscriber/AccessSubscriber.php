@@ -2,9 +2,11 @@
 
 namespace AppBundle\EventSubscriber;
 
+use JavierEguiluz\Bundle\EasyAdminBundle\Configuration\ConfigManager;
 use JavierEguiluz\Bundle\EasyAdminBundle\Event\EasyAdminEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
+use Symfony\Component\Form\Extension\Core\DataTransformer\NumberToLocalizedStringTransformer;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -14,9 +16,12 @@ class AccessSubscriber implements EventSubscriberInterface {
    */
   protected $authorizationChecker;
 
-  public function __construct(AuthorizationCheckerInterface $authorizationChecker)
+  protected $configManager;
+
+  public function __construct(AuthorizationCheckerInterface $authorizationChecker, ConfigManager $configManager)
   {
     $this->authorizationChecker = $authorizationChecker;
+    $this->configManager = $configManager;
   }
 
   /**
@@ -37,11 +42,31 @@ class AccessSubscriber implements EventSubscriberInterface {
     $request = $event->getArgument('request');
     $action = $request->query->get('action', 'list');
     $entity = $event->getArgument('entity');
-    if (isset($entity[$action]['roles'])) {
-      $roles = $entity[$action]['roles'];
+    $roles = $this->getRoles($entity, $action);
+    if ($roles !== NULL) {
       $this->requireRole($roles);
     }
   }
+
+protected function getRoles($config, $action) {
+  $roles = NULL;
+
+  if (is_object($config)) {
+    $config = $this->configManager->getEntityConfigByClass(get_class($config));
+  }
+
+  if (is_array($config)) {
+    // @TODO: Inherit roles in a meaningful way.
+    if (isset($config[$action]['roles'])) {
+      $roles = $config[$action]['roles'];
+    }
+    elseif (isset($config['list']['roles'])) {
+      $roles = $config['list']['roles'];
+    }
+  }
+
+  return $roles;
+}
 
   public function requireRole(array $roleNames) {
     foreach ($roleNames as $roleName) {

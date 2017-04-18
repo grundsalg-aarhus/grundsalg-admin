@@ -3,6 +3,7 @@ services:
         class: AppBundle\EventSubscriber\AccessSubscriber
         arguments:
             - '@security.authorization_checker'
+            - '@easyadmin.config.manager'
         tags:
             - { name: kernel.event_subscriber }
 
