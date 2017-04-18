@@ -1,0 +1,57 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+
+{% block body_class %}list{% endblock %}
+
+{% block content_title %}
+  {% spaceless %}
+    {{ 'app.stats.betalte' | trans }} {{ ('plural.' ~ type) | trans }} {{ 'app.stats.total' | trans }}
+  {% endspaceless %}
+{% endblock %}
+
+{% block content_header %}
+  <div class="row">
+    <div class="col-sm-8">
+      {% block content_title_wrapper %}
+        <h1 class="title">{{ 'app.stats.betalte' | trans }} {{ ('plural.' ~ type) | trans }}</h1>
+      {% endblock %}
+    </div>
+
+    {% include 'statistics/_year_select.html.twig' %}
+  </div>
+{% endblock content_header %}
+
+{% block main %}
+  <div class="table-responsive">
+
+    <table class="table easyadmin-list">
+      <thead>
+      <tr>
+        <th><span>{{ 'app.stats.year' | trans }}</span></th>
+        <th><span>{{ 'app.grund.pris' | trans }}</span></th>
+        <th><span>{{ 'app.grund.salgsprisumoms' | trans }}</span></th>
+        <th><span>{{ 'app.stats.thecount' | trans }}</span></th>
+        <th><span></span></th>
+      </tr>
+      </thead>
+      {% for r in result %}
+        <tr>
+          <td class="text-left">{{ r['year'] }}</td>
+          <td class="text-right">{{ r['pris'] | number_format }}</td>
+          <td class="text-right">{{ r['salgspris'] | number_format }}</td>
+          <td class="text-right">{{ r['thecount'] }}</td>
+          <td><a href="{{ path('grundsalg_statistics_betalte', {'type': type, 'showYear': r['year'], 'menuIndex': menuIndex, 'submenuIndex': submenuIndex }) }}" class="btn btn-default">{{ 'action.show' | trans }}</a></td>
+        </tr>
+      {% endfor %}
+      <tfoot>
+      <tr>
+        <th class="text-left">{{ 'app.stats.total' | trans | capitalize }}</th>
+        <th class="text-right">{{ total['pris'] | number_format }}</th>
+        <th class="text-right">{{ total['salgspris'] | number_format }}</th>
+        <th class="text-right">{{ total['thecount'] }}</th>
+        <th></th>
+      </tr>
+      </tfoot>
+    </table>
+
+  </div>
+{% endblock %}

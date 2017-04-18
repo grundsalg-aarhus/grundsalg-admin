@@ -1,0 +1,89 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+
+{% block body_class %}list{% endblock %}
+
+{% block content_title %}
+  {% spaceless %}
+    {{ ('plural.' ~ type) | trans | capitalize }}: {{ salgsomraade }}
+  {% endspaceless %}
+{% endblock %}
+
+{% block content_header %}
+  <div class="row">
+    <div class="col-sm-8">
+      {% block content_title_wrapper %}
+        <h1 class="title">{{ ('plural.' ~ type) | trans | capitalize }}: {{ salgsomraade }}</h1>
+      {% endblock %}
+    </div>
+
+    {% include 'statistics/_omraade_select.html.twig' %}
+  </div>
+{% endblock content_header %}
+
+{% block main %}
+
+  <div class="table-responsive">
+
+    <table class="table easyadmin-list">
+      <thead>
+      <tr>
+        <th><span>{{ 'app.stats.year' | trans }}</span></th>
+        <th><span>{{ 'app.stats.grund' | trans }}</span></th>
+        <th><span>{{ 'app.stats.koeber' | trans }}</span></th>
+        <th><span>{{ 'app.stats.koeberAdresse' | trans }}</span></th>
+        <th><span>{{ 'app.stats.matnr' | trans }}</span></th>
+        <th><span>{{ 'app.stats.bruttoareal' | trans }}</span></th>
+        <th><span>{{ 'app.grund.pris' | trans }}</span></th>
+        <th><span>{{ 'app.grund.salgsprisumoms' | trans }}</span></th>
+        <th><span>{{ 'app.stats.thecount' | trans }}</span></th>
+        <th><span></span></th>
+      </tr>
+      </thead>
+      {% for q, r in stats %}
+        <tr>
+          <th class="text-left">{{ r['year'] }}</th>
+          <th class="text-left"></th>
+          <th class="text-left"></th>
+          <th class="text-left"></th>
+          <th class="text-left"></th>
+          <th class="text-left"></th>
+          <th class="text-right">{{ r['pris'] | number_format }}</th>
+          <th class="text-right">{{ r['salgspris'] | number_format }}</th>
+          <th class="text-right">{{ r['thecount'] }}</th>
+          <th class="text-right"></th>
+        </tr>
+        {% for g in grunde[r['year']] %}
+          <tr>
+            <td class="text-left"></td>
+            <td class="text-left">{{ g.vej }} {{ g.husnummer }}{{ g.bogstav }}, {{ g.postby }}</td>
+            <td class="text-left">{{ g.koeberNavn }}</td>
+            <td class="text-left">{{ g.koeberAdresse }}{{ g.koeberPostby is not null ? ',' }} {{ g.koeberPostby }}</td>
+            <td class="text-left">{{ g.mnr }}{{ g.mnr2 }}</td>
+            <td class="text-right">{{ g.bruttoareal }}</td>
+            <td class="text-right">{{ g.pris | number_format }}</td>
+            <td class="text-right">{{ g.salgsprisumoms | number_format }}</td>
+            <td class="text-right"></td>
+            <td>
+              <a class="btn btn default" href="{{ path('easyadmin', parameters = {'action': 'show', 'entity': 'parcelhusgrund', 'id': g.id }) }}">{{ 'action.show' | trans }}</a>
+            </td>
+          </tr>
+        {% endfor %}
+      {% endfor %}
+      <tfoot>
+      <tr>
+        <th class="text-left">{{ 'app.stats.total' | trans | capitalize }}</th>
+        <th class="text-left"></th>
+        <th class="text-left"></th>
+        <th class="text-left"></th>
+        <th class="text-left"></th>
+        <th class="text-left"></th>
+        <th class="text-right">{{ total['pris'] | number_format }}</th>
+        <th class="text-right">{{ total['salgspris'] | number_format }}</th>
+        <th class="text-right">{{ total['thecount'] }}</th>
+        <th class="text-right"></th>
+      </tr>
+      </tfoot>
+    </table>
+
+  </div>
+{% endblock %}
