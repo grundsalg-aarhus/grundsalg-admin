@@ -73,6 +73,7 @@ easy_admin:
                 - { entity: 'salgsomraade', label: 'Salgsområder' }
                 - { entity: 'opkoeb', label: 'Opkøb' }
             - label: 'Admin'
+              roles: [ROLE_ADMIN]
               icon: 'wrench'
               children:
                 - { entity: 'postby', label: 'Postnr / By' }

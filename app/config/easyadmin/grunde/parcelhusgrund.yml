@@ -29,6 +29,9 @@ easy_admin:
                     - { property: areal, label: 'app.grund.areal', css_class: 'text-right', format: '%.0f' }
                     - { property: pris, label: 'app.grund.pris', css_class: 'text-right' }
 
+            delete:
+                roles: [ROLE_ADMIN]
+
             search: &parcelhusgrund_default_search
                 fields:
                     - vej
@@ -42,10 +45,14 @@ easy_admin:
                     - pris
 
             edit: &parcelhusgrund_default_edit
+                roles: [ROLE_ADMIN]
                 title: 'Rediger Parcelhusgrund'
 
             show: &parcelhusgrund_default_show
                 title: 'Parcelhusgrund'
+                actions:
+                    - { name: edit, roles: [ROLE_ADMIN] }
+                    - { name: delete, roles: [ROLE_ADMIN] }
 
             new: &parcelhusgrund_default_new
                 title: 'Opret Grund'

@@ -42,6 +42,7 @@ easy_admin:
                     - pris
 
             edit: &erhvervsgrund_default_edit
+                roles: [ROLE_ADMIN]
                 title: 'Rediger Erhvervsgrund'
 
             show: &erhvervsgrund_default_show

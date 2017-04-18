@@ -4,6 +4,7 @@ easy_admin:
             class: AppBundle\Entity\User
             controller: AppBundle\Controller\UserController
             list:
+                roles: [ROLE_ADMIN]
                 title: 'Brugere'
                 sort: ['name', 'ASC']
                 actions:
