@@ -22,9 +22,8 @@ class ApiController extends Controller {
    */
   public function grundeAction(Request $request, $udstykningsId, $format = 'drupal_api') {
     $em = $this->getDoctrine()->getManager();
-    $query = $em->getRepository('AppBundle:Grund')->getGrundeForSalgsOmraade($udstykningsId);
+    $grunde = $em->getRepository('AppBundle:Grund')->getGrundeForSalgsOmraade($udstykningsId);
 
-    $grunde = $query->getResult();
     $list = array();
 
     if($format === 'geojson') {
