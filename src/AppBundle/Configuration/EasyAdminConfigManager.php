@@ -12,30 +12,51 @@ class EasyAdminConfigManager extends ConfigManager {
    */
   protected $authorizationChecker;
 
+  /**
+   * @var \Symfony\Component\DependencyInjection\ContainerInterface
+   */
+  protected $container;
+
   public function __construct(ContainerInterface $container, AuthorizationCheckerInterface $authorizationChecker) {
     parent::__construct($container);
     $this->authorizationChecker = $authorizationChecker;
+    $this->container = $container;
   }
 
+  private $cache = [];
+
   public function getBackendConfig($propertyPath = NULL) {
+    $cacheKey = $propertyPath ?: '';
+    if (isset($this->cache[$cacheKey])) {
+      return $this->cache[$cacheKey];
+    }
+
     $config = parent::getBackendConfig($propertyPath);
 
-    if ($propertyPath === 'design.menu') {
-      $config = self::arrayFilterRecursive($config, function ($item) {
-        if (!isset($item['roles'])) {
-          return TRUE;
+    $token = $this->container->get('security.token_storage')->getToken();
+    if ($token) {
+      if (is_array($config)) {
+        // Filter config by roles.
+        $config = self::arrayFilterRecursive($config, function ($item) {
+          if (!isset($item['roles'])) {
+            return TRUE;
+          }
+
+          $roles = $item['roles'];
+          if (!is_array($roles)) {
+            $roles = [$roles];
+          }
+
+          return $this->hasRole($roles);
+        });
+
+        if ($propertyPath === 'design.menu') {
+          $this->reindexMenu($config);
         }
-
-        $roles = $item['roles'];
-        if (!is_array($roles)) {
-          $roles = [$roles];
-        }
-
-        return $this->hasRole($roles);
-      });
-
-      $this->reindexMenu($config);
+      }
     }
+
+    $this->cache[$cacheKey] = $config;
 
     return $config;
   }
@@ -48,7 +69,8 @@ class EasyAdminConfigManager extends ConfigManager {
         if (isset($item['children'])) {
           $this->reindexMenu($item['children'], $index);
         }
-      } else {
+      }
+      else {
         $item['menu_index'] = $menuIndex;
         $item['submenu_index'] = $index;
       }
