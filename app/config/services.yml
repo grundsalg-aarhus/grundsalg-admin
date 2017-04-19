@@ -9,10 +9,14 @@ services:
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
 
   grundsalg.communication:
-    class: AppBundle\EventSubscriber\GrundsalgWebCommunication
+    class: AppBundle\Service\GrundsalgCommunicationService
+    arguments: ['%grundsalg_web%']
+
+  app.salgsomraade_subscriber:
+    class: AppBundle\EventSubscriber\SalgsomraadeSubscriber
     tags:
       - { name: doctrine.event_subscriber }
-    arguments: ['%grundsalg_web%']
+    arguments: [ '@grundsalg.communication' ]
 
   app.timestampable_subscriber:
     class: AppBundle\EventSubscriber\TimestampableSubscriber
