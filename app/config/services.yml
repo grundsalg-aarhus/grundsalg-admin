@@ -21,3 +21,10 @@ services:
     class: AppBundle\EventSubscriber\TimestampableSubscriber
     tags:
       - { name: doctrine.event_subscriber }
+
+  app.twig_extension:
+    class: AppBundle\Twig\AppExtension
+    arguments: ['@service_container']
+    public: false
+    tags:
+      - { name: twig.extension }
