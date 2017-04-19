@@ -16,6 +16,15 @@ easy_admin:
                     - { property: salgbartareal, css_class: 'text-right', format: '%.0f', label: 'Salgbart Areal' }
                     - { property: forbrugsandel, css_class: 'text-right' }
 
+            search:
+                fields:
+                    - nr
+                    - titel
+                    - lokalsamfund
+                    - samletareal
+                    - salgbartareal
+                    - forbrugsandel
+
             edit:
                 title: 'Rediger Lokalplan'
 

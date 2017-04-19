@@ -26,7 +26,7 @@ app:
       fastpris: Fastpris
       gid: GID
       grund: Grund
-      grundtype: Grundtype
+      type: Grundtype
       historiskeSalg: Historiske Salg
       husnummer: Husnr.
       koeber: Køber
@@ -101,9 +101,27 @@ app:
       createdAt: Oprettet
 
   salgsomraade:
+      annonceres: Annonceres
       nr: Nr.
       salgsomraade: Salgsområde
       titel: Titel
+
+  stats:
+      betalte: Betalte
+      bruttoareal: Areal i m²
+      grund: Grund
+      ikke_angivet: <Område ikke angivet>
+      koeber: Navn
+      koeberAdresse: Opr. adresse
+      kvt: Kvt.
+      matnr: Mat.nr
+      omraade: pr. område
+      overview: Oversigt
+      quarter: Kvartal
+      salgsomraade: Salgsområde
+      thecount: Antal
+      total: i alt
+      year: År
 
 label:
     yes: Ja
@@ -112,6 +130,12 @@ label:
         empty_value: (tom)
 
 label.null: '–'
+
+plural:
+    Andre: Andre grunde
+    Erhvervsgrund: erhvervsgrunde
+    Parcelhusgrund: parcelhusgrunde
+    Storparcel: storparceller
 
 # If we use the 'form_label' widget directly the EasyAdmin 'label' value is not used
 Bogstav: Bogst.

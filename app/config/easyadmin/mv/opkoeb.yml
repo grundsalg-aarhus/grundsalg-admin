@@ -17,6 +17,16 @@ easy_admin:
                     - { property: pris, label: 'Pris/m2', css_class: 'text-right' }
                     - { property: procentaflp, label: '% af LP', css_class: 'text-right' }
 
+            search:
+                fields:
+                    - lokalplan.nr
+                    - matrikel
+                    - ejerlav
+                    - m2
+                    - opkoebdato
+                    - pris
+                    - procentaflp
+
             edit:
                 title: 'Rediger Opkøb'
 

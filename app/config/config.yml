@@ -89,11 +89,25 @@ doctrine:
             polygon:    CrEOF\Spatial\DBAL\Types\Geometry\PolygonType
             linestring: CrEOF\Spatial\DBAL\Types\Geometry\LineStringType
 
+            Anvendelse:         AppBundle\DBAL\Types\Anvendelse
+            GrundStatus:        AppBundle\DBAL\Types\GrundStatus
+            GrundSalgStatus:    AppBundle\DBAL\Types\GrundSalgStatus
+            GrundPublicStatus:  AppBundle\DBAL\Types\GrundPublicStatus
+            GrundType:          AppBundle\DBAL\Types\GrundType
+            Kpl4:               AppBundle\DBAL\Types\Kpl4
+            Mulighed:           AppBundle\DBAL\Types\Mulighed
+            SalgsType:          AppBundle\DBAL\Types\SalgsType
+            TilslutningsType:   AppBundle\DBAL\Types\TilslutningsType
+
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
         dql:
+            datetime_functions:
+                year: DoctrineExtensions\Query\Mysql\Year
+                quarter: DoctrineExtensions\Query\Mysql\Quarter
+                month: DoctrineExtensions\Query\Mysql\Month
             numeric_functions:
                 st_contains:     CrEOF\Spatial\ORM\Query\AST\Functions\MySql\STContains
                 contains:     CrEOF\Spatial\ORM\Query\AST\Functions\MySql\Contains

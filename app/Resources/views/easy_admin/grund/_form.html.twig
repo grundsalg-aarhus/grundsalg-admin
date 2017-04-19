@@ -2,7 +2,40 @@
   <div class="form-group field-entity">
     <label class="col-sm-2 control-label">{{ label | trans }}</label>
     <div class="col-sm-10">
-      <span class="form-control">{{ field }}</span>
+      <span class="form-control">
+        {% if field is same as(true) %}
+          <span class="label label-success">Ja</span>
+        {% elseif field is same as(false) %}
+          <span class="label label-danger">Nej</span>
+        {% elseif field.date is defined %}
+          {{ field | date }}
+        {% elseif field is iterable %}
+          {{ field | join(', ') }}
+        {% else %}
+          {{ field }}
+        {% endif %}
+      </span>
+    </div>
+  </div>
+{% endmacro %}
+
+{% macro entity_row(label, field = null) %}
+  <div class="form-group field-entity">
+    <label class="col-sm-2 control-label">{{ label | trans }}</label>
+    <div class="col-sm-10">
+      <div class="form-control">
+        {% if field is same as(true) %}
+          <span class="label label-success">Ja</span>
+        {% elseif field is same as(false) %}
+          <span class="label label-danger">Nej</span>
+        {% elseif field.date is defined %}
+          {{ field | date }}
+        {% elseif field is iterable %}
+          {{ field | join(', ') }}
+        {% else %}
+          {{ field }}
+        {% endif %}
+      </div>
     </div>
   </div>
 {% endmacro %}
@@ -58,9 +91,9 @@
                 </div>
                 <div class="col-md-6">
                   {% if entity.salgsomraade %}
-                    {{ grundsalg.entity_value('app.grund.psp', entity.salgsomraade.sagsnr ) }}
+                    {{ grundsalg.entity_value('app.salgsomraade.annonceres', entity.salgsomraade.annonceres ) }}
                   {% else %}
-                    {{ grundsalg.entity_value('app.grund.psp' ) }}
+                    {{ grundsalg.entity_value('app.salgsomraade.annonceres' ) }}
                   {% endif %}
                 </div>
                 <div class="col-md-6">
@@ -68,6 +101,13 @@
                     {{ grundsalg.entity_value('app.salgsomraade.titel', entity.salgsomraade.titel ) }}
                   {% else %}
                     {{ grundsalg.entity_value('app.salgsomraade.titel' ) }}
+                  {% endif %}
+                </div>
+                <div class="col-md-6">
+                  {% if entity.salgsomraade %}
+                    {{ grundsalg.entity_value('app.grund.psp', entity.salgsomraade.sagsnr ) }}
+                  {% else %}
+                    {{ grundsalg.entity_value('app.grund.psp' ) }}
                   {% endif %}
                 </div>
               </div>
@@ -84,7 +124,7 @@
               <div class="row">
                 <div class="col-md-6">
                   {{ grundsalg.entity_value('app.grund.gid', entity.gid ) }}
-                  {{ form_row(form.grundtype) }}
+                  {{ form_row(form.type) }}
 
                   <div class="form-group field-text">
                     {{ form_label(form.mnr) }}
@@ -114,7 +154,7 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                  {{ grundsalg.entity_value('app.grund.salgstatus', entity.salgstatus ) }}
+                  {{ grundsalg.entity_value('app.grund.salgstatus', entity.visStatus ) }}
                   {{ form_row(form.salgstype) }}
 
                   <div class="field-section ">
@@ -273,7 +313,13 @@
                   <dt>Anvendelse</dt>
                   <dd>{{ entity.salgsomraade.delomraade.anvendelse }}</dd>
                   <dt>Mulighed for</dt>
-                  <dd>{{ entity.salgsomraade.delomraade.mulighedfor }}</dd>
+                  <dd>
+                    {% if entity.salgsomraade.delomraade.mulighedfor is iterable %}
+                      {{ entity.salgsomraade.delomraade.mulighedfor | join(', ') }}
+                    {% else %}
+                      {{ entity.salgsomraade.delomraade.mulighedfor }}
+                    {% endif %}
+                  </dd>
                 </dl>
               {% else %}
                 <dl class="dl-horizontal">
@@ -507,7 +553,7 @@
             {% for salg in entity.salgshistorik %}
               <tr>
                 <td>{{ salg.navn }}</td>
-                <td>{{ salg.status }}</td>
+                <td>{{ salg.salgStatus }}</td>
                 <td>{{ salg.createdAt | date }}</td>
               </tr>
             {% endfor %}

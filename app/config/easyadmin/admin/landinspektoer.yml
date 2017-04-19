@@ -14,6 +14,12 @@ easy_admin:
                     - { property: email }
                     - { property: telefon }
 
+            search:
+                fields:
+                    - navn
+                    - email
+                    - telefon
+
             edit:
                 title: 'Rediger Landinspektør'
 

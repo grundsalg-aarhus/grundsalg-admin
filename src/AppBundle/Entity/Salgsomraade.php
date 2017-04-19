@@ -5,6 +5,8 @@ namespace AppBundle\Entity;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\DBAL\Types\GrundType;
+use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 
 /**
  * Salgsomraade
@@ -51,9 +53,10 @@ class Salgsomraade
   private $titel;
 
   /**
-   * @var string
+   * @var GrundType
    *
-   * @ORM\Column(name="type", type="string", length=30, nullable=false)
+   * @ORM\Column(name="type", type="GrundType", nullable=true)
+   * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GrundType")
    */
   private $type;
 
@@ -93,9 +96,9 @@ class Salgsomraade
   private $gisurl;
 
   /**
-   * @var string
+   * @var array
    *
-   * @ORM\Column(name="tilsluttet", type="string", length=50, nullable=true)
+   * @ORM\Column(name="tilsluttet", type="array", nullable=true)
    */
   private $tilsluttet;
 
@@ -245,12 +248,11 @@ class Salgsomraade
   /**
    * Set type
    *
-   * @param string $type
+   * @param GrundType $type
    *
-   * @return Salgsomraade
+   * @return Grund
    */
-  public function setType($type)
-  {
+  public function setType($type) {
     $this->type = $type;
 
     return $this;
@@ -259,10 +261,9 @@ class Salgsomraade
   /**
    * Get type
    *
-   * @return string
+   * @return GrundType
    */
-  public function getType()
-  {
+  public function getType() {
     return $this->type;
   }
 
@@ -387,27 +388,17 @@ class Salgsomraade
   }
 
   /**
-   * Set tilsluttet
-   *
-   * @param string $tilsluttet
-   *
-   * @return Salgsomraade
+   * @return array
    */
-  public function setTilsluttet($tilsluttet)
-  {
-    $this->tilsluttet = $tilsluttet;
-
-    return $this;
+  public function getTilsluttet() {
+    return $this->tilsluttet;
   }
 
   /**
-   * Get tilsluttet
-   *
-   * @return string
+   * @param array $tilsluttet
    */
-  public function getTilsluttet()
-  {
-    return $this->tilsluttet;
+  public function setTilsluttet(array $tilsluttet) {
+    $this->tilsluttet = $tilsluttet;
   }
 
   /**

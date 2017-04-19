@@ -1,0 +1,67 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+
+{% block body_class %}list{% endblock %}
+
+{% block content_title %}
+  {% spaceless %}
+    {{ 'app.stats.betalte' | trans }} {{ ('plural.' ~ type) | trans }} {{ 'app.stats.total' | trans }}
+  {% endspaceless %}
+{% endblock %}
+
+{% block content_header %}
+  <div class="row">
+    <div class="col-sm-8">
+      {% block content_title_wrapper %}
+        <h1 class="title">{{ ('plural.' ~ type) | trans | capitalize }} {{ 'app.stats.omraade' | trans }} </h1>
+      {% endblock %}
+    </div>
+
+    {% include 'statistics/_omraade_select.html.twig' %}
+  </div>
+{% endblock content_header %}
+
+{% block main %}
+  <div class="table-responsive">
+
+    <table class="table easyadmin-list">
+      <thead>
+      <tr>
+        <th><span>{{ 'app.stats.salgsomraade' | trans }}</span></th>
+        <th><span>{{ 'app.grund.pris' | trans }}</span></th>
+        <th><span>{{ 'app.grund.salgsprisumoms' | trans }}</span></th>
+        <th><span>{{ 'app.stats.thecount' | trans }}</span></th>
+        <th><span></span></th>
+      </tr>
+      </thead>
+      {% for r in result %}
+        <tr>
+          {% if r['salgsomraadeTitel'] is not empty %}
+            <td class="text-left">{{ r['salgsomraadeTitel'] }}</td>
+          {% else %}
+            <td class="text-left"><em>{{ 'app.stats.ikke_angivet' | trans }}</em></td>
+          {% endif %}
+          <td class="text-right">{{ r['pris'] | number_format }}</td>
+          <td class="text-right">{{ r['salgspris'] | number_format }}</td>
+          <td class="text-right">{{ r['thecount'] }}</td>
+          {% if r['salgsomraadeId'] is not empty %}
+            <td>
+              <a href="{{ path('grundsalg_statistics_omraade', {'type': type, 'salgsomraadeId': r['salgsomraadeId'], 'menuIndex': menuIndex, 'submenuIndex': submenuIndex }) }}" class="btn btn-default">{{ 'action.show' | trans }}</a>
+            </td>
+          {% else %}
+            <td></td>
+          {% endif %}
+        </tr>
+      {% endfor %}
+      <tfoot>
+      <tr>
+        <th class="text-left">{{ 'app.stats.total' | trans | capitalize }}</th>
+        <th class="text-right">{{ total['pris'] | number_format }}</th>
+        <th class="text-right">{{ total['salgspris'] | number_format }}</th>
+        <th class="text-right">{{ total['thecount'] }}</th>
+        <th></th>
+      </tr>
+      </tfoot>
+    </table>
+
+  </div>
+{% endblock %}
