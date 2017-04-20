@@ -23,7 +23,6 @@ easy_admin:
                     - { property: postby.postalcode, css_class: 'text-right', label: 'app.postby.postalcode' }
                     - { property: postby.city, label: 'app.postby.city' }
                     - { property: annonceres, label: 'app.grund.annonceres' }
-                    - { property: salgsomraade.nr, label: 'S.Nr' }
                     - { property: salgsomraade.titel, label: 'app.grund.salgsomraade' }
                     - { property: salgsomraade.lokalplan.nr, label: 'app.lokalplan.nr' }
                     - { property: salgstype, label: 'app.grund.salgstype' }
