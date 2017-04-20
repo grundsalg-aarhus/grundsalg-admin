@@ -122,6 +122,8 @@ stof_doctrine_extensions:
         default:
             timestampable: true
             blameable: true
+    class:
+        blameable: AppBundle\EventSubscriber\BlameableListener
 
 # Swiftmailer Configuration
 swiftmailer:
