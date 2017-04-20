@@ -17,8 +17,3 @@ services:
     tags:
       - { name: doctrine.event_subscriber }
     arguments: [ '@grundsalg.communication' ]
-
-  app.timestampable_subscriber:
-    class: AppBundle\EventSubscriber\TimestampableSubscriber
-    tags:
-      - { name: doctrine.event_subscriber }

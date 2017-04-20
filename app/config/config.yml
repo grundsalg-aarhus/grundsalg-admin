@@ -117,6 +117,12 @@ doctrine:
                 st_buffer:     CrEOF\Spatial\ORM\Query\AST\Functions\MySql\STBuffer
                 point: CrEOF\Spatial\ORM\Query\AST\Functions\MySql\Point
 
+stof_doctrine_extensions:
+    orm:
+        default:
+            timestampable: true
+            blameable: true
+
 # Swiftmailer Configuration
 swiftmailer:
     transport: "%mailer_transport%"
