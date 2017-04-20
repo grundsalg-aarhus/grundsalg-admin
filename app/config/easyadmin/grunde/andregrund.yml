@@ -13,7 +13,7 @@ easy_admin:
                 new: 'easy_admin/grund/new.html.twig'
             list: &andregrund_default_list
                 title: 'Alle Grunde'
-                sort: postby
+                sort: vej
                 dql_filter: entity.type = 'Andre'
                 actions:
                     <<: *default_list_actions

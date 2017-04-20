@@ -8,11 +8,6 @@ services:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
 
-  symfony.controller.subscriber.init:
-    class: Yavin\Symfony\Controller\InitControllerSubscriber
-    tags:
-      - { name: kernel.event_subscriber }
-
   grundsalg.communication:
     class: AppBundle\Service\GrundsalgCommunicationService
     arguments: ['%grundsalg_web%']

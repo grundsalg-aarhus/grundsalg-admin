@@ -13,7 +13,7 @@ easy_admin:
                 new: 'easy_admin/grund/new.html.twig'
             list: &erhvervsgrund_default_list
                 title: 'Alle Erhvervsgrunde'
-                sort: postby
+                sort: vej
                 dql_filter: entity.type = 'Erhvervsgrund'
                 actions:
                     <<: *default_list_actions
@@ -23,6 +23,7 @@ easy_admin:
                     - { property: postby.postalcode, css_class: 'text-right', label: 'app.postby.postalcode' }
                     - { property: postby.city, label: 'app.postby.city' }
                     - { property: annonceres, label: 'app.grund.annonceres' }
+                    - { property: salgsomraade.nr, label: 'S.Nr' }
                     - { property: salgsomraade.titel, label: 'app.grund.salgsomraade' }
                     - { property: salgsomraade.lokalplan.nr, label: 'app.lokalplan.nr' }
                     - { property: salgstype, label: 'app.grund.salgstype' }

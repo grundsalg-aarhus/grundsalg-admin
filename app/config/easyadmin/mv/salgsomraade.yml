@@ -25,10 +25,6 @@ easy_admin:
             edit:
                 title: 'Rediger Salgsområde'
 
-            search:
-                fields:
-                    - titel
-
             form:
                 fields: &salgsomraade_form_fields
                     - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Salgsområde' }

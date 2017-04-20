@@ -23,3 +23,6 @@ parameters:
     grundsalg_web_address:
     crs_properties_href: http://spatialreference.org/ref/epsg/25832/proj4/
     crs_properties_type: proj4
+
+    # First year with sales, used for building selects in statistics UI
+    grundsalg_first_year: 2006
