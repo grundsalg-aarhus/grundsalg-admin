@@ -17,7 +17,8 @@ services:
     class: AppBundle\Service\GrundsalgCommunicationService
     arguments: ['%grundsalg_web%']
 
-  app.timestampable_subscriber:
-    class: AppBundle\EventSubscriber\TimestampableSubscriber
+  app.salgsomraade_subscriber:
+    class: AppBundle\EventSubscriber\SalgsomraadeSubscriber
     tags:
       - { name: doctrine.event_subscriber }
+    arguments: [ '@grundsalg.communication' ]
