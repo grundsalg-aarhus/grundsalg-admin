@@ -8,6 +8,7 @@
 namespace AppBundle\EventSubscriber;
 
 use AppBundle\Entity\Salgsomraade;
+use AppBundle\Service\GrundsalgCommunicationService;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use GuzzleHttp\Client;
@@ -19,9 +20,9 @@ use GuzzleHttp\Client;
  *
  * @package AppBundle
  */
-class GrundsalgWebCommunication implements EventSubscriber {
+class SalgsomraadeSubscriber implements EventSubscriber {
 
-  private $endpoint;
+  private $service;
 
   /**
    * {@inheritdoc}
@@ -36,8 +37,8 @@ class GrundsalgWebCommunication implements EventSubscriber {
   /**
    * Set the endpoint url defined in parameters.yml
    */
-  public function __construct($endpoint) {
-    $this->endpoint = $endpoint;
+  public function __construct(GrundsalgCommunicationService $service) {
+    $this->service = $service;
   }
 
   public function postPersist(LifecycleEventArgs $args) {
@@ -56,28 +57,7 @@ class GrundsalgWebCommunication implements EventSubscriber {
       return;
     }
 
-    $this->saveSalgsomraade($entity);
+    $this->service->saveSalgsomraade($entity);
   }
 
-  /**
-   * Handle save of salgsomraade.
-   *
-   * @param $salgsomraade
-   *
-   * @return array
-   *   The content received as json from the remote system.
-   *
-   * @throws \Exception
-   *   If error message is return from the remote system.
-   */
-  private function saveSalgsomraade($salgsomraade) {
-    $client = new Client();
-
-    $response = $client->request('POST', $this->endpoint . "/api/udstykning/" . $salgsomraade->getId() . "/updated");
-
-    $body = $response->getBody()->getContents();
-    $content = \GuzzleHttp\json_decode($body);
-
-    return (array) $content;
-  }
 }
