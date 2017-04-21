@@ -40,7 +40,8 @@
         "guzzlehttp/guzzle": "^6.2",
         "javiereguiluz/easyadmin-bundle": "^1.16",
         "fresh/doctrine-enum-bundle": "~5.0",
-        "beberlei/DoctrineExtensions": "^1.0"
+        "beberlei/DoctrineExtensions": "^1.0",
+        "box/spout": "^2.7"
     },
     "require-dev": {
         "behatch/contexts": "^2.6",

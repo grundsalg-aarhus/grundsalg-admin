@@ -92,6 +92,7 @@ easy_admin:
                 - { label: 'Storparceller pr. område', route: 'grundsalg_statistics_omraade_overview', params: { type: 'Storparcel' } }
                 - { label: 'Erhvervsgrunde pr. område', route: 'grundsalg_statistics_omraade_overview', params: { type: 'Erhvervsgrund' } }
                 - { label: 'Andre grunde pr. område', route: 'grundsalg_statistics_omraade_overview', params: { type: 'Andre' } }
+                - { label: 'Rapporter', icon: 'table', route: 'grundsalg_report' }
             - { entity: 'interessent', label: 'Interessenter', icon: 'user-circle' }
             - label: 'Log ud'
               icon: 'sign-out'

@@ -22,3 +22,11 @@ services:
     class: AppBundle\EventSubscriber\TimestampableSubscriber
     tags:
       - { name: doctrine.event_subscriber }
+
+  app.report_manager:
+    class: AppBundle\Report\Manager
+    arguments:
+      - reports:
+          - class: AppBundle\Report\ReportTilSalgIPerioden
+          - class: AppBundle\Report\ReportOekonomi
+          - class: AppBundle\Report\ReportOpkoebOgForbrug

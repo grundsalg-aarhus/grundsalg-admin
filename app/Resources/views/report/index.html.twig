@@ -1,0 +1,50 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+
+{% block main %}
+	<form action="{{ path('grundsalg_report_generate') }}" class="form-horizontal">
+		<div class="form-group">
+			<label for="report" class="col-sm-2 control-label">{{ 'Rapporttype' | trans }}</label>
+			<div class="col-sm-10">
+				<select name="report" class="form-control" id="report" required>
+					{% for key, report in reports %}
+						<option value="{{ key }}">{{ report.title }}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+
+		{% for name, form in parameterForms %}
+			{% form_theme form with 'bootstrap_3_horizontal_layout.html.twig' %}
+			<div class="report-parameters" id="report-parameters-{{ name }}">
+				{{ (form_widget(form)) }}
+			</div>
+		{% endfor %}
+
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<button type="submit" class="btn btn-primary" formaction="{{ path('grundsalg_report_generate', {_format: 'xlsx'}) }}">{{ 'Generer rapport (XLSX)' | trans }}</button>
+				<button type="submit" class="btn btn-primary" formaction="{{ path('grundsalg_report_generate', {_format: 'csv'}) }}">{{ 'Generer rapport (CSV)' | trans }}</button>
+			</div>
+		</div>
+	</form>
+{% endblock %}
+
+{% block body_javascript %}
+	{{ parent() }}
+
+	<script>(function($) {
+		 $(document).ready(function() {
+			 var reportIds = {{ reports|keys|json_encode()|raw }},
+					 updateUI = function() {
+						 // Disable all parameter form controls
+						 $('.report-parameters :input').prop('disabled', true);
+						 $('.report-parameters').hide();
+						 var id = $('#report').val();
+						 $('#report-parameters-' + id + ' :input').prop('disabled', false);
+						 $('#report-parameters-' + id).show();
+					 };
+			 $('#report').on('change', updateUI);
+			 updateUI();
+		 });
+	 }(jQuery))</script>
+{% endblock %}
