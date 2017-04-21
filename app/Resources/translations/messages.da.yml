@@ -31,6 +31,7 @@ app:
       husnummer: Husnr.
       koeber: Køber
       koeberAdresse: Adresse
+      koeberAdresse.list: Opr. Adresse
       koeberEmail: Email
       koeberLand: Land
       koeberMobil: Mobil
