@@ -3,8 +3,8 @@
 namespace AppBundle\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\FormView;
 
 class AppExtension extends \Twig_Extension {
   protected $container;
@@ -31,17 +31,31 @@ class AppExtension extends \Twig_Extension {
     $factory = $this->getFormFactory();
     $builder = $factory->createNamedBuilder($name, FormType::class);
     foreach ($config as $options) {
+      $type = isset($options['type']) ? $this->getType($options['type']) : NULL;
+      unset($options['type']);
       if (isset($options['property'])) {
         $property = $options['property'];
         unset($options['property']);
-        $type = isset($options['type']) ? $options['type'] : NULL;
-        unset($options['type']);
         $field = $factory->createBuilderForProperty($class, $property, NULL, $options);
+        $builder->add($field, $type, $options);
+      } elseif (isset($options['name'])) {
+        $name = $options['name'];
+        unset($options['name']);
+        $field = $factory->createNamedBuilder($name, $type, NULL, isset($options['type_options']) ? $options['type_options'] : null);
         $builder->add($field, $type, $options);
       }
     }
 
     return $builder->getForm()->createView();
+  }
+
+  private function getType($type) {
+    switch ($type) {
+      case 'choice':
+        return ChoiceType::class;
+    }
+
+    return $type;
   }
 
   protected function getFormFactory() {

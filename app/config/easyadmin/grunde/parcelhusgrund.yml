@@ -33,6 +33,15 @@ easy_admin:
                               - property: status
                                 label: Ny status
                               - property: salgstatus
+
+                              - name: status
+                                label: Ny status
+                                # type: Symfony\Component\Form\Extension\Core\Type\ChoiceType
+                                type: choice
+                                type_options:
+                                    choices:
+                                        Fremtidig: Fremtidig
+
                     - label: Delete
                       message: Really, really delete stuff?
                       type: form
