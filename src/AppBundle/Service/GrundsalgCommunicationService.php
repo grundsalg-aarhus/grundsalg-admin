@@ -6,6 +6,7 @@
  */
 namespace AppBundle\Service;
 
+use AppBundle\Entity\Salgsomraade;
 use GuzzleHttp\Client;
 
 /**
@@ -34,14 +35,18 @@ class GrundsalgCommunicationService {
    * @throws \Exception
    *   If error message is return from the remote system.
    */
-  public function saveSalgsomraade($salgsomraade) {
-    $client = new Client();
+  public function saveSalgsomraade(Salgsomraade $salgsomraade) {
+    if($salgsomraade->isAnnonceres()) {
+      $client = new Client();
 
-    $response = $client->request('POST', $this->endpoint . "/api/udstykning/" . $salgsomraade->getId() . "/updated");
+      $response = $client->request('POST', $this->endpoint . "/api/udstykning/" . $salgsomraade->getId() . "/updated");
 
-    $body = $response->getBody()->getContents();
-    $content = \GuzzleHttp\json_decode($body);
+      $body = $response->getBody()->getContents();
+      $content = \GuzzleHttp\json_decode($body);
 
-    return (array)$content;
+      return (array) $content;
+    } else {
+      return FALSE;
+    }
   }
 }
