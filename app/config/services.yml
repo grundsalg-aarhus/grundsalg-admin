@@ -23,3 +23,9 @@ services:
     tags:
       - { name: doctrine.event_subscriber }
     arguments: [ '@doctrine.orm.entity_manager' ]
+
+  app.calculation.grund:
+    class: AppBundle\CalculationService\GrundCalculator
+    tags:
+      - { name: doctrine.event_subscriber }
+    arguments: [ '@doctrine.orm.entity_manager' ]
