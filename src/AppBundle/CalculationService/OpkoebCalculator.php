@@ -17,7 +17,8 @@ class OpkoebCalculator implements EventSubscriber {
    */
   public function getSubscribedEvents() {
     return [
-      'prePersist'
+      'prePersist',
+      'preUpdate'
     ];
   }
 
@@ -29,6 +30,19 @@ class OpkoebCalculator implements EventSubscriber {
       return;
     }
 
+    $this->calculateProcentAfLokalplan($opkoeb);
+
+  }
+
+  public function preUpdate(LifecycleEventArgs $args) {
+    $opkoeb = $args->getEntity();
+
+    // only act on some "Opkoeb" entity
+    if (!$opkoeb instanceof Opkoeb) {
+      return;
+    }
+
+    $this->calculateProcentAfLokalplan($opkoeb);
   }
 
   /**
