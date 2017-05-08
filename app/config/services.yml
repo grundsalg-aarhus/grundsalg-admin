@@ -33,3 +33,8 @@ services:
     class: AppBundle\CalculationService\LokalplanCalculator
     tags:
       - { name: doctrine.event_subscriber }
+
+  app.calculation.delomraade:
+    class: AppBundle\CalculationService\DelomraadeCalculator
+    tags:
+      - { name: doctrine.event_subscriber }
