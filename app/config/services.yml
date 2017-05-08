@@ -8,16 +8,38 @@ services:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
 
-  symfony.controller.subscriber.init:
-    class: Yavin\Symfony\Controller\InitControllerSubscriber
-    tags:
-      - { name: kernel.event_subscriber }
-
   grundsalg.communication:
     class: AppBundle\Service\GrundsalgCommunicationService
     arguments: ['%grundsalg_web%']
 
-  app.timestampable_subscriber:
-    class: AppBundle\EventSubscriber\TimestampableSubscriber
+  app.salgsomraade_subscriber:
+    class: AppBundle\EventSubscriber\SalgsomraadeCommunicationSubscriber
+    tags:
+      - { name: doctrine.event_subscriber }
+    arguments: [ '@grundsalg.communication' ]
+
+  app.calculation.salgsomraade:
+    class: AppBundle\CalculationService\SalgsomraadeCalculator
+    tags:
+      - { name: doctrine.event_subscriber }
+    arguments: [ '@doctrine.orm.entity_manager' ]
+
+  app.calculation.grund:
+    class: AppBundle\CalculationService\GrundCalculator
+    tags:
+      - { name: doctrine.event_subscriber }
+
+  app.calculation.lokalplan:
+    class: AppBundle\CalculationService\LokalplanCalculator
+    tags:
+      - { name: doctrine.event_subscriber }
+
+  app.calculation.delomraade:
+    class: AppBundle\CalculationService\DelomraadeCalculator
+    tags:
+      - { name: doctrine.event_subscriber }
+
+  app.calculation.opkoeb:
+    class: AppBundle\CalculationService\OpkoebCalculator
     tags:
       - { name: doctrine.event_subscriber }
