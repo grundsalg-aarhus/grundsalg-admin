@@ -11,14 +11,6 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 
 class GrundCalculator implements EventSubscriber {
-  private $em;
-
-  /**
-   * Constructor
-   */
-  public function __construct(EntityManager $em) {
-    $this->em = $em;
-  }
 
   /**
    * {@inheritdoc}
@@ -33,7 +25,7 @@ class GrundCalculator implements EventSubscriber {
   public function prePersist(LifecycleEventArgs $args) {
     $grund = $args->getEntity();
 
-    // only act on some "Salgsomraade" entity
+    // only act on some "Grund" entity
     if (!$grund instanceof Grund) {
       return;
     }
@@ -47,7 +39,7 @@ class GrundCalculator implements EventSubscriber {
   public function preUpdate(LifecycleEventArgs $args) {
     $grund = $args->getEntity();
 
-    // only act on some "Salgsomraade" entity
+    // only act on some "Grund" entity
     if (!$grund instanceof Grund) {
       return;
     }

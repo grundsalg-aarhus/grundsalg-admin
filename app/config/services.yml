@@ -28,4 +28,8 @@ services:
     class: AppBundle\CalculationService\GrundCalculator
     tags:
       - { name: doctrine.event_subscriber }
-    arguments: [ '@doctrine.orm.entity_manager' ]
+
+  app.calculation.lokalplan:
+    class: AppBundle\CalculationService\LokalplanCalculator
+    tags:
+      - { name: doctrine.event_subscriber }

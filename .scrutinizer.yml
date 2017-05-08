@@ -50,6 +50,8 @@ filter:
     excluded_paths:
         - 'app/*'
         - 'web/js/lib/*'
+        - 'tests/*'
+        - 'bin/*'
 
 checks:
     php:
