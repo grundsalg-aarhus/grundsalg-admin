@@ -38,7 +38,8 @@ class EasyAdminConfigManager extends ConfigManager {
       if (is_array($config)) {
         // Filter config by roles.
         $config = self::arrayFilterRecursive($config, function ($item) {
-          if (!isset($item['roles'])) {
+          // If key "roles" is not set or the value is an associative array, we want to keep the value.
+          if (!isset($item['roles']) || self::isAssoc($item['roles'])) {
             return TRUE;
           }
 
@@ -96,5 +97,11 @@ class EasyAdminConfigManager extends ConfigManager {
     }
 
     return array_filter($input, $callback);
+  }
+
+  // @see http://stackoverflow.com/a/173479
+  private static function isAssoc(array $arr) {
+    if (array() === $arr) return false;
+    return array_keys($arr) !== range(0, count($arr) - 1);
   }
 }
