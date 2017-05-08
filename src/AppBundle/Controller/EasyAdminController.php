@@ -87,6 +87,7 @@ class EasyAdminController extends BaseAdminController {
 
     // Get the deafult query based on the search fields (- but missing relations)
     $queryBuilder = parent::createSearchQueryBuilder($entityClass, $searchQuery, $searchableFields, $sortField, $sortDirection, $dqlFilter);
+//    return $queryBuilder;
 
     // To search in fields in related entities we need to build our own joins and where
     $queryBuilder->resetDQLPart('join');
@@ -152,12 +153,11 @@ class EasyAdminController extends BaseAdminController {
         $queryBuilder->orWhere(sprintf('%s.%s = :exact_query', $entityDqlName, $fieldDqlName));
         // adding '0' turns the string into a numeric value
         $queryBuilder->setParameter('exact_query', 0 + $searchQuery);
-      }
-      elseif ($isGuidField) {
+      } elseif ($isGuidField) {
         // some databases don't support LOWER() on UUID fields
         $queryBuilder->orWhere(sprintf('%s.%s IN (:words_query)', $entityDqlName, $fieldDqlName));
         $queryBuilder->setParameter('words_query', explode(' ', $searchQuery));
-      } else {
+      } elseif ($metadata['dataType'] !== 'association') {
         // Default: text search
         $searchQuery = mb_strtolower($searchQuery);
 

@@ -45,7 +45,7 @@ class Lokalplan
    *
    * @ORM\ManyToOne(targetEntity="Lokalsamfund", fetch="EAGER")
    * @ORM\JoinColumns({
-   *   @ORM\JoinColumn(name="lokalsamfundId", referencedColumnName="id")
+   *   @ORM\JoinColumn(name="lokalsamfundId", referencedColumnName="id", nullable=false)
    * })
    */
   private $lokalsamfund;
@@ -95,7 +95,7 @@ class Lokalplan
   /**
    * @var string
    *
-   * @ORM\Column(name="forbrugsAndel", type="float", precision=18, scale=12, nullable=false)
+   * @ORM\Column(name="forbrugsAndel", type="float", precision=18, scale=12, nullable=true)
    */
   private $forbrugsandel;
 

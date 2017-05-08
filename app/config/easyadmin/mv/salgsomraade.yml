@@ -27,8 +27,10 @@ easy_admin:
 
             form:
                 fields: &salgsomraade_form_fields
+                    - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Delområde' }
+                    - { property: delomraade, label: 'Delområde', type_options: { required: true } }
                     - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Salgsområde' }
-                    - { property: nr, label: 'Nr', css_class: 'col-sm-4', readonly: true, type_options: { disabled: true }}
+                    - { property: nr, label: 'Nr', css_class: 'col-sm-4', readonly: true, type_options: { disabled: true, required: false }}
                     - { property: matrikkel1, label: 'Matr.nr', css_class: 'col-sm-4' }
                     - { property: matrikkel2, label: false, css_class: 'col-sm-4' }
                     - { type: 'divider' }
@@ -43,7 +45,6 @@ easy_admin:
 
                     - { type: 'divider' }
                     - { property: annonceres, label: 'Annonceres', css_class: 'col-sm-12' }
-                    - { property: delomraade, label: 'KPL', css_class: 'col-sm-12', readonly: true, type_options: { disabled: true }}
                     - { property: tilsluttet, label: 'Tilsluttet', css_class: 'col-sm-12', type: 'AppBundle\Form\Field\TilslutningsType', type_options: { expanded : true, multiple : true }, help: 'Prisen indeholder helt eller delvis tilslutning til ovenstående' }
 
             show:

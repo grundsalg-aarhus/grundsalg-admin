@@ -36,7 +36,7 @@ class GrundsalgCommunicationService {
    *   If error message is return from the remote system.
    */
   public function saveSalgsomraade(Salgsomraade $salgsomraade) {
-    if($salgsomraade->isAnnonceres()) {
+    if($salgsomraade->isAnnonceres() && $this->endpoint) {
       $client = new Client();
 
       $response = $client->request('POST', $this->endpoint . "/api/udstykning/" . $salgsomraade->getId() . "/updated");

@@ -21,7 +21,7 @@ use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
  *   @ORM\Index(name="search_Salgsomraade_nr", columns={"nr"}),
  *   @ORM\Index(name="search_Salgsomraade_type", columns={"type"})
  * })
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\SalgsomraadeRepository")
  */
 class Salgsomraade
 {
@@ -55,7 +55,7 @@ class Salgsomraade
   /**
    * @var GrundType
    *
-   * @ORM\Column(name="type", type="GrundType", nullable=true)
+   * @ORM\Column(name="type", type="GrundType", nullable=false)
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GrundType")
    */
   private $type;
@@ -131,7 +131,7 @@ class Salgsomraade
    *
    * @ORM\ManyToOne(targetEntity="Delomraade", fetch="EAGER")
    * @ORM\JoinColumns({
-   *   @ORM\JoinColumn(name="delomraadeId", referencedColumnName="id")
+   *   @ORM\JoinColumn(name="delomraadeId", referencedColumnName="id", nullable=true)
    * })
    */
   private $delomraade;
@@ -141,7 +141,7 @@ class Salgsomraade
    *
    * @ORM\ManyToOne(targetEntity="Lokalplan", fetch="EAGER")
    * @ORM\JoinColumns({
-   *   @ORM\JoinColumn(name="lokalplanId", referencedColumnName="id")
+   *   @ORM\JoinColumn(name="lokalplanId", referencedColumnName="id", nullable=true)
    * })
    */
   private $lokalplan;
@@ -483,6 +483,7 @@ class Salgsomraade
   public function setDelomraade(\AppBundle\Entity\Delomraade $delomraade = null)
   {
     $this->delomraade = $delomraade;
+    $this->setLokalplan($delomraade->getLokalplan());
 
     return $this;
   }

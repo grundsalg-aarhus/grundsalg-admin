@@ -7,7 +7,11 @@ easy_admin:
                 title: 'Opkøb'
                 sort: ['id', 'ASC']
                 actions:
-                    <<: *default_list_actions
+                    - { name: show, css_class: 'btn btn-default' }
+                    - { name: edit, css_class: 'btn btn-default' }
+                    - { name: search }
+                    - { name: -new }
+                    - { name: -delete }
                 fields:
                     - lokalplan.nr
                     - matrikel
@@ -32,6 +36,9 @@ easy_admin:
 
             form:
                 fields: &opkoeb_form_fields
+                    - { type: 'group', css_class: 'col-sm-12', label: 'Lokalplan' }
+                    - { property: 'lokalplan', readonly: true, type_options: { disabled: true }}
+
                     - { type: 'group', css_class: 'col-sm-12', label: 'Opkøb' }
                     - { property: matrik1, label: 'Matrikel 1' }
                     - { property: matrik2, label: 'Matrikel 2' }
@@ -41,9 +48,6 @@ easy_admin:
                     - { property: 'opkoebdato', type: 'date', label: 'Opkøbt dato', type_options: { widget: 'single_text' } }
                     - { property: pris, label: 'Pris/m2' }
                     - { property: procentaflp, label: '% af LP', readonly: true, type_options: { disabled: true } }
-
-                    - { type: 'group', css_class: 'col-sm-12', label: 'Lokalplan' }
-                    - { property: 'lokalplan'}
 
             show:
                 title: 'Opkøb'
