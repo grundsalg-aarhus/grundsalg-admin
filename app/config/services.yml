@@ -13,15 +13,10 @@ services:
     arguments: ['%grundsalg_web%']
 
   app.salgsomraade_subscriber:
-    class: AppBundle\EventSubscriber\SalgsomraadeSubscriber
+    class: AppBundle\EventSubscriber\SalgsomraadeCommunicationSubscriber
     tags:
       - { name: doctrine.event_subscriber }
     arguments: [ '@grundsalg.communication' ]
-
-  app.timestampable_subscriber:
-    class: AppBundle\EventSubscriber\TimestampableSubscriber
-    tags:
-      - { name: doctrine.event_subscriber }
 
   app.twig_extension:
     class: AppBundle\Twig\AppExtension
@@ -29,3 +24,29 @@ services:
     public: false
     tags:
       - { name: twig.extension }
+
+  app.calculation.salgsomraade:
+    class: AppBundle\CalculationService\SalgsomraadeCalculator
+    tags:
+      - { name: doctrine.event_subscriber }
+    arguments: [ '@doctrine.orm.entity_manager' ]
+
+  app.calculation.grund:
+    class: AppBundle\CalculationService\GrundCalculator
+    tags:
+      - { name: doctrine.event_subscriber }
+
+  app.calculation.lokalplan:
+    class: AppBundle\CalculationService\LokalplanCalculator
+    tags:
+      - { name: doctrine.event_subscriber }
+
+  app.calculation.delomraade:
+    class: AppBundle\CalculationService\DelomraadeCalculator
+    tags:
+      - { name: doctrine.event_subscriber }
+
+  app.calculation.opkoeb:
+    class: AppBundle\CalculationService\OpkoebCalculator
+    tags:
+      - { name: doctrine.event_subscriber }

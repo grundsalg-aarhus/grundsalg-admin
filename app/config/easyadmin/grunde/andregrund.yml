@@ -13,7 +13,7 @@ easy_admin:
                 new: 'easy_admin/grund/new.html.twig'
             list: &andregrund_default_list
                 title: 'Alle Grunde'
-                sort: postby
+                sort: vej
                 dql_filter: entity.type = 'Andre'
                 actions:
                     <<: *default_list_actions
@@ -42,6 +42,7 @@ easy_admin:
                     - pris
 
             edit: &andregrund_default_edit
+                roles: [ROLE_EDITOR]
                 title: 'Rediger Grund'
 
             show: &andregrund_default_show
@@ -238,6 +239,20 @@ easy_admin:
             list:
                 title: 'Betalte Andre Grunde'
                 dql_filter: entity.type = 'Andre' AND entity.salgstatus = 'Solgt'
+
+                fields:
+                    - { property: vej, label: 'app.grund.vej' }
+                    - { property: husnummer, label: 'app.grund.husnummer', css_class: 'text-right', format: '%.0f' }
+                    - { property: postby.postalcode, css_class: 'text-right', label: 'app.postby.postalcode' }
+                    - { property: postby.city, label: 'app.postby.city' }
+                    - { property: koeberNavn, label: 'app.grund.koeberNavn' }
+                    - { property: koeberAdresse, label: 'app.grund.koeberAdresse.list' }
+                    - { property: annonceres, label: 'app.grund.annonceres' }
+                    - { property: salgsomraade.titel, label: 'app.grund.salgsomraade' }
+                    - { property: salgsomraade.lokalplan.nr, label: 'app.lokalplan.nr' }
+                    - { property: salgstype, label: 'app.grund.salgstype' }
+                    - { property: areal, label: 'app.grund.areal', css_class: 'text-right', format: '%.0f' }
+                    - { property: pris, label: 'app.grund.pris', css_class: 'text-right' }
 
                 # Import default values
                 <<: *andregrund_default_list

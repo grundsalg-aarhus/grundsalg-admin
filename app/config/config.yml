@@ -17,12 +17,13 @@ imports:
     - { resource: easyadmin/admin/lokalsamfund.yml }
     - { resource: easyadmin/admin/user.yml }
     - { resource: easyadmin/reservation/interessent.yml }
+    - { resource: easyadmin/services.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: da
-    grundsalg_web: %grundsalg_web_address%
+    grundsalg_web: "%grundsalg_web_address%"
 
 framework:
     #esi:             ~
@@ -117,6 +118,14 @@ doctrine:
                 st_buffer:     CrEOF\Spatial\ORM\Query\AST\Functions\MySql\STBuffer
                 point: CrEOF\Spatial\ORM\Query\AST\Functions\MySql\Point
 
+stof_doctrine_extensions:
+    orm:
+        default:
+            timestampable: true
+            blameable: true
+    class:
+        blameable: AppBundle\EventSubscriber\BlameableListener
+
 # Swiftmailer Configuration
 swiftmailer:
     transport: "%mailer_transport%"
@@ -139,9 +148,9 @@ white_october_breadcrumbs:
 braincrafted_bootstrap:
     icon_prefix: fa
     output_dir:
-    assets_dir: %kernel.root_dir%/../vendor/twbs/bootstrap
-    jquery_path: %kernel.root_dir%/../vendor/components/jquery/jquery.min.js
-    fonts_dir: %kernel.root_dir%/../web/fonts
+    assets_dir: "%kernel.root_dir%/../vendor/twbs/bootstrap"
+    jquery_path: "%kernel.root_dir%/../vendor/components/jquery/jquery.min.js"
+    fonts_dir: "%kernel.root_dir%/../web/fonts"
     auto_configure:
         assetic: false
         twig: false
@@ -149,7 +158,7 @@ braincrafted_bootstrap:
         knp_paginator: true
     customize:
         variables_file: ~
-        bootstrap_output: %kernel.root_dir%/Resources/less/bootstrap.less
+        bootstrap_output: "%kernel.root_dir%/Resources/less/bootstrap.less"
         bootstrap_template: BraincraftedBootstrapBundle:Bootstrap:bootstrap.less.twig
 
 knp_paginator:

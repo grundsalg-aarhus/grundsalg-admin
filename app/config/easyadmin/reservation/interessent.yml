@@ -43,6 +43,7 @@ easy_admin:
                     - { property: koeberNotat, label: 'app.interessent.notat' }
 
             edit:
+                roles: [ROLE_EDITOR]
                 title: 'Rediger Interessent'
 
             show:

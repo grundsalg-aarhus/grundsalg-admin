@@ -2,10 +2,67 @@
 
 namespace AppBundle\Controller;
 
-use JavierEguiluz\Bundle\EasyAdminBundle\Event\EasyAdminEvents;
 use JavierEguiluz\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 class EasyAdminController extends BaseAdminController {
+  /**
+   * @Route("/", name="easyadmin")
+   *
+   * @param Request $request
+   *
+   * @return RedirectResponse|Response
+   */
+  public function indexAction(Request $request)
+  {
+    $this->initialize($request);
+    if (null === $request->query->get('entity')) {
+      $frontPageUrl = $this->getFrontPageUrl();
+      if ($frontPageUrl) {
+        return $this->redirect($frontPageUrl);
+      }
+    }
+
+    return parent::indexAction($request);
+  }
+
+  private function getFrontPageUrl() {
+    // Redirect to first "entity" entry in menu.
+    $menu = $this->get('easyadmin.config.manager')->getBackendConfig('design.menu');
+    $item = $this->getEntityItem($menu);
+    if ($item) {
+      $parameters = [
+          'entity' => $item['entity'],
+          'action' => 'list',
+          'menuIndex' => $item['menu_index'],
+          'submenuIndex' => $item['submenu_index'],
+        ] + $item['params'];
+      return $this->generateUrl('easyadmin', $parameters);
+    }
+  }
+
+  /**
+   * Get first (depth first) menu item of type "entity".
+   *
+   * @param array $menu
+   * @return mixed|null
+   */
+  private function getEntityItem(array $menu) {
+    foreach ($menu as $item) {
+      if ($item['type'] === 'entity') {
+        return $item;
+      }
+      if (isset($item['children'])) {
+        $subitem = $this->getEntityItem($item['children']);
+        if ($subitem) {
+          return $subitem;
+        }
+      }
+    }
+
+    return null;
+  }
 
   /**
    * Creates Query Builder instance for all the records.
@@ -87,6 +144,7 @@ class EasyAdminController extends BaseAdminController {
 
     // Get the deafult query based on the search fields (- but missing relations)
     $queryBuilder = parent::createSearchQueryBuilder($entityClass, $searchQuery, $searchableFields, $sortField, $sortDirection, $dqlFilter);
+//    return $queryBuilder;
 
     // To search in fields in related entities we need to build our own joins and where
     $queryBuilder->resetDQLPart('join');
@@ -152,12 +210,11 @@ class EasyAdminController extends BaseAdminController {
         $queryBuilder->orWhere(sprintf('%s.%s = :exact_query', $entityDqlName, $fieldDqlName));
         // adding '0' turns the string into a numeric value
         $queryBuilder->setParameter('exact_query', 0 + $searchQuery);
-      }
-      elseif ($isGuidField) {
+      } elseif ($isGuidField) {
         // some databases don't support LOWER() on UUID fields
         $queryBuilder->orWhere(sprintf('%s.%s IN (:words_query)', $entityDqlName, $fieldDqlName));
         $queryBuilder->setParameter('words_query', explode(' ', $searchQuery));
-      } else {
+      } elseif ($metadata['dataType'] !== 'association') {
         // Default: text search
         $searchQuery = mb_strtolower($searchQuery);
 

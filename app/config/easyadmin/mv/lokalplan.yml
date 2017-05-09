@@ -26,6 +26,7 @@ easy_admin:
                     - forbrugsandel
 
             edit:
+                roles: [ROLE_EDITOR]
                 title: 'Rediger Lokalplan'
 
             form:
