@@ -72,7 +72,9 @@ easy_admin:
                 - { entity: 'delomraade', label: 'Delområder' }
                 - { entity: 'salgsomraade', label: 'Salgsområder' }
                 - { entity: 'opkoeb', label: 'Opkøb' }
+                - { entity: 'interessent', label: 'Interessenter' }
             - label: 'Admin'
+              roles: [ROLE_ADMIN]
               icon: 'wrench'
               children:
                 - { entity: 'postby', label: 'Postnr / By' }
@@ -92,7 +94,6 @@ easy_admin:
                 - { label: 'Storparceller pr. område', route: 'grundsalg_statistics_omraade_overview', params: { type: 'Storparcel' } }
                 - { label: 'Erhvervsgrunde pr. område', route: 'grundsalg_statistics_omraade_overview', params: { type: 'Erhvervsgrund' } }
                 - { label: 'Andre grunde pr. område', route: 'grundsalg_statistics_omraade_overview', params: { type: 'Andre' } }
-            - { entity: 'interessent', label: 'Interessenter', icon: 'user-circle' }
             - label: 'Log ud'
               icon: 'sign-out'
               route: 'fos_user_security_logout'

@@ -22,6 +22,7 @@ easy_admin:
                     - lokalplan.titel
 
             edit:
+                roles: [ROLE_EDITOR]
                 title: 'Rediger Delområde'
 
             form:

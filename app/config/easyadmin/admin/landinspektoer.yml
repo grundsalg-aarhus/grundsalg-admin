@@ -21,6 +21,7 @@ easy_admin:
                     - telefon
 
             edit:
+                roles: [ROLE_ADMIN]
                 title: 'Rediger Landinspektør'
 
             form:

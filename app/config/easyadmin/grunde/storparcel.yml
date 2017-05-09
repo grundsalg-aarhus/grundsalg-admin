@@ -42,6 +42,7 @@ easy_admin:
                     - pris
 
             edit: &storparcel_default_edit
+                roles: [ROLE_EDITOR]
                 title: 'Rediger Storparcel'
 
             show: &storparcel_default_show
