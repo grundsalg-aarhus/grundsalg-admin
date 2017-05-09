@@ -18,6 +18,7 @@ easy_admin:
                     - city
 
             edit:
+                roles: [ROLE_ADMIN]
                 title: 'Rediger Postnr. / By'
 
             form:

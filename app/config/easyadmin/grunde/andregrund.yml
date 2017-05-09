@@ -42,7 +42,7 @@ easy_admin:
                     - pris
 
             edit: &andregrund_default_edit
-                roles: [ROLE_ADMIN]
+                roles: [ROLE_EDITOR]
                 title: 'Rediger Grund'
 
             show: &andregrund_default_show

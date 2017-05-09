@@ -45,7 +45,7 @@ easy_admin:
                     - pris
 
             edit: &parcelhusgrund_default_edit
-                roles: [ROLE_ADMIN]
+                roles: [ROLE_EDITOR]
                 title: 'Rediger Parcelhusgrund'
 
             show: &parcelhusgrund_default_show

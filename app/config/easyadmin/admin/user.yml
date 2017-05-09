@@ -24,6 +24,7 @@ easy_admin:
                     - roles
 
             edit:
+                roles: [ROLE_ADMIN]
                 title: 'Rediger Bruger'
 
             form:
