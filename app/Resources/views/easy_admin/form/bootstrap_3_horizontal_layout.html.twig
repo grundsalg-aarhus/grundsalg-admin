@@ -8,43 +8,53 @@
 {# Rows #}
 
 {% block form_row -%}
-{% spaceless %}
 
-    {% set _field_type = easyadmin.field.fieldType|default('default') %}
-    <div class="form-group {% if (not compound or force_error|default(false)) and not valid %}has-error{% endif %} field-{{ block_prefixes|slice(-2)|first }}">
-        {% set _field_label = easyadmin.field['label']|default(null) %}
+  {% if label is not empty %}
 
-        {% if easyadmin.field['label'] is not same as(false) %}
-          {{ form_label(form, _field_label, { translation_domain: easyadmin.entity.translation_domain }) }}
-        {% endif %}
+    {{ parent() }}
 
-        <div class="{{ block('form_group_class') }}">
-            {{ form_widget(form) }}
+  {% else %}
 
-            {% if _field_type in ['datetime', 'date', 'time', 'birthday'] and easyadmin.field.nullable|default(false) and easyadmin.field.readonly is defined and easyadmin.field.readonly is not same as(true) %}
-                <div class="nullable-control">
-                    <label>
-                        <input type="checkbox" {% if data is null %}checked="checked"{% endif %}>
-                        {{ 'label.nullable_field'|trans({}, 'EasyAdminBundle')}}
-                    </label>
-                </div>
+    {% spaceless %}
+
+        {% set _field_type = easyadmin.field.fieldType|default('default') %}
+        <div class="form-group {% if (not compound or force_error|default(false)) and not valid %}has-error{% endif %} field-{{ block_prefixes|slice(-2)|first }}">
+            {% set _field_label = easyadmin.field['label']|default(null) %}
+
+            {% if easyadmin.field['label'] is defined and easyadmin.field['label'] is not same as(false) %}
+              {{ form_label(form, _field_label, { translation_domain: easyadmin.entity.translation_domain }) }}
             {% endif %}
 
-            {{ form_errors(form) }}
+            <div class="{{ block('form_group_class') }}">
+                {{ form_widget(form) }}
 
-            {% if easyadmin.field.help|default('') != '' %}
-                <span class="help-block"><i class="fa fa-info-circle"></i> {{ easyadmin.field.help|trans(domain = easyadmin.entity.translation_domain)|raw }}</span>
-            {% endif %}
+                {% if _field_type in ['datetime', 'date', 'time', 'birthday'] and easyadmin.field.nullable|default(false) and easyadmin.field.readonly is defined and easyadmin.field.readonly is not same as(true) %}
+                    <div class="nullable-control">
+                        <label>
+                            <input type="checkbox" {% if data is null %}checked="checked"{% endif %}>
+                            {{ 'label.nullable_field'|trans({}, 'EasyAdminBundle')}}
+                        </label>
+                    </div>
+                {% endif %}
+
+                {{ form_errors(form) }}
+
+                {% if easyadmin.field.help|default('') != '' %}
+                    <span class="help-block"><i class="fa fa-info-circle"></i> {{ easyadmin.field.help|trans(domain = easyadmin.entity.translation_domain)|raw }}</span>
+                {% endif %}
+            </div>
         </div>
-    </div>
-{% endspaceless %}
+    {% endspaceless %}
+
+  {% endif %}
 {%- endblock form_row %}
 
 {% block form_group_class -%}
-  {% if easyadmin.field['label'] is not same as(false) %}
+  {% if easyadmin.field['label'] is defined and easyadmin.field['label'] is not same as(false) %}
     col-sm-10
   {% else %}
-    col-sm-12
+    {#col-sm-12#}
+    {{ parent() }}
   {% endif %}
 {% endblock form_group_class %}
 
