@@ -8,7 +8,6 @@
 {# Rows #}
 
 {% block form_row -%}
-
   {% if label is not empty %}
 
     {{ parent() }}
@@ -156,14 +155,22 @@
 {# ------- OPKØB -------- #}
 
 {#{%- block form_widget_compound -%}#}
-  {#<div {{ block('widget_container_attributes') }}>#}
-    {#{%- if form.parent is empty -%}#}
-      {#{{ form_errors(form) }}#}
-    {#{%- endif -%}#}
-    {#{{- block('form_rows') -}}#}
-    {#{{- form_rest(form) -}}#}
-  {#</div>#}
-{#{%- endblock form_widget_compound -%}#}
+{%- block _lokalplan_opkoeb_lists_widget -%}
+  {% if value is empty %}
+    {{ block('empty_collection') }}
+  {% endif %}
+  {% if value is empty or form.vars.prototype is defined %}
+    {% set attr = attr|merge({'data-empty-collection': block('empty_collection') }) %}
+  {% endif %}
+  {{- block('form_widget_compound') -}}
+{%- endblock -%}
+
+{%- block collection_widget -%}
+  {% if prototype is defined %}
+    {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+  {% endif %}
+  {{- block('form_widget') -}}
+{%- endblock collection_widget -%}
 
 {% block _lokalplan_opkoeb_lists_row %}
   {% if prototype is defined %}
@@ -172,7 +179,7 @@
 
   <table class="table table-bordered">
     <tbody {{ block('widget_container_attributes') }}>
-      {{ block('_lokalplan_opkoeb_lists_entry_row') }}
+      {{ block('form_row') }}
     </tbody>
   </table>
 
@@ -210,23 +217,8 @@
   {% endif %}
 {% endblock %}
 
-{% block _lokalplan_opkoeb_lists_entry_row %}
-  {{ block('_lokalplan_opkoeb_lists_entry_widget') }}
-{% endblock %}
-
-{% block _lokalplan_opkoeb_lists_entry_widget %}
-  {% spaceless %}
-    {% if compound  %}
-      {{ block('_lokalplan_opkoeb_lists_compound') }}
-    {% else %}
-      {{ block('form_widget_simple') }}
-    {% endif %}
-  {% endspaceless %}
-{% endblock %}
-
-{%- block _lokalplan_opkoeb_lists_compound -%}
-  {#<tr><td colspan="7">{{ dump(original_type) }}</td></tr>#}
-  <tr data-custom="?" {{ block('widget_container_attributes') }}>
+{%- block _lokalplan_opkoeb_lists_entry_row -%}
+  <tr {{ block('widget_container_attributes') }}>
     {%- if form.parent is empty -%}
       {{ form_errors(form) }}
     {%- endif -%}
