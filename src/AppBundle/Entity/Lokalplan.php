@@ -63,7 +63,7 @@ class Lokalplan
   /**
    * @var \Doctrine\Common\Collections\ArrayCollection
    *
-   * @OneToMany(targetEntity="Opkoeb", mappedBy="lokalplan")
+   * @OneToMany(targetEntity="Opkoeb", mappedBy="lokalplan", cascade={"persist"})
    */
   private $opkoeb;
 

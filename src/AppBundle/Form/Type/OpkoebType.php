@@ -23,44 +23,13 @@ class OpkoebType extends AbstractType {
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
 
-    $builder->add('matrik1');
-    $builder->add('matrik2', null, array('label' => 'My New Label:'));
+    $builder->add('matrik1', null, array('label' => 'Mat1'));
+    $builder->add('matrik2', null, array('label' => 'Mat2'));
+    $builder->add('ejerlav', null, array('label' => 'Ejerlav'));
+    $builder->add('m2', null, array('label' => 'Areal'));
+    $builder->add('opkoebDato', DateTimeType::class, array('label' => 'Opkøbt d.', 'widget' => 'single_text'));
+    $builder->add('pris', null, array('label' => 'Pris'));
 
-//    $placeholder = [];
-//    foreach (['year', 'month', 'day', 'hour', 'minute'] as $key) {
-//      $placeholder[$key] = 'form.type.occurrence.datetime.placeholder.' . $key;
-//    }
-//
-//    $builder
-//      ->add('startDate', DateTimeType::class, [
-//        'placeholder' => $placeholder,
-//        'required' => TRUE,
-//      ])
-//      ->add('endDate', DateTimeType::class, [
-//        'placeholder' => $placeholder,
-//        'required' => TRUE,
-//      ])
-//      ->add('place', EasyAdminAutocompleteType::class, [
-//        'class' => Place::class,
-//        'required' => TRUE,
-//      ]);
-//
-//    $builder->add('ticketPriceRange', PriceRangeType::class, [
-//      'required' => TRUE,
-//    ]);
-//
-//    $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
-//      $form = $event->getForm();
-//      $place = $form->get('place')->getData();
-//      if (!$place) {
-//        $form->get('place')->addError(new FormError('Please select a place'));
-//      }
-//      $startDate = $form->get('startDate')->getData();
-//      $endDate = $form->get('endDate')->getData();
-//      if ($startDate && $endDate && $endDate <= $startDate) {
-//        $form->get('endDate')->addError(new FormError('End date must be after start date'));
-//      }
-//    });
   }
 
   /**

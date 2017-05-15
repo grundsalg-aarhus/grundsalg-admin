@@ -50,6 +50,7 @@ easy_admin:
                       label: 'Opkøb'
                       type_options:
                         entry_type: AppBundle\Form\Type\OpkoebType
+                        block_name: opkoeb_lists
                         by_reference: false
                         required: false
                       embedded: true

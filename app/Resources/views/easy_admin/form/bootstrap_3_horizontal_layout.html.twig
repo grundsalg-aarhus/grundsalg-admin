@@ -150,3 +150,136 @@
     </div>
   </div>
 {% endblock easyadmin_widget %}
+
+
+
+{# ------- OPKØB -------- #}
+
+{#{%- block form_widget_compound -%}#}
+  {#<div {{ block('widget_container_attributes') }}>#}
+    {#{%- if form.parent is empty -%}#}
+      {#{{ form_errors(form) }}#}
+    {#{%- endif -%}#}
+    {#{{- block('form_rows') -}}#}
+    {#{{- form_rest(form) -}}#}
+  {#</div>#}
+{#{%- endblock form_widget_compound -%}#}
+
+{% block _lokalplan_opkoeb_lists_row %}
+  {% if prototype is defined %}
+    {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+  {% endif %}
+
+  <table class="table table-bordered">
+    <tbody {{ block('widget_container_attributes') }}>
+      {{ block('_lokalplan_opkoeb_lists_entry_row') }}
+    </tbody>
+  </table>
+
+
+  {% if allow_add|default(false) %}
+    {% set js_add_item %}
+      $(function() {
+      if (event.preventDefault) event.preventDefault(); else event.returnValue = false;
+
+      var collection = $('#{{ id }}');
+      // Use a counter to avoid having the same index more than once
+      var numItems = collection.data('count') || collection.children('div.form-group').length;
+
+      collection.prev('.collection-empty').remove();
+
+      var newItem = collection.attr('data-prototype')
+      .replace(/\>__name__label__\</g, '>' + numItems + '<')
+      .replace(/_{{ name }}___name__/g, '_{{ name }}_' + numItems)
+      .replace(/{{ name }}\]\[__name__\]/g, '{{ name }}][' + numItems + ']')
+      ;
+
+      // Increment the counter and store it in the collection
+      collection.data('count', ++numItems);
+
+      collection.append(newItem).trigger('easyadmin.collection.item-added');
+      });
+    {% endset %}
+
+    <div class="text-right field-collection-action">
+      <a href="#" onclick="{{ js_add_item|raw }}" class="btn btn-primary">
+        <i class="fa fa-plus-square"></i>
+        {{ (form|length == 0 ? 'action.add_new_item' : 'action.add_another_item')|trans({}, 'EasyAdminBundle') }}
+      </a>
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block _lokalplan_opkoeb_lists_entry_row %}
+  {{ block('_lokalplan_opkoeb_lists_entry_widget') }}
+{% endblock %}
+
+{% block _lokalplan_opkoeb_lists_entry_widget %}
+  {% spaceless %}
+    {% if compound  %}
+      {{ block('_lokalplan_opkoeb_lists_compound') }}
+    {% else %}
+      {{ block('form_widget_simple') }}
+    {% endif %}
+  {% endspaceless %}
+{% endblock %}
+
+{%- block _lokalplan_opkoeb_lists_compound -%}
+  {#<tr><td colspan="7">{{ dump(original_type) }}</td></tr>#}
+  <tr data-custom="?" {{ block('widget_container_attributes') }}>
+    {%- if form.parent is empty -%}
+      {{ form_errors(form) }}
+    {%- endif -%}
+    {{- block('form_rows') -}}
+    {{- form_rest(form) -}}
+
+  {% if form.parent.vars.allow_delete|default(false) %}
+    {% set remove_item_javascript %}
+      $(function() {
+      if (event.preventDefault) event.preventDefault(); else event.returnValue = false;
+
+      var containerDiv = $('#{{ id }}');
+      var parentDiv = containerDiv.parents('[data-prototype]:first');
+      containerDiv.remove();
+      parentDiv.trigger('easyadmin.collection.item-deleted');
+
+      if (0 == parentDiv.children().length && 'undefined' !== parentDiv.attr('data-empty-collection')) {
+        $(parentDiv.attr('data-empty-collection')).insertBefore(parentDiv);
+      }
+      });
+    {% endset %}
+
+    <td class="text-right field-collection-item-action">
+      <a href="#" onclick="{{ remove_item_javascript|raw }}" class="btn btn-sm btn-danger">
+        <i class="fa fa-remove"></i>
+        {{ 'action.remove_item'|trans({}, 'EasyAdminBundle') }}
+      </a>
+    </td>
+    </tr>
+  {% endif %}
+
+{%- endblock  -%}
+
+{% block _lokalplan_opkoeb_lists_entry_matrik1_row %}
+  <td>{{ block('form_widget') }}</td>
+{% endblock %}
+
+{% block _lokalplan_opkoeb_lists_entry_matrik2_row %}
+  <td>{{ block('form_widget') }}</td>
+{% endblock %}
+
+{% block _lokalplan_opkoeb_lists_entry_ejerlav_row %}
+  <td>{{ block('form_widget') }}</td>
+{% endblock %}
+
+{% block _lokalplan_opkoeb_lists_entry_m2_row %}
+  <td>{{ block('form_widget') }}</td>
+{% endblock %}
+
+{% block _lokalplan_opkoeb_lists_entry_opkoebDato_row %}
+  <td>{{ block('form_widget') }}</td>
+{% endblock %}
+
+{% block _lokalplan_opkoeb_lists_entry_pris_row %}
+  <td>{{ block('form_widget') }}</td>
+{% endblock %}
