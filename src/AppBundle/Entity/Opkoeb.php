@@ -95,7 +95,7 @@ class Opkoeb
   /**
    * @var \Lokalplan
    *
-   * @ORM\ManyToOne(targetEntity="Lokalplan", fetch="EAGER")
+   * @ORM\ManyToOne(targetEntity="Lokalplan", inversedBy="opkoeb", fetch="EAGER")
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="lokalplanId", referencedColumnName="id")
    * })

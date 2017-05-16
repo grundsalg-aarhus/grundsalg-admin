@@ -32,3 +32,46 @@ span.form-control, span.form-inline .form-control {
 .meta-label:first-child {
   padding: 0 1em 0 0;
 }
+
+.table.form-collection .form-group {
+  margin: 0;
+}
+
+.table.form-collection .form-group .col-sm-10 {
+  width: 100%;
+  padding: 0;
+}
+
+.table.form-collection th label.col-sm-2 {
+  width: 100%;
+  padding: 0;
+  text-align: left;
+}
+
+.table.form-collection>tbody>tr>td {
+  padding: 0;
+}
+
+.table.form-collection>tbody>tr>td input {
+  border: 1px solid white;
+}
+
+.table.form-collection>tbody>tr>td input:disabled {
+  background-color: #eee;
+  border: 1px solid #eee;
+}
+
+.table.form-collection>tbody>tr>td .has-error input {
+  border: 1px solid #dd4b39;
+}
+
+.table.form-collection>tbody>tr>td input:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+}
+
+.table.form-collection>tbody>tr>td .error-block {
+  padding: 8px;
+}

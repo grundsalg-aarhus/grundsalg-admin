@@ -47,12 +47,12 @@ easy_admin:
                     - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Opkøb' }
                     - property: opkoeb
                       type: collection
-                      label: 'Opkøb'
+                      label: false
                       type_options:
                         entry_type: AppBundle\Form\Type\OpkoebType
                         block_name: opkoeb_lists
                         by_reference: false
-                        required: false
+                        required: true
                       embedded: true
 
             show:

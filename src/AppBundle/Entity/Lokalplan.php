@@ -63,7 +63,7 @@ class Lokalplan
   /**
    * @var \Doctrine\Common\Collections\ArrayCollection
    *
-   * @OneToMany(targetEntity="Opkoeb", mappedBy="lokalplan", cascade={"persist"})
+   * @OneToMany(targetEntity="Opkoeb", mappedBy="lokalplan", cascade={"persist", "remove"}, orphanRemoval=true)
    */
   private $opkoeb;
 
@@ -358,6 +358,9 @@ class Lokalplan
     $this->opkoeb->add($opkoeb);
   }
 
+  /**
+   * @param \AppBundle\Entity\Opkoeb $opkoeb
+   */
   public function removeOpkoeb(Opkoeb $opkoeb) {
     $this->opkoeb->removeElement($opkoeb);
   }

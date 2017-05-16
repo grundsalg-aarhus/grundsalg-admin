@@ -13,7 +13,6 @@
     {{ parent() }}
 
   {% else %}
-
     {% spaceless %}
 
         {% set _field_type = easyadmin.field.fieldType|default('default') %}
@@ -151,33 +150,38 @@
 {% endblock easyadmin_widget %}
 
 
-
 {# ------- OPKØB -------- #}
 
-{#{%- block form_widget_compound -%}#}
 {%- block _lokalplan_opkoeb_lists_widget -%}
-  {% if value is empty %}
-    {{ block('empty_collection') }}
-  {% endif %}
-  {% if value is empty or form.vars.prototype is defined %}
-    {% set attr = attr|merge({'data-empty-collection': block('empty_collection') }) %}
-  {% endif %}
-  {{- block('form_widget_compound') -}}
-{%- endblock -%}
-
-{%- block collection_widget -%}
-  {% if prototype is defined %}
-    {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
-  {% endif %}
-  {{- block('form_widget') -}}
-{%- endblock collection_widget -%}
+  <div>
+    {%- if form.parent is empty -%}
+      {{ form_errors(form) }}
+    {%- endif -%}
+    {{- block('form_rows') -}}
+    {{- form_rest(form) -}}
+  </div>
+{%- endblock _lokalplan_opkoeb_lists_widget -%}
 
 {% block _lokalplan_opkoeb_lists_row %}
   {% if prototype is defined %}
     {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
   {% endif %}
 
-  <table class="table table-bordered">
+  <table class="table table-bordered form-collection">
+    {% if prototype is defined %}
+      <thead>
+      <tr>
+        {% for child in prototype.children %}
+          <th>
+            {{ form_label(child) }}
+          </th>
+        {% endfor %}
+        {% if allow_delete|default(false) %}
+          <th></th>
+        {% endif %}
+      </tr>
+      </thead>
+    {% endif %}
     <tbody {{ block('widget_container_attributes') }}>
       {{ block('form_row') }}
     </tbody>
@@ -191,7 +195,7 @@
 
       var collection = $('#{{ id }}');
       // Use a counter to avoid having the same index more than once
-      var numItems = collection.data('count') || collection.children('div.form-group').length;
+      var numItems = collection.data('count') || collection.children('tr').length;
 
       collection.prev('.collection-empty').remove();
 
@@ -253,25 +257,41 @@
 {%- endblock  -%}
 
 {% block _lokalplan_opkoeb_lists_entry_matrik1_row %}
-  <td>{{ block('form_widget') }}</td>
+  {% set label = false %}
+  <td>{{ block('form_row') }}</td>
 {% endblock %}
 
 {% block _lokalplan_opkoeb_lists_entry_matrik2_row %}
-  <td>{{ block('form_widget') }}</td>
+  {% set label = false %}
+  <td>{{ block('form_row') }}</td>
 {% endblock %}
 
 {% block _lokalplan_opkoeb_lists_entry_ejerlav_row %}
-  <td>{{ block('form_widget') }}</td>
+  {% set label = false %}
+  <td>{{ block('form_row') }}</td>
 {% endblock %}
 
 {% block _lokalplan_opkoeb_lists_entry_m2_row %}
-  <td>{{ block('form_widget') }}</td>
+  {% set label = false %}
+  <td>{{ block('form_row') }}</td>
 {% endblock %}
 
 {% block _lokalplan_opkoeb_lists_entry_opkoebDato_row %}
-  <td>{{ block('form_widget') }}</td>
+  {% set label = false %}
+  <td>{{ block('form_row') }}</td>
 {% endblock %}
 
 {% block _lokalplan_opkoeb_lists_entry_pris_row %}
-  <td>{{ block('form_widget') }}</td>
+  {% set label = false %}
+  <td>{{ block('form_row') }}</td>
+{% endblock %}
+
+{% block _lokalplan_opkoeb_lists_entry_procentaflp_row %}
+  {% set label = false %}
+  <td>{{ block('form_row') }}</td>
+{% endblock %}
+
+{% block _lokalplan_opkoeb_lists_entry_bemaerkning_row %}
+  {% set label = false %}
+  <td>{{ block('form_row') }}</td>
 {% endblock %}
