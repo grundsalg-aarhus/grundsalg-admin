@@ -44,6 +44,17 @@ easy_admin:
                     - { property: salgbartareal, label: 'Salgbart Areal' }
                     - { property: forbrugsandel, label: 'Forbrugsandel i %', readonly: true, type_options: { disabled: true } }
 
+                    - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Opkøb' }
+                    - property: opkoeb
+                      type: collection
+                      label: false
+                      type_options:
+                        entry_type: AppBundle\Form\Type\OpkoebType
+                        block_name: opkoeb_lists
+                        by_reference: false
+                        required: true
+                      embedded: true
+
             show:
                 title: 'Lokalplan'
                 fields:
