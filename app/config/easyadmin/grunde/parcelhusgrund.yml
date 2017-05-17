@@ -29,7 +29,7 @@ easy_admin:
                               action:
                                   value: update-status
                                   label: Do it!
-                                  route: grund_bulk_update_status
+                                  route: bulk_update
                               fields:
                                   - property: status
                                     label: Ny status

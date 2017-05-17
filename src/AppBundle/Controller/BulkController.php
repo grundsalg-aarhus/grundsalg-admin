@@ -10,22 +10,24 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\Exception\NoSuchPropertyException;
 
 /**
- * @Route("/grund")
+ * @Route("/bulk")
  */
 class BulkController extends Controller {
   /**
    *
-   * @Route("/bulk/grund/update-status", name="bulk_grund_update_status")
+   * @Route("/update", name="bulk_update")
    * @Method("POST")
    */
-  public function bulkUpdateStatusAction(Request $request) {
+  public function bulkUpdateAction(Request $request) {
     $bulk = $request->get('bulk');
     $data = $request->get('data');
     unset($data['_token']);
     // Remove empty values.
     $data = array_filter($data);
     $ids = $bulk['ids'];
+
     $translator = $this->get('translator');
+    $succes_ids = array();
 
     if (empty($data) || empty($ids)) {
       $this->addFlash('warning', $translator->trans('Nothing to update'));
@@ -49,18 +51,20 @@ class BulkController extends Controller {
             }
           }
           if ($errors) {
-            $this->addFlash('danger',
-              $translator->trans('Error updating entity #@id',
-                ['@id' => $entity->getId()]));
+            $this->addFlash('danger', $translator->trans('Error updating @entity', ['@entity' => $entity->_toString()]));
           }
           else {
             $em->persist($entity);
             $em->flush();
-            $this->addFlash('success', $translator->trans('Entity #@id updated',
-              ['@id' => $entity->getId()]));
+
+            $succes_ids[] = $entity->getId();
           }
         }
       }
+    }
+
+    if(!empty($succes_ids)) {
+      $this->addFlash('success', $translator->trans('@count entities updated', ['@count' => count($succes_ids)]));
     }
 
     return $this->redirectToRoute('easyadmin', $request->query->all());
