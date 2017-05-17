@@ -12,10 +12,10 @@ use Symfony\Component\PropertyAccess\Exception\NoSuchPropertyException;
 /**
  * @Route("/grund")
  */
-class GrundController extends Controller {
+class BulkController extends Controller {
   /**
    *
-   * @Route("/bulk/update-status", name="grund_bulk_update_status")
+   * @Route("/bulk/grund/update-status", name="bulk_grund_update_status")
    * @Method("POST")
    */
   public function bulkUpdateStatusAction(Request $request) {
@@ -36,10 +36,8 @@ class GrundController extends Controller {
       foreach ($ids as $id) {
         $entity = $repository->find($id);
         if (!$entity) {
-          $this->addFlash('warning',
-            $translator->trans('Cannot find entity with @id', ['@id' => $id]));
-        }
-        else {
+          $this->addFlash('warning', $translator->trans('Cannot find entity with @id', ['@id' => $id]));
+        } else {
           $errors = [];
           foreach ($data as $name => $value) {
             if ($accessor->isWritable($entity, $name)) {

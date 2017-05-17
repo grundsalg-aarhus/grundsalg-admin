@@ -2,7 +2,7 @@
 
 {% block main %}
   {% set _list_item_actions = easyadmin_get_actions_for_list_item(_entity_config.name) %}
-  {% set _bulk_actions = _entity_config.list.bulk_actions|default() %}
+  {% set _bulk_actions = _entity_config.list.bulk.actions|default() %}
   {# We need a form wrapping the entity list and bulk actions. #}
   <form method="POST" id="list-form">
 
