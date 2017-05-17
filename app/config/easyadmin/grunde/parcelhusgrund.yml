@@ -17,6 +17,43 @@ easy_admin:
                 dql_filter: entity.type = 'Parcelhusgrund'
                 actions:
                     <<: *default_list_actions
+                # Inspired by https://github.com/javiereguiluz/EasyAdminBundle/issues/1503#issuecomment-276128125
+                bulk:
+                    actions:
+                        - label: Update status
+                          title: Update status – or not!
+                          message: Vælg ny status.
+                          type: form
+                          form:
+                              block_name: data # field block name
+                              action:
+                                  value: update-status
+                                  label: Do it!
+                                  route: bulk_update
+                              fields:
+                                  - property: status
+                                    label: Ny status
+                                  - property: salgstatus
+
+                                  - name: status
+                                    label: Ny status
+                                    # type: Symfony\Component\Form\Extension\Core\Type\ChoiceType
+                                    type: choice
+                                    type_options:
+                                        choices:
+                                            Fremtidig: Fremtidig
+
+                        - label: Delete
+                          message: Really, really delete stuff?
+                          type: form
+                          form:
+                              action:
+                                  value: delete
+                                  label: Yes
+                                  route: grund_bulk_delete
+                              close:
+                                  label: No
+
                 fields:
                     - { property: vej, label: 'app.grund.vej' }
                     - { property: husnummer, label: 'app.grund.husnummer', css_class: 'text-right', format: '%.0f' }

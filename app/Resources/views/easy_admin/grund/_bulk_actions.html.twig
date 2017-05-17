@@ -1,0 +1,79 @@
+<div class="bulk-actions bulk-actions-grund">
+  {% if _bulk_actions|length > 1 %}
+    <div class="btn-group">
+      <button type="button" class="btn btn-primary dropdown-toggle bulk-action" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{ 'Bulk action' | trans }} <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        {% for index, action in _bulk_actions %}
+          <li>
+            <a data-toggle="modal" data-target="#bulk-action-{{ index }}" href="#bulk-action-{{ index }}">
+              {{ action.label | trans }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% else %}
+    {% for index, action in _bulk_actions %}
+      <button type="button" class="btn btn-primary bulk-action" data-toggle="modal" data-target="#bulk-action-{{ index }}">
+        {{ action.label | trans }}
+      </button>
+    {% endfor %}
+  {% endif %}
+
+  {% for index, action in _bulk_actions %}
+    {% set _id = 'bulk-action-' ~ index %}
+    <div class="modal fade" id="{{ _id }}" tabindex="-1" role="dialog" aria-labelledby="#{{ _id }}-label">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="#{{ _id }}-label">{{ action.title|default(action.label) | trans }}</h4>
+          </div>
+          <div class="modal-body">
+            {% if action.message|default() %}
+              <div class="message">{{ action.message }}</div>
+            {% endif %}
+
+            {% if action.form.fields|default() %}
+              <div class="form-horizontal">
+                {% set form = build_form(_entity_config.class, action.form.block_name|default('data'), action.form.fields) %}
+                {#
+                @FIXME: The form cannot be rendered with Easy Admin theme:
+                {% form_theme form with easyadmin_config('design.form_theme') %}
+                #}
+                {% form_theme form with 'bootstrap_3_horizontal_layout.html.twig' %}
+                {{ form_widget(form) }}
+              </div>
+            {% endif %}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">{{ action.form.close.label|default('Close') | trans }}</button>
+            <button type="submit" name="bulk[action]" value="{{ action.form.action.value }}" formaction="{{ path(action.form.action.route, app.request.query.all) }}" class="btn btn-primary bulk-action">{{ action.form.action.label|default('OK') | trans }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+
+  <script>(function($) {
+     var checkBoxesSelector = 'form [type="checkbox"][name="bulk[ids][]"]',
+         updateBulkStatus = function() {
+           var selector = checkBoxesSelector;
+           $('.bulk-action').prop('disabled', $(selector + ':checked').length == 0);
+         };
+
+     $(document).ready(function() {
+       var selector = checkBoxesSelector;
+       $(selector).on('change', updateBulkStatus);
+
+       $('.bulk-ids-toggle').on('change', function() {
+         var selector = checkBoxesSelector;
+         $(selector).prop('checked', $(this).prop('checked'));
+         updateBulkStatus();
+       });
+       updateBulkStatus();
+     });
+   }(jQuery))</script>
+</div>
