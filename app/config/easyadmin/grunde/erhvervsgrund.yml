@@ -13,7 +13,7 @@ easy_admin:
                 new: 'easy_admin/grund/new.html.twig'
             list: &erhvervsgrund_default_list
                 title: 'Alle Erhvervsgrunde'
-                sort: vej
+                sort: ['vej', 'ASC']
                 dql_filter: entity.type = 'Erhvervsgrund'
                 actions:
                     <<: *default_list_actions

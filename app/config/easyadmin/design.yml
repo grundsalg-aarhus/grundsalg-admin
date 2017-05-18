@@ -13,6 +13,7 @@ easy_admin:
                 - '/css/grundsalg-styles.css'
 
         menu:
+            - { entity: 'grund_collection', label: 'grund collection' }
             - label: 'Parcelhusgrunde'
               icon: 'home'
               children:

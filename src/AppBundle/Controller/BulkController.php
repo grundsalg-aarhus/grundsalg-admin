@@ -13,6 +13,26 @@ use Symfony\Component\PropertyAccess\Exception\NoSuchPropertyException;
  * @Route("/bulk")
  */
 class BulkController extends Controller {
+
+
+  /**
+   *
+   * @Route("/new", name="bulk_new")
+   * @Method("GET")
+   */
+  public function bulkNewAction(Request $request) {
+
+  }
+
+  /**
+   *
+   * @Route("/create", name="bulk_create")
+   * @Method("POST")
+   */
+  public function bulkCreateAction(Request $request) {
+
+  }
+
   /**
    *
    * @Route("/update", name="bulk_update")

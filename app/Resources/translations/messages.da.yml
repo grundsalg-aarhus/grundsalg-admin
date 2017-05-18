@@ -50,6 +50,8 @@ app:
       medkoeberNavn: Navn
       medkoeberPostby: Post/By
       medkoeberTelefon: Telefon
+      mnr: Mat. nr.
+      mnr2: Mat. nr.
       note: Note
       oplysninger: Grundoplysninger
       overtagelse: Overtagelse

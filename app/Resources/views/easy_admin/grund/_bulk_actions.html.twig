@@ -1,7 +1,7 @@
-<div class="bulk-actions bulk-actions-grund">
+<div class="bulk-actions-grund">
   {% if _bulk_actions|length > 1 %}
     <div class="btn-group">
-      <button type="button" class="btn btn-primary dropdown-toggle bulk-action" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <button type="button" class="btn btn-default dropdown-toggle bulk-action" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         {{ 'Bulk action' | trans }} <span class="caret"></span>
       </button>
       <ul class="dropdown-menu">
@@ -16,7 +16,7 @@
     </div>
   {% else %}
     {% for index, action in _bulk_actions %}
-      <button type="button" class="btn btn-primary bulk-action" data-toggle="modal" data-target="#bulk-action-{{ index }}">
+      <button type="button" class="btn btn-default bulk-action" data-toggle="modal" data-target="#bulk-action-{{ index }}">
         {{ action.label | trans }}
       </button>
     {% endfor %}
@@ -76,4 +76,8 @@
        updateBulkStatus();
      });
    }(jQuery))</script>
+
+  <a class="btn btn default" href="{{ path('easyadmin', parameters = {'action': 'new', 'entity': 'grund_collection'}) }}">Opret Grunde (flere)</a>
+  
 </div>
+

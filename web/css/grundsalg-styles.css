@@ -33,6 +33,10 @@ span.form-control, span.form-inline .form-control {
   padding: 0 1em 0 0;
 }
 
+.bulk-actions {
+  margin-bottom: 1em;
+}
+
 .table.form-collection .form-group {
   margin: 0;
 }

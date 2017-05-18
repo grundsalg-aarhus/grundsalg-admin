@@ -6,6 +6,9 @@ use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\InheritanceType;
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Doctrine\Common\Collections\ArrayCollection;
 use AppBundle\DBAL\Types\GrundType;
 use AppBundle\DBAL\Types\SalgsType;
@@ -30,6 +33,9 @@ use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
  *   @ORM\Index(name="search_Grund_pris", columns={"pris"}),
  * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GrundRepository")
+ * @InheritanceType("SINGLE_TABLE")
+ * @DiscriminatorColumn(name="discr", type="string")
+ * @DiscriminatorMap({"GRUND" = "Grund", "COLL" = "GrundCollection"})
  */
 class Grund {
   use BlameableEntity;
@@ -132,7 +138,7 @@ class Grund {
    *   @ORM\JoinColumn(name="postbyId", referencedColumnName="id")
    * })
    */
-  private $postby;
+  protected $postby;
 
   /**
    * @var string
@@ -608,7 +614,7 @@ class Grund {
   public function __construct() {
     $this->reservationer = new ArrayCollection();
     $this->salgshistorik = new ArrayCollection();
-    $this->tilsluttet = new ArrayCollection();
+    $this->tilsluttet = array();
     $this->annonceres = false;
   }
 
@@ -2223,14 +2229,14 @@ class Grund {
   /**
    * @return int
    */
-  public function getSrid(): int {
+  public function getSrid() {
     return $this->srid;
   }
 
   /**
    * @param int $srid
    */
-  public function setSrid(int $srid) {
+  public function setSrid($srid) {
     $this->srid = $srid;
   }
 

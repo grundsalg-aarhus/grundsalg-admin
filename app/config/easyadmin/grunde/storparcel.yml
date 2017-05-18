@@ -13,7 +13,7 @@ easy_admin:
                 new: 'easy_admin/grund/new.html.twig'
             list: &storparcel_default_list
                 title: 'Alle Storparceller'
-                sort: vej
+                sort: ['vej', 'ASC']
                 dql_filter: entity.type = 'Storparcel'
                 actions:
                     <<: *default_list_actions

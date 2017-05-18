@@ -50,3 +50,9 @@ services:
     class: AppBundle\CalculationService\OpkoebCalculator
     tags:
       - { name: doctrine.event_subscriber }
+
+  app.bulk.create.grund:
+    class: AppBundle\EventSubscriber\GrundBulkCreateSubscriber
+    arguments: [ "@doctrine.orm.entity_manager" ]
+    tags:
+      - { name: kernel.event_subscriber }

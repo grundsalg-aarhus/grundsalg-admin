@@ -13,7 +13,7 @@ easy_admin:
                 new: 'easy_admin/grund/new.html.twig'
             list: &parcelhusgrund_default_list
                 title: 'Alle Parcelhusgrunde'
-                sort: vej
+                sort: ['vej', 'ASC']
                 dql_filter: entity.type = 'Parcelhusgrund'
                 actions:
                     <<: *default_list_actions

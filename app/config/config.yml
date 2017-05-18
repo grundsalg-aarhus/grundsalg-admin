@@ -8,6 +8,7 @@ imports:
     - { resource: easyadmin/grunde/storparcel.yml }
     - { resource: easyadmin/grunde/erhvervsgrund.yml }
     - { resource: easyadmin/grunde/andregrund.yml }
+    - { resource: easyadmin/grunde/grund_collection.yml }
     - { resource: easyadmin/mv/salgsomraade.yml }
     - { resource: easyadmin/mv/lokalplan.yml }
     - { resource: easyadmin/mv/delomraade.yml }
