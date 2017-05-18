@@ -5,9 +5,9 @@ easy_admin:
         max_results: 100
         actions: &default_list_actions
             - { name: show, css_class: 'btn btn-default' }
-            - { name: edit, css_class: 'btn btn-default', roles: [ROLE_ADMIN] }
+            - { name: edit, css_class: 'btn btn-default', roles: [ROLE_EDITOR] }
             - { name: search }
-            - { name: new, label: 'Tilføj', icon: 'plus', roles: [ROLE_ADMIN] }
+            - { name: new, label: 'Tilføj', icon: 'plus', roles: [ROLE_EDITOR] }
             - { name: -delete }
 
     show: &default_show_actions

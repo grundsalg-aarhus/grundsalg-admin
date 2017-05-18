@@ -19,6 +19,7 @@ easy_admin:
                     <<: *default_list_actions
                 # Inspired by https://github.com/javiereguiluz/EasyAdminBundle/issues/1503#issuecomment-276128125
                 bulk:
+                    roles: [ROLE_EDITOR]
                     actions:
                         - label: Update status
                           title: Update status – or not!
@@ -67,7 +68,7 @@ easy_admin:
                     - { property: pris, label: 'app.grund.pris', css_class: 'text-right' }
 
             delete:
-                roles: [ROLE_ADMIN]
+                roles: [ROLE_EDITOR]
 
             search: &parcelhusgrund_default_search
                 fields:
@@ -88,8 +89,8 @@ easy_admin:
             show: &parcelhusgrund_default_show
                 title: 'Parcelhusgrund'
                 actions:
-                    - { name: edit, roles: [ROLE_ADMIN] }
-                    - { name: delete, roles: [ROLE_ADMIN] }
+                    - { name: edit, roles: [ROLE_EDITOR] }
+                    - { name: delete, roles: [ROLE_EDITOR] }
 
             new: &parcelhusgrund_default_new
                 title: 'Opret Grund'

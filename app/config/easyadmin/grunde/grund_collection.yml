@@ -4,6 +4,7 @@ easy_admin:
 
     entities:
         grund_collection:
+            roles: [ROLE_EDITOR]
             class: AppBundle\Entity\GrundCollection
 
             new:
