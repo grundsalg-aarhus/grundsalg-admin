@@ -185,46 +185,89 @@
               <h3 class="box-title">{{ 'app.grund.priser' | trans }}</h3>
             </div>
             <div class="box-body">
-              <div class="row">
-                <div class="col-md-8">
+              <div class="row js-maxetagem2">
+                <div class="col-xs-12">
                   <div class="col-xs-3">
                     <div class="form-group field-text">
-                      {{ grundsalg.custom_label( form.areal ) }}
-                      {{ form_widget(form.areal) }}
-                    </div>
-                  </div>
-                  <div class="col-xs-3">
-                    <div class="form-group field-text">
-                      {{ grundsalg.custom_label( form.arealvej ) }}
-                      {{ form_widget(form.arealvej) }}
-                    </div>
-                  </div>
-                  <div class="col-xs-3">
-                    <div class="form-group field-text">
-                      {{ grundsalg.custom_label( form.arealkotelet ) }}
-                      {{ form_widget(form.arealkotelet) }}
-                    </div>
-                  </div>
-                  <div class="col-xs-3">
-                    <div class="form-group field-text">
-                      {{ grundsalg.custom_label( form.bruttoareal ) }}
-                      {{ form_widget(form.bruttoareal) }}
+                      {{ grundsalg.custom_label( form.maxetagem2 ) }}
+                      {{ form_widget(form.maxetagem2) }}
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4">
-                  <div class="col-xs-6">
-                    <div class="form-group field-text">
-                      {{ grundsalg.custom_label( form.prism2 ) }}
-                      {{ form_widget(form.prism2) }}
-                    </div>
-                  </div>
-                  <div class="col-xs-6">
-                    <div class="form-group field-text">
-                      {{ grundsalg.custom_label( form.fastpris ) }}
-                      {{ form_widget(form.fastpris) }}
-                    </div>
-                  </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-12">
+                  <table class="table form-collection js-pris-calc">
+                    <thead>
+                      <tr>
+                        <th>{{ grundsalg.custom_label( form.areal ) }}</th>
+                        <th>{{ grundsalg.custom_label( form.arealvej ) }}</th>
+                        <th>{{ grundsalg.custom_label( form.arealkotelet ) }}</th>
+                        <th>{{ grundsalg.custom_label( form.bruttoareal ) }}</th>
+                        <th>{{ grundsalg.custom_label( form.prism2 ) }}</th>
+                        <th>
+                          <span class="js-pris">{{ grundsalg.custom_label( form.pris ) }}</span>
+                          <span class="js-fastpris">{{ grundsalg.custom_label( form.fastpris ) }}</span>
+                          <span class="js-minbud">{{ grundsalg.custom_label( form.minbud ) }}</span>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td>{{ form_widget(form.areal) }}</td>
+                      <td>{{ form_widget(form.arealvej) }}</td>
+                      <td>{{ form_widget(form.arealkotelet) }}</td>
+                      <td>{{ form_widget(form.bruttoareal) }}</td>
+                      <td>{{ form_widget(form.prism2) }}</td>
+                      <td>
+                        <span class="js-pris">{{ form_widget(form.pris) }}</span>
+                        <span class="js-fastpris">{{ form_widget(form.fastpris) }}</span>
+                        <span class="js-minbud">{{ form_widget(form.minbud) }}</span>
+                      </td>
+                    </tr>
+                    <tr class="js-priskorrektion">
+                      <th></th>
+                      <th colspan="2">{{ grundsalg.custom_label( form.priskorrektion1 ) }}</th>
+                      <th>{{ grundsalg.custom_label( form.antalkorr1 ) }}</th>
+                      <th>{{ grundsalg.custom_label( form.akrkorr1 ) }}</th>
+                      <th>{{ 'app.grund.korrektionerialt' | trans }}</th>
+                    </tr>
+                    <tr class="js-priskorrektion">
+                      <td></td>
+                      <td colspan="2">{{ form_widget(form.priskorrektion1) }}</td>
+                      <td>{{ form_widget(form.antalkorr1) }}</td>
+                      <td>{{ form_widget(form.akrkorr1) }}</td>
+                      <td>
+                        <input type="text" id="vis_priskorrektion1_total" name="vis_storparcel[priskorrektion1_total]" disabled="disabled" class="form-control">
+                      </td>
+                    </tr>
+                    <tr class="js-priskorrektion">
+                      <td></td>
+                      <td colspan="2">{{ form_widget(form.priskorrektion2) }}</td>
+                      <td>{{ form_widget(form.antalkorr2) }}</td>
+                      <td>{{ form_widget(form.akrkorr2) }}</td>
+                      <td>
+                        <input type="text" id="vis_priskorrektion2_total" name="vis_storparcel[priskorrektion2_total]" disabled="disabled" class="form-control">
+                      </td>
+                    </tr>
+                    <tr class="js-priskorrektion">
+                      <td></td>
+                      <td colspan="2">{{ form_widget(form.priskorrektion3) }}</td>
+                      <td>{{ form_widget(form.antalkorr3) }}</td>
+                      <td>{{ form_widget(form.akrkorr3) }}</td>
+                      <td>
+                        <input type="text" id="vis_priskorrektion3_total" name="vis_storparcel[priskorrektion3_total]" disabled="disabled" class="form-control">
+                      </td>
+                    </tr>
+                    <tr class="js-priskorrektion">
+                      <td colspan="5" class="priskorrektion_total"></td>
+                      <td>
+                        <input type="text" id="vis_priskorrektion_total" name="vis_storparcel[priskorrektion_total]" disabled="disabled" class="form-control">
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
@@ -605,3 +648,83 @@
 </div>
 
 {{ form_end(form) }}
+
+<script>
+  (function($) {
+    $(document).ready(function() {
+
+      var salgsType = $('#vis_storparcel_salgstype').val();
+
+      var arealInput = $('#vis_storparcel_areal');
+      var arealvejInput = $('#vis_storparcel_arealvej');
+      var arealkoteletInput = $('#vis_storparcel_arealkotelet');
+      var bruttoarealInput = $('#vis_storparcel_bruttoareal');
+      var prism2Input = $('#vis_storparcel_prism2');
+      var prisInput = $('#vis_storparcel_pris');
+
+      $('.js-pris-calc input').on('keyup', function() {
+
+        areal = parseFloat(arealInput.val().replace(',', '.')) ? parseFloat(arealInput.val().replace(',', '.')) : 0;
+        arealvej = parseFloat(arealvejInput.val().replace(',', '.')) ? parseFloat(arealvejInput.val().replace(',', '.')) : 0;
+        arealkotelet = parseFloat(arealkoteletInput.val().replace(',', '.')) ? parseFloat(arealkoteletInput.val().replace(',', '.')) : 0;
+        bruttoareal = parseFloat(bruttoarealInput.val().replace(',', '.')) ? parseFloat(bruttoarealInput.val().replace(',', '.')) : 0;
+        prism2 = parseFloat(prism2Input.val().replace(',', '.')) ? parseFloat(prism2Input.val().replace(',', '.')) : 0;
+        pris = parseFloat(prisInput.val().replace(',', '.')) ? parseFloat(prisInput.val().replace(',', '.')) : 0;
+
+        if(salgsType == 'Kvadratmeterpris' || salgsType == 'Etgm2') {
+
+          bruttoareal = (areal - arealvej - arealkotelet).toFixed(2);
+          bruttoarealInput.val(bruttoareal.toString().replace('.', ','));
+          if(prism2 > 0) {
+            pris = (bruttoareal * prism2).toFixed(2);
+            prisInput.val(pris.toString().replace('.', ','));
+          }
+
+        } else if(salgsType == 'Fastpris') {
+
+        } else if(salgsType == 'Auktion') {
+
+        }
+      });
+
+      $('#vis_storparcel_type').on('change', function() {
+        if(this.value == 'Storparcel') {
+          $('.js-maxetagem2').show();
+        } else {
+          $('.js-maxetagem2').hide();
+        }
+      });
+
+      $('#vis_storparcel_salgstype').on('change', function() {
+
+        salgsType = this.value;
+
+        if(salgsType == 'Kvadratmeterpris' || salgsType == 'Etgm2') {
+
+          $('.js-fastpris').hide();
+          $('.js-minbud').hide();
+
+          $('.js-pris').show();
+          $('.js-priskorrektion').show();
+
+        } else if(salgsType == 'Fastpris') {
+
+          $('.js-priskorrektion').hide();
+          $('.js-pris').hide();
+          $('.js-minbud').hide();
+
+          $('.js-fastpris').show();
+
+        } else if(salgsType == 'Auktion') {
+
+          $('.js-priskorrektion').hide();
+          $('.js-pris').hide();
+          $('.js-fastpris').hide();
+
+          $('.js-minbud').show();
+
+        }
+      });
+    });
+  }(jQuery))
+</script>

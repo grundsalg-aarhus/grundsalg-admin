@@ -12,7 +12,9 @@ action:
 app:
   grund:
       accept: Accept
+      akrkorr1: á kr.
       annonceres: Annonceres
+      antalkorr1: Antal
       areal: Areal
       arealkotelet: Koteletben
       arealvej: Heraf vej
@@ -39,9 +41,11 @@ app:
       koeberNotat: Notat
       koeberPostby: Post/By
       koeberTelefon: Telefon
+      korrektionerialt: Korrektioner i alt
       landinspektoer: Landinspektør
       lokalplan: Lokalplan m.v.
       lokalsamfund: Lokalsamfund
+      maxetagem2: Max. Etg. m²
       medkoeber: Medkøber
       medkoeberAdresse: Adresse
       medkoeberEmail: Email
@@ -50,6 +54,7 @@ app:
       medkoeberNavn: Navn
       medkoeberPostby: Post/By
       medkoeberTelefon: Telefon
+      minbud: Min. bud
       mnr: Mat. nr.
       mnr2: Mat. nr.
       note: Note
@@ -58,6 +63,7 @@ app:
       postby: Postnr/By
       pris: Pris
       priser: Priser
+      priskorrektion1: Priskorrektioner
       prism2: Pris pr. m²
       psp: PSP
       resslut: til og med

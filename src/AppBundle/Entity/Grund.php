@@ -616,6 +616,7 @@ class Grund {
     $this->salgshistorik = new ArrayCollection();
     $this->tilsluttet = array();
     $this->annonceres = false;
+    $this->setSalgstype(SalgsType::KVADRATMETERPRIS);
   }
 
   /**
