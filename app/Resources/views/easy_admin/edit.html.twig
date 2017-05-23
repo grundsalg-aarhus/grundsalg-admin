@@ -1,0 +1,15 @@
+{% extends '@EasyAdmin/default/edit.html.twig' %}
+
+{% block body_javascript %}
+	{{ parent() }}
+
+	{% include 'easy_admin/_includes/_translations.js.twig' %}
+{% endblock %}
+
+{% block delete_form %}
+	{% if can_delete(entity) %}
+		{{ parent() }}
+	{% else %}
+		{% include 'easy_admin/_includes/_cannot_delete_message.html.twig' %}
+	{% endif %}
+{% endblock %}
