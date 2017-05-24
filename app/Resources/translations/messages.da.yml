@@ -144,3 +144,6 @@ plural:
 Bogstav: Bogst.
 Husnummer: Husnr.
 Urlgis: GIS-kort
+
+'Cannot delete %name%': '"%name%" kan ikke slettes'
+'%name% is referenced by %count% entities': 'one: "%name%" bruges af %count% datapost | some: "%name%" bruges af %count% dataposter'
