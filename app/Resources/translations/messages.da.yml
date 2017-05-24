@@ -18,6 +18,9 @@ app:
       areal: Areal
       arealkotelet: Koteletben
       arealvej: Heraf vej
+      auktion: Auktion
+      auktionstartdato: Startdato:
+      auktionslutdato: Slutdato
       beloebanvist: Beløb anvist
       bogstav: Bogstav
       bruttoareal: Samlet areal

@@ -65,6 +65,10 @@ span.form-control, span.form-inline .form-control {
   padding: 0;
 }
 
+.table.form-collection>tbody>tr>td button {
+  margin-top: 0.5em;
+}
+
 .table.form-collection>tbody>tr>td .error-block {
   padding: 8px;
 }
@@ -73,19 +77,23 @@ span.form-control, span.form-inline .form-control {
   border-right: 1px solid #CCC;
 }
 
-.table.form-collection .number input {
+.number input {
   text-align: right;
+}
+
+.table.form-collection td.priskorrektion--select {
+  padding-right: 1em;
 }
 
 #vis_priskorrektion3_total {
   border-bottom: 1px solid #444444;
 }
 
-#vis_priskorrektion_total {
+td.pris-total input {
   border-top: 1px solid #444444;
   border-bottom: 6px double #444444;
 }
 
-.js-maxetagem2, .js-fastpris, .js-minbud {
+.js-maxetagem2, .js-fastpris, .js-minbud, .js-price-table {
   display: none;
 }

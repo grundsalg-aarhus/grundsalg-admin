@@ -100,6 +100,7 @@ doctrine:
             Mulighed:           AppBundle\DBAL\Types\Mulighed
             SalgsType:          AppBundle\DBAL\Types\SalgsType
             TilslutningsType:   AppBundle\DBAL\Types\TilslutningsType
+            Priskorrektion:     AppBundle\DBAL\Types\Priskorrektion
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"

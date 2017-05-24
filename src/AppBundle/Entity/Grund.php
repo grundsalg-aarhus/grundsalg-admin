@@ -249,14 +249,15 @@ class Grund {
   /**
    * @var string
    *
-   * @ORM\Column(name="prisKorrektion1", type="string", length=30, nullable=true)
+   * @ORM\Column(name="prisKorrektion1", type="Priskorrektion", nullable=true)
+   * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\Priskorrektion")
    */
   private $priskorrektion1;
 
   /**
-   * @var float
+   * @var integer
    *
-   * @ORM\Column(name="antalKorr1", type="float", precision=10, scale=0, nullable=true)
+   * @ORM\Column(name="antalKorr1", type="integer", nullable=true)
    */
   private $antalkorr1;
 
@@ -277,14 +278,15 @@ class Grund {
   /**
    * @var string
    *
-   * @ORM\Column(name="prisKorrektion2", type="string", length=30, nullable=true)
+   * @ORM\Column(name="prisKorrektion2", type="Priskorrektion", nullable=true)
+   * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\Priskorrektion")
    */
   private $priskorrektion2;
 
   /**
-   * @var float
+   * @var integer
    *
-   * @ORM\Column(name="antalKorr2", type="float", precision=10, scale=0, nullable=true)
+   * @ORM\Column(name="antalKorr2", type="integer", nullable=true)
    */
   private $antalkorr2;
 
@@ -305,14 +307,15 @@ class Grund {
   /**
    * @var string
    *
-   * @ORM\Column(name="prisKorrektion3", type="string", length= 30, nullable=true)
+   * @ORM\Column(name="prisKorrektion3", type="Priskorrektion", nullable=true)
+   * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\Priskorrektion")
    */
   private $priskorrektion3;
 
   /**
-   * @var float
+   * @var integer
    *
-   * @ORM\Column(name="antalKorr3", type="float", precision=10, scale=0, nullable=true)
+   * @ORM\Column(name="antalKorr3", type="integer", nullable=true)
    */
   private $antalkorr3;
 
@@ -1242,7 +1245,7 @@ class Grund {
   /**
    * Set antalkorr1
    *
-   * @param float $antalkorr1
+   * @param integer $antalkorr1
    *
    * @return Grund
    */
@@ -1255,7 +1258,7 @@ class Grund {
   /**
    * Get antalkorr1
    *
-   * @return float
+   * @return integer
    */
   public function getAntalkorr1() {
     return $this->antalkorr1;
@@ -1330,7 +1333,7 @@ class Grund {
   /**
    * Set antalkorr2
    *
-   * @param float $antalkorr2
+   * @param integer $antalkorr2
    *
    * @return Grund
    */
@@ -1343,7 +1346,7 @@ class Grund {
   /**
    * Get antalkorr2
    *
-   * @return float
+   * @return integer
    */
   public function getAntalkorr2() {
     return $this->antalkorr2;
@@ -1418,7 +1421,7 @@ class Grund {
   /**
    * Set antalkorr3
    *
-   * @param float $antalkorr3
+   * @param integer $antalkorr3
    *
    * @return Grund
    */
@@ -1431,7 +1434,7 @@ class Grund {
   /**
    * Get antalkorr3
    *
-   * @return float
+   * @return integer
    */
   public function getAntalkorr3() {
     return $this->antalkorr3;
