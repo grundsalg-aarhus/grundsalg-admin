@@ -8,6 +8,7 @@ imports:
     - { resource: easyadmin/grunde/storparcel.yml }
     - { resource: easyadmin/grunde/erhvervsgrund.yml }
     - { resource: easyadmin/grunde/andregrund.yml }
+    - { resource: easyadmin/grunde/grund_collection.yml }
     - { resource: easyadmin/mv/salgsomraade.yml }
     - { resource: easyadmin/mv/lokalplan.yml }
     - { resource: easyadmin/mv/delomraade.yml }
@@ -17,6 +18,7 @@ imports:
     - { resource: easyadmin/admin/lokalsamfund.yml }
     - { resource: easyadmin/admin/user.yml }
     - { resource: easyadmin/reservation/interessent.yml }
+    - { resource: easyadmin/services.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -116,6 +118,14 @@ doctrine:
                 st_intersects:     CrEOF\Spatial\ORM\Query\AST\Functions\MySql\STIntersects
                 st_buffer:     CrEOF\Spatial\ORM\Query\AST\Functions\MySql\STBuffer
                 point: CrEOF\Spatial\ORM\Query\AST\Functions\MySql\Point
+
+stof_doctrine_extensions:
+    orm:
+        default:
+            timestampable: true
+            blameable: true
+    class:
+        blameable: AppBundle\EventSubscriber\BlameableListener
 
 # Swiftmailer Configuration
 swiftmailer:

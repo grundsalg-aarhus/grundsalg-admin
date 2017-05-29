@@ -78,21 +78,33 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
             }
 
             if (strpos($table, 'Omraader') !== false) {
-              $fagsystemID = $this->matchToOmraade($table, $row['OmraadeNavn'], $row['Info1_overskr']);
 
-              try {
-                $sql = 'UPDATE Salgsomraade SET SP_GEOMETRY = ST_GEOMFROMTEXT(?, ?), srid = ?, MI_STYLE = ? WHERE id = ?';
+              // If we know the match between web<>fagsystem then use that, else best guess.
+              $fagsystemID = $this->matchToOmraadeStatic($table, $row['ID']);
+              if(!$fagsystemID) {
+                $fagsystemID = $this->matchToOmraade($table, $row['OmraadeNavn'], $row['Info1_overskr']);
+              }
 
-                $stmt = $connection->prepare($sql);
-                $stmt->bindValue(1, $row['WKT']);
-                $stmt->bindValue(2, $row['srid']);
-                $stmt->bindValue(3, $row['srid']);
-                $stmt->bindValue(4, $row['MI_STYLE']);
-                $stmt->bindValue(5, $fagsystemID);
-                $stmt->execute();
+              if($fagsystemID) {
 
-              } catch (ForeignKeyConstraintViolationException $e) {
-                throw $e;
+                $fagsystemID =  is_array($fagsystemID) ? $fagsystemID : array($fagsystemID);
+
+                foreach ($fagsystemID as $id) {
+                  try {
+                    $sql = 'UPDATE Salgsomraade SET SP_GEOMETRY = ST_GEOMFROMTEXT(?, ?), srid = ?, MI_STYLE = ? WHERE id = ?';
+
+                    $stmt = $connection->prepare($sql);
+                    $stmt->bindValue(1, $row['WKT']);
+                    $stmt->bindValue(2, $row['srid']);
+                    $stmt->bindValue(3, $row['srid']);
+                    $stmt->bindValue(4, $row['MI_STYLE']);
+                    $stmt->bindValue(5, $id);
+                    $stmt->execute();
+
+                  } catch (ForeignKeyConstraintViolationException $e) {
+                    throw $e;
+                  }
+                }
               }
 
             }
@@ -106,6 +118,65 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
     $this->printChangeLog($this->changeCount);
 
   }
+
+  /**
+   * Match "Web" Salgsomrader to "Fag" Salgsomraader from staic tables of matches.
+   * These are the areas we hjave confirmed as matched.
+   *
+   * @param $table
+   * @param $id
+   * @return bool|mixed
+   */
+  private function matchToOmraadeStatic($table, $id) {
+
+    $parcelhusgrundMatchArray = [
+      711 => array(223),
+      780 => array(112),
+      854 => array(170),
+      768 => array(114),
+      818 => array(272),
+      994 => array(276),
+      823 => array(141)
+    ];
+
+    $storparcelMatchArray = [
+      763 => array(32),
+      768 => array(1),
+      878 => array(40)
+    ];
+
+    $erhvervsgrundMatchArray = [
+      27 => array(7),
+      374 => array(25, 26),
+      868 => array(66),
+      13601 => array(2),
+      812 => array(64),
+      802 => array(61, 62),
+      602 => array(49),
+      428 => array(39, 40),
+      846 => array(66, 67, 68),
+      411 => array(31, 32, 33, 34, 35, 36, 37),
+      59 => array(48),
+      359 => array(20, 21),
+      692 => array(55),
+      546 => array(47)
+    ];
+
+    switch ($table) {
+      case 'OmraaderBolig':
+        return array_key_exists($id, $parcelhusgrundMatchArray) ? $parcelhusgrundMatchArray[$id] : FALSE;
+
+      case 'OmraaderErhverv':
+        return array_key_exists($id, $erhvervsgrundMatchArray) ? $erhvervsgrundMatchArray[$id] : FALSE;
+
+      case 'OmraaderStorParcel':
+        return array_key_exists($id, $storparcelMatchArray) ? $storparcelMatchArray[$id] : FALSE;
+
+      default:
+        return FALSE;
+    }
+  }
+
 
   private function matchToOmraade($table, $OmraadeNavn, $info1_overskr)
   {

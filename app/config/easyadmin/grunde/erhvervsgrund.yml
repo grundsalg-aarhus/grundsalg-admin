@@ -13,17 +13,53 @@ easy_admin:
                 new: 'easy_admin/grund/new.html.twig'
             list: &erhvervsgrund_default_list
                 title: 'Alle Erhvervsgrunde'
-                sort: postby
+                sort: ['vej', 'ASC']
                 dql_filter: entity.type = 'Erhvervsgrund'
                 actions:
                     <<: *default_list_actions
+                # Inspired by https://github.com/javiereguiluz/EasyAdminBundle/issues/1503#issuecomment-276128125
+                bulk:
+                    roles: [ROLE_EDITOR]
+                    actions:
+                        - label: Update status
+                          title: Update status – or not!
+                          message: Vælg ny status.
+                          type: form
+                          form:
+                              block_name: data # field block name
+                              action:
+                                  value: update-status
+                                  label: Do it!
+                                  route: bulk_update
+                              fields:
+                                  - property: status
+                                    label: Ny status
+                                  - property: salgstatus
+
+                                  - name: status
+                                    label: Ny status
+                                    # type: Symfony\Component\Form\Extension\Core\Type\ChoiceType
+                                    type: choice
+                                    type_options:
+                                        choices:
+                                            Fremtidig: Fremtidig
+
+                        - label: Delete
+                          message: Really, really delete stuff?
+                          type: form
+                          form:
+                              action:
+                                  value: delete
+                                  label: Yes
+                                  route: grund_bulk_delete
+                              close:
+                                  label: No
                 fields:
                     - { property: vej, label: 'app.grund.vej' }
                     - { property: husnummer, label: 'app.grund.husnummer', css_class: 'text-right', format: '%.0f' }
                     - { property: postby.postalcode, css_class: 'text-right', label: 'app.postby.postalcode' }
                     - { property: postby.city, label: 'app.postby.city' }
                     - { property: annonceres, label: 'app.grund.annonceres' }
-                    - { property: salgsomraade.nr, label: 'S.Nr' }
                     - { property: salgsomraade.titel, label: 'app.grund.salgsomraade' }
                     - { property: salgsomraade.lokalplan.nr, label: 'app.lokalplan.nr' }
                     - { property: salgstype, label: 'app.grund.salgstype' }
@@ -43,6 +79,7 @@ easy_admin:
                     - pris
 
             edit: &erhvervsgrund_default_edit
+                roles: [ROLE_EDITOR]
                 title: 'Rediger Erhvervsgrund'
 
             show: &erhvervsgrund_default_show
@@ -238,6 +275,20 @@ easy_admin:
             list:
                 title: 'Betalte Erhvervsgrunde'
                 dql_filter: entity.type = 'Erhvervsgrund' AND entity.salgstatus = 'Solgt'
+
+                fields:
+                    - { property: vej, label: 'app.grund.vej' }
+                    - { property: husnummer, label: 'app.grund.husnummer', css_class: 'text-right', format: '%.0f' }
+                    - { property: postby.postalcode, css_class: 'text-right', label: 'app.postby.postalcode' }
+                    - { property: postby.city, label: 'app.postby.city' }
+                    - { property: koeberNavn, label: 'app.grund.koeberNavn' }
+                    - { property: koeberAdresse, label: 'app.grund.koeberAdresse.list' }
+                    - { property: annonceres, label: 'app.grund.annonceres' }
+                    - { property: salgsomraade.titel, label: 'app.grund.salgsomraade' }
+                    - { property: salgsomraade.lokalplan.nr, label: 'app.lokalplan.nr' }
+                    - { property: salgstype, label: 'app.grund.salgstype' }
+                    - { property: areal, label: 'app.grund.areal', css_class: 'text-right', format: '%.0f' }
+                    - { property: pris, label: 'app.grund.pris', css_class: 'text-right' }
 
                 # Import default values
                 <<: *erhvervsgrund_default_list

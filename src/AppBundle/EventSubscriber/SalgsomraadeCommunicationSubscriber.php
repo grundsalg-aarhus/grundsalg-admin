@@ -11,7 +11,6 @@ use AppBundle\Entity\Salgsomraade;
 use AppBundle\Service\GrundsalgCommunicationService;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
-use GuzzleHttp\Client;
 
 /**
  * Class GrundsalgWebCommunication
@@ -20,7 +19,7 @@ use GuzzleHttp\Client;
  *
  * @package AppBundle
  */
-class SalgsomraadeSubscriber implements EventSubscriber {
+class SalgsomraadeCommunicationSubscriber implements EventSubscriber {
 
   private $service;
 

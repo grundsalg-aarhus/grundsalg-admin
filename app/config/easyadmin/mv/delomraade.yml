@@ -22,16 +22,17 @@ easy_admin:
                     - lokalplan.titel
 
             edit:
+                roles: [ROLE_EDITOR]
                 title: 'Rediger Delområde'
 
             form:
                 fields: &delomraade_form_fields
                     - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Lokalplan' }
-                    - lokalplan
+                    - { property: lokalplan, type_options: { required: true} }
 
                     - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Delområde' }
                     - { type: 'section', label: 'LP-delområde' }
-                    - { property: o1, label: false, css_class: 'col-xs-4' }
+                    - { property: o1, label: false, css_class: 'col-xs-4', type_options: { required: false } }
                     - { property: o2, label: false, css_class: 'col-xs-4' }
                     - { property: o3, label: false, css_class: 'col-xs-4' }
                     - { type: 'section', label: 'KPL' }

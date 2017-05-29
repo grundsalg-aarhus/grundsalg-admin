@@ -1823,16 +1823,16 @@
         },
         {
             "name": "javiereguiluz/easyadmin-bundle",
-            "version": "v1.16.5",
+            "version": "v1.16.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/javiereguiluz/EasyAdminBundle.git",
-                "reference": "68c3263e3184bd5f0b2655b46fad7cfedcbc52b9"
+                "reference": "129d3f33b23668c5829106118c1fb1b677365756"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/javiereguiluz/EasyAdminBundle/zipball/68c3263e3184bd5f0b2655b46fad7cfedcbc52b9",
-                "reference": "68c3263e3184bd5f0b2655b46fad7cfedcbc52b9",
+                "url": "https://api.github.com/repos/javiereguiluz/EasyAdminBundle/zipball/129d3f33b23668c5829106118c1fb1b677365756",
+                "reference": "129d3f33b23668c5829106118c1fb1b677365756",
                 "shasum": ""
             },
             "require": {
@@ -1855,8 +1855,10 @@
                 "symfony/polyfill-mbstring": "^1.0",
                 "symfony/property-access": "~2.3|~3.0",
                 "symfony/security-bundle": "~2.3|~3.0",
+                "symfony/translation": "~2.3|~3.0",
                 "symfony/twig-bridge": "^2.3.4|~3.0",
                 "symfony/twig-bundle": "~2.3|~3.0",
+                "symfony/validator": "~2.3|~3.0",
                 "twig/extensions": "~1.0",
                 "twig/twig": "~1.14,>=1.14.2|~2.0"
             },
@@ -1870,7 +1872,6 @@
                 "symfony/dom-crawler": "~2.3|~3.0",
                 "symfony/finder": "~2.3|~3.0",
                 "symfony/phpunit-bridge": "^2.7",
-                "symfony/validator": "~2.3|~3.0",
                 "symfony/var-dumper": "~2.3|~3.0",
                 "symfony/yaml": "~2.3|~3.0"
             },
@@ -1904,7 +1905,7 @@
                 "backend",
                 "generator"
             ],
-            "time": "2017-01-23T10:19:39+00:00"
+            "time": "2017-04-08T18:35:00+00:00"
         },
         {
             "name": "jdorn/sql-formatter",

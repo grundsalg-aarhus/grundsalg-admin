@@ -8,43 +8,51 @@
 {# Rows #}
 
 {% block form_row -%}
-{% spaceless %}
+  {% if label is not empty %}
 
-    {% set _field_type = easyadmin.field.fieldType|default('default') %}
-    <div class="form-group {% if (not compound or force_error|default(false)) and not valid %}has-error{% endif %} field-{{ block_prefixes|slice(-2)|first }}">
-        {% set _field_label = easyadmin.field['label']|default(null) %}
+    {{ parent() }}
 
-        {% if easyadmin.field['label'] is not same as(false) %}
-          {{ form_label(form, _field_label, { translation_domain: easyadmin.entity.translation_domain }) }}
-        {% endif %}
+  {% else %}
+    {% spaceless %}
 
-        <div class="{{ block('form_group_class') }}">
-            {{ form_widget(form) }}
+        {% set _field_type = easyadmin.field.fieldType|default('default') %}
+        <div class="form-group {% if (not compound or force_error|default(false)) and not valid %}has-error{% endif %} field-{{ block_prefixes|slice(-2)|first }}">
+            {% set _field_label = easyadmin.field['label']|default(null) %}
 
-            {% if _field_type in ['datetime', 'date', 'time', 'birthday'] and easyadmin.field.nullable|default(false) and easyadmin.field.readonly is defined and easyadmin.field.readonly is not same as(true) %}
-                <div class="nullable-control">
-                    <label>
-                        <input type="checkbox" {% if data is null %}checked="checked"{% endif %}>
-                        {{ 'label.nullable_field'|trans({}, 'EasyAdminBundle')}}
-                    </label>
-                </div>
+            {% if easyadmin.field['label'] is defined and easyadmin.field['label'] is not same as(false) %}
+              {{ form_label(form, _field_label, { translation_domain: easyadmin.entity.translation_domain }) }}
             {% endif %}
 
-            {{ form_errors(form) }}
+            <div class="{{ block('form_group_class') }}">
+                {{ form_widget(form) }}
 
-            {% if easyadmin.field.help|default('') != '' %}
-                <span class="help-block"><i class="fa fa-info-circle"></i> {{ easyadmin.field.help|trans(domain = easyadmin.entity.translation_domain)|raw }}</span>
-            {% endif %}
+                {% if _field_type in ['datetime', 'date', 'time', 'birthday'] and easyadmin.field.nullable|default(false) and easyadmin.field.readonly is defined and easyadmin.field.readonly is not same as(true) %}
+                    <div class="nullable-control">
+                        <label>
+                            <input type="checkbox" {% if data is null %}checked="checked"{% endif %}>
+                            {{ 'label.nullable_field'|trans({}, 'EasyAdminBundle')}}
+                        </label>
+                    </div>
+                {% endif %}
+
+                {{ form_errors(form) }}
+
+                {% if easyadmin.field.help|default('') != '' %}
+                    <span class="help-block"><i class="fa fa-info-circle"></i> {{ easyadmin.field.help|trans(domain = easyadmin.entity.translation_domain)|raw }}</span>
+                {% endif %}
+            </div>
         </div>
-    </div>
-{% endspaceless %}
+    {% endspaceless %}
+
+  {% endif %}
 {%- endblock form_row %}
 
 {% block form_group_class -%}
-  {% if easyadmin.field['label'] is not same as(false) %}
+  {% if easyadmin.field['label'] is defined and easyadmin.field['label'] is not same as(false) %}
     col-sm-10
   {% else %}
-    col-sm-12
+    {#col-sm-12#}
+    {{ parent() }}
   {% endif %}
 {% endblock form_group_class %}
 
@@ -140,3 +148,302 @@
     </div>
   </div>
 {% endblock easyadmin_widget %}
+
+
+{# ------- OPKØB -------- #}
+
+{%- block _lokalplan_opkoeb_lists_widget -%}
+  <div>
+    {%- if form.parent is empty -%}
+      {{ form_errors(form) }}
+    {%- endif -%}
+    {{- block('form_rows') -}}
+    {{- form_rest(form) -}}
+  </div>
+{%- endblock _lokalplan_opkoeb_lists_widget -%}
+
+{% block _lokalplan_opkoeb_lists_row %}
+  {% if prototype is defined %}
+    {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+  {% endif %}
+
+  <table class="table table-bordered form-collection">
+    {% if prototype is defined %}
+      <thead>
+      <tr>
+        {% for child in prototype.children %}
+          <th>
+            {{ form_label(child) }}
+          </th>
+        {% endfor %}
+        {% if allow_delete|default(false) %}
+          <th></th>
+        {% endif %}
+      </tr>
+      </thead>
+    {% endif %}
+    <tbody {{ block('widget_container_attributes') }}>
+      {{ block('form_row') }}
+    </tbody>
+  </table>
+
+
+  {% if allow_add|default(false) %}
+    {% set js_add_item %}
+      $(function() {
+      if (event.preventDefault) event.preventDefault(); else event.returnValue = false;
+
+      var collection = $('#{{ id }}');
+      // Use a counter to avoid having the same index more than once
+      var numItems = collection.data('count') || collection.children('tr').length;
+
+      collection.prev('.collection-empty').remove();
+
+      var newItem = collection.attr('data-prototype')
+      .replace(/\>__name__label__\</g, '>' + numItems + '<')
+      .replace(/_{{ name }}___name__/g, '_{{ name }}_' + numItems)
+      .replace(/{{ name }}\]\[__name__\]/g, '{{ name }}][' + numItems + ']')
+      ;
+
+      // Increment the counter and store it in the collection
+      collection.data('count', ++numItems);
+
+      collection.append(newItem).trigger('easyadmin.collection.item-added');
+      });
+    {% endset %}
+
+    <div class="text-right field-collection-action">
+      <a href="#" onclick="{{ js_add_item|raw }}" class="btn btn-primary">
+        <i class="fa fa-plus-square"></i>
+        {{ (form|length == 0 ? 'action.add_new_item' : 'action.add_another_item')|trans({}, 'EasyAdminBundle') }}
+      </a>
+    </div>
+  {% endif %}
+{% endblock %}
+
+{%- block _lokalplan_opkoeb_lists_entry_row -%}
+  <tr {{ block('widget_container_attributes') }}>
+    {%- if form.parent is empty -%}
+      {{ form_errors(form) }}
+    {%- endif -%}
+    {{- block('form_rows') -}}
+    {{- form_rest(form) -}}
+
+  {% if form.parent.vars.allow_delete|default(false) %}
+    {% set remove_item_javascript %}
+      $(function() {
+      if (event.preventDefault) event.preventDefault(); else event.returnValue = false;
+
+      var containerDiv = $('#{{ id }}');
+      var parentDiv = containerDiv.parents('[data-prototype]:first');
+      containerDiv.remove();
+      parentDiv.trigger('easyadmin.collection.item-deleted');
+
+      if (0 == parentDiv.children().length && 'undefined' !== parentDiv.attr('data-empty-collection')) {
+        $(parentDiv.attr('data-empty-collection')).insertBefore(parentDiv);
+      }
+      });
+    {% endset %}
+
+    <td class="text-right field-collection-item-action">
+      <a href="#" onclick="{{ remove_item_javascript|raw }}" class="btn btn-sm btn-danger">
+        <i class="fa fa-remove"></i>
+        {{ 'action.remove_item'|trans({}, 'EasyAdminBundle') }}
+      </a>
+    </td>
+    </tr>
+  {% endif %}
+
+{%- endblock  -%}
+
+{% block _lokalplan_opkoeb_lists_entry_matrik1_row %}
+  {% set label = false %}
+  <td>{{ block('form_row') }}</td>
+{% endblock %}
+
+{% block _lokalplan_opkoeb_lists_entry_matrik2_row %}
+  {% set label = false %}
+  <td>{{ block('form_row') }}</td>
+{% endblock %}
+
+{% block _lokalplan_opkoeb_lists_entry_ejerlav_row %}
+  {% set label = false %}
+  <td>{{ block('form_row') }}</td>
+{% endblock %}
+
+{% block _lokalplan_opkoeb_lists_entry_m2_row %}
+  {% set label = false %}
+  <td>{{ block('form_row') }}</td>
+{% endblock %}
+
+{% block _lokalplan_opkoeb_lists_entry_opkoebDato_row %}
+  {% set label = false %}
+  <td>{{ block('form_row') }}</td>
+{% endblock %}
+
+{% block _lokalplan_opkoeb_lists_entry_pris_row %}
+  {% set label = false %}
+  <td>{{ block('form_row') }}</td>
+{% endblock %}
+
+{% block _lokalplan_opkoeb_lists_entry_procentaflp_row %}
+  {% set label = false %}
+  <td>{{ block('form_row') }}</td>
+{% endblock %}
+
+{% block _lokalplan_opkoeb_lists_entry_bemaerkning_row %}
+  {% set label = false %}
+  <td>{{ block('form_row') }}</td>
+{% endblock %}
+
+
+{# ------- GRUND Embedded -------- #}
+
+{%- block _grund_collection_grunde_list_widget -%}
+  <div>
+    {%- if form.parent is empty -%}
+      {{ form_errors(form) }}
+    {%- endif -%}
+    {{- block('form_rows') -}}
+    {{- form_rest(form) -}}
+  </div>
+{%- endblock _grund_collection_grunde_list_widget -%}
+
+{% block _grund_collection_grunde_list_row %}
+  {% if prototype is defined %}
+    {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+  {% endif %}
+
+  <table class="table table-bordered form-collection">
+    {% if prototype is defined %}
+      <thead>
+      <tr>
+        {% for child in prototype.children %}
+          <th>
+            {{ form_label(child) }}
+          </th>
+        {% endfor %}
+        {% if allow_delete|default(false) %}
+          <th></th>
+        {% endif %}
+      </tr>
+      </thead>
+    {% endif %}
+    <tbody {{ block('widget_container_attributes') }}>
+    {{ block('form_row') }}
+    </tbody>
+  </table>
+
+
+  {% if allow_add|default(false) %}
+    {% set js_add_item %}
+      $(function() {
+      if (event.preventDefault) event.preventDefault(); else event.returnValue = false;
+
+      var collection = $('#{{ id }}');
+      // Use a counter to avoid having the same index more than once
+      var numItems = collection.data('count') || collection.children('tr').length;
+
+      collection.prev('.collection-empty').remove();
+
+      var newItem = collection.attr('data-prototype')
+      .replace(/\>__name__label__\</g, '>' + numItems + '<')
+      .replace(/_{{ name }}___name__/g, '_{{ name }}_' + numItems)
+      .replace(/{{ name }}\]\[__name__\]/g, '{{ name }}][' + numItems + ']')
+      ;
+
+      // Increment the counter and store it in the collection
+      collection.data('count', ++numItems);
+
+      collection.append(newItem).trigger('easyadmin.collection.item-added');
+      });
+    {% endset %}
+
+    <div class="text-right field-collection-action">
+      <a href="#" onclick="{{ js_add_item|raw }}" class="btn btn-primary">
+        <i class="fa fa-plus-square"></i>
+        {{ (form|length == 0 ? 'action.add_new_item' : 'action.add_another_item')|trans({}, 'EasyAdminBundle') }}
+      </a>
+    </div>
+  {% endif %}
+{% endblock %}
+
+{%- block _grund_collection_grunde_list_entry_row -%}
+<tr {{ block('widget_container_attributes') }}>
+  {%- if form.parent is empty -%}
+    {{ form_errors(form) }}
+  {%- endif -%}
+  {{- block('form_rows') -}}
+  {{- form_rest(form) -}}
+
+  {% if form.parent.vars.allow_delete|default(false) %}
+    {% set remove_item_javascript %}
+      $(function() {
+      if (event.preventDefault) event.preventDefault(); else event.returnValue = false;
+
+      var containerDiv = $('#{{ id }}');
+      var parentDiv = containerDiv.parents('[data-prototype]:first');
+      containerDiv.remove();
+      parentDiv.trigger('easyadmin.collection.item-deleted');
+
+      if (0 == parentDiv.children().length && 'undefined' !== parentDiv.attr('data-empty-collection')) {
+      $(parentDiv.attr('data-empty-collection')).insertBefore(parentDiv);
+      }
+      });
+    {% endset %}
+
+    <td class="text-right field-collection-item-action">
+      <a href="#" onclick="{{ remove_item_javascript|raw }}" class="btn btn-sm btn-danger">
+        <i class="fa fa-remove"></i>
+        {{ 'action.remove_item'|trans({}, 'EasyAdminBundle') }}
+      </a>
+    </td>
+    </tr>
+  {% endif %}
+
+{%- endblock  -%}
+
+{% block _grund_collection_grunde_list_entry_mnr_row %}
+  {% set label = false %}
+  <td>{{ block('form_row') }}</td>
+{% endblock %}
+
+{% block _grund_collection_grunde_list_entry_mnr2_row %}
+  {% set label = false %}
+  <td>{{ block('form_row') }}</td>
+{% endblock %}
+
+{% block _grund_collection_grunde_list_entry_delareal_row %}
+  {% set label = false %}
+  <td>{{ block('form_row') }}</td>
+{% endblock %}
+
+{% block _grund_collection_grunde_list_entry_husnummer_row %}
+  {% set label = false %}
+  <td>{{ block('form_row') }}</td>
+{% endblock %}
+
+{% block _grund_collection_grunde_list_entry_bogstav_row %}
+  {% set label = false %}
+  <td>{{ block('form_row') }}</td>
+{% endblock %}
+
+{% block _grund_collection_grunde_list_entry_areal_row %}
+  {% set label = false %}
+  <td>{{ block('form_row') }}</td>
+{% endblock %}
+
+{% block _grund_collection_grunde_list_entry_arealvej_row %}
+  {% set label = false %}
+  <td>{{ block('form_row') }}</td>
+{% endblock %}
+
+{% block _grund_collection_grunde_list_entry_arealkotelet_row %}
+  {% set label = false %}
+  <td>{{ block('form_row') }}</td>
+{% endblock %}
+
+{% block _grund_collection_grunde_list_entry_fastpris_row %}
+  {% set label = false %}
+  <td>{{ block('form_row') }}</td>
+{% endblock %}
