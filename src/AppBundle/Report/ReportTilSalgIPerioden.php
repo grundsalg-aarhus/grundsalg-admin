@@ -6,9 +6,15 @@ use AppBundle\DBAL\Types\GrundType;
 use Doctrine\DBAL\Types\Type;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
+/**
+ * Report.
+ */
 class ReportTilSalgIPerioden extends Report {
   protected $title = 'Til salg i perioden';
 
+  /**
+   * {@inheritdoc}
+   */
   public function getParameters() {
     return [
       'grundtype' => [
@@ -20,12 +26,15 @@ class ReportTilSalgIPerioden extends Report {
             GrundType::ERHVERV => GrundType::ERHVERV,
             GrundType::STORPARCEL => GrundType::STORPARCEL,
             GrundType::ANDRE => GrundType::ANDRE,
-          ]
+          ],
         ],
       ],
     ] + parent::getParameters();
   }
 
+  /**
+   * {@inheritdoc}
+   */
   protected function writeData() {
     // GrundSalgServlets/src/com/Symfoni/AArhus/GrundSalg/Servlets/Report.java:forsale
     $grundtype = $this->getParameterValue('grundtype');
@@ -33,13 +42,18 @@ class ReportTilSalgIPerioden extends Report {
       case GrundType::PARCELHUS:
       case GrundType::ANDRE:
         return $this->writeDataParcelhusAndre();
+
       case GrundType::STORPARCEL:
         return $this->writeDataStorparcel();
+
       case GrundType::ERHVERV:
         return $this->writeDataErhverv();
     }
   }
 
+  /**
+   * Write report data.
+   */
   private function writeDataParcelhusAndre() {
     $grundtype = $this->getParameterValue('grundtype');
     $startdate = $this->getParameterValue('startdate');
@@ -55,7 +69,7 @@ class ReportTilSalgIPerioden extends Report {
       'Accept.',
       'Res. /Tilb 4)',
       'Disp',
-      ]);
+    ]);
 
     $sql = "SELECT g.lokalSamfundId, s.name, count(g.vej) as aktuelle, SUM(CASE WHEN SalgStatus='Solgt' THEN 1  ELSE 0 END) as solgt, ";
     $sql .= "SUM(CASE WHEN SalgStatus='Accepteret' OR SalgStatus='Skøde rekvireret' THEN 1  ELSE 0 END) as accept, ";
@@ -72,9 +86,9 @@ class ReportTilSalgIPerioden extends Report {
     $sql .= "group by g.lokalSamfundId,s.name order by s.name ";
 
     $stmt = $this->entityManager->getConnection()->prepare($sql);
-    $stmt->bindValue(':grundtype' , $grundtype);
-    $stmt->bindValue(':fromDate' , $startdate, Type::DATE);
-    $stmt->bindValue(':toDate' , $enddate, Type::DATE);
+    $stmt->bindValue(':grundtype', $grundtype);
+    $stmt->bindValue(':fromDate', $startdate, Type::DATE);
+    $stmt->bindValue(':toDate', $enddate, Type::DATE);
     $stmt->execute();
 
     $totals = [
@@ -93,13 +107,12 @@ class ReportTilSalgIPerioden extends Report {
 
       $this->writeGroupHeader([
         $row['name'], NULL, NULL,
-        (int)$row['aktuelle'],
-        (int)$row['solgt'],
-        (int)$row['accept'],
-        (int)$row['res'],
-        (int)$row['disp'],
+        (int) $row['aktuelle'],
+        (int) $row['solgt'],
+        (int) $row['accept'],
+        (int) $row['res'],
+        (int) $row['disp'],
       ]);
-
 
       $sql = "SELECT g.vej,IFNULL(lp.nr,'') as nr,g.salgsType, COUNT(g.vej) as aktuelle,sum(CASE WHEN g.salgStatus='Solgt' THEN 1 else 0 end) as solgt ";
       $sql .= ",sum(CASE WHEN g.salgStatus='Skøde rekvireret' OR g.salgStatus='Accepteret' THEN 1 else 0 end) as accept ";
@@ -119,10 +132,10 @@ class ReportTilSalgIPerioden extends Report {
       $sql .= "group by g.vej,lp.nr,g.salgsType";
 
       $itemStmt = $this->entityManager->getConnection()->prepare($sql);
-      $itemStmt->bindValue(':grundtype' , $grundtype);
-      $itemStmt->bindValue(':lokalSamfundId' , $row['lokalSamfundId']);
-      $itemStmt->bindValue(':fromDate' , $startdate, Type::DATE);
-      $itemStmt->bindValue(':toDate' , $enddate, Type::DATE);
+      $itemStmt->bindValue(':grundtype', $grundtype);
+      $itemStmt->bindValue(':lokalSamfundId', $row['lokalSamfundId']);
+      $itemStmt->bindValue(':fromDate', $startdate, Type::DATE);
+      $itemStmt->bindValue(':toDate', $enddate, Type::DATE);
       $itemStmt->execute();
 
       while ($item = $itemStmt->fetch()) {
@@ -131,11 +144,11 @@ class ReportTilSalgIPerioden extends Report {
           $item['vej'],
           $item['nr'],
           $item['salgsType'],
-          (int)$item['aktuelle'],
-					(int)$item['solgt'],
-					(int)$item['accept'],
-					(int)$item['res'],
-					(int)$item['disp'],
+          (int) $item['aktuelle'],
+          (int) $item['solgt'],
+          (int) $item['accept'],
+          (int) $item['res'],
+          (int) $item['disp'],
         ]);
       }
     }
@@ -149,4 +162,5 @@ class ReportTilSalgIPerioden extends Report {
       $totals['disp'],
     ]);
   }
+
 }
