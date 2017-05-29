@@ -33,8 +33,6 @@ class ReportController extends Controller {
       $parameterForms[$name] = $view;
     }
 
-    // header('Content-type: text/plain'); echo var_export($parameterForms, true); die(__FILE__.':'.__LINE__.':'.__METHOD__);
-
     return [
       'reports' => $reports,
       'parameterForms' => $parameterForms,
@@ -56,7 +54,7 @@ class ReportController extends Controller {
     $reportKey = $request->get('report');
     $reportClass = NULL;
     foreach ($this->getReports() as $r) {
-      if ($this->getReportKey($r)) {
+      if ($this->getReportKey($r) === $reportKey) {
         $reportClass = get_class($r);
         break;
       }
@@ -104,9 +102,9 @@ class ReportController extends Controller {
     return $reports;
   }
 
-private function getReportKey(Report $report) {
+  private function getReportKey(Report $report) {
     return md5(get_class($report));
-}
+  }
 
   private function getGrundTypes() {
     return GrundType::getChoices();
@@ -125,41 +123,4 @@ private function getReportKey(Report $report) {
     return $builder->getForm();
   }
 
-  /**
-   * @Route(
-   *   name = "grundsalg_report_debug",
-   *   path = "/debug",
-   * )
-   */
-  public function debugAction(Request $request) {
-    //*
-    $this->entityManager = $this->getDoctrine()->getManager();
-    $this->parameters = [
-      'grundtype' => 'Parcelhusgrund',
-      'startdate' => new \DateTime('2000-01-01'),
-      'enddate' => new \DateTime('2100-01-01'),
-    ];
-    $sql = "SELECT g.lokalSamfundId,s.name, count(g.vej) as aktuelle, SUM(CASE WHEN SalgStatus='Solgt' THEN 1  ELSE 0 END) as solgt, ";
-    $sql .= "SUM(CASE WHEN SalgStatus='Accepteret' OR SalgStatus='Skøde rekvireret' THEN 1  ELSE 0 END) as accept, ";
-    $sql .= "SUM(CASE WHEN SalgStatus='Reserveret' THEN 1  ELSE 0 END) as res ";
-    $sql .= "FROM Grund as g ";
-    $sql .= "JOIN Lokalsamfund as s on s.id=g.lokalSamfundId ";
-    $sql .= "WHERE g.type= :grundtype and not ( ";
-    $sql .= "(beloebAnvist is not null and beloebAnvist < :fromDate) or ";
-    $sql .= "(datoAnnonce1 is not null And datoAnnonce1 > :toDate) or ";
-    $sql .= "(datoAnnonce1 is null And (datoAnnonce is not null And datoAnnonce > :toDate)) or ";
-    $sql .= "(( auktionStartDato is not null And auktionStartDato > :toDate) And ( datoAnnonce1 is null Or datoAnnonce1 > :toDate)) or ";
-    $sql .= "(status = 'Fremtidig' And annonceres = 1)";
-    $sql .= ") ";
-    $sql .= "group by g.lokalSamfundId,s.name order by s.name ";
-
-    $stmt = $this->entityManager->getConnection()->prepare($sql);
-    $stmt->bindValue(':grundtype' , $this->parameters['grundtype']);
-    $stmt->bindValue(':fromDate' , $this->parameters['startdate'], Type::DATE);
-    $stmt->bindValue(':toDate' , $this->parameters['enddate'], Type::DATE);
-    $stmt->execute();
-    $rows = $stmt->fetchAll();
-    header('Content-type: text/plain'); echo var_export($rows, true); die(__FILE__.':'.__LINE__.':'.__METHOD__);
-//*/
-  }
 }

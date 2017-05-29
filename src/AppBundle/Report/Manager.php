@@ -2,16 +2,27 @@
 
 namespace AppBundle\Report;
 
+/**
+ * Report manager.
+ */
 class Manager {
   /**
+   * The configuration.
+   *
    * @var array
    */
   protected $configuration;
 
+  /**
+   * Constructor.
+   */
   public function __construct(array $configuration) {
     $this->configuration = $configuration;
   }
 
+  /**
+   * Get all enabled reports.
+   */
   public function getReports() {
     $reports = [];
 
@@ -28,4 +39,5 @@ class Manager {
 
     return $reports;
   }
+
 }
