@@ -150,4 +150,11 @@ abstract class Report {
     $this->writer->addRow($data);
   }
 
+  /**
+   *
+   */
+  protected function formatNumber($number, $decimals = 4) {
+    return number_format($number, $decimals, ',', '');
+  }
+
 }
