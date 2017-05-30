@@ -7,15 +7,18 @@
   <form method="POST" id="list-form">
 
   {% block bulk_actions_top %}
-    {% if paginator.currentPageResults.count > 0 %}
-      {% if _bulk_actions %}
-        <div class="bulk-actions">
+    <div class="bulk-actions">
+      {% if paginator.currentPageResults.count > 0 %}
+        {% if _bulk_actions %}
           {% if _entity_config.class == 'AppBundle\\Entity\\Grund' %}
             {% include 'easy_admin/grund/_bulk_actions.html.twig' %}
           {% endif %}
-        </div>
+        {% endif %}
       {% endif %}
-    {% endif %}
+      <div class="bulk-create-grund">
+        <a class="btn btn default" href="{{ path('easyadmin', parameters = {'action': 'new', 'entity': 'grund_collection'}) }}">Opret Grunde (flere)</a>
+      </div>
+    </div>
   {% endblock %}
 
   <div class="table-responsive">

@@ -79,3 +79,7 @@ span.form-control, span.form-inline .form-control {
 .table.form-collection>tbody>tr>td .error-block {
   padding: 8px;
 }
+
+.bulk-actions > div {
+	display: inline-block;
+}

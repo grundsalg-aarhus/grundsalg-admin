@@ -5,6 +5,8 @@ namespace AppBundle\Twig;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class AppExtension extends \Twig_Extension {
   protected $container;
@@ -53,6 +55,10 @@ class AppExtension extends \Twig_Extension {
     switch ($type) {
       case 'choice':
         return ChoiceType::class;
+      case 'text':
+        return TextType::class;
+      case 'hidden':
+        return HiddenType::class;
     }
 
     return $type;
