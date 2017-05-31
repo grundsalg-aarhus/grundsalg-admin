@@ -94,6 +94,6 @@ td.pris-total input {
   border-bottom: 6px double #444444;
 }
 
-.js-maxetagem2, .js-fastpris, .js-minbud, .js-price-table {
+.js-maxetagem2, .js-fastpris, .js-minbud, .js-price-table, .js-status {
   display: none;
 }

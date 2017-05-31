@@ -155,6 +155,7 @@
                 </div>
                 <div class="col-md-6">
                   {{ grundsalg.entity_value('app.grund.salgstatus', entity.visStatus ) }}
+                  <div class="js-status">{{ form_row(form.status) }}</div>
                   {{ form_row(form.salgstype) }}
 
                   <div class="field-section ">
@@ -746,6 +747,7 @@
       grundShowHidePriceFields();
       grundShowHideEtagem2();
       grundShowHideAnnoceres();
+      grundSetReadOnlyDatoannonce();
 
       $('[id$=_annonceres]').on('click', grundShowHideAnnoceres);
       $('.js-calc-minbud').on('click', grundCalcMinbud);
@@ -799,12 +801,22 @@
 
     var grundShowHideAnnoceres = function () {
       var annonceres = $('[id$=_annonceres]').is(":checked");
-      alert(annonceres);
 
       if (annonceres) {
           $('.js-datoAnnonce').show();
       } else {
           $('.js-datoAnnonce').hide();
+      }
+    }
+
+    var grundSetReadOnlyDatoannonce = function() {
+      var status = $('[id$=_status]').val();
+      var datoAnnonceInput = $('[id$=_datoAnnonce]');
+
+      if ((status === 'Fremtidig') || (status === 'Annonceret')) {
+        datoAnnonceInput.prop('readonly', true);
+      } else {
+        datoAnnonceInput.prop('readonly', false);
       }
     }
 

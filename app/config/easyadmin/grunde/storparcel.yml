@@ -106,6 +106,7 @@ easy_admin:
                     - { property: 'lokalsamfund', label: 'app.grund.lokalsamfund' }
                     - { property: 'urlgis', label: 'app.grund.urlgis', type: url }
 
+                    - { property: 'status', label: 'app.grund.status', type: 'AppBundle\Form\Field\GrundStatus' }
                     - { property: 'annonceres', label: 'app.grund.annonceres' }
                     - { property: 'datoAnnonce', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoAnnonce' }
                     - { property: 'datoAnnonce1', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoAnnonce1' }
