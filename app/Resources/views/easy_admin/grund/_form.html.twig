@@ -163,8 +163,10 @@
                     </h2>
                   </div>
                   {{ form_row(form.annonceres) }}
+                  <div class="js-datoAnnonce">
                   {{ form_row(form.datoAnnonce) }}
                   {{ form_row(form.datoAnnonce1) }}
+                  </div>
 
                   <div class="js-auktion">
                     <div class="field-section ">
@@ -743,7 +745,9 @@
 
       grundShowHidePriceFields();
       grundShowHideEtagem2();
+      grundShowHideAnnoceres();
 
+      $('[id$=_annonceres]').on('click', grundShowHideAnnoceres);
       $('.js-calc-minbud').on('click', grundCalcMinbud);
       $('.js-pris-calc input').on('keyup', grundCalc);
       $('[id$=_type]').on('change', grundShowHideEtagem2);
@@ -792,6 +796,17 @@
       });
 
     });
+
+    var grundShowHideAnnoceres = function () {
+      var annonceres = $('[id$=_annonceres]').is(":checked");
+      alert(annonceres);
+
+      if (annonceres) {
+          $('.js-datoAnnonce').show();
+      } else {
+          $('.js-datoAnnonce').hide();
+      }
+    }
 
     var grundShowHideEtagem2 = function () {
       var type = $('[id$=_type]').val();
@@ -842,6 +857,7 @@
 
     var grundCalcMinbud = function () {
       var salgsType = $('[id$=_salgstype]').val();
+      var type = $('[id$=_type]').val();
 
       var arealInput = $('[id$=_areal]');
       var arealvejInput = $('[id$=_arealvej]');
@@ -849,20 +865,25 @@
       var bruttoarealInput = $('[id$=_bruttoareal]');
       var prism2Input = $('[id$=_prism2]');
       var minBudInput = $('[id$=_minbud]');
+      var maxetagem2Input = $('[id$=_maxetagem2]');
 
       var areal = arealInput.grundParseFloat();
       var arealvej = arealvejInput.grundParseFloat();
       var arealkotelet = arealkoteletInput.grundParseFloat();
-      var bruttoareal = bruttoarealInput.grundParseFloat();
       var prism2 = prism2Input.grundParseFloat();
       var minbud = minBudInput.grundParseFloat();
+      var maxetagem2 = maxetagem2Input.grundParseFloat();
 
       var bruttoareal = areal - arealvej - arealkotelet;
       bruttoarealInput.grundFloatToString(bruttoareal);
 
       if (salgsType == 'Auktion') {
         if (prism2 > 0) {
-          minbud = bruttoareal * prism2;
+          if (type === 'Storparcel') {
+            minbud = maxetagem2 * prism2;
+          } else {
+            minbud = bruttoareal * prism2;
+          }
           minBudInput.grundFloatToString(minbud);
         }
       }
