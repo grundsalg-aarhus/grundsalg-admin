@@ -8,12 +8,15 @@
         grundShowHideEtagem2();
         grundShowHideAnnoceres();
         grundSetReadOnlyDatoannonce();
+        grundShowHideSalgsFields();
 
         $('[id$=_annonceres]').on('click', grundShowHideAnnoceres);
         $('.js-calc-minbud').on('click', grundCalcMinbud);
         $('.js-pris-calc input').on('keyup', grundCalc);
         $('[id$=_type]').on('change', grundShowHideEtagem2);
         $('[id$=_salgstype]').on('change', grundShowHidePriceFields);
+        $('[id$=_auktionstartdato]').on('change', grundSyncAuktionDates);
+        $('[id$=_auktionslutdato]').on('change', grundSyncAuktionDates);
 
         $('.js-price-table').show();
 
@@ -59,6 +62,41 @@
 
     });
 
+    var grundShowHideSalgsFields = function() {
+        var status = $('[id$=_status]').val();
+        var salgstype = $('[id$=_salgstype]').val();
+
+        if ((salgstype !== 'Auktion') && ((status === 'Ledig') || (status === 'Tilbud'))) {
+            $('.js-resdate-wrapper').show();
+            $('.js-tilbuddate-wrapper').show();
+        } else {
+            $('.js-resdate-wrapper').hide();
+            $('.js-tilbuddate-wrapper').hide();
+        }
+
+        if (salgstype === 'Auktion') {
+            $('.js-antagetbud-wrapper').show();
+        } else {
+            $('.js-antagetbud-wrapper').hide();
+        }
+
+        if ((status === 'Ledig') || (status === 'Tilbud') || (status === 'Auktion slut')) {
+            $('.js-salgsdatoer-wrapper').show();
+            $('.js-koeber-wrapper').show();
+        } else {
+            $('.js-salgsdatoer-wrapper').hide();
+            $('.js-koeber-wrapper').hide();
+        }
+    };
+
+    var grundSyncAuktionDates = function() {
+        var start = moment( $('[id$=_auktionstartdato]').val() );
+        $('.js-auktion-wrapper span.form-control').first().text( start.format('DD/MM/YYYY') );
+
+        var slut = moment( $('[id$=_auktionslutdato]').val() );
+        $('.js-auktion-wrapper span.form-control').last().text( slut.format('DD/MM/YYYY') );
+    }
+
     var grundShowHideAnnoceres = function () {
         var annonceres = $('[id$=_annonceres]').is(":checked");
 
@@ -97,7 +135,7 @@
 
             $('.js-fastpris').hide();
             $('.js-minbud').hide();
-            $('.js-auktion').hide();
+            $('.js-auktion-wrapper').hide();
 
             $('.js-pris').show();
             $('.js-priskorrektion').show();
@@ -109,7 +147,7 @@
             $('.js-priskorrektion').hide();
             $('.js-pris').hide();
             $('.js-minbud').hide();
-            $('.js-auktion').hide();
+            $('.js-auktion-wrapper').hide();
 
             $('.js-fastpris').show();
 
@@ -120,7 +158,7 @@
             $('.js-fastpris').hide();
 
             $('.js-minbud').show();
-            $('.js-auktion').show();
+            $('.js-auktion-wrapper').show();
 
             grundCalcMinbud();
 
@@ -250,7 +288,7 @@
     }
 
 
-}(jQuery))
+}(jQuery));
 
 jQuery.fn.extend({
     grundParseFloat: function () {

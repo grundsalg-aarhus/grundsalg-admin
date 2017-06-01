@@ -77,7 +77,7 @@ span.form-control, span.form-inline .form-control {
   border-right: 1px solid #CCC;
 }
 
-.number input {
+.number input, .number {
   text-align: right;
 }
 

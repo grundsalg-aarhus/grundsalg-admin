@@ -149,6 +149,7 @@ easy_admin:
                     - { property: 'skoederekv', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.skoederekv' }
                     - { property: 'beloebanvist', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.beloebanvist' }
                     - { property: 'salgsprisumoms', label: 'app.grund.salgsprisumoms' }
+                    - { property: 'antagetbud', label: 'app.grund.antagetbud' }
 
                     - { property: 'koeberNavn', label: 'app.grund.koeberNavn' }
                     - { property: 'koeberAdresse', label: 'app.grund.koeberAdresse' }

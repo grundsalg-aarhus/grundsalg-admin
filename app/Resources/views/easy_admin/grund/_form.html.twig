@@ -169,7 +169,7 @@
                   {{ form_row(form.datoAnnonce1) }}
                   </div>
 
-                  <div class="js-auktion">
+                  <div class="js-auktion-wrapper">
                     <div class="field-section ">
                       <h2>
                         {{ 'app.grund.auktion' | trans }}
@@ -458,7 +458,16 @@
 
             <div class="box-body">
 
-              <div class="row">
+              <div class="row js-auktion-wrapper">
+                <div class="col-md-6">
+                  {{ grundsalg.entity_value('app.grund.auktionstartdato', entity.auktionstartdato) }}
+                </div>
+                <div class="col-md-6">
+                  {{ grundsalg.entity_value('app.grund.auktionslutdato', entity.auktionslutdato) }}
+                </div>
+              </div>
+
+              <div class="row js-resdate-wrapper">
                 <div class="col-md-6">
                   <div class="form-group field-date">
                     {{ form_label(form.resstart) }}
@@ -487,7 +496,7 @@
                 </div>
               </div>
 
-              <div class="row">
+              <div class="row js-tilbuddate-wrapper">
                 <div class="col-md-6">
                   <div class="form-group field-date">
                     {{ form_label(form.tilbudstart) }}
@@ -516,7 +525,7 @@
                 </div>
               </div>
 
-              <div class="row">
+              <div class="row js-salgsdatoer-wrapper">
                 <div class="col-md-6">
                   <div class="form-group field-date">
                     {{ form_label(form.accept) }}
@@ -535,7 +544,7 @@
                 </div>
               </div>
 
-              <div class="row">
+              <div class="row js-salgsdatoer-wrapper">
                 <div class="col-md-6">
                   <div class="form-group field-date">
                     {{ form_label(form.skoederekv) }}
@@ -561,9 +570,16 @@
                   </div>
 
                   <div class="form-group  field-number js-fastpris">
-                    <label class="col-sm-2 control-label" for="storparcel_salgsprisumoms">{{ 'app.grund.salgsprisumoms' | trans }}</label>
+                    <label class="col-sm-2 control-label">{{ 'app.grund.salgsprisumoms' | trans }}</label>
                     <div class="col-sm-10 js-readonly number">
                       {{ form_widget(form.salgsprisumoms) }}
+                    </div>
+                  </div>
+
+                  <div class="form-group  field-number js-antagetbud-wrapper">
+                    <label class="col-sm-2 control-label">{{ 'app.grund.antagetbud' | trans }}</label>
+                    <div class="col-sm-10 number">
+                      {{ form_widget(form.antagetbud) }}
                     </div>
                   </div>
 
@@ -575,7 +591,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row js-koeber-wrapper">
         <div class="field-group col-md-6">
           <div class="box box-default">
             <div class="box-header with-border">
@@ -618,7 +634,7 @@
       </div>
 
 
-      <div class="row">
+      <div class="row js-koeber-wrapper">
         <div class="field-group col-xs-12">
           <div class="box box-default">
             <div class="box-header with-border">
@@ -737,4 +753,4 @@
 
 {{ form_end(form) }}
 
-<script src="/js/grund-form.js"></script>
+<script src="/js/grund-form-edit.js"></script>
