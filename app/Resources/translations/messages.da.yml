@@ -1,13 +1,14 @@
 action:
+    cancel: Annuller
     delete: Slet
     edit: Rediger
     list: Tilbage til oversigten
+    new: Tilføj %entity_name%
+    ok: OK
     remove_item: Slet element
     save: Gem
     search: Søg
-    new: Tilføj %entity_name%
     show: Vis
-    cancel: Annuller
 
 app:
   grund:
