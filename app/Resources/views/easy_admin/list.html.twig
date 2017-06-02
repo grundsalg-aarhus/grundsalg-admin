@@ -18,6 +18,11 @@
           {% endif %}
         {% endif %}
       {% endif %}
+      {% if _entity_config.class == 'AppBundle\\Entity\\Grund' %}
+        <div class="bulk-create-grund">
+          <a class="btn btn default" href="{{ path('easyadmin', parameters = {'action': 'new', 'entity': 'grund_collection'}) }}">Opret Grunde (flere)</a>
+        </div>
+      {% endif %}
     </div>
   {% endblock %}
 
