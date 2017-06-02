@@ -168,6 +168,10 @@ easy_admin:
                                   - name: status
                                     type: hidden
                                     type_options:
+                                        data: !php/const:AppBundle\DBAL\Types\GrundStatus::LEDIG
+                                  - name: salgstatus
+                                    type: hidden
+                                    type_options:
                                         data: !php/const:AppBundle\DBAL\Types\GrundSalgStatus::LEDIG
 
             search: *parcelhusgrund_default_search
