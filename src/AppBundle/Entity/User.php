@@ -86,6 +86,6 @@ class User extends BaseUser
    */
   public function __toString()
   {
-    return isset($this->name) ? $this->name : '' . $this->id;
+    return isset($this->name) ? $this->name : $this->getUsernameCanonical();
   }
 }
