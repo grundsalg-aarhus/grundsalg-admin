@@ -1,0 +1,84 @@
+{% extends "@EasyAdmin/default/show.html.twig" %}
+
+{% macro entity_row(label, field = null) %}
+  <div class="form-group field-entity">
+    <label class="col-sm-2 control-label">{{ label | trans }}</label>
+    <div class="col-sm-10">
+      <div class="form-control">
+        {% if field is same as(true) %}
+          <span class="label label-success">Ja</span>
+        {% elseif field is same as(false) %}
+          <span class="label label-danger">Nej</span>
+        {% elseif field.date is defined %}
+          {{ field | date }}
+        {% elseif field is iterable %}
+          {{ field | join(', ') }}
+        {% else %}
+          {{ field }}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endmacro %}
+
+{% import _self as grundsalg %}
+
+{% block main %}
+
+  <div class="form-horizontal">
+    <div class="field-group col-xs-12 col-sm-12 new-row">
+      <div class="box box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">
+            Postnr. / By
+          </h3>
+        </div>
+
+        <div class="box-body">
+
+          <div class="row">
+
+            <div class="col-xs-12 col-sm-6">
+              {{ grundsalg.entity_row('app.postby.postalcode', entity.postalcode ) }}
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              {{ grundsalg.entity_row('app.postby.city', entity.city ) }}
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    {% include "easy_admin/_includes/_blameable.html.twig" %}
+
+    <div class="form-group form-actions">
+      <div class="col-sm-10 col-sm-offset-2">
+        {% block item_actions %}
+          {% set _show_actions = easyadmin_get_actions_for_show_item(_entity_config.name) %}
+          {% set _request_parameters = { entity: _entity_config.name, referer: app.request.query.get('referer') } %}
+
+          {{ include('@EasyAdmin/default/includes/_actions.html.twig', {
+            actions: _show_actions,
+            request_parameters: _request_parameters,
+            translation_domain: _entity_config.translation_domain,
+            trans_parameters: _trans_parameters,
+            item_id: _entity_id
+          }, with_context = false) }}
+        {% endblock item_actions %}
+      </div>
+    </div>
+  </div>
+
+  {% block delete_form %}
+    {{ include('@EasyAdmin/default/includes/_delete_form.html.twig', {
+      view: 'show',
+      referer: app.request.query.get('referer', ''),
+      delete_form: delete_form,
+      _translation_domain: _entity_config.translation_domain,
+      _trans_parameters: _trans_parameters,
+      _entity_config: _entity_config,
+    }, with_context = false) }}
+  {% endblock delete_form %}
+{% endblock %}

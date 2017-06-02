@@ -1,13 +1,14 @@
 action:
+    cancel: Annuller
     delete: Slet
     edit: Rediger
     list: Tilbage til oversigten
+    new: Tilføj %entity_name%
+    ok: OK
     remove_item: Slet element
     save: Gem
     search: Søg
-    new: Tilføj %entity_name%
     show: Vis
-    cancel: Annuller
 
 app:
   grund:
@@ -150,7 +151,13 @@ plural:
     Parcelhusgrund: parcelhusgrunde
     Storparcel: storparceller
 
+user:
+    signout: Log ud
+
 # If we use the 'form_label' widget directly the EasyAdmin 'label' value is not used
 Bogstav: Bogst.
 Husnummer: Husnr.
 Urlgis: GIS-kort
+
+'Cannot delete %name%': '"%name%" kan ikke slettes'
+'%name% is referenced by %count% entities': 'one: "%name%" bruges af %count% datapost | some: "%name%" bruges af %count% dataposter'

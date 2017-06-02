@@ -97,3 +97,11 @@ td.pris-total input {
 .js-maxetagem2, .js-fastpris, .js-minbud, .js-price-table, .js-status {
   display: none;
 }
+
+.table.form-collection>tbody>tr>td .error-block {
+  padding: 8px;
+}
+
+.bulk-actions > div {
+	display: inline-block;
+}

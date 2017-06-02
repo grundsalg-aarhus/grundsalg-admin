@@ -29,9 +29,6 @@ class BlameableListener extends \Gedmo\Blameable\BlameableListener
 
         // ok so its not an association, then it is a string
         if (is_object($this->user)) {
-            if (method_exists($this->user, 'getName')) {
-                return (string) $this->user->getName();
-            }
             if (method_exists($this->user, '__toString')) {
                 return $this->user->__toString();
             }

@@ -38,14 +38,21 @@ class GrundCalculator implements EventSubscriber {
 
   public function preUpdate(LifecycleEventArgs $args) {
     $grund = $args->getEntity();
+    $changeset = $args->getEntityChangeSet();
 
     // only act on some "Grund" entity
     if (!$grund instanceof Grund) {
       return;
     }
 
-    $this->updateStatus($grund);
-    $this->calculateSalgstatus($grund);
+    // if either status or salgsstaus is explicitly set abstain from changing
+    // (bulk change)
+    if(!array_key_exists('status', $changeset)) {
+      $this->updateStatus($grund);
+    }
+    if(!array_key_exists('salgstatus', $changeset)) {
+      $this->calculateSalgstatus($grund);
+    }
     $this->calculateToDates($grund);
 
   }

@@ -562,7 +562,7 @@ class Grund {
   /**
    * @var \AppBundle\Entity\Salgshistorik
    *
-   * @OneToMany(targetEntity="Salgshistorik", mappedBy="grund")
+   * @OneToMany(targetEntity="Salgshistorik", mappedBy="grund", cascade={"remove"})
    */
   private $salgshistorik;
 
@@ -628,7 +628,7 @@ class Grund {
    * @return string
    */
   public function __toString() {
-    return $this->getVej() . ' ' . $this->getHusnummer() . $this->getBogstav() . ($this->getZipcity() ? ', ' . $this->getZipcity() : '');
+    return $this->getVej() . ' ' . $this->getHusnummer() . $this->getBogstav() . ($this->getPostby() ? ', ' . $this->getPostby() : '');
   }
 
   /**

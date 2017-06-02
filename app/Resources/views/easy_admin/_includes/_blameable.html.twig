@@ -5,13 +5,13 @@
         <div class="row">
           <div class="col-sm-6">
             <p>
-              <span class="meta-label">{{ 'app.meta.created_at' | trans }}:</span> {{ entity.createdAt | date('d-m-Y, H:i') }}
+              <span class="meta-label">{{ 'app.meta.created_at' | trans }}:</span> {{ entity.createdAt | date('d-m-Y, H:i') | replace({', 00:00': ''}) }}
               <span class="meta-label">{{ 'app.meta.created_by' | trans }}:</span> {{ entity.createdBy }}
             </p>
           </div>
           <div class="col-sm-6">
             <p>
-              <span class="meta-label">{{ 'app.meta.updated_at' | trans }}:</span> {{ entity.updatedAt | date('d-m-Y, H:i') }}
+              <span class="meta-label">{{ 'app.meta.updated_at' | trans }}:</span> {{ entity.updatedAt | date('d-m-Y, H:i') | replace({', 00:00': ''}) }}
               <span class="meta-label">{{ 'app.meta.updated_by' | trans }}:</span> {{ entity.updatedBy }}
             </p>
           </div>

@@ -10,9 +10,13 @@ easy_admin:
             - { name: new, label: 'Tilføj', icon: 'plus', roles: [ROLE_EDITOR] }
             - { name: -delete }
 
+    edit: &default_edit_actions
+        actions:
+            - { name: delete, roles: [ROLE_ADMIN] }
+
     show: &default_show_actions
         actions:
-            - { name: edit, roles: [ROLE_ADMIN] }
+            - { name: edit, roles: [ROLE_EDITOR] }
             - { name: delete, roles: [ROLE_ADMIN] }
 
     formats:
