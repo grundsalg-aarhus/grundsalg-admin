@@ -1,0 +1,37 @@
+<div id="modal-delete" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h4>{{ 'Cannot delete %name%' | trans({'%name%': entity | trim }) }}</h4>
+
+        {% set info = get_cannot_delete_info(entity) %}
+
+        {% transchoice info.total with {'%name%': entity | trim} %}
+        %name% is referenced by %count% entities
+        {% endtranschoice %}
+
+        {# @TODO: Render more details? #}
+        {#
+        <dl>
+          {% for class, fields in info.references %}
+            <dt>
+              {{ class }}
+            </dt>
+            <dd>
+              {% for field, count in fields %}
+                <dt>{{ field }}</dt>
+                <dd>{{ count }}</dd>
+              {% endfor %}
+            </dd>
+          {% endfor %}
+        </dl>
+        #}
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn">
+          {{ 'action.ok'|trans }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -499,7 +499,7 @@ class Interessent
 
   public function __toString()
   {
-    return $this->navn . " / " . $this->navn1;
+    return $this->koeberNotat . " / " . $this->medkoeberNavn;
   }
 
   /**
