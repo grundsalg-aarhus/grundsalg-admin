@@ -141,6 +141,9 @@ plural:
     Parcelhusgrund: parcelhusgrunde
     Storparcel: storparceller
 
+user:
+    signout: Log ud
+
 # If we use the 'form_label' widget directly the EasyAdmin 'label' value is not used
 Bogstav: Bogst.
 Husnummer: Husnr.
