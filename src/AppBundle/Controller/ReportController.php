@@ -70,7 +70,7 @@ class ReportController extends Controller {
     $form->submit($request->get($form->getName()));
     $parameters = $form->getData();
 
-    $filename = $this->getFilename($_format);
+    $filename = $this->getFilename($parameters, $report->getTitle(), $_format);
 
     $writer = WriterFactory::create($_format);
     $writer->openToBrowser($filename);
@@ -79,8 +79,13 @@ class ReportController extends Controller {
     exit;
   }
 
-  private function getFilename($format) {
-    return 'export.' . $format;
+  private function getFilename($parameters, $title, $format) {
+    $title = str_replace(' ', '-', $title);
+    if(array_key_exists('grundtype', $parameters)) {
+      return $parameters['grundtype'] . '_' . $title . '.' . $format;
+    }
+
+    return $title . '.' . $format;
   }
 
   private static $contentTypes = [
