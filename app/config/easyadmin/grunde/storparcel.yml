@@ -45,9 +45,14 @@ easy_admin:
             edit: &storparcel_default_edit
                 roles: [ROLE_EDITOR]
                 title: 'Rediger Storparcel'
+                actions:
+                    - { name: delete, roles: [ROLE_ADMIN] }
 
             show: &storparcel_default_show
                 title: 'Storparcel'
+                actions:
+                    - { name: edit, roles: [ROLE_EDITOR] }
+                    - { name: delete, roles: [ROLE_ADMIN] }
 
             new: &storparcel_default_new
                 title: 'Opret Grund'

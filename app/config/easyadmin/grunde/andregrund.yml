@@ -44,9 +44,14 @@ easy_admin:
             edit: &andregrund_default_edit
                 roles: [ROLE_EDITOR]
                 title: 'Rediger Grund'
+                actions:
+                    - { name: delete, roles: [ROLE_ADMIN] }
 
             show: &andregrund_default_show
                 title: 'Grund'
+                actions:
+                    - { name: edit, roles: [ROLE_EDITOR] }
+                    - { name: delete, roles: [ROLE_ADMIN] }
 
             new: &andregrund_default_new
                 title: 'Opret Grund'

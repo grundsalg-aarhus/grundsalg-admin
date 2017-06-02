@@ -45,9 +45,14 @@ easy_admin:
             edit: &erhvervsgrund_default_edit
                 roles: [ROLE_EDITOR]
                 title: 'Rediger Erhvervsgrund'
+                actions:
+                    - { name: delete, roles: [ROLE_ADMIN] }
 
             show: &erhvervsgrund_default_show
                 title: 'Erhvervsgrund'
+                actions:
+                    - { name: edit, roles: [ROLE_EDITOR] }
+                    - { name: delete, roles: [ROLE_ADMIN] }
 
             new: &erhvervsgrund_default_new
                 title: 'Opret Grund'

@@ -48,12 +48,14 @@ easy_admin:
             edit: &parcelhusgrund_default_edit
                 roles: [ROLE_EDITOR]
                 title: 'Rediger Parcelhusgrund'
+                actions:
+                    - { name: delete, roles: [ROLE_ADMIN] }
 
             show: &parcelhusgrund_default_show
                 title: 'Parcelhusgrund'
                 actions:
                     - { name: edit, roles: [ROLE_EDITOR] }
-                    - { name: delete, roles: [ROLE_EDITOR] }
+                    - { name: delete, roles: [ROLE_ADMIN] }
 
             new: &parcelhusgrund_default_new
                 title: 'Opret Grund'

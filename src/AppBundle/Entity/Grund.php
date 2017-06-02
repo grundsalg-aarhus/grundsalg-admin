@@ -559,7 +559,7 @@ class Grund {
   /**
    * @var \AppBundle\Entity\Salgshistorik
    *
-   * @OneToMany(targetEntity="Salgshistorik", mappedBy="grund")
+   * @OneToMany(targetEntity="Salgshistorik", mappedBy="grund", cascade={"remove"})
    */
   private $salgshistorik;
 
