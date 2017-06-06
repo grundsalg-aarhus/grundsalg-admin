@@ -78,20 +78,37 @@ easy_admin:
                     - { property: 'lokalsamfund', label: 'app.grund.lokalsamfund' }
                     - { property: 'urlgis', label: 'app.grund.urlgis', type: url }
 
+                    - { property: 'status', label: 'app.grund.status', type: 'AppBundle\Form\Field\GrundStatus' }
                     - { property: 'annonceres', label: 'app.grund.annonceres' }
                     - { property: 'datoAnnonce', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoAnnonce' }
                     - { property: 'datoAnnonce1', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoAnnonce1' }
+
+                    - { property: 'auktionstartdato', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.auktionstartdato' }
+                    - { property: 'auktionslutdato', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.auktionslutdato' }
 
                     - { property: 'type', label: 'app.grund.type', type: 'AppBundle\Form\Field\GrundType' }
                     - { property: 'salgstype', label: 'app.grund.salgstype', type: 'AppBundle\Form\Field\SalgsType' }
                     - { property: 'tilsluttet', label: 'app.grund.tilsluttet', type: 'AppBundle\Form\Field\TilslutningsType', type_options: { expanded : true, multiple : true } }
 
+                    - { property: 'maxetagem2', label: 'app.grund.maxetagem2' }
                     - { property: 'areal', label: 'app.grund.areal' }
                     - { property: 'arealvej', label: 'app.grund.arealvej' }
                     - { property: 'arealkotelet', label: 'app.grund.arealkotelet' }
-                    - { property: 'bruttoareal', label: 'app.grund.bruttoareal', readonly: true, type_options: { disabled: true } }
+                    - { property: 'bruttoareal', label: 'app.grund.bruttoareal' }
                     - { property: 'prism2', label: 'app.grund.prism2' }
+                    - { property: 'pris', label: 'app.grund.pris' }
                     - { property: 'fastpris', label: 'app.grund.fastpris' }
+                    - { property: 'minbud', label: 'app.grund.minbud' }
+
+                    - { property: 'priskorrektion1', label: 'app.grund.priskorrektion1', type: 'AppBundle\Form\Field\Priskorrektion' }
+                    - { property: 'antalkorr1', label: 'app.grund.antalkorr1' }
+                    - { property: 'akrkorr1', label: 'app.grund.akrkorr1' }
+                    - { property: 'priskorrektion2', label: 'app.grund.priskorrektion2', type: 'AppBundle\Form\Field\Priskorrektion' }
+                    - { property: 'antalkorr2', label: 'app.grund.antalkorr2' }
+                    - { property: 'akrkorr2', label: 'app.grund.akrkorr2' }
+                    - { property: 'priskorrektion3', label: 'app.grund.priskorrektion3', type: 'AppBundle\Form\Field\Priskorrektion' }
+                    - { property: 'antalkorr3', label: 'app.grund.antalkorr3' }
+                    - { property: 'akrkorr3', label: 'app.grund.akrkorr3' }
 
                     - { property: 'note', label: 'app.grund.note' }
 
@@ -103,6 +120,8 @@ easy_admin:
                     - { property: 'overtagelse', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.overtagelse' }
                     - { property: 'skoederekv', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.skoederekv' }
                     - { property: 'beloebanvist', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.beloebanvist' }
+                    - { property: 'salgsprisumoms', label: 'app.grund.salgsprisumoms' }
+                    - { property: 'antagetbud', label: 'app.grund.antagetbud' }
 
                     - { property: 'koeberNavn', label: 'app.grund.koeberNavn' }
                     - { property: 'koeberAdresse', label: 'app.grund.koeberAdresse' }

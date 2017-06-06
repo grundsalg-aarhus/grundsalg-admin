@@ -37,6 +37,10 @@ span.form-control, span.form-inline .form-control {
   margin-bottom: 1em;
 }
 
+.table.form-collection {
+  border: 0;
+}
+
 .table.form-collection .form-group {
   margin: 0;
 }
@@ -52,28 +56,46 @@ span.form-control, span.form-inline .form-control {
   text-align: left;
 }
 
+.table.form-collection>thead>tr>th {
+  border: 0;
+}
+
 .table.form-collection>tbody>tr>td {
+  border: 0;
   padding: 0;
 }
 
-.table.form-collection>tbody>tr>td input {
-  border: 1px solid white;
+.table.form-collection>tbody>tr>td button {
+  margin-top: 0.5em;
 }
 
-.table.form-collection>tbody>tr>td input:disabled {
-  background-color: #eee;
-  border: 1px solid #eee;
+.table.form-collection>tbody>tr>td .error-block {
+  padding: 8px;
 }
 
-.table.form-collection>tbody>tr>td .has-error input {
-  border: 1px solid #dd4b39;
+.table.form-collection>tbody>tr>td.priskorrektion_total {
+  border-right: 1px solid #CCC;
 }
 
-.table.form-collection>tbody>tr>td input:focus {
-  border-color: #66afe9;
-  outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+.number input, .number {
+  text-align: right;
+}
+
+.table.form-collection td.priskorrektion--select {
+  padding-right: 1em;
+}
+
+#vis_priskorrektion3_total {
+  border-bottom: 1px solid #444444;
+}
+
+td.pris-total input {
+  border-top: 1px solid #444444;
+  border-bottom: 6px double #444444;
+}
+
+.js-maxetagem2, .js-fastpris, .js-minbud, .js-price-table, .js-status {
+  display: none;
 }
 
 .table.form-collection>tbody>tr>td .error-block {

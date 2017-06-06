@@ -11,6 +11,8 @@ easy_admin:
         assets:
             css:
                 - '/css/grundsalg-styles.css'
+            js:
+                - '/js/lib/moment-with-locales.min.js'
 
         menu:
             - label: 'Parcelhusgrunde'
