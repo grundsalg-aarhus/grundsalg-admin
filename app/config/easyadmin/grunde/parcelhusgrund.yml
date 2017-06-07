@@ -13,10 +13,11 @@ easy_admin:
                 new: 'easy_admin/grund/new.html.twig'
             list: &parcelhusgrund_default_list
                 title: 'Alle Parcelhusgrunde'
-                sort: vej
+                sort: ['vej', 'ASC']
                 dql_filter: entity.type = 'Parcelhusgrund'
                 actions:
                     <<: *default_list_actions
+
                 fields:
                     - { property: vej, label: 'app.grund.vej' }
                     - { property: husnummer, label: 'app.grund.husnummer', css_class: 'text-right', format: '%.0f' }
@@ -28,6 +29,9 @@ easy_admin:
                     - { property: salgstype, label: 'app.grund.salgstype' }
                     - { property: areal, label: 'app.grund.areal', css_class: 'text-right', format: '%.0f' }
                     - { property: pris, label: 'app.grund.pris', css_class: 'text-right' }
+
+            delete:
+                roles: [ROLE_EDITOR]
 
             search: &parcelhusgrund_default_search
                 fields:
@@ -42,10 +46,16 @@ easy_admin:
                     - pris
 
             edit: &parcelhusgrund_default_edit
+                roles: [ROLE_EDITOR]
                 title: 'Rediger Parcelhusgrund'
+                actions:
+                    - { name: delete, roles: [ROLE_ADMIN] }
 
             show: &parcelhusgrund_default_show
                 title: 'Parcelhusgrund'
+                actions:
+                    - { name: edit, roles: [ROLE_EDITOR] }
+                    - { name: delete, roles: [ROLE_ADMIN] }
 
             new: &parcelhusgrund_default_new
                 title: 'Opret Grund'
@@ -68,20 +78,37 @@ easy_admin:
                     - { property: 'lokalsamfund', label: 'app.grund.lokalsamfund' }
                     - { property: 'urlgis', label: 'app.grund.urlgis', type: url }
 
+                    - { property: 'status', label: 'app.grund.status', type: 'AppBundle\Form\Field\GrundStatus' }
                     - { property: 'annonceres', label: 'app.grund.annonceres' }
                     - { property: 'datoAnnonce', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoAnnonce' }
                     - { property: 'datoAnnonce1', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoAnnonce1' }
+
+                    - { property: 'auktionstartdato', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.auktionstartdato' }
+                    - { property: 'auktionslutdato', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.auktionslutdato' }
 
                     - { property: 'type', label: 'app.grund.type', type: 'AppBundle\Form\Field\GrundType' }
                     - { property: 'salgstype', label: 'app.grund.salgstype', type: 'AppBundle\Form\Field\SalgsType' }
                     - { property: 'tilsluttet', label: 'app.grund.tilsluttet', type: 'AppBundle\Form\Field\TilslutningsType', type_options: { expanded : true, multiple : true } }
 
+                    - { property: 'maxetagem2', label: 'app.grund.maxetagem2' }
                     - { property: 'areal', label: 'app.grund.areal' }
                     - { property: 'arealvej', label: 'app.grund.arealvej' }
                     - { property: 'arealkotelet', label: 'app.grund.arealkotelet' }
-                    - { property: 'bruttoareal', label: 'app.grund.bruttoareal', readonly: true, type_options: { disabled: true } }
+                    - { property: 'bruttoareal', label: 'app.grund.bruttoareal' }
                     - { property: 'prism2', label: 'app.grund.prism2' }
+                    - { property: 'pris', label: 'app.grund.pris' }
                     - { property: 'fastpris', label: 'app.grund.fastpris' }
+                    - { property: 'minbud', label: 'app.grund.minbud' }
+
+                    - { property: 'priskorrektion1', label: 'app.grund.priskorrektion1', type: 'AppBundle\Form\Field\Priskorrektion' }
+                    - { property: 'antalkorr1', label: 'app.grund.antalkorr1' }
+                    - { property: 'akrkorr1', label: 'app.grund.akrkorr1' }
+                    - { property: 'priskorrektion2', label: 'app.grund.priskorrektion2', type: 'AppBundle\Form\Field\Priskorrektion' }
+                    - { property: 'antalkorr2', label: 'app.grund.antalkorr2' }
+                    - { property: 'akrkorr2', label: 'app.grund.akrkorr2' }
+                    - { property: 'priskorrektion3', label: 'app.grund.priskorrektion3', type: 'AppBundle\Form\Field\Priskorrektion' }
+                    - { property: 'antalkorr3', label: 'app.grund.antalkorr3' }
+                    - { property: 'akrkorr3', label: 'app.grund.akrkorr3' }
 
                     - { property: 'note', label: 'app.grund.note' }
 
@@ -93,6 +120,8 @@ easy_admin:
                     - { property: 'overtagelse', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.overtagelse' }
                     - { property: 'skoederekv', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.skoederekv' }
                     - { property: 'beloebanvist', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.beloebanvist' }
+                    - { property: 'salgsprisumoms', label: 'app.grund.salgsprisumoms' }
+                    - { property: 'antagetbud', label: 'app.grund.antagetbud' }
 
                     - { property: 'koeberNavn', label: 'app.grund.koeberNavn' }
                     - { property: 'koeberAdresse', label: 'app.grund.koeberAdresse' }
@@ -140,6 +169,32 @@ easy_admin:
                 # Import default values
                 <<: *parcelhusgrund_default_list
 
+                # Inspired by https://github.com/javiereguiluz/EasyAdminBundle/issues/1503#issuecomment-276128125
+                bulk: &parcelhusgrund_bulk
+                    roles: [ROLE_EDITOR]
+                    actions:
+                        - label: Flyt til ledige grunde
+                          # title: Update status – or not!
+                          # message: Vælg ny status.
+                          type: form
+                          form:
+                              block_name: data # field block name
+                              action:
+                                  label: Flyt grunde
+                                  value: update-status
+                                  route: bulk_update
+                              close:
+                                  label: Cancel
+                              fields:
+                                  - name: status
+                                    type: hidden
+                                    type_options:
+                                        data: !php/const:AppBundle\DBAL\Types\GrundStatus::LEDIG
+                                  - name: salgstatus
+                                    type: hidden
+                                    type_options:
+                                        data: !php/const:AppBundle\DBAL\Types\GrundSalgStatus::LEDIG
+
             search: *parcelhusgrund_default_search
             edit: *parcelhusgrund_default_edit
             show: *parcelhusgrund_default_show
@@ -156,6 +211,7 @@ easy_admin:
 
                 # Import default values
                 <<: *parcelhusgrund_default_list
+                bulk: *parcelhusgrund_bulk
 
             search: *parcelhusgrund_default_search
             edit: *parcelhusgrund_default_edit
@@ -173,6 +229,7 @@ easy_admin:
 
                 # Import default values
                 <<: *parcelhusgrund_default_list
+                bulk: *parcelhusgrund_bulk
 
             search: *parcelhusgrund_default_search
             edit: *parcelhusgrund_default_edit

@@ -39,28 +39,28 @@ class Opkoeb
   /**
    * @var string
    *
-   * @ORM\Column(name="matrik1", type="string", length=50, nullable=true)
+   * @ORM\Column(name="matrik1", type="string", length=50, nullable=false)
    */
   private $matrik1;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="matrik2", type="string", length=50, nullable=true)
+   * @ORM\Column(name="matrik2", type="string", length=50, nullable=false)
    */
   private $matrik2;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="ejerlav", type="string", length=60, nullable=true)
+   * @ORM\Column(name="ejerlav", type="string", length=60, nullable=false)
    */
   private $ejerlav;
 
   /**
    * @var integer
    *
-   * @ORM\Column(name="m2", type="integer", nullable=true)
+   * @ORM\Column(name="m2", type="integer", nullable=false)
    */
   private $m2;
 
@@ -74,14 +74,14 @@ class Opkoeb
   /**
    * @var \DateTime
    *
-   * @ORM\Column(name="opkoebDato", type="date", nullable=true)
+   * @ORM\Column(name="opkoebDato", type="date", nullable=false)
    */
   private $opkoebdato;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="pris", type="float", precision=16, scale=2, nullable=true)
+   * @ORM\Column(name="pris", type="float", precision=16, scale=2, nullable=false)
    */
   private $pris;
 
@@ -95,7 +95,7 @@ class Opkoeb
   /**
    * @var \Lokalplan
    *
-   * @ORM\ManyToOne(targetEntity="Lokalplan", fetch="EAGER")
+   * @ORM\ManyToOne(targetEntity="Lokalplan", inversedBy="opkoeb", fetch="EAGER")
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="lokalplanId", referencedColumnName="id")
    * })

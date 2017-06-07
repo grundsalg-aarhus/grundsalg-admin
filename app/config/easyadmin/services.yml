@@ -1,0 +1,27 @@
+services:
+    app.easyadmin.access_subscriber:
+        class: AppBundle\EventSubscriber\AccessSubscriber
+        arguments:
+            - '@security.authorization_checker'
+            - '@easyadmin.config.manager'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    # Inject our custom config manager (overwrite the original one)
+    easyadmin.config.manager:
+        class: AppBundle\Configuration\EasyAdminConfigManager
+        arguments: ['@service_container', '@security.authorization_checker']
+
+    # Note: Decorating the EasyAdmin config manager
+    # (cf. http://symfony.com/doc/current/service_container/service_decoration.html)
+    # would be the right way to do the stuff above, but that breaks
+    # the type of parameters injected into
+    # JavierEguiluz\Bundle\EasyAdminBundle\Twig\EasyAdminTwigExtension:
+    #
+    # app.easyadmin.config.manager:
+    #     class: AppBundle\Configuration\EasyAdminConfigManager
+    #     decorates: easyadmin.config.manager
+    #     arguments:
+    #         - '@app.easyadmin.config.manager.inner'
+    #         - '@security.authorization_checker'
+    #     public:    false

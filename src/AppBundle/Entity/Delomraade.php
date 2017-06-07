@@ -392,6 +392,6 @@ class Delomraade
 
   public function __toString()
   {
-    return $this->getKpl1234Combined() . ' (Område: ' . $this->getO123Combined() . ')';
+    return $this->getKpl1234Combined() . ' (Område: ' . $this->getO123Combined() . ' - LP: ' . $this->getLokalplan() . ')';
   }
 }

@@ -19,6 +19,7 @@ easy_admin:
                     - name
 
             edit:
+                roles: [ROLE_ADMIN]
                 title: 'Rediger Lokalsamfund'
 
             form:

@@ -6,6 +6,9 @@ use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\InheritanceType;
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Doctrine\Common\Collections\ArrayCollection;
 use AppBundle\DBAL\Types\GrundType;
 use AppBundle\DBAL\Types\SalgsType;
@@ -30,7 +33,9 @@ use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
  *   @ORM\Index(name="search_Grund_pris", columns={"pris"}),
  * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GrundRepository")
- * @ORM\HasLifecycleCallbacks()
+ * @InheritanceType("SINGLE_TABLE")
+ * @DiscriminatorColumn(name="discr", type="string")
+ * @DiscriminatorMap({"GRUND" = "Grund", "COLL" = "GrundCollection"})
  */
 class Grund {
   use BlameableEntity;
@@ -133,7 +138,7 @@ class Grund {
    *   @ORM\JoinColumn(name="postbyId", referencedColumnName="id")
    * })
    */
-  private $postby;
+  protected $postby;
 
   /**
    * @var string
@@ -244,14 +249,15 @@ class Grund {
   /**
    * @var string
    *
-   * @ORM\Column(name="prisKorrektion1", type="string", length=30, nullable=true)
+   * @ORM\Column(name="prisKorrektion1", type="Priskorrektion", nullable=true)
+   * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\Priskorrektion")
    */
   private $priskorrektion1;
 
   /**
-   * @var float
+   * @var integer
    *
-   * @ORM\Column(name="antalKorr1", type="float", precision=10, scale=0, nullable=true)
+   * @ORM\Column(name="antalKorr1", type="integer", nullable=true)
    */
   private $antalkorr1;
 
@@ -272,14 +278,15 @@ class Grund {
   /**
    * @var string
    *
-   * @ORM\Column(name="prisKorrektion2", type="string", length=30, nullable=true)
+   * @ORM\Column(name="prisKorrektion2", type="Priskorrektion", nullable=true)
+   * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\Priskorrektion")
    */
   private $priskorrektion2;
 
   /**
-   * @var float
+   * @var integer
    *
-   * @ORM\Column(name="antalKorr2", type="float", precision=10, scale=0, nullable=true)
+   * @ORM\Column(name="antalKorr2", type="integer", nullable=true)
    */
   private $antalkorr2;
 
@@ -300,14 +307,15 @@ class Grund {
   /**
    * @var string
    *
-   * @ORM\Column(name="prisKorrektion3", type="string", length= 30, nullable=true)
+   * @ORM\Column(name="prisKorrektion3", type="Priskorrektion", nullable=true)
+   * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\Priskorrektion")
    */
   private $priskorrektion3;
 
   /**
-   * @var float
+   * @var integer
    *
-   * @ORM\Column(name="antalKorr3", type="float", precision=10, scale=0, nullable=true)
+   * @ORM\Column(name="antalKorr3", type="integer", nullable=true)
    */
   private $antalkorr3;
 
@@ -554,7 +562,7 @@ class Grund {
   /**
    * @var \AppBundle\Entity\Salgshistorik
    *
-   * @OneToMany(targetEntity="Salgshistorik", mappedBy="grund")
+   * @OneToMany(targetEntity="Salgshistorik", mappedBy="grund", cascade={"remove"})
    */
   private $salgshistorik;
 
@@ -609,8 +617,9 @@ class Grund {
   public function __construct() {
     $this->reservationer = new ArrayCollection();
     $this->salgshistorik = new ArrayCollection();
-    $this->tilsluttet = new ArrayCollection();
+    $this->tilsluttet = array();
     $this->annonceres = false;
+    $this->setSalgstype(SalgsType::KVADRATMETERPRIS);
   }
 
   /**
@@ -619,7 +628,7 @@ class Grund {
    * @return string
    */
   public function __toString() {
-    return $this->getVej() . ' ' . $this->getHusnummer() . $this->getBogstav() . ($this->getZipcity() ? ', ' . $this->getZipcity() : '');
+    return $this->getVej() . ' ' . $this->getHusnummer() . $this->getBogstav() . ($this->getPostby() ? ', ' . $this->getPostby() : '');
   }
 
   /**
@@ -1236,7 +1245,7 @@ class Grund {
   /**
    * Set antalkorr1
    *
-   * @param float $antalkorr1
+   * @param integer $antalkorr1
    *
    * @return Grund
    */
@@ -1249,7 +1258,7 @@ class Grund {
   /**
    * Get antalkorr1
    *
-   * @return float
+   * @return integer
    */
   public function getAntalkorr1() {
     return $this->antalkorr1;
@@ -1324,7 +1333,7 @@ class Grund {
   /**
    * Set antalkorr2
    *
-   * @param float $antalkorr2
+   * @param integer $antalkorr2
    *
    * @return Grund
    */
@@ -1337,7 +1346,7 @@ class Grund {
   /**
    * Get antalkorr2
    *
-   * @return float
+   * @return integer
    */
   public function getAntalkorr2() {
     return $this->antalkorr2;
@@ -1412,7 +1421,7 @@ class Grund {
   /**
    * Set antalkorr3
    *
-   * @param float $antalkorr3
+   * @param integer $antalkorr3
    *
    * @return Grund
    */
@@ -1425,7 +1434,7 @@ class Grund {
   /**
    * Get antalkorr3
    *
-   * @return float
+   * @return integer
    */
   public function getAntalkorr3() {
     return $this->antalkorr3;
@@ -2224,14 +2233,14 @@ class Grund {
   /**
    * @return int
    */
-  public function getSrid(): int {
+  public function getSrid() {
     return $this->srid;
   }
 
   /**
    * @param int $srid
    */
-  public function setSrid(int $srid) {
+  public function setSrid($srid) {
     $this->srid = $srid;
   }
 
@@ -2281,167 +2290,6 @@ class Grund {
     }
   }
 
-  /**
-   * Update status base on dates for auktion, reserveret, etc.
-   *
-   * "Copy-paste" from legacy system
-   *
-   * @ORM\PreUpdate
-   */
-  public function updateStatus()
-  {
-    $today = new \DateTime();
-    $today->setTime(12,0);
 
-    if($this->getSalgstype() === SalgsType::AUKTION) {
-
-      // Auktion slut dato i fortid: Auktion slut
-      if($this->getAuktionslutdato() && $this->getAuktionslutdato() < $today) {
-        $this->setStatus(GrundStatus::AUKTION_SLUT);
-      }
-
-      // Ny ell. 'Fremtidig'/'Annonceret' grund - annonce dato i fortiden: Annonceret
-      elseif(($this->getStatus() === GrundStatus::FREMTIDIG || $this->getStatus() === GrundStatus::ANNONCERET) && $this->getDatoannonce() && $this->getDatoannonce() <= $today) {
-        $this->setStatus(GrundStatus::ANNONCERET);
-      }
-
-      // Auktion slut dato i fremtid: Fremtidig
-      elseif($this->getAuktionslutdato() && $this->getAuktionslutdato() > $today) {
-        $this->setStatus(GrundStatus::FREMTIDIG);
-      }
-
-      // Ingen auktion start dato: Fremtidig
-      elseif(!$this->getAuktionstartdato()) {
-        $this->setStatus(GrundStatus::FREMTIDIG);
-      }
-
-      // 'Annonceret' grund - annoncedato i fremtiden: Fremtidig
-      elseif($this->getStatus() === GrundStatus::ANNONCERET && $this->getDatoannonce() && $this->getDatoannonce() > $today) {
-        $this->setStatus(GrundStatus::FREMTIDIG);
-      }
-
-    } else {
-
-      // 'Fremtidig'/'Annonceret' grund - annonce dato i fortiden: Annonceret
-      if(($this->getStatus() === GrundStatus::FREMTIDIG || $this->getStatus() === GrundStatus::ANNONCERET) && $this->getDatoannonce() && $this->getDatoannonce() <= $today) {
-        $this->setStatus(GrundStatus::ANNONCERET);
-      }
-
-      // 'Skal-annonceres' grund - ingen annonce dato endnu: Fremtidig
-      elseif ($this->isAnnonceres() && !$this->getDatoannonce()) {
-        $this->setStatus(GrundStatus::FREMTIDIG);
-      }
-
-      // 'Annonceret' grund - annoncedato i fremtiden: Fremtidig
-      elseif ($this->getStatus() === GrundStatus::ANNONCERET && $this->getDatoannonce() && $this->getDatoannonce() > $today) {
-        $this->setStatus(GrundStatus::FREMTIDIG);
-      }
-    }
-  }
-
-  /**
-   * Update status base on dates for auktion, reserveret, etc.
-   *
-   * "Copy-paste" from legacy system
-   *
-   * @ORM\PrePersist
-   */
-  public function persistStatus()
-  {
-    $today = new \DateTime();
-    $today->setTime(12,0);
-
-    if($this->getSalgstype() === SalgsType::AUKTION) {
-
-      // Ny - annonce dato i fortiden: Annonceret
-      if($this->getDatoannonce() && $this->getDatoannonce() <= $today) {
-        $this->setStatus(GrundStatus::ANNONCERET);
-      }
-
-      // Ny - ingen annonce dato: Fremtidig
-      elseif(!$this->getDatoannonce()) {
-        $this->setStatus(GrundStatus::FREMTIDIG);
-      }
-
-      // Ny - annoncedato i fremtiden: Fremtidig
-      elseif($this->getDatoannonce() && $this->getDatoannonce() > $today) {
-        $this->setStatus(GrundStatus::FREMTIDIG);
-      }
-
-    } else {
-
-      // Ny - annonce dato i fortiden: Annonceret
-      if($this->getDatoannonce() && $this->getDatoannonce() <= $today) {
-        $this->setStatus(GrundStatus::ANNONCERET);
-      }
-
-      // Ny - ingen annonce dato endnu: Fremtidig
-      elseif ($this->isAnnonceres() && !$this->getDatoannonce()) {
-        $this->setStatus(GrundStatus::FREMTIDIG);
-      }
-
-      // Ny - annoncedato i fremtiden: Fremtidig
-      elseif ($this->getDatoannonce() && $this->getDatoannonce() > $today) {
-        $this->setStatus(GrundStatus::FREMTIDIG);
-      }
-    }
-  }
-
-  /**
-   * Update salgstatus base on dates for auktion, reserveret, etc.
-   *
-   * "Copy-paste" from legacy system
-   *
-   * @ORM\PreUpdate
-   * @ORM\PrePersist
-   */
-  public function persistSalgstatus() {
-    $today = new \DateTime();
-    $today->setTime(12,0);
-
-    if($this->getBeloebanvist()) {
-      $this->setSalgstatus(GrundSalgStatus::SOLGT);
-    } elseif ($this->getSkoederekv()) {
-      $this->setSalgstatus(GrundSalgStatus::SKOEDE_REKVIRERET);
-    } elseif ($this->getAccept()) {
-      $this->setSalgstatus(GrundSalgStatus::ACCEPTERET);
-    } elseif ($this->getAuktionstartdato() && $this->getAuktionslutdato() && $this->getAuktionslutdato() < $today) {
-      $this->setSalgstatus(GrundSalgStatus::AUKTION_SLUT);
-    } elseif ($this->getTilbudstart()) {
-      $this->setSalgstatus(GrundSalgStatus::TILBUD_SENDT);
-    } elseif ($this->getResstart()) {
-      $this->setSalgstatus(GrundSalgStatus::RESERVERET);
-    } else {
-      $this->setSalgstatus(GrundSalgStatus::LEDIG);
-    }
-  }
-
-  /**
-   * If the are not set, update 'til og med' dates base on their respective 'fra' dates
-   *
-   * "Copy-paste" from legacy system
-   *
-   * @ORM\PreUpdate
-   * @ORM\PrePersist
-   */
-  public function persistToDates() {
-
-    // Default reservation is 14 days
-    if($this->getResstart() && !$this->getResslut()) {
-      $endDay = clone $this->getResstart();
-      $endDay->add(new \DateInterval('P14D'));
-
-      $this->setResslut($endDay);
-    }
-
-    // Default 'tilbud' is 28 days
-    if($this->getTilbudstart() && !$this->getTilbudslut()) {
-      $endDay = clone $this->getTilbudstart();
-      $endDay->add(new \DateInterval('P28D'));
-
-      $this->setTilbudslut($endDay);
-    }
-
-  }
 
 }

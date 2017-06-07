@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OneToMany;
 
 /**
  * Lokalplan
@@ -23,6 +24,15 @@ class Lokalplan
   use BlameableEntity;
   use TimestampableEntity;
 
+  public function __construct() {
+    $this->lokalsamfund = new \Doctrine\Common\Collections\ArrayCollection();
+    $this->opkoeb = new \Doctrine\Common\Collections\ArrayCollection();
+  }
+
+  public function __toString()
+  {
+    return $this->getNr() . ' - ' . $this->getTitel();
+  }
 
   /**
    * @var integer
@@ -45,10 +55,17 @@ class Lokalplan
    *
    * @ORM\ManyToOne(targetEntity="Lokalsamfund", fetch="EAGER")
    * @ORM\JoinColumns({
-   *   @ORM\JoinColumn(name="lokalsamfundId", referencedColumnName="id")
+   *   @ORM\JoinColumn(name="lokalsamfundId", referencedColumnName="id", nullable=false)
    * })
    */
   private $lokalsamfund;
+
+  /**
+   * @var \Doctrine\Common\Collections\ArrayCollection
+   *
+   * @OneToMany(targetEntity="Opkoeb", mappedBy="lokalplan", cascade={"persist", "remove"}, orphanRemoval=true)
+   */
+  private $opkoeb;
 
   /**
    * @var string
@@ -95,7 +112,7 @@ class Lokalplan
   /**
    * @var string
    *
-   * @ORM\Column(name="forbrugsAndel", type="float", precision=18, scale=12, nullable=false)
+   * @ORM\Column(name="forbrugsAndel", type="float", precision=18, scale=12, nullable=true)
    */
   private $forbrugsandel;
 
@@ -326,8 +343,26 @@ class Lokalplan
     return $this->forbrugsandel;
   }
 
-  public function __toString()
-  {
-    return $this->getNr() . ' - ' . $this->getTitel();
+  /**
+   * @return mixed
+   */
+  public function getOpkoeb() {
+    return $this->opkoeb;
   }
+
+  /**
+   * @param \AppBundle\Entity\Opkoeb $opkoeb
+   */
+  public function addOpkoeb(Opkoeb $opkoeb) {
+    $opkoeb->setLokalplan($this);
+    $this->opkoeb->add($opkoeb);
+  }
+
+  /**
+   * @param \AppBundle\Entity\Opkoeb $opkoeb
+   */
+  public function removeOpkoeb(Opkoeb $opkoeb) {
+    $this->opkoeb->removeElement($opkoeb);
+  }
+
 }

@@ -8,6 +8,7 @@ imports:
     - { resource: easyadmin/grunde/storparcel.yml }
     - { resource: easyadmin/grunde/erhvervsgrund.yml }
     - { resource: easyadmin/grunde/andregrund.yml }
+    - { resource: easyadmin/grunde/grund_collection.yml }
     - { resource: easyadmin/mv/salgsomraade.yml }
     - { resource: easyadmin/mv/lokalplan.yml }
     - { resource: easyadmin/mv/delomraade.yml }
@@ -17,6 +18,7 @@ imports:
     - { resource: easyadmin/admin/lokalsamfund.yml }
     - { resource: easyadmin/admin/user.yml }
     - { resource: easyadmin/reservation/interessent.yml }
+    - { resource: easyadmin/services.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -98,6 +100,7 @@ doctrine:
             Mulighed:           AppBundle\DBAL\Types\Mulighed
             SalgsType:          AppBundle\DBAL\Types\SalgsType
             TilslutningsType:   AppBundle\DBAL\Types\TilslutningsType
+            Priskorrektion:     AppBundle\DBAL\Types\Priskorrektion
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
