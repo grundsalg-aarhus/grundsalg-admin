@@ -5,6 +5,9 @@ easy_admin:
     entities:
         grund_collection:
             roles: [ROLE_EDITOR]
+            templates: &default_andregrund_templates
+                # Twig namespace template syntax
+                new: 'easy_admin/grund/collection.html.twig'
             class: AppBundle\Entity\GrundCollection
 
             new:
@@ -16,7 +19,6 @@ easy_admin:
                     - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Salgsomraade' }
                     - { property: 'salgsomraade', label: 'app.grund.salgsomraade', css_class: 'col-sm-6' }
 
-                    - { type: 'group', label: 'Grund', css_class: 'col-sm-6' }
                     - { property: 'type', label: 'app.grund.type', type: 'AppBundle\Form\Field\GrundType' }
                     - { property: 'ejerlav', label: 'app.grund.ejerlav' }
                     - { property: 'vej', label: 'app.grund.vej' }
@@ -26,13 +28,16 @@ easy_admin:
                     - { property: 'prism2', label: 'app.grund.prism2' }
                     - { property: 'urlgis', label: 'app.grund.urlgis', type: url }
 
-                    - { type: 'group', label: 'Salg', css_class: 'col-sm-6' }
-                    - { property: 'visStatus', label: 'app.grund.salgstatus', type: 'text', , readonly: true, type_options: { disabled: true } }
+                    - { property: 'status', label: 'app.grund.status', type: 'AppBundle\Form\Field\GrundStatus' }
+#                    - { property: 'visStatus', label: 'app.grund.salgstatus', type: 'text', , readonly: true, type_options: { disabled: true } }
                     - { property: 'salgstype', label: 'app.grund.salgstype', type: 'AppBundle\Form\Field\SalgsType' }
                     - { property: 'annonceres', label: 'app.grund.annonceres' }
                     - { property: 'datoAnnonce', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoAnnonce' }
                     - { property: 'datoAnnonce1', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoAnnonce1' }
                     - { property: 'tilsluttet', label: 'app.grund.tilsluttet', type: 'AppBundle\Form\Field\TilslutningsType', type_options: { expanded : true, multiple : true } }
+
+                    - { property: 'auktionstartdato', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.auktionstartdato' }
+                    - { property: 'auktionslutdato', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.auktionslutdato' }
 
                     - { type: 'group', label: 'Salg', css_class: 'col-sm-12 new-row' }
                     - property: grunde

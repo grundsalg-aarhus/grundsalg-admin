@@ -26,6 +26,7 @@ class MultiGrundEmbedType extends AbstractType {
     $builder->add('delareal', null, array('label' => 'app.grund.delareal'));
     $builder->add('husnummer', null, array('label' => 'app.grund.husnummer'));
     $builder->add('bogstav', null, array('label' => 'app.grund.bogstav'));
+    $builder->add('maxetagem2', null, array('label' => 'app.grund.maxetagem2'));
     $builder->add('areal', null, array('label' => 'app.grund.areal'));
     $builder->add('arealvej', null, array('label' => 'app.grund.arealvej'));
     $builder->add('arealkotelet', null, array('label' => 'app.grund.arealkotelet'));

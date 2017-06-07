@@ -319,7 +319,8 @@
       <thead>
       <tr>
         {% for child in prototype.children %}
-          <th>
+          {% set col_class = child.vars.unique_block_prefix %}
+          <th class="{{ col_class }}">
             {{ form_label(child) }}
           </th>
         {% endfor %}
@@ -334,6 +335,7 @@
     </tbody>
   </table>
 
+  <script src="/js/grund-form-multiple-create.js"></script>
 
   {% if allow_add|default(false) %}
     {% set js_add_item %}
@@ -405,45 +407,50 @@
 
 {% block _grund_collection_grunde_list_entry_mnr_row %}
   {% set label = false %}
-  <td>{{ block('form_row') }}</td>
+  <td class="{{ unique_block_prefix }}">{{ block('form_row') }}</td>
 {% endblock %}
 
 {% block _grund_collection_grunde_list_entry_mnr2_row %}
   {% set label = false %}
-  <td>{{ block('form_row') }}</td>
+  <td class="{{ unique_block_prefix }}">{{ block('form_row') }}</td>
 {% endblock %}
 
 {% block _grund_collection_grunde_list_entry_delareal_row %}
   {% set label = false %}
-  <td>{{ block('form_row') }}</td>
+  <td class="{{ unique_block_prefix }}">{{ block('form_row') }}</td>
 {% endblock %}
 
 {% block _grund_collection_grunde_list_entry_husnummer_row %}
   {% set label = false %}
-  <td>{{ block('form_row') }}</td>
+  <td class="{{ unique_block_prefix }}">{{ block('form_row') }}</td>
 {% endblock %}
 
 {% block _grund_collection_grunde_list_entry_bogstav_row %}
   {% set label = false %}
-  <td>{{ block('form_row') }}</td>
+  <td class="{{ unique_block_prefix }}">{{ block('form_row') }}</td>
 {% endblock %}
 
 {% block _grund_collection_grunde_list_entry_areal_row %}
   {% set label = false %}
-  <td>{{ block('form_row') }}</td>
+  <td class="{{ unique_block_prefix }}">{{ block('form_row') }}</td>
 {% endblock %}
 
 {% block _grund_collection_grunde_list_entry_arealvej_row %}
   {% set label = false %}
-  <td>{{ block('form_row') }}</td>
+  <td class="{{ unique_block_prefix }}">{{ block('form_row') }}</td>
 {% endblock %}
 
 {% block _grund_collection_grunde_list_entry_arealkotelet_row %}
   {% set label = false %}
-  <td>{{ block('form_row') }}</td>
+  <td class="{{ unique_block_prefix }}">{{ block('form_row') }}</td>
 {% endblock %}
 
 {% block _grund_collection_grunde_list_entry_fastpris_row %}
   {% set label = false %}
-  <td>{{ block('form_row') }}</td>
+  <td class="{{ unique_block_prefix }}">{{ block('form_row') }}</td>
+{% endblock %}
+
+{% block _grund_collection_grunde_list_entry_maxetagem2_row %}
+  {% set label = false %}
+  <td class="{{ unique_block_prefix }} js-maxetagem2">{{ block('form_row') }}</td>
 {% endblock %}
