@@ -97,7 +97,6 @@ easy_admin:
                 - { label: 'Erhvervsgrunde pr. område', route: 'grundsalg_statistics_omraade_overview', params: { type: 'Erhvervsgrund' } }
                 - { label: 'Andre grunde pr. område', route: 'grundsalg_statistics_omraade_overview', params: { type: 'Andre' } }
                 - { label: 'Rapporter', icon: 'table', route: 'grundsalg_report' }
-            - { entity: 'interessent', label: 'Interessenter', icon: 'user-circle' }
             - label: 'Log ud'
               icon: 'sign-out'
               route: 'fos_user_security_logout'
