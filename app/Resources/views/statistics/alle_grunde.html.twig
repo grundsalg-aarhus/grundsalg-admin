@@ -1,0 +1,112 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+
+{% block content_title %}{{ 'Alle grunde' | trans }}{% endblock %}
+
+{% block content_header %}
+  <div class="row">
+    <div class="col-sm-8">
+      {% block content_title_wrapper %}
+        <h1 class="title">{{ 'Alle grunde' | trans }}</h1>
+      {% endblock %}
+    </div>
+  </div>
+{% endblock content_header %}
+
+{% macro render_rows(rows, level = 0, parent_id = null) %}
+  {% import _self as this %}
+
+  {% for row in rows %}
+    {{ this.render_row(row, level, parent_id) }}
+  {% endfor %}
+{% endmacro %}
+
+{% macro render_row(row, level, parent_id) %}
+  {% import _self as this %}
+
+  <tr data-node="treetable-{{ row.id }}" {% if parent_id %} data-pnode="treetable-{{ parent_id }}"{% endif %}>
+    <td>{{ row.tree }}</td>
+    <td class="number">{{ row.pris | number_format }}</td>
+    <td class="number">{{ row.minPris | number_format }}</td>
+    <td class="number">{{ row.m2 | number_format }}</td>
+    <td class="number">{{ row.maxm2 | number_format }}</td>
+    <td class="number">{{ row.antal|default(null) }}</td>
+  </tr>
+  {% if row._breakdown is defined %}
+    {{ this.render_rows(row._breakdown, level+1, row.id) }}
+  {% endif %}
+{% endmacro %}
+
+{% import _self as this %}
+
+{% block main %}
+  <div class="table-responsive">
+    <table class="table" id="table">
+      <thead>
+        <tr>
+          <th>{{ 'Område/Adresse' | trans }}</th>
+          <th class="number">{{ 'pris' | trans }}</th>
+          <th class="number">{{ 'minpris' | trans }}</th>
+          <th class="number">{{ 'm2' | trans }}</th>
+          <th class="number">{{ 'maxm2' | trans }}</th>
+          <th class="number">{{ 'antal' | trans }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{ this.render_rows(result) }}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
+
+{% block head_stylesheets %}
+  {{ parent() }}
+  <style>
+   {# lock number columns width #}
+   #table td + td {
+     width: 12%;
+   }
+
+   .treetable-expander {
+     width: 1em;
+   }
+
+   .treetable-expanded > td:first-child,
+   .treetable-collapsed > td:first-child {
+     padding-left: 2em;
+   }
+   .treetable-expanded > td:first-child > .treetable-expander,
+   .treetable-collapsed > td:first-child > .treetable-expander {
+     top: 0.05em;
+     position: relative;
+     margin-left: -1.5em;
+     margin-right: 0.25em;
+   }
+   .treetable-expanded .treetable-expander,
+   .treetable-expanded .treetable-expander {
+     width: 1em;
+     height: 1em;
+     cursor: pointer;
+     position: relative;
+     display: inline-block;
+   }
+   .treetable-depth-1 > td:first-child {
+     padding-left: 3em;
+   }
+
+   .treetable-depth-2 > td:first-child {
+     padding-left: 4.5em;
+   }
+   .treetable-depth-3 > td:first-child {
+     padding-left: 6em;
+   }
+  </style>
+{% endblock %}
+
+{% block body_javascript %}
+  <script src="{{ asset('js/lib/jquery.treetable.js') }}"></script>
+  <script>(function ($) {
+     $('#table').treeTable({
+       startCollapsed: true
+     });
+   }(jQuery))</script>
+{% endblock body_javascript %}
