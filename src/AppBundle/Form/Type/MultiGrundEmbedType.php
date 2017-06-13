@@ -32,6 +32,11 @@ class MultiGrundEmbedType extends AbstractType {
     $builder->add('arealkotelet', null, array('label' => 'app.grund.arealkotelet'));
     $builder->add('fastpris', null, array('label' => 'app.grund.fastpris'));
 
+    $builder->add('minbud', null, array('label' => 'app.grund.minbud'));
+    $builder->add('priskorrektion1', null, array('label' => 'app.grund.priskorrektion1'));
+    $builder->add('antalkorr1', null, array('label' => 'app.grund.antalkorr1'));
+    $builder->add('akrkorr1', null, array('label' => 'app.grund.akrkorr1'));
+    $builder->add('totalkorr1', TextType::class, array('mapped' => false, 'required' => false, 'disabled' => true));
   }
 
   /**
