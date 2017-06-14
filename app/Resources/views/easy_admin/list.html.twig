@@ -12,9 +12,6 @@
         {% if _bulk_actions %}
           {% if _entity_config.class == 'AppBundle\\Entity\\Grund' %}
             {% include 'easy_admin/grund/_bulk_actions.html.twig' %}
-            <div class="bulk-create-grund">
-              <a class="btn btn default" href="{{ path('easyadmin', parameters = {'action': 'new', 'entity': 'grund_collection'}) }}">Opret Grunde (flere)</a>
-            </div>
           {% endif %}
         {% endif %}
       {% endif %}
