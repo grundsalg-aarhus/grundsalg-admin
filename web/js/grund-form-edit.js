@@ -301,7 +301,7 @@ jQuery.fn.extend({
     },
     grundFloatToString: function (value) {
         if (isNaN(value)) {
-            floatValue = 0.0;
+            value = 0.0;
         }
         var result = value.toFixed(2).toString().replace('.', ',');
         this.val(result);
