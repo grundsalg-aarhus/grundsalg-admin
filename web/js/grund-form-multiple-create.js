@@ -19,9 +19,6 @@
     getValue = function(name, context) {
         return findControl(name, context).val();
     },
-    setValue = function(name, context, value) {
-        return findControl(name, context).val(value);
-    },
     /**
      * Show elements by field names.
      */
@@ -39,7 +36,7 @@
         var amount = parseInt(getValue('antalkorr1', context));
         var value = parseInt(getValue('akrkorr1', context));
         var total = amount * value;
-        setValue('totalkorr1', context, isNaN(total) ? '–' : total);
+        findControl('totalkorr1', context).grundFloatToString(total);
     };
 
     $(document).ready(function () {
