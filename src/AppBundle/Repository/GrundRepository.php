@@ -243,4 +243,218 @@ class GrundRepository extends EntityRepository {
 
     return $stmt->fetchAll();
   }
+
+  /**
+   * Get Stats for 'Alle grunde'
+   *
+   * @return array
+   */
+  public function getStatsAlleGrunde($depth = 0, $node = null) {
+    $delimiter = '__';
+    $gTypes = [
+      'Storparcel' => 1,
+      'Erhvervsgrund' => 2,
+      'Parcelhusgrund' => 3,
+      'Andre' => 4,
+      'Andre grunde' => 5,
+      'Off. formål' => 6,
+      '-> Grundtype mangler' => 7,
+    ];
+
+    $children = [];
+
+    if ($depth == 0) {
+      $antal = 0;
+      $pris = 0;
+      $minPris = 0;
+      $m2 = 0;
+      $maxm2 = 0;
+
+      $sql = "SELECT SUM(g.pris) as pris,SUM(g.minBud) as minPris, SUM(g.bruttoAreal) as m2,SUM(g.maxEtageM2) as maxm2,COUNT(g.id) as thecount ";
+      $sql .= "FROM Grund as g ";
+      $sql .= "LEFT JOIN Salgsomraade as s on s.id=g.salgsomraadeId ";
+      $sql .= "WHERE s.sagsNr = '' OR g.salgsomraadeId IS NULL";
+
+      $stmt = $this->getEntityManager()->getConnection()->executeQuery($sql);
+      if ($row = $stmt->fetch()) {
+        $child = [];
+
+        $child["id"] = "-1" . $delimiter . "-1";
+        $child["tree"] = "-> Intet sagsnummer";
+
+        $antal += $row["thecount"];
+        $child["antal"] = $row["thecount"];
+
+        $pris += $row["pris"];
+        $child["pris"] = $row["pris"];
+
+        $minPris += $row["minPris"];
+        $child["minPris"] = $row["minPris"];
+
+        $m2 += $row["m2"];
+        $child["m2"] = $row["m2"];
+
+        $maxm2 += $row["maxm2"];
+        $child["maxm2"] = $row["maxm2"];
+        $child["leaf"] = false;
+
+        $child['_breakdown'] = $this->getStatsAlleGrunde($depth + 1, $child['id']);
+
+        $children[] = $child;
+      }
+
+      $sql = "SELECT s.sagsNr, l.titel,l.id, SUM(g.pris) as pris, SUM(g.minBud) as minPris, SUM(g.bruttoAreal) as m2,SUM(g.maxEtageM2) as maxm2,COUNT(g.id) as thecount ";
+      $sql .= "FROM Grund as g ";
+      $sql .= "JOIN Salgsomraade as s on s.id=g.salgsomraadeId ";
+      // $sql .= "FULL JOIN Lokalplan as l on l.id=s.lokalPlanId ";
+      $sql .= "JOIN Lokalplan as l on l.id=s.lokalPlanId ";
+      $sql .= "WHERE s.sagsNr <> '' ";
+      $sql .= "GROUP BY s.sagsNr, l.titel,l.id ";
+      $sql .= "ORDER BY s.sagsNr, l.titel ASC";
+
+      $stmt = $this->getEntityManager()->getConnection()->executeQuery($sql);
+      while ($row = $stmt->fetch()) {
+        $child = [];
+
+        $omraade = "";
+
+        $titel = $row["titel"];
+        if ($titel == null) {
+          $titel = "";
+        }
+
+        $sagsnummer = $row["sagsNr"];
+        $omraade = $sagsnummer . " - " . $titel;
+
+        $child["id"] = $sagsnummer . $delimiter . $row["id"];
+        $child["tree"] = $omraade;
+
+        $antal += $row["thecount"];
+        $child["antal"] = $row["thecount"];
+
+        $pris += $row["pris"];
+        $child["pris"] = $row["pris"];
+
+        $minPris += $row["minPris"];
+        $child["minPris"] =$row["minPris"];
+
+        $m2 += $row["m2"];
+        $child["m2"] = $row["m2"];
+
+        $maxm2 += $row["maxm2"];
+        $child["maxm2"] =$row["maxm2"];
+
+        $child["leaf"] = false;
+
+        $child['_breakdown'] = $this->getStatsAlleGrunde($depth + 1, $child['id']);
+
+        $children[] = $child;
+      }
+
+      $child = [];
+      $child["id"] = "total";
+      $child["tree"] = "Total";
+      $child["antal"] = $antal;
+      $child["pris"] = $pris;
+      $child["minPris"] = $minPris;
+      $child["m2"] = $m2;
+      $child["maxm2"] = $maxm2;
+      $child["leaf"] = true;
+
+      $children[] = $child;
+    } elseif ($depth == 1) {
+      $values = explode($delimiter, $node);
+      $sagsNr = $values[0];
+      $id = $values[1];
+
+      $sql = "SELECT g.type grundType, IFNULL(s.sagsNr,'') as sagsNr, SUM(g.pris) as pris,SUM(g.minBud) as minPris, SUM(g.bruttoAreal) as m2,SUM(g.maxEtageM2) as maxm2,COUNT(g.id) as thecount ";
+      $sql .= "FROM Grund as g ";
+      $sql .= "LEFT JOIN Salgsomraade as s on s.id=g.salgsomraadeId ";
+
+      if ($sagsNr == -1) {
+        $sql .= "WHERE s.sagsNr = '' OR g.salgsomraadeId IS NULL ";
+      } else {
+        if ($id == "null"){
+          $sql .= "WHERE s.sagsNr = '" . $sagsNr . "' ";
+        } else {
+          $sql .= "JOIN Lokalplan as l on l.id=s.lokalPlanId ";
+          $sql .= "WHERE s.sagsNr = '" . $sagsNr . "' AND l.id='" . $id . "' ";
+        }
+      }
+
+      $sql .= "GROUP BY g.type,IFNULL(s.sagsNr,'') ";
+      $sql .= "ORDER BY g.type,IFNULL(s.sagsNr,'') ASC";
+
+      $stmt = $this->getEntityManager()->getConnection()->executeQuery($sql);
+      while ($row = $stmt->fetch()) {
+        $child = [];
+
+        $gType = $row["grundType"];
+        if ($gType == null) {
+          $gType = "-> Grundtype mangler";
+        }
+
+        $child["id"] = $sagsNr . $delimiter . $id . $delimiter . $gTypes[$gType];
+        $child["tree"] = $gType;
+        $child["antal"] = $row["thecount"];
+        $child["pris"] = $row["pris"];
+        $child["minPris"] = $row["minPris"];
+        $child["m2"] = $row["m2"];
+        $child["maxm2"] = $row["maxm2"];
+        $child["leaf"] = false;
+
+        $child['_breakdown'] = $this->getStatsAlleGrunde($depth + 1, $child['id']);
+
+        $children[] = $child;
+      }
+    } else {
+      $values = explode($delimiter, $node);
+
+      $sagsNr = $values[0];
+      $id = $values[1];
+      $gType = $values[2];
+
+      $grundTypeSQL = "g.type='" . array_search($gType, $gTypes) . "' ";
+
+      if ($gType == "7") { //ingen grundtype
+        $grundTypeSQL = "g.type IS NULL ";
+      }
+
+      $sql = "SELECT g.vej, IFNULL(g.husNummer,'') as husNummer, IFNULL(g.bogstav,'') as bogstav, g.type, g.pris,g.id,g.minBud as minPris, g.bruttoAreal as m2,g.maxEtageM2 as maxm2 ";
+      $sql .= "FROM Grund as g ";
+      $sql .= "LEFT JOIN Salgsomraade as s on s.id=g.salgsomraadeId ";
+      if ($sagsNr == "-1"){
+        $sql .= "WHERE (s.sagsNr = '' OR g.salgsomraadeId IS NULL) and " . $grundTypeSQL;
+      } else {
+        if ($id == "null") {
+          $sql .= "WHERE s.sagsNr = '" . $sagsNr . "' and " . $grundTypeSQL;
+        } else {
+          $sql .= "JOIN Lokalplan as l on l.id=s.lokalPlanId ";
+          $sql .= "WHERE s.sagsNr = '" . $sagsNr . "' and l.id='" . $id . "' and " . $grundTypeSQL;
+        }
+      }
+
+      $sql .= "ORDER BY g.vej,CAST(g.husNummer as int) ASC";
+      $stmt = $this->getEntityManager()->getConnection()->executeQuery($sql);
+      while ($row = $stmt->fetch()) {
+        $child = [];
+
+        $adr = $row["vej"] . " " .  $row["husNummer"] . " " . $row["bogstav"];
+
+        $child["id"] = $row["id"];
+        $child["type"] = $row["type"];
+        $child["tree"] = trim($adr);
+        $child["pris"] = $row["pris"];
+        $child["minPris"] = $row["minPris"];
+        $child["m2"] = $row["m2"];
+        $child["maxm2"] = $row["maxm2"];
+        $child["leaf"] = true;
+
+        $children[] = $child;
+      }
+    }
+
+    return $children;
+  }
+
 }

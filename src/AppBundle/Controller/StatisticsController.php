@@ -136,4 +136,22 @@ class StatisticsController extends BaseAdminController
 
   }
 
+  /**
+   * @Route(path = "/statistics/grunde", name = "grundsalg_statistics_alle_grunde")
+   */
+  public function alleGrundeAction(Request $request)
+  {
+    $menuIndex = $request->query->get('menuIndex');
+    $submenuIndex = $request->query->get('submenuIndex');
+
+    $repository = $this->get('doctrine')->getRepository('AppBundle:Grund');
+    $result = $repository->getStatsAlleGrunde();
+
+    return $this->render('statistics/alle_grunde.html.twig', array(
+      'result' => $result,
+      'menuIndex' => $menuIndex,
+      'submenuIndex' => $submenuIndex,
+    ));
+  }
+
 }
