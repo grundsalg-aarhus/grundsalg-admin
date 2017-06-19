@@ -420,7 +420,7 @@ class GrundRepository extends EntityRepository {
         $grundTypeSQL = "g.type IS NULL ";
       }
 
-      $sql = "SELECT g.vej, IFNULL(g.husNummer,'') as husNummer, IFNULL(g.bogstav,'') as bogstav, g.pris,g.id,g.minBud as minPris, g.bruttoAreal as m2,g.maxEtageM2 as maxm2 ";
+      $sql = "SELECT g.vej, IFNULL(g.husNummer,'') as husNummer, IFNULL(g.bogstav,'') as bogstav, g.type, g.pris,g.id,g.minBud as minPris, g.bruttoAreal as m2,g.maxEtageM2 as maxm2 ";
       $sql .= "FROM Grund as g ";
       $sql .= "LEFT JOIN Salgsomraade as s on s.id=g.salgsomraadeId ";
       if ($sagsNr == "-1"){
@@ -442,6 +442,7 @@ class GrundRepository extends EntityRepository {
         $adr = $row["vej"] . " " .  $row["husNummer"] . " " . $row["bogstav"];
 
         $child["id"] = $row["id"];
+        $child["type"] = $row["type"];
         $child["tree"] = trim($adr);
         $child["pris"] = $row["pris"];
         $child["minPris"] = $row["minPris"];

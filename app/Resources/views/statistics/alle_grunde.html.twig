@@ -29,7 +29,22 @@
     <td class="number">{{ row.minPris | number_format }}</td>
     <td class="number">{{ row.m2 | number_format }}</td>
     <td class="number">{{ row.maxm2 | number_format }}</td>
-    <td class="number">{{ row.antal|default(null) }}</td>
+    <td class="number">
+      {% if row.antal is defined %}
+        {{ row.antal|default(null) }}
+      {% else %}
+        {% if row.type == 'Parcelhusgrund' %}
+          {% set type =  'parcelhusgrund' %}
+        {% elseif row.type == 'Storparcel' %}
+          {% set type =  'storparcel' %}
+        {% elseif row.type == 'Erhvervsgrund' %}
+          {% set type =  'erhvervsgrund' %}
+        {% else %}
+          {% set type =  'andregrund' %}
+        {% endif %}
+        <a class="btn btn-default btn-xs" href="{{ path('easyadmin', parameters = {'action': 'show', 'entity': type, 'id': row.id }) }}">{{ 'action.show' | trans }}</a>
+      {% endif %}
+    </td>
   </tr>
   {% if row._breakdown is defined %}
     {{ this.render_rows(row._breakdown, level+1, row.id) }}
@@ -39,8 +54,8 @@
 {% import _self as this %}
 
 {% block main %}
-  <div class="table-responsive">
-    <table class="table" id="table">
+  <div class="table">
+    <table class="table table-hover" id="table">
       <thead>
         <tr>
           <th>{{ 'Område/Adresse' | trans }}</th>
@@ -68,6 +83,7 @@
 
    .treetable-expander {
      width: 1em;
+     cursor: pointer;
    }
 
    .treetable-expanded > td:first-child,
@@ -85,7 +101,6 @@
    .treetable-expanded .treetable-expander {
      width: 1em;
      height: 1em;
-     cursor: pointer;
      position: relative;
      display: inline-block;
    }
@@ -106,7 +121,8 @@
   <script src="{{ asset('js/lib/jquery.treetable.js') }}"></script>
   <script>(function ($) {
      $('#table').treeTable({
-       startCollapsed: true
+       startCollapsed: true,
+       clickableNodeNames: true
      });
    }(jQuery))</script>
 {% endblock body_javascript %}
