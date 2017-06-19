@@ -87,6 +87,10 @@ class StatisticsController extends BaseAdminController
     $repository = $this->get('doctrine')->getRepository('AppBundle:Salgsomraade');
     $salgsomraade = $repository->find($salgsomraadeId);
 
+    if ($salgsomraade === null) {
+      return $this->redirectToRoute('grundsalg_statistics_omraade_overview', ['type' => $type]);
+    }
+
     $repository = $this->get('doctrine')->getRepository('AppBundle:Grund');
     $result = $repository->getStatsOmraadeIalt($type);
     $stats = $repository->getStatsOmraadeByType($type, $salgsomraade);
