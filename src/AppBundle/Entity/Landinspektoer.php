@@ -81,6 +81,7 @@ class Landinspektoer
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="postbyId", referencedColumnName="id")
    * })
+   * @ORM\OrderBy({"postalcode" = "ASC"})
    */
   private $postby;
 

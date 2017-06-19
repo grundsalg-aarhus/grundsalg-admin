@@ -153,6 +153,7 @@ class Salgsomraade
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="postById", referencedColumnName="id")
    * })
+   * @ORM\OrderBy({"postalcode" = "ASC"})
    */
   private $postby;
 

@@ -137,6 +137,7 @@ class Grund {
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="postbyId", referencedColumnName="id")
    * })
+   * @ORM\OrderBy({"postalcode" = "ASC"})
    */
   protected $postby;
 
@@ -539,6 +540,7 @@ class Grund {
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="medKoeberPostById", referencedColumnName="id")
    * })
+   * @ORM\OrderBy({"postalcode" = "ASC"})
    */
   private $medkoeberPostby;
 
@@ -549,6 +551,7 @@ class Grund {
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="koeberPostById", referencedColumnName="id")
    * })
+   * @ORM\OrderBy({"postalcode" = "ASC"})
    */
   private $koeberPostby;
 
