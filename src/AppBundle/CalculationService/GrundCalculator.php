@@ -25,7 +25,7 @@ class GrundCalculator implements EventSubscriber {
   public function prePersist(LifecycleEventArgs $args) {
     $grund = $args->getEntity();
 
-    // only act on some "Grund" entity
+    // only act on "Grund" entity
     if (!$grund instanceof Grund) {
       return;
     }
@@ -33,6 +33,8 @@ class GrundCalculator implements EventSubscriber {
     $this->persistStatus($grund);
     $this->calculateSalgstatus($grund);
     $this->calculateToDates($grund);
+    $this->calculateBruttoAreal($grund);
+    $this->calculatePris($grund);
 
   }
 
@@ -40,13 +42,11 @@ class GrundCalculator implements EventSubscriber {
     $grund = $args->getEntity();
     $changeset = $args->getEntityChangeSet();
 
-    // only act on some "Grund" entity
+    // only act on "Grund" entity
     if (!$grund instanceof Grund) {
       return;
     }
 
-    // if either status or salgsstaus is explicitly set abstain from changing
-    // (bulk change)
     if(!array_key_exists('status', $changeset)) {
       $this->updateStatus($grund);
     }
@@ -54,6 +54,8 @@ class GrundCalculator implements EventSubscriber {
       $this->calculateSalgstatus($grund);
     }
     $this->calculateToDates($grund);
+    $this->calculateBruttoAreal($grund);
+    $this->calculatePris($grund);
 
   }
 
@@ -216,6 +218,44 @@ class GrundCalculator implements EventSubscriber {
       $grund->setTilbudslut($endDay);
     }
 
+  }
+
+  /**
+   * Calulate Bruttoareal
+   *
+   * @param Grund $grund
+   */
+  private function calculateBruttoAreal(Grund $grund) {
+    $grund->setBruttoareal($grund->getAreal() - $grund->getArealvej() - $grund->getArealkotelet());
+  }
+
+  /**
+   * Calculate price
+   *
+   * @param Grund $grund
+   */
+  private function calculatePris(Grund $grund) {
+
+    if ($grund->getSalgstype() == SalgsType::KVADRATMETERPRIS || $grund->getSalgstype() == SalgsType::ETGM2) {
+
+      $grund->setPriskoor1($grund->getAntalkorr1() * $grund->getAkrkorr1());
+      $grund->setPriskoor2($grund->getAntalkorr2() * $grund->getAkrkorr2());
+      $grund->setPriskoor3($grund->getAntalkorr3() * $grund->getAkrkorr3());
+
+      if($grund->getPrism2() > 0) {
+        $prisExKorr = $grund->getBruttoareal() * $grund->getPrism2();
+        $pris = $prisExKorr + $grund->getPriskoor1() + $grund->getPriskoor2() + $grund->getPriskoor3();
+
+        $grund->setPris($pris);
+      }
+
+    } else if ($grund->getSalgstype() == 'Fastpris') {
+
+      if($grund->getFastpris() && $grund->getAccept()) {
+        $grund->setSalgsprisumoms(0.8 * $grund->getFastpris());
+      }
+
+    }
   }
 
 }
