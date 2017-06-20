@@ -27,7 +27,6 @@ easy_admin:
                     - { property: 'lokalsamfund', label: 'app.grund.lokalsamfund' }
                     - { property: 'landinspektoer', label: 'app.grund.landinspektoer' }
                     - { property: 'prism2', label: 'app.grund.prism2' }
-                    - { property: 'urlgis', label: 'app.grund.urlgis', type: url }
 
                     - { property: 'status', label: 'app.grund.status', type: 'AppBundle\Form\Field\GrundStatus' }
 #                    - { property: 'visStatus', label: 'app.grund.salgstatus', type: 'text', , readonly: true, type_options: { disabled: true } }

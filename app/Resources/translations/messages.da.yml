@@ -84,7 +84,6 @@ app:
       tilbudstart: Tilbud
       tilsluttet: Tilsluttet
       tilsluttet_header: Prisen indeholder helt eller delvis tilslutning til
-      urlgis: GIS-kort URL
       vej: Vej
       venteliste: Venteliste
 
@@ -158,7 +157,6 @@ user:
 # If we use the 'form_label' widget directly the EasyAdmin 'label' value is not used
 Bogstav: Bogst.
 Husnummer: Husnr.
-Urlgis: GIS-kort
 
 'Cannot delete %name%': '"%name%" kan ikke slettes'
 '%name% is referenced by %count% entities': 'one: "%name%" bruges af %count% datapost | some: "%name%" bruges af %count% dataposter'

@@ -58,7 +58,6 @@ class GrundBulkCreateSubscriber implements EventSubscriberInterface {
       $grund->setLokalsamfund($collection->getLokalsamfund());
       $grund->setLandinspektoer($collection->getLandinspektoer());
       $grund->setPrism2($collection->getPrism2());
-      $grund->setUrlgis($collection->getUrlgis());
 
       $grund->setSalgstype($collection->getSalgstype());
       $grund->setAnnonceres($collection->isAnnonceres());

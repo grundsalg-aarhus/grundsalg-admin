@@ -145,13 +145,6 @@
 
                   {{ form_row(form.postby) }}
                   {{ form_row(form.lokalsamfund) }}
-                  <div class="form-group field-text">
-                    {{ form_label(form.urlgis) }}
-                    <div class="col-sm-10">{{ form_widget(form.urlgis) }}</div>
-                  </div>
-                  <div class="form-group field-text">
-                    <div class="col-sm-10 col-md-offset-2"><a href="{{ entity.urlgis }}" target="_blank" class="btn btn-default"><i class="fa fa-external-link-square"></i> {{ 'action.show' | trans }}</a></div>
-                  </div>
                 </div>
                 <div class="col-md-6">
                   {{ grundsalg.entity_value('app.grund.salgstatus', entity.visStatus ) }}

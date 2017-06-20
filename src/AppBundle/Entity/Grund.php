@@ -151,13 +151,6 @@ class Grund {
   protected $postby;
 
   /**
-   * @var string
-   *
-   * @ORM\Column(name="urlGIS", type="string", length=255, nullable=true)
-   */
-  private $urlgis;
-
-  /**
    * @var SalgsType
    *
    * @ORM\Column(name="salgsType", type="SalgsType", nullable=true)
@@ -930,28 +923,6 @@ class Grund {
    */
   public function getPostby() {
     return $this->postby;
-  }
-
-  /**
-   * Set urlgis
-   *
-   * @param string $urlgis
-   *
-   * @return Grund
-   */
-  public function setUrlgis($urlgis) {
-    $this->urlgis = $urlgis;
-
-    return $this;
-  }
-
-  /**
-   * Get urlgis
-   *
-   * @return string
-   */
-  public function getUrlgis() {
-    return $this->urlgis;
   }
 
   /**

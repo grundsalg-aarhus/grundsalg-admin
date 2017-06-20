@@ -73,7 +73,6 @@ easy_admin:
                     - { property: 'bogstav', label: 'app.grund.bogstav' }
                     - { property: 'postby', label: 'app.grund.postby' }
                     - { property: 'lokalsamfund', label: 'app.grund.lokalsamfund' }
-                    - { property: 'urlgis', label: 'app.grund.urlgis', type: url }
 
                     - { property: 'status', label: 'app.grund.status', type: 'AppBundle\Form\Field\GrundStatus' }
                     - { property: 'publicstatus', label: 'app.grund.publicstatus', type: 'AppBundle\Form\Field\GrundPublicStatus' }
