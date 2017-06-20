@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\DBAL\Types\GrundPublicStatus;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
@@ -65,6 +66,14 @@ class Grund {
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GrundSalgStatus")
    */
   private $salgstatus;
+
+  /**
+   * @var GrundPublicStatus
+   *
+   * @ORM\Column(name="publicStatus", type="GrundPublicStatus", nullable=true)
+   * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GrundPublicStatus")
+   */
+  private $publicstatus;
 
   /**
    * @var string
@@ -663,6 +672,22 @@ class Grund {
    */
   public function getStatus() {
     return $this->status;
+  }
+
+  /**
+   * @return GrundPublicStatus
+   */
+  public function getPublicstatus()
+  {
+    return $this->publicstatus;
+  }
+
+  /**
+   * @param GrundPublicStatus $publicstatus
+   */
+  public function setPublicstatus($publicstatus)
+  {
+    $this->publicstatus = $publicstatus;
   }
 
   /**

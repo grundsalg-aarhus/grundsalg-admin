@@ -145,6 +145,13 @@ class ApiController extends Controller {
    * @return string
    */
   private function getPublicStatus(Grund $grund) {
+
+    // If 'Public status' is set explicitly we use that
+    if($grund->getPublicstatus()) {
+      return $grund->getPublicstatus();
+    }
+
+    // Otherwise it depends on the combination of status and salgstatus
     $status = $grund->getStatus();
     $salgStatus = $grund->getSalgstatus();
 
