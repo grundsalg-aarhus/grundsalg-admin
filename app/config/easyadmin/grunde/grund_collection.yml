@@ -9,6 +9,7 @@ easy_admin:
                 # Twig namespace template syntax
                 new: 'easy_admin/grund/collection.html.twig'
             class: AppBundle\Entity\GrundCollection
+            disabled_actions: ['edit', 'delete']
 
             new:
                 title: 'Opret Grunde (flere)'

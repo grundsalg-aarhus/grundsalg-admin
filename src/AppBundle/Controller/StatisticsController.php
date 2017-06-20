@@ -3,15 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\DBAL\Types\GrundType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use JavierEguiluz\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminController;
+use Symfony\Component\Routing\Annotation\Route;
 
-class StatisticsController extends BaseAdminController
+class StatisticsController extends EasyAdminController
 {
-
   /**
    * @Route(path = "/statistics/betalte/{type}/{showYear}", name = "grundsalg_statistics_betalte")
    */
