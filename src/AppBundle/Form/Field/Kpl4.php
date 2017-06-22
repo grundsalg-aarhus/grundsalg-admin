@@ -11,7 +11,7 @@ class Kpl4 extends AbstractType
   public function configureOptions(OptionsResolver $resolver)
   {
     $resolver->setDefaults(array(
-      'choices' => \AppBundle\DBAL\Types\Kpl4Type::getChoices()
+      'choices' => \AppBundle\DBAL\Types\Kpl4::getChoices()
       )
     );
   }
