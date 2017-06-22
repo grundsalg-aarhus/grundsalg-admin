@@ -214,7 +214,7 @@ class EasyAdminController extends BaseAdminController {
         // some databases don't support LOWER() on UUID fields
         $queryBuilder->orWhere(sprintf('%s.%s IN (:words_query)', $entityDqlName, $fieldDqlName));
         $queryBuilder->setParameter('words_query', explode(' ', $searchQuery));
-      } elseif ($metadata['dataType'] !== 'association') {
+      } elseif ($metadata['dataType'] !== 'association' && !$metadata['virtual']) {
         // Default: text search
         $searchQuery = mb_strtolower($searchQuery);
 
