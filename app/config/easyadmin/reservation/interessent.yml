@@ -9,9 +9,9 @@ easy_admin:
                 actions:
                     <<: *default_list_actions
                 fields:
-                    - koeberNavn
-                    - koeberEmail
-                    - koeberLand
+                    - { property: koeberNavn, label: 'app.grund.koeberNavn' }
+                    - { property: koeberEmail, label: 'app.grund.koeberEmail' }
+                    - { property: koeberLand, label: 'app.grund.koeberLand' }
 
             search:
                 fields:
