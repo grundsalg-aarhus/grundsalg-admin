@@ -11,7 +11,7 @@ class Anvendelse extends AbstractType
   public function configureOptions(OptionsResolver $resolver)
   {
     $resolver->setDefaults(array(
-      'choices' => \AppBundle\DBAL\Types\AnvendelseType::getChoices()
+      'choices' => \AppBundle\DBAL\Types\Anvendelse::getChoices()
       )
     );
   }

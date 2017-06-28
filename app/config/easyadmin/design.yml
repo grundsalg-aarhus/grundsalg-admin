@@ -11,8 +11,11 @@ easy_admin:
         assets:
             css:
                 - '/css/grundsalg-styles.css'
+                - '/css/lib/bootstrap-datepicker3.min.css'
             js:
                 - '/js/lib/moment-with-locales.min.js'
+                - '/js/lib/bootstrap-datepicker.min.js'
+                - '/js/lib/bootstrap-datepicker.da.min.js'
 
         menu:
             - label: 'Parcelhusgrunde'

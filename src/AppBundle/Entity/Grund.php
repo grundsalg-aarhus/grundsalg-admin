@@ -567,7 +567,7 @@ class Grund {
   /**
    * @var \AppBundle\Entity\Salgshistorik
    *
-   * @OneToMany(targetEntity="Salgshistorik", mappedBy="grund", cascade={"remove"})
+   * @OneToMany(targetEntity="Salgshistorik", mappedBy="grund", cascade={"persist", "remove"})
    */
   private $salgshistorik;
 
@@ -2165,10 +2165,18 @@ class Grund {
   }
 
   /**
-   * @param mixed $salgshistorik
+   * @param Salgshistorik $salgshistorik
    */
-  public function setSalgshistorik($salgshistorik) {
-    $this->salgshistorik = $salgshistorik;
+  public function addSalgshistorik(Salgshistorik $salgshistorik) {
+    $salgshistorik->setGrund($this);
+    $this->salgshistorik->add($salgshistorik);
+  }
+
+  /**
+   * @param Salgshistorik $salgshistorik
+   */
+  public function removeSalgshistorik(Salgshistorik $salgshistorik) {
+    $this->salgshistorik->removeElement($salgshistorik);
   }
 
   /**

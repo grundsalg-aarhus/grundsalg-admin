@@ -3,6 +3,28 @@
 {% block body_javascript %}
 	{{ parent() }}
 
+	<script>
+      (function ($) {
+          $(document).ready(function () {
+
+              var fields = $('input[type="date"]');
+              fields.each(function(index, element) {
+                  var isDisabled = $(element).is(':disabled');
+                  var dateType = $(element).prop('type');
+                  if (!isDisabled && dateType != 'date' ) {
+                      $(element).datepicker({
+                          language: 'da',
+                          todayBtn: 'linked',
+                          format: 'yyyy-mm-dd',
+                          todayHighlight: true
+                      });
+                  }
+              });
+
+          });
+      }(jQuery));
+	</script>
+
 	{% include 'easy_admin/_includes/_translations.js.twig' %}
 {% endblock %}
 
