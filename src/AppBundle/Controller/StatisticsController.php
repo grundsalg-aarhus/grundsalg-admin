@@ -3,15 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\DBAL\Types\GrundType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use JavierEguiluz\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminController;
+use Symfony\Component\Routing\Annotation\Route;
 
-class StatisticsController extends BaseAdminController
+class StatisticsController extends EasyAdminController
 {
-
   /**
    * @Route(path = "/statistics/betalte/{type}/{showYear}", name = "grundsalg_statistics_betalte")
    */
@@ -87,6 +83,10 @@ class StatisticsController extends BaseAdminController
     $repository = $this->get('doctrine')->getRepository('AppBundle:Salgsomraade');
     $salgsomraade = $repository->find($salgsomraadeId);
 
+    if ($salgsomraade === null) {
+      return $this->redirectToRoute('grundsalg_statistics_omraade_overview', ['type' => $type]);
+    }
+
     $repository = $this->get('doctrine')->getRepository('AppBundle:Grund');
     $result = $repository->getStatsOmraadeIalt($type);
     $stats = $repository->getStatsOmraadeByType($type, $salgsomraade);
@@ -130,6 +130,24 @@ class StatisticsController extends BaseAdminController
       'submenuIndex' => $submenuIndex,
     ));
 
+  }
+
+  /**
+   * @Route(path = "/statistics/grunde", name = "grundsalg_statistics_alle_grunde")
+   */
+  public function alleGrundeAction(Request $request)
+  {
+    $menuIndex = $request->query->get('menuIndex');
+    $submenuIndex = $request->query->get('submenuIndex');
+
+    $repository = $this->get('doctrine')->getRepository('AppBundle:Grund');
+    $result = $repository->getStatsAlleGrunde();
+
+    return $this->render('statistics/alle_grunde.html.twig', array(
+      'result' => $result,
+      'menuIndex' => $menuIndex,
+      'submenuIndex' => $submenuIndex,
+    ));
   }
 
 }

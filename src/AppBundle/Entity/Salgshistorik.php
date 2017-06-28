@@ -235,6 +235,7 @@ class Salgshistorik
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="medKoeberPostById", referencedColumnName="id")
    * })
+   * @ORM\OrderBy({"postalcode" = "ASC"})
    */
   private $medkoeberPostby;
 
@@ -255,6 +256,7 @@ class Salgshistorik
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="koeberPostById", referencedColumnName="id")
    * })
+   * @ORM\OrderBy({"postalcode" = "ASC"})
    */
   private $koeberPostby;
 

@@ -8,12 +8,14 @@
     <div class="form-action">
       <form class="form-horizontal  edit-form">
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="grundsalg_statistics_betalte">År</label>
+          <label class="col-sm-2 control-label" for="grundsalg_statistics_betalte">{{ 'Område' | trans }}</label>
           <div class="col-sm-10">
             <select onchange="if (this.value) window.location.href=this.value" name="grundsalg_statistics_betalte" class="form-control">
               <option value="{{ path('grundsalg_statistics_omraade_overview', {'type': type, 'menuIndex': menuIndex, 'submenuIndex': submenuIndex }) }}" {{ salgsomraadeId is null ? 'selected="selected"' : '' }}>{{ 'app.stats.overview' | trans }}</option>
               {% for r in result %}
-                <option value="{{ path('grundsalg_statistics_omraade', {'type': type, 'salgsomraadeId': r['salgsomraadeId'], 'menuIndex': menuIndex, 'submenuIndex': submenuIndex }) }}" {{ r['salgsomraadeId'] == salgsomraadeId ? 'selected="selected"' : '' }}>{{ r['salgsomraadeTitel'] }}</option>
+                {% if r['salgsomraadeId'] %}
+                  <option value="{{ path('grundsalg_statistics_omraade', {'type': type, 'salgsomraadeId': r['salgsomraadeId'], 'menuIndex': menuIndex, 'submenuIndex': submenuIndex }) }}" {{ r['salgsomraadeId'] == salgsomraadeId ? 'selected="selected"' : '' }}>{{ r['salgsomraadeTitel'] }}</option>
+                {% endif %}
               {% endfor %}
             </select>
           </div>

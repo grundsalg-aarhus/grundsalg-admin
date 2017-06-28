@@ -143,18 +143,11 @@
 
                       {{ grundsalg.entity_row('app.grund.postby', entity.postby ) }}
                       {{ grundsalg.entity_row('app.grund.lokalsamfund', entity.lokalsamfund ) }}
-                      <div class="form-group field-text">
-                        {{ grundsalg.entity_label('app.grund.urlgis') }}
-                        <div class="col-sm-10">{{ grundsalg.entity_widget(entity.urlgis) }}</div>
-                      </div>
-                      <div class="form-group field-text">
-                        <div class="col-sm-10 col-md-offset-2"><a href="{{ entity.urlgis }}" target="_blank" class="btn btn-default"><i
-                              class="fa fa-external-link-square"></i> {{ 'action.show' | trans }}</a></div>
-                      </div>
                     </div>
                     <div class="col-md-6">
                       {{ grundsalg.entity_row('app.grund.salgstatus', entity.visStatus ) }}
                       <div class="js-status">{{ grundsalg.entity_row('app.grund.status', entity.status ) }}</div>
+                      {{ grundsalg.entity_row('app.grund.publicstatus', entity.publicstatus ) }}
                       {{ grundsalg.entity_row('app.grund.salgstype', entity.salgstype ) }}
 
                       <div class="field-section ">
@@ -603,8 +596,7 @@
                     <td>{{ reservation.interessent.createdAt | date }}</td>
                     <td>{{ reservation.annulleret ? 'label.yes' | trans }}</td>
                     <td>
-                      <a class="btn btn default"
-                         href="{{ path('easyadmin', parameters = {'action': 'show', 'entity': 'interessent', 'id': reservation.interessent.id }) }}">{{ 'action.show' | trans }}</a>
+                      <a class="btn btn-default" href="{{ path('easyadmin', parameters = {'action': 'show', 'entity': 'interessent', 'id': reservation.interessent.id }) }}">{{ 'action.show' | trans }}</a>
                     </td>
                   </tr>
                 {% endfor %}

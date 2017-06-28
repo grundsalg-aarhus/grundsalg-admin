@@ -10,6 +10,20 @@ action:
     search: Søg
     show: Vis
 
+# If we use the 'form_label' widget directly the EasyAdmin 'label' value is not used
+Accept: Accept
+Beloebanvist: Beløb anvist
+Bogstav: Bogst.
+Husnummer: Husnr.
+Mnr: Mat. nr.
+Overtagelse: Overtagelse
+Resslut: til og med
+Resstart: Reservation
+Skoederekv: Skøde rekv.
+Tilbudslut: til og med
+Tilbudslut: til og med
+Tilbudstart: Tilbud
+
 app:
   grund:
       accept: Accept
@@ -71,6 +85,7 @@ app:
       priskorrektion1: Priskorrektioner
       prism2: Pris pr. m²
       psp: PSP
+      publicstatus: Off. status
       resslut: til og med
       resstart: Reservation
       salg: Salg
@@ -83,7 +98,6 @@ app:
       tilbudstart: Tilbud
       tilsluttet: Tilsluttet
       tilsluttet_header: Prisen indeholder helt eller delvis tilslutning til
-      urlgis: GIS-kort URL
       vej: Vej
       venteliste: Venteliste
 
@@ -153,11 +167,6 @@ plural:
 
 user:
     signout: Log ud
-
-# If we use the 'form_label' widget directly the EasyAdmin 'label' value is not used
-Bogstav: Bogst.
-Husnummer: Husnr.
-Urlgis: GIS-kort
 
 'Cannot delete %name%': '"%name%" kan ikke slettes'
 '%name% is referenced by %count% entities': 'one: "%name%" bruges af %count% datapost | some: "%name%" bruges af %count% dataposter'

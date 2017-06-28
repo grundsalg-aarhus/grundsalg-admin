@@ -11,8 +11,11 @@ easy_admin:
         assets:
             css:
                 - '/css/grundsalg-styles.css'
+                - '/css/lib/bootstrap-datepicker3.min.css'
             js:
                 - '/js/lib/moment-with-locales.min.js'
+                - '/js/lib/bootstrap-datepicker.min.js'
+                - '/js/lib/bootstrap-datepicker.da.min.js'
 
         menu:
             - label: 'Parcelhusgrunde'
@@ -96,8 +99,8 @@ easy_admin:
                 - { label: 'Storparceller pr. område', route: 'grundsalg_statistics_omraade_overview', params: { type: 'Storparcel' } }
                 - { label: 'Erhvervsgrunde pr. område', route: 'grundsalg_statistics_omraade_overview', params: { type: 'Erhvervsgrund' } }
                 - { label: 'Andre grunde pr. område', route: 'grundsalg_statistics_omraade_overview', params: { type: 'Andre' } }
+                - { label: 'Alle grunde', icon: 'table', route: 'grundsalg_statistics_alle_grunde' }
                 - { label: 'Rapporter', icon: 'table', route: 'grundsalg_report' }
-            - { entity: 'interessent', label: 'Interessenter', icon: 'user-circle' }
             - label: 'Log ud'
               icon: 'sign-out'
               route: 'fos_user_security_logout'

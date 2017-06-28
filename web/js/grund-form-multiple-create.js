@@ -1,6 +1,45 @@
 (function ($) {
-    $(document).ready(function () {
+    /**
+     * Find elements by field names.
+     */
+    var find = function(names, context) {
+        if (!$.isArray(names)) {
+            names = [names];
+        }
+        var selectors = [];
+        for (var i = 0, name; name = names[i]; i++) {
+            selectors.push('[class$="_' + name + '"]');
+            selectors.push('[class="js-' + name + '"]');
+        }
+        return $(selectors.join(','), context || null);
+    },
+    findControl = function(names, context) {
+        return find(names, context).find('input, select');
+    },
+    getValue = function(name, context) {
+        return findControl(name, context).val();
+    },
+    /**
+     * Show elements by field names.
+     */
+    show = function(names) {
+        find(names).show();
+    },
+    /**
+     * Hide elements by field names.
+     */
+    hide = function(names) {
+        find(names).hide();
+    },
+    calculateRow = function(row) {
+        var context = $(row);
+        var amount = parseInt(getValue('antalkorr1', context));
+        var value = parseInt(getValue('akrkorr1', context));
+        var total = amount * value;
+        findControl('totalkorr1', context).grundFloatToString(total);
+    };
 
+    $(document).ready(function () {
         // Set here because readonly not properly supported by EasyAdmin
         $('.js-readonly input').prop('readonly', true);
 
@@ -9,6 +48,16 @@
         grundShowHideAnnoceres();
         grundSetReadOnlyDatoannonce();
         grundShowHideSalgsFields();
+
+        $('#grund_collection_grunde').on('easyadmin.collection.item-added', function(event) {
+            var newRow = $(this).children().last();
+            grundShowHideEtagem2();
+            grundShowHidePriceFields();
+            findControl(['antalkorr1', 'akrkorr1'], newRow).on('change keyup', function (event) {
+                var row = $(this).closest('tr');
+                calculateRow(row);
+            }).trigger('keyup');
+        });
 
         $('[id$=_annonceres]').on('click', grundShowHideAnnoceres);
         $('.js-calc-minbud').on('click', grundCalcMinbud);
@@ -122,9 +171,9 @@
         var type = $('[id$=_type]').val();
 
         if (type == 'Storparcel') {
-            $('.js-maxetagem2').show();
+            show('maxetagem2');
         } else {
-            $('.js-maxetagem2').hide();
+            hide('maxetagem2');
         }
     }
 
@@ -132,32 +181,24 @@
         var salgsType = $('[id$=_salgstype]').val();
 
         if (salgsType == 'Kvadratmeterpris' || salgsType == 'Etgm2') {
+            show(['priskorrektion1', 'minbud', 'antalkorr1', 'akrkorr1', 'totalkorr1']);
+            hide(['fastpris', 'minbud']);
 
-            $('.js-fastpris').hide();
-            $('.js-minbud').hide();
             $('.js-auktion-wrapper').hide();
-
             $('.js-pris').show();
-            $('.js-priskorrektion').show();
-
             // grundCalc();
 
         } else if (salgsType == 'Fastpris') {
+            show('fastpris');
+            hide(['priskorrektion1', 'antalkorr1', 'akrkorr1', 'totalkorr1', 'minbud']);
 
-            $('.js-priskorrektion').hide();
             $('.js-pris').hide();
-            $('.js-minbud').hide();
             $('.js-auktion-wrapper').hide();
-
-            $('.js-fastpris').show();
-
         } else if (salgsType == 'Auktion') {
+            show('minbud');
+            hide(['priskorrektion1', 'antalkorr1', 'akrkorr1', 'totalkorr1', 'fastpris']);
 
-            $('.js-priskorrektion').hide();
             $('.js-pris').hide();
-            $('.js-fastpris').hide();
-
-            $('.js-minbud').show();
             $('.js-auktion-wrapper').show();
 
             // grundCalcMinbud();
@@ -301,7 +342,7 @@ jQuery.fn.extend({
     },
     grundFloatToString: function (value) {
         if (isNaN(value)) {
-            floatValue = 0.0;
+            value = 0.0;
         }
         var result = value.toFixed(2).toString().replace('.', ',');
         this.val(result);

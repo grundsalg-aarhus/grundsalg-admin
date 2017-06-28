@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\DBAL\Types\GrundPublicStatus;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
@@ -65,6 +66,14 @@ class Grund {
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GrundSalgStatus")
    */
   private $salgstatus;
+
+  /**
+   * @var GrundPublicStatus
+   *
+   * @ORM\Column(name="publicStatus", type="GrundPublicStatus", nullable=true)
+   * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GrundPublicStatus")
+   */
+  private $publicstatus;
 
   /**
    * @var string
@@ -137,15 +146,9 @@ class Grund {
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="postbyId", referencedColumnName="id")
    * })
+   * @ORM\OrderBy({"postalcode" = "ASC"})
    */
   protected $postby;
-
-  /**
-   * @var string
-   *
-   * @ORM\Column(name="urlGIS", type="string", length=255, nullable=true)
-   */
-  private $urlgis;
 
   /**
    * @var SalgsType
@@ -539,6 +542,7 @@ class Grund {
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="medKoeberPostById", referencedColumnName="id")
    * })
+   * @ORM\OrderBy({"postalcode" = "ASC"})
    */
   private $medkoeberPostby;
 
@@ -549,6 +553,7 @@ class Grund {
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="koeberPostById", referencedColumnName="id")
    * })
+   * @ORM\OrderBy({"postalcode" = "ASC"})
    */
   private $koeberPostby;
 
@@ -562,7 +567,7 @@ class Grund {
   /**
    * @var \AppBundle\Entity\Salgshistorik
    *
-   * @OneToMany(targetEntity="Salgshistorik", mappedBy="grund", cascade={"remove"})
+   * @OneToMany(targetEntity="Salgshistorik", mappedBy="grund", cascade={"persist", "remove"})
    */
   private $salgshistorik;
 
@@ -660,6 +665,22 @@ class Grund {
    */
   public function getStatus() {
     return $this->status;
+  }
+
+  /**
+   * @return GrundPublicStatus
+   */
+  public function getPublicstatus()
+  {
+    return $this->publicstatus;
+  }
+
+  /**
+   * @param GrundPublicStatus $publicstatus
+   */
+  public function setPublicstatus($publicstatus)
+  {
+    $this->publicstatus = $publicstatus;
   }
 
   /**
@@ -902,28 +923,6 @@ class Grund {
    */
   public function getPostby() {
     return $this->postby;
-  }
-
-  /**
-   * Set urlgis
-   *
-   * @param string $urlgis
-   *
-   * @return Grund
-   */
-  public function setUrlgis($urlgis) {
-    $this->urlgis = $urlgis;
-
-    return $this;
-  }
-
-  /**
-   * Get urlgis
-   *
-   * @return string
-   */
-  public function getUrlgis() {
-    return $this->urlgis;
   }
 
   /**
@@ -2166,10 +2165,18 @@ class Grund {
   }
 
   /**
-   * @param mixed $salgshistorik
+   * @param Salgshistorik $salgshistorik
    */
-  public function setSalgshistorik($salgshistorik) {
-    $this->salgshistorik = $salgshistorik;
+  public function addSalgshistorik(Salgshistorik $salgshistorik) {
+    $salgshistorik->setGrund($this);
+    $this->salgshistorik->add($salgshistorik);
+  }
+
+  /**
+   * @param Salgshistorik $salgshistorik
+   */
+  public function removeSalgshistorik(Salgshistorik $salgshistorik) {
+    $this->salgshistorik->removeElement($salgshistorik);
   }
 
   /**
