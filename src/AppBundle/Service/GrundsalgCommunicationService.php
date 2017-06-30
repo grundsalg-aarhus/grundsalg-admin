@@ -16,12 +16,16 @@ use GuzzleHttp\Client;
  */
 class GrundsalgCommunicationService {
   private $endpoint;
+  private $username;
+  private $password;
 
   /**
    * Constructor
    */
-  public function __construct($endpoint) {
+  public function __construct($endpoint, $username, $password) {
     $this->endpoint = $endpoint;
+    $this->username = $username;
+    $this->password = $password;
   }
 
   /**
@@ -39,7 +43,11 @@ class GrundsalgCommunicationService {
     if($salgsomraade->isAnnonceres() && $this->endpoint) {
       $client = new Client();
 
-      $response = $client->request('POST', $this->endpoint . "/api/udstykning/" . $salgsomraade->getId() . "/updated");
+      if($this->username && $this->password) {
+        $response = $client->request('POST', $this->endpoint . "/api/udstykning/" . $salgsomraade->getId() . "/updated", ['auth' => [$this->username, $this->password]]);
+      } else {
+        $response = $client->request('POST', $this->endpoint . "/api/udstykning/" . $salgsomraade->getId() . "/updated");
+      }
 
       $body = $response->getBody()->getContents();
       $content = \GuzzleHttp\json_decode($body);

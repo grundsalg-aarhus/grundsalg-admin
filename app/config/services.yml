@@ -10,7 +10,7 @@ services:
 
   grundsalg.communication:
     class: AppBundle\Service\GrundsalgCommunicationService
-    arguments: ['%grundsalg_web%']
+    arguments: ['%grundsalg_web%', '%grundsalg_web_username%', '%grundsalg_web_password%']
 
   app.salgsomraade_subscriber:
     class: AppBundle\EventSubscriber\SalgsomraadeCommunicationSubscriber
