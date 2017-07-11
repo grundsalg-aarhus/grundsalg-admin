@@ -21,7 +21,7 @@ class DelomraadeCalculator implements EventSubscriber {
   }
 
   public function prePersist(LifecycleEventArgs $args) {
-    $delomraade = $args->getEntity();
+    $delomraade = $args->getObject();
 
     // only act on some "Delomraade" entity
     if (!$delomraade instanceof Delomraade) {

@@ -23,7 +23,7 @@ class GrundCalculator implements EventSubscriber {
   }
 
   public function prePersist(LifecycleEventArgs $args) {
-    $grund = $args->getEntity();
+    $grund = $args->getObject();
 
     // only act on "Grund" entity
     if (!$grund instanceof Grund) {
@@ -39,7 +39,7 @@ class GrundCalculator implements EventSubscriber {
   }
 
   public function preUpdate(LifecycleEventArgs $args) {
-    $grund = $args->getEntity();
+    $grund = $args->getObject();
     $changeset = $args->getEntityChangeSet();
 
     // only act on "Grund" entity

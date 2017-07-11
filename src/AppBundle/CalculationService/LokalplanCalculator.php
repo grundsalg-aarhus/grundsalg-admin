@@ -24,7 +24,7 @@ class LokalplanCalculator implements EventSubscriber {
   }
 
   public function prePersist(LifecycleEventArgs $args) {
-    $lokalplan = $args->getEntity();
+    $lokalplan = $args->getObject();
 
     // only act on some "Lokalplan" entity
     if (!$lokalplan instanceof Lokalplan) {
@@ -36,7 +36,7 @@ class LokalplanCalculator implements EventSubscriber {
   }
 
   public function preUpdate(LifecycleEventArgs $args) {
-    $lokalplan = $args->getEntity();
+    $lokalplan = $args->getObject();
 
     // only act on some "Lokalplan" entity
     if (!$lokalplan instanceof Lokalplan) {
