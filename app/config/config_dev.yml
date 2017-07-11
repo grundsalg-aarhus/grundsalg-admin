@@ -32,6 +32,3 @@ monolog:
 
 #swiftmailer:
 #    delivery_address: me@example.com
-
-parameters:
-    grundsalg_web: null

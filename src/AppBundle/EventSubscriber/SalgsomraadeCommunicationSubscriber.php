@@ -10,7 +10,8 @@ namespace AppBundle\EventSubscriber;
 use AppBundle\Entity\Salgsomraade;
 use AppBundle\Service\GrundsalgCommunicationService;
 use Doctrine\Common\EventSubscriber;
-use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\OnFlushEventArgs;
+use Doctrine\ORM\Events;
 
 /**
  * Class GrundsalgWebCommunication
@@ -28,8 +29,8 @@ class SalgsomraadeCommunicationSubscriber implements EventSubscriber {
    */
   public function getSubscribedEvents() {
     return [
-      'postPersist',
-      'postUpdate',
+      Events::onFlush,
+      Events::postFlush,
     ];
   }
 
@@ -40,23 +41,59 @@ class SalgsomraadeCommunicationSubscriber implements EventSubscriber {
     $this->service = $service;
   }
 
-  public function postPersist(LifecycleEventArgs $args) {
-    $this->handleEvent($args);
-  }
+  /**
+   * @var array Storage for inserted/updated/deleted Salgsomraade entities.
+   *
+   * Caveat: https://stackoverflow.com/a/43604820
+   */
+  private $updatedSalgsomraade = [];
 
-  public function postUpdate(LifecycleEventArgs $args) {
-    $this->handleEvent($args);
-  }
+  const INSERT = 'insert';
+  const UPDATE = 'update';
+  const DELETE = 'delete';
 
-  private function handleEvent(LifecycleEventArgs $args) {
-    $entity = $args->getEntity();
-
-    // only act on some "Salgsomraade" entity
-    if (!$entity instanceof Salgsomraade) {
-      return;
+  /**
+   * Store a list of inserted/updated/deleted Salgsomraade entities.
+   *
+   * @param \Doctrine\ORM\Event\OnFlushEventArgs $args
+   */
+  public function onFlush(OnFlushEventArgs $args) {
+    $uow = $args->getEntityManager()->getUnitOfWork();
+    $this->updatedSalgsomraade = [
+      self::INSERT => [],
+      self::UPDATE => [],
+    ];
+    foreach ($uow->getScheduledEntityInsertions() as $entity) {
+      if ($entity instanceof Salgsomraade) {
+        $this->updatedSalgsomraade[self::INSERT][] = $entity;
+      }
     }
+    foreach ($uow->getScheduledEntityUpdates() as $entity) {
+      if ($entity instanceof Salgsomraade) {
+        $this->updatedSalgsomraade[self::UPDATE][] = $entity;
+      }
+    }
+    foreach ($uow->getScheduledEntityDeletions() as $entity) {
+      if ($entity instanceof Salgsomraade) {
+        $this->updatedSalgsomraade[self::DELETE][] = $entity;
+      }
+    }
+  }
 
-    $this->service->saveSalgsomraade($entity);
+  /**
+   * Notify web-site of inserted/updated Salgsomraade entities.
+   */
+  public function postFlush() {
+    if (isset($this->updatedSalgsomraade[self::INSERT])) {
+      foreach ($this->updatedSalgsomraade[self::INSERT] as $salgsomraade) {
+        $this->service->saveSalgsomraade($salgsomraade);
+      }
+    }
+    if (isset($this->updatedSalgsomraade[self::UPDATE])) {
+      foreach ($this->updatedSalgsomraade[self::UPDATE] as $salgsomraade) {
+        $this->service->saveSalgsomraade($salgsomraade);
+      }
+    }
   }
 
 }
