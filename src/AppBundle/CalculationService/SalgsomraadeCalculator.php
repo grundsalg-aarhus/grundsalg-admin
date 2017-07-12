@@ -27,7 +27,7 @@ class SalgsomraadeCalculator implements EventSubscriber {
   }
 
   public function prePersist(LifecycleEventArgs $args) {
-    $salgsomraade = $args->getEntity();
+    $salgsomraade = $args->getObject();
 
     // only act on some "Salgsomraade" entity
     if (!$salgsomraade instanceof Salgsomraade) {

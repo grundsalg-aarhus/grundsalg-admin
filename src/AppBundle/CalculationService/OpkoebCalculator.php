@@ -23,7 +23,7 @@ class OpkoebCalculator implements EventSubscriber {
   }
 
   public function prePersist(LifecycleEventArgs $args) {
-    $opkoeb = $args->getEntity();
+    $opkoeb = $args->getObject();
 
     // only act on some "Opkoeb" entity
     if (!$opkoeb instanceof Opkoeb) {
@@ -35,7 +35,7 @@ class OpkoebCalculator implements EventSubscriber {
   }
 
   public function preUpdate(LifecycleEventArgs $args) {
-    $opkoeb = $args->getEntity();
+    $opkoeb = $args->getObject();
 
     // only act on some "Opkoeb" entity
     if (!$opkoeb instanceof Opkoeb) {
