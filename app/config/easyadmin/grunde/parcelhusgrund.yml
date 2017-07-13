@@ -50,6 +50,8 @@ easy_admin:
                 title: 'Rediger Parcelhusgrund'
                 actions:
                     - { name: delete, roles: [ROLE_ADMIN] }
+#                    - { name: 'waitlist', icon: 'plus-square', css_class: 'btn btn_default', label: 'Opret Interessent' }
+                    - { name: 'interessent_create', type: 'route', icon: 'plus-square', css_class: 'btn btn_default', label: 'Opret Interessent' }
 
             show: &parcelhusgrund_default_show
                 title: 'Parcelhusgrund'

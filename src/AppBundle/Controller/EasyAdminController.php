@@ -243,4 +243,20 @@ class EasyAdminController extends BaseAdminController {
     return $queryBuilder;
   }
 
+  /**
+   * @param object $entity
+   */
+  public function prePersistInteressentEntity($entity)
+  {
+    $id = $this->request->query->get('grundId');
+
+    if($id) {
+      $repository = $this->getDoctrine()->getRepository('AppBundle:Grund');
+      $grund = $repository->find($id);
+      $grund->addInteressent($entity);
+
+      $d = 1;
+    }
+  }
+
 }

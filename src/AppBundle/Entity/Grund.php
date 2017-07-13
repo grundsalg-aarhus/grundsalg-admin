@@ -560,7 +560,7 @@ class Grund {
   /**
    * @var \AppBundle\Entity\Reservation
    *
-   * @OneToMany(targetEntity="Reservation", mappedBy="grund")
+   * @OneToMany(targetEntity="Reservation", mappedBy="grund", cascade={"persist"}))
    */
   private $reservationer;
 
@@ -2150,11 +2150,17 @@ class Grund {
     return $this->reservationer;
   }
 
-  /**
-   * @param mixed $reservationer
-   */
-  public function setReservationer($reservationer) {
-    $this->reservationer = $reservationer;
+  public function addReservation(Reservation $reservation) {
+    $this->reservationer->add($reservation);
+  }
+
+  public function addInteressent(Interessent $interessent) {
+    $reservation = new Reservation();
+    $reservation->setGrund($this);
+    $reservation->setInteressent($interessent);
+
+    $this->reservationer->add($reservation);
+    $interessent->addReservation($reservation);
   }
 
   /**

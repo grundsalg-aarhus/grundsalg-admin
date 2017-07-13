@@ -109,6 +109,8 @@ app:
       medkoeber: Medkøber
       navn: Navn
       notat: Notat
+      reservationer: Venteliste til
+      venteliste: Venteliste
 
   lokalplan:
       nr: Nr.

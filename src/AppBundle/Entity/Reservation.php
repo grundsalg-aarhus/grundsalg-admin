@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Blameable\Traits\BlameableEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * Reservation
@@ -12,6 +14,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Reservation
 {
+  use BlameableEntity;
+  use TimestampableEntity;
+
   /**
    * @var integer
    *
@@ -41,13 +46,17 @@ class Reservation
   /**
    * @var \Interessent
    *
-   * @ORM\ManyToOne(targetEntity="Interessent", inversedBy="reservationer")
+   * @ORM\ManyToOne(targetEntity="Interessent", inversedBy="reservationer", cascade={"persist"})
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="interessentId", referencedColumnName="id")
    * })
    */
   private $interessent;
 
+  public function __construct()
+  {
+    $this->annulleret = false;
+  }
 
   /**
    * Get id
@@ -133,6 +142,9 @@ class Reservation
 
   public function __toString()
   {
-    return __CLASS__;
+    $annulleret = $this->getAnnulleret() ? 'Ja' : 'Nej';
+    $createdAt = date_format($this->getCreatedAt(), 'd-m-Y, H:i');
+    $createdAt = str_replace(', 00:00', '', $createdAt);
+    return $createdAt . ' / ' . $this->getGrund() . ' / Annulleret: ' . $annulleret;
   }
 }
