@@ -16,16 +16,7 @@ class VentelisteController extends Controller {
    */
   public function waitlistAction(Request $request) {
 
-    $em = $this->getDoctrine()->getManager();
-    $repository = $this->getDoctrine()->getRepository('AppBundle:Grund');
-
     $id = $request->query->get('id');
-    $grund = $repository->find($id);
-//
-//    $interessent = new Interessent();
-//    $grund->addInteressent($interessent);
-//
-//    $em->flush();
 
     $returnPath = $this->generateUrl('easyadmin', array(
       'action' => 'edit',
@@ -37,7 +28,6 @@ class VentelisteController extends Controller {
 
     return $this->redirectToRoute('easyadmin', array(
       'action' => 'new',
-//      'id' => $interessent->getId(),
       'entity' => 'interessent',
       'referer' => $returnPath,
       'menuIndex' => $request->query->get('menuIndex'),
