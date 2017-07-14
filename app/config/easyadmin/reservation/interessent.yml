@@ -45,9 +45,13 @@ easy_admin:
             edit:
                 roles: [ROLE_EDITOR]
                 title: 'Rediger Interessent'
+                actions:
+                    - { name: -delete }
 
             show:
                 title: 'Interessent'
+                actions:
+                    - { name: -delete }
                 fields:
                     - { type: 'group', css_class: 'col-md-6', label: 'app.interessent.koeber' }
                     - { property: koeberNavn, label: 'app.grund.koeberNavn' }

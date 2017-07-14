@@ -670,6 +670,7 @@
                 <td>{{ reservation.annulleret ? 'label.yes' | trans }}</td>
                 <td class="actions">
                   <a class="btn btn default" href="{{ path('easyadmin', parameters = {'action': 'show', 'entity': 'interessent', 'id': reservation.interessent.id }) }}">{{ 'action.show' | trans }}</a>
+                  <a class="btn btn default" href="{{ path('easyadmin', parameters = {'action': 'edit', 'entity': 'interessent', 'id': reservation.interessent.id }) }}">{{ 'action.edit' | trans }}</a>
                 </td>
               </tr>
             {% endfor %}

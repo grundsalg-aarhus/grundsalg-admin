@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Grund;
 use JavierEguiluz\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -255,7 +256,9 @@ class EasyAdminController extends BaseAdminController {
       $grund = $repository->find($id);
       $grund->addInteressent($entity);
 
-      $d = 1;
+      $user = $this->getUser();
+      $grund->setUpdatedAt(new \DateTime());
+      $grund->setUpdatedBy((string) $user);
     }
   }
 
