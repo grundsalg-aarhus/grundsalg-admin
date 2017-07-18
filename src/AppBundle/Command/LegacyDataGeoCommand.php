@@ -514,6 +514,9 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
       throw new \Exception('File ' . $filename . ' does not exist');
     }
 
+    // URL changed, but doesn't forward (july, 2017)
+    $content = str_ireplace('gis.aarhus.dk', 'webgis.aarhus.dk', $content);
+
     $data = @json_decode($content, TRUE);
 
     if (!$data) {
