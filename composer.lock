@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3e48ba38ad1a24b406f670aaa7f55951",
+    "content-hash": "5b8eddbcf221259fa79c60cc276d749a",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -3728,6 +3728,61 @@
     ],
     "packages-dev": [
         {
+            "name": "aakb/php-coding-standard",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:aakb/php-coding-standard.git",
+                "reference": "404f1f64714da6dc235b0ec41fceed9a7cb3e01f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aakb/php-coding-standard/zipball/404f1f64714da6dc235b0ec41fceed9a7cb3e01f",
+                "reference": "404f1f64714da6dc235b0ec41fceed9a7cb3e01f",
+                "shasum": ""
+            },
+            "require": {
+                "squizlabs/php_codesniffer": "3.*"
+            },
+            "type": "phpcodesniffer-standard",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "scripts": {
+                "post-install-cmd": [
+                    "vendor/bin/phpcs --config-set installed_paths vendor/aakb/php-coding-standard",
+                    "ln -s vendor/aakb/php-coding-standard/hooks/pre-commit .git/hooks/pre-commit"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jesper Kristensen",
+                    "email": "jeskr@aarhus.dk"
+                },
+                {
+                    "name": "ITK",
+                    "homepage": "aakb.dk"
+                }
+            ],
+            "description": "CodeSniffer ruleset for the ITK PHP coding standard",
+            "homepage": "https://github.com/aakb/php-coding-standard",
+            "keywords": [
+                "Symfony",
+                "coding standard",
+                "phpcs"
+            ],
+            "support": {
+                "source": "https://github.com/aakb/php-coding-standard/tree/1.0.5",
+                "issues": "https://github.com/aakb/php-coding-standard/issues"
+            },
+            "time": "2017-07-19T12:22:49+00:00"
+        },
+        {
             "name": "behat/behat",
             "version": "v3.3.0",
             "source": {
@@ -4451,6 +4506,57 @@
             ],
             "description": "This bundle generates code for you",
             "time": "2017-03-15T01:02:10+00:00"
+        },
+        {
+            "name": "squizlabs/php_codesniffer",
+            "version": "3.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
+                "reference": "c7594a88ae75401e8f8d0bd4deb8431b39045c51"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/c7594a88ae75401e8f8d0bd4deb8431b39045c51",
+                "reference": "c7594a88ae75401e8f8d0bd4deb8431b39045c51",
+                "shasum": ""
+            },
+            "require": {
+                "ext-simplexml": "*",
+                "ext-tokenizer": "*",
+                "ext-xmlwriter": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "bin": [
+                "bin/phpcs",
+                "bin/phpcbf"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Greg Sherwood",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
+            "homepage": "http://www.squizlabs.com/php-codesniffer",
+            "keywords": [
+                "phpcs",
+                "standards"
+            ],
+            "time": "2017-07-18T01:12:32+00:00"
         },
         {
             "name": "symfony/phpunit-bridge",

@@ -48,9 +48,8 @@ class CronCommand extends ContainerAwareCommand {
   /**
    * Mark auctions on select Grunds as ended.
    */
-  private function endAuction()
-  {
-      $queryBuilder = $this->manager->getRepository(Grund::class)->createQueryBuilder('g');
+  private function endAuction() {
+    $queryBuilder = $this->manager->getRepository(Grund::class)->createQueryBuilder('g');
     $entities = $queryBuilder
       ->andWhere('g.status in (:statuses)')
       ->setParameter('statuses', [GrundStatus::FREMTIDIG, GrundStatus::ANNONCERET])
@@ -65,7 +64,7 @@ class CronCommand extends ContainerAwareCommand {
         sprintf(
           "% 8d: %s\t%s",
           $entity->getId(),
-          (string)$entity,
+          (string) $entity,
           $entity->getAuktionslutdato()->format(\DateTime::ISO8601)
         )
       );
@@ -93,7 +92,7 @@ class CronCommand extends ContainerAwareCommand {
         sprintf(
           "% 8d: %s\t%s",
           $entity->getId(),
-          (string)$entity,
+          (string) $entity,
           $entity->getDatoAnnonce()->format(\DateTime::ISO8601)
         )
       );
@@ -105,11 +104,13 @@ class CronCommand extends ContainerAwareCommand {
 
   /**
    * Write message(s) to console.
+   *
+   * @param string $messages
+   *   The message to output.
    */
   private function write($messages) {
     if ($this->output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
       $this->output->writeln($messages);
     }
   }
-
 }
