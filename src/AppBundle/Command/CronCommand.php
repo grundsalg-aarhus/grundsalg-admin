@@ -55,12 +55,19 @@ class CronCommand extends ContainerAwareCommand {
       ->setParameter('statuses', [GrundStatus::FREMTIDIG, GrundStatus::ANNONCERET])
       ->andWhere('g.auktionslutdato IS NOT NULL')
       ->andWhere('g.auktionslutdato < :now')
-      ->setParameter('now', new \DateTime(NULL, new \DateTimeZone('UTC')))
+      ->setParameter('now', new \DateTime(null, new \DateTimeZone('UTC')))
       ->getQuery()->getResult();
 
     $this->write(sprintf('End auction; #entities: %d', count($entities)));
     foreach ($entities as $entity) {
-      $this->write(sprintf("% 8d: %s\t%s", $entity->getId(), (string) $entity, $entity->getAuktionslutdato()->format(\DateTime::ISO8601)));
+      $this->write(
+        sprintf(
+          "% 8d: %s\t%s",
+          $entity->getId(),
+          (string)$entity,
+          $entity->getAuktionslutdato()->format(\DateTime::ISO8601)
+        )
+      );
       $entity->setStatus(GrundStatus::AUKTION_SLUT);
       $this->manager->persist($entity);
     }
@@ -76,12 +83,19 @@ class CronCommand extends ContainerAwareCommand {
       ->andWhere('g.status IN (:statuses)')
       ->setParameter('statuses', [GrundStatus::FREMTIDIG])
       ->andWhere('g.datoannonce <= :now')
-      ->setParameter('now', new \DateTime(NULL, new \DateTimeZone('UTC')))
+      ->setParameter('now', new \DateTime(null, new \DateTimeZone('UTC')))
       ->getQuery()->getResult();
 
     $this->write(sprintf('Set announced; #entities: %d', count($entities)));
     foreach ($entities as $entity) {
-      $this->write(sprintf("% 8d: %s\t%s", $entity->getId(), (string) $entity, $entity->getDatoAnnonce()->format(\DateTime::ISO8601)));
+      $this->write(
+        sprintf(
+          "% 8d: %s\t%s",
+          $entity->getId(),
+          (string)$entity,
+          $entity->getDatoAnnonce()->format(\DateTime::ISO8601)
+        )
+      );
       $entity->setStatus(GrundStatus::ANNONCERET);
       $this->manager->persist($entity);
     }
