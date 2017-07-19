@@ -48,8 +48,9 @@ class CronCommand extends ContainerAwareCommand {
   /**
    * Mark auctions on select Grunds as ended.
    */
-  private function endAuction() {
-    $queryBuilder = $this->manager->getRepository(Grund::class)->createQueryBuilder('g');
+  private function endAuction()
+  {
+      $queryBuilder = $this->manager->getRepository(Grund::class)->createQueryBuilder('g');
     $entities = $queryBuilder
       ->andWhere('g.status in (:statuses)')
       ->setParameter('statuses', [GrundStatus::FREMTIDIG, GrundStatus::ANNONCERET])
