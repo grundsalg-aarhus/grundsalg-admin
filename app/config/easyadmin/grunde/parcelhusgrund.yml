@@ -52,6 +52,7 @@ easy_admin:
                     - { name: delete, roles: [ROLE_ADMIN] }
 #                    - { name: 'waitlist', icon: 'plus-square', css_class: 'btn btn_default', label: 'Opret Interessent' }
                     - { name: 'interessent_create', type: 'route', icon: 'plus-square', css_class: 'btn btn_default', label: 'Opret Interessent' }
+                    - { name: 'interessent_fetch', type: 'route', icon: 'caret-square-o-right', css_class: 'btn btn_default', label: 'Hent fra venteliste' }
                     - { name: 'sale_cancel', type: 'route', icon: 'minus-square', css_class: 'btn btn_default', label: 'Annuller salg' }
 
             show: &parcelhusgrund_default_show

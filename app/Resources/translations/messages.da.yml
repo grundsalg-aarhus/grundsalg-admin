@@ -11,8 +11,12 @@ action:
     show: Vis
 
 flash:
+    buyer_available: Bemærk at der er interessenter på venteliste
+    buyer_cannot_be_empty: Der skal angives en køber inden salg annulleres
+    buyer_not_empty: Der er allerede registreret en køber under salg
     waitlist_allready_cancelled: Venteliste allerede annulleret
     waitlist_cancelled: Venteliste annulleret
+    waitlist_fetched: Køber hentet fra ventelisten
 
 # If we use the 'form_label' widget directly the EasyAdmin 'label' value is not used
 Accept: Accept
@@ -182,4 +186,3 @@ user:
 
 'Cannot delete %name%': '"%name%" kan ikke slettes'
 '%name% is referenced by %count% entities': 'one: "%name%" bruges af %count% datapost | some: "%name%" bruges af %count% dataposter'
-'Byer cannot be empty': 'Der skal angives en køber inden salg annulleres'

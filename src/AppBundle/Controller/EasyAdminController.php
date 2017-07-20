@@ -97,6 +97,11 @@ class EasyAdminController extends BaseAdminController {
    * @param Salgshistorik $salgshistorik
    */
   public function prePersistSalgshistorikEntity(Salgshistorik $salgshistorik) {
+    if(!empty($salgshistorik->getGrund()->getActiveReservationer())) {
+      $translator = $this->get('translator');
+      $this->addFlash('info', $translator->trans('flash.buyer_available'));
+    }
+
     $salgshistorik->getGrund()->clearSalgFields();
   }
 

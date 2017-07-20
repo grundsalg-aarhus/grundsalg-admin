@@ -2170,10 +2170,31 @@ class Grund {
   }
 
   /**
+   * @return mixed
+   */
+  public function getActiveReservationer() {
+    $active = [];
+    foreach ($this->getReservationer() as $reservation) {
+      if(!$reservation->isAnnulleret()) {
+        $active[] = $reservation;
+      }
+    }
+
+    return $active;
+  }
+
+  /**
    * @param Reservation $reservation
    */
   public function addReservation(Reservation $reservation) {
     $this->reservationer->add($reservation);
+  }
+
+  /**
+   * @param Reservation $reservation
+   */
+  public function removeReservation(Reservation $reservation) {
+    $this->reservationer->removeElement($reservation);
   }
 
   /**
@@ -2361,5 +2382,32 @@ class Grund {
     $this->setMedkoeberTelefon(NULL);
     $this->setMedkoeberMobil(NULL);
     $this->setMedkoeberEmail(NULL);
+  }
+
+  /**
+   * Set all 'salgs' fields based on given Interessent
+   *
+   * @param Interessent $interessent
+   */
+  public function setSaleFromInteressent(Interessent $interessent) {
+    $this->setResstart($interessent->getCreatedAt());
+
+    $this->setKoeberNavn($interessent->getKoeberNavn());
+    $this->setKoeberAdresse($interessent->getKoeberAdresse());
+    $this->setKoeberPostby($interessent->getKoeberPostby());
+    $this->setKoeberLand($interessent->getKoeberLand());
+    $this->setKoeberTelefon($interessent->getKoeberTelefon());
+    $this->setKoeberMobil($interessent->getKoeberMobil());
+    $this->setKoeberEmail($interessent->getKoeberEmail());
+
+    $this->setKoeberNotat($interessent->getKoeberNotat());
+
+    $this->setMedkoeberNavn($interessent->getMedkoeberNavn());
+    $this->setMedkoeberAdresse($interessent->getMedkoeberAdresse());
+    $this->setMedkoeberPostby($interessent->getMedkoeberPostby());
+    $this->setMedkoeberLand($interessent->getMedkoeberLand());
+    $this->setMedkoeberTelefon($interessent->getMedkoeberTelefon());
+    $this->setMedkoeberMobil($interessent->getMedkoeberMobil());
+    $this->setMedkoeberEmail($interessent->getMedkoeberEmail());
   }
 }
