@@ -103,7 +103,7 @@ class VentelisteController extends Controller {
       // There must be a byer before sale can be cancelled
       if (empty($grund->getKoeberNavn())) {
         $translator = $this->get('translator');
-        $this->addFlash('warning', $translator->trans('Byer cannot be empty'));
+        $this->addFlash('error', $translator->trans('Byer cannot be empty'));
 
         return $this->redirectToRoute(
           'easyadmin',
