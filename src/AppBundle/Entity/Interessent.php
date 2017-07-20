@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
@@ -151,7 +152,7 @@ class Interessent
   /**
    * @var \AppBundle\Entity\Reservation
    *
-   * @OneToMany(targetEntity="Reservation", mappedBy="interessent")
+   * @OneToMany(targetEntity="Reservation", mappedBy="interessent", cascade={"persist"})
    */
   private $reservationer;
 
@@ -501,7 +502,7 @@ class Interessent
 
   public function __toString()
   {
-    return $this->koeberNotat . " / " . $this->medkoeberNavn;
+    return $this->koeberNavn . " / " . $this->koeberEmail;
   }
 
   /**
@@ -511,11 +512,8 @@ class Interessent
     return $this->reservationer;
   }
 
-  /**
-   * @param mixed $reservationer
-   */
-  public function setReservationer($reservationer) {
-    $this->reservationer = $reservationer;
+  public function addReservation(Reservation $reservation) {
+    $this->reservationer->add($reservation);
   }
 
 }

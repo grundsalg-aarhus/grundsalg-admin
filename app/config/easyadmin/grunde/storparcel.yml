@@ -47,6 +47,9 @@ easy_admin:
                 title: 'Rediger Storparcel'
                 actions:
                     - { name: delete, roles: [ROLE_ADMIN] }
+                    - { name: interessent_create, type: 'route', icon: 'plus-square', css_class: 'btn btn_default', label: 'Opret Interessent', roles: [ROLE_ADMIN] }
+                    - { name: interessent_fetch, type: 'route', icon: 'caret-square-o-right', css_class: 'btn btn_default', label: 'Hent fra venteliste', roles: [ROLE_ADMIN] }
+                    - { name: sale_cancel, type: 'route', icon: 'minus-square', css_class: 'btn btn_default', label: 'Annuller salg', roles: [ROLE_ADMIN] }
 
             show: &storparcel_default_show
                 title: 'Storparcel'
@@ -150,7 +153,9 @@ easy_admin:
                 <<: *storparcel_default_list
 
             search: *storparcel_default_search
-            edit: *storparcel_default_edit
+            edit:
+                <<: *storparcel_default_edit
+                actions:
             show: *storparcel_default_show
             new: *storparcel_default_new
             form: *storparcel_default_form
@@ -189,7 +194,9 @@ easy_admin:
                                         data: !php/const:AppBundle\DBAL\Types\GrundSalgStatus::LEDIG
 
             search: *storparcel_default_search
-            edit: *storparcel_default_edit
+            edit:
+                <<: *storparcel_default_edit
+                actions:
             show: *storparcel_default_show
             new: *storparcel_default_new
             form: *storparcel_default_form
@@ -207,7 +214,9 @@ easy_admin:
                 bulk: *storparcel_bulk
 
             search: *storparcel_default_search
-            edit: *storparcel_default_edit
+            edit:
+                <<: *storparcel_default_edit
+                actions:
             show: *storparcel_default_show
             new: *storparcel_default_new
             form: *storparcel_default_form
