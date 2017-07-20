@@ -10,6 +10,10 @@ action:
     search: Søg
     show: Vis
 
+flash:
+    waitlist_allready_cancelled: Venteliste allerede annulleret
+    waitlist_cancelled: Venteliste annulleret
+
 # If we use the 'form_label' widget directly the EasyAdmin 'label' value is not used
 Accept: Accept
 Beloebanvist: Beløb anvist

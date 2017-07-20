@@ -87,7 +87,7 @@ class Reservation
    *
    * @return string
    */
-  public function getAnnulleret()
+  public function isAnnulleret()
   {
     return $this->annulleret;
   }
@@ -142,7 +142,7 @@ class Reservation
 
   public function __toString()
   {
-    $annulleret = $this->getAnnulleret() ? 'Ja' : 'Nej';
+    $annulleret = $this->isAnnulleret() ? 'Ja' : 'Nej';
     $createdAt = date_format($this->getCreatedAt(), 'd-m-Y, H:i');
     $createdAt = str_replace(', 00:00', '', $createdAt);
     return $createdAt . ' / ' . $this->getGrund() . ' / Annulleret: ' . $annulleret;

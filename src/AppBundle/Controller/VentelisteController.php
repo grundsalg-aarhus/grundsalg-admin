@@ -59,17 +59,28 @@ class VentelisteController extends Controller {
     $repository = $this->getDoctrine()->getRepository('AppBundle:Interessent');
 
     $id = $request->query->get('id');
+    $referer = $request->query->get('referer');
 
     $interessent = $repository->find($id);
     $reservationer = $interessent->getReservationer();
 
+    $flashMessage = "flash.waitlist_allready_cancelled";
+    $flashType = 'warning';
+
     foreach ($reservationer as $reservation) {
+      if(!$reservation->isAnnulleret()) {
+        $flashMessage = "flash.waitlist_cancelled";
+        $flashType = 'success';
+      }
       $reservation->setAnnulleret(TRUE);
     }
 
+    $translator = $this->get('translator');
+    $this->addFlash($flashType, $translator->trans($flashMessage));
+
     $em->flush();
 
-    return $this->redirectToRoute(
+    $entityEditUrl = $this->generateUrl(
       'easyadmin',
       [
         'action' => 'edit',
@@ -77,6 +88,10 @@ class VentelisteController extends Controller {
         'entity' => $request->query->get('entity'),
       ]
     );
+
+    $url = empty($referer) ? $entityEditUrl : $referer;
+
+    return $this->redirect($url);
   }
 
 /**
