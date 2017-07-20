@@ -1,4 +1,8 @@
 <?php
+/**
+ *
+ *
+ */
 
 namespace AppBundle\Entity;
 
@@ -12,17 +16,18 @@ use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 /**
  * Salgshistorik
  *
- * @ORM\Table(name="Salgshistorik", indexes={@ORM\Index(name="fk_Salgshistorik_grundId", columns={"grundId"}), @ORM\Index(name="fk_Salgshistorik_koeberPostById", columns={"koeberPostById"}), @ORM\Index(name="fk_Salgshistorik_medKoeberPostById", columns={"medKoeberPostById"})})
+ * @ORM\Table(name="Salgshistorik", indexes={@ORM\Index(name="fk_Salgshistorik_grundId", columns={"grundId"}),
+ *   @ORM\Index(name="fk_Salgshistorik_koeberPostById", columns={"koeberPostById"}),
+ *   @ORM\Index(name="fk_Salgshistorik_medKoeberPostById", columns={"medKoeberPostById"})})
  * @ORM\Entity
  */
-class Salgshistorik
-{
+class Salgshistorik {
   use BlameableEntity;
   use TimestampableEntity;
 
 
   /**
-   * @var integer
+   * @var int
    *
    * @ORM\Column(name="id", type="integer", nullable=false)
    * @ORM\Id
@@ -33,7 +38,7 @@ class Salgshistorik
   /**
    * @var string
    *
-   * @ORM\Column(name="aarsag", type="text", nullable=true)
+   * @ORM\Column(name="aarsag", type="text", nullable=false)
    */
   private $aarsag;
 
@@ -41,6 +46,7 @@ class Salgshistorik
    * @var SalgsType
    *
    * @ORM\Column(name="salgsType", type="SalgsType", nullable=true)
+   *
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\SalgsType")
    */
   private $salgstype;
@@ -49,6 +55,7 @@ class Salgshistorik
    * @var GrundSalgStatus
    *
    * @ORM\Column(name="salgStatus", type="GrundSalgStatus", nullable=true)
+   *
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GrundSalgStatus")
    */
   private $salgStatus;
@@ -140,104 +147,94 @@ class Salgshistorik
   /**
    * @var string
    *
-   * @ORM\Column(name="navn", type="string", length=255, nullable=true)
+   * @ORM\Column(name="koeberNavn", type="string", length=255, nullable=true)
    */
-  private $navn;
+  private $koeberNavn;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="adresse", type="string", length=100, nullable=true)
+   * @ORM\Column(name="koeberAdresse", type="string", length=120, nullable=true)
    */
-  private $adresse;
+  private $koeberAdresse;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="land", type="string", length=50, nullable=true)
+   * @ORM\Column(name="koeberLand", type="string", length=50, nullable=true)
    */
-  private $land;
+  private $koeberLand;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="telefon", type="string", length=50, nullable=true)
+   * @ORM\Column(name="koeberTelefon", type="string", length=50, nullable=true)
    */
-  private $telefon;
+  private $koeberTelefon;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="mobil", type="string", length=50, nullable=true)
+   * @ORM\Column(name="koeberMobil", type="string", length=50, nullable=true)
    */
-  private $mobil;
+  private $koeberMobil;
 
   /**
    * @var string
    *
    * @ORM\Column(name="koeberEmail", type="string", length=120, nullable=true)
    */
-  private $koeberemail;
+  private $koeberEmail;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="navn1", type="string", length=120, nullable=true)
+   * @ORM\Column(name="medkoeberNavn", type="string", length=255, nullable=true)
    */
-  private $navn1;
+  private $medkoeberNavn;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="adresse1", type="string", length=120, nullable=true)
+   * @ORM\Column(name="medkoeberAdresse", type="string", length=120, nullable=true)
    */
-  private $adresse1;
+  private $medkoeberAdresse;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="land1", type="string", length=50, nullable=true)
+   * @ORM\Column(name="medkoeberLand", type="string", length=50, nullable=true)
    */
-  private $land1;
+  private $medkoeberLand;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="telefon1", type="string", length=50, nullable=true)
+   * @ORM\Column(name="medkoeberTelefon", type="string", length=50, nullable=true)
    */
-  private $telefon1;
+  private $medkoeberTelefon;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="mobil1", type="string", length=50, nullable=true)
+   * @ORM\Column(name="medkoeberMobil", type="string", length=50, nullable=true)
    */
-  private $mobil1;
+  private $medkoeberMobil;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="medKoeberEmail", type="string", length=120, nullable=true)
+   * @ORM\Column(name="medkoeberEmail", type="string", length=120, nullable=true)
    */
-  private $medkoeberemail;
+  private $medkoeberEmail;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="notat", type="text", nullable=true)
+   * @ORM\Column(name="koeberNotat", type="text", nullable=true)
    */
-  private $notat;
+  private $koeberNotat;
 
-  /**
-   * @var \Postby
-   *
-   * @ORM\ManyToOne(targetEntity="Postby")
-   * @ORM\JoinColumns({
-   *   @ORM\JoinColumn(name="medKoeberPostById", referencedColumnName="id")
-   * })
-   * @ORM\OrderBy({"postalcode" = "ASC"})
-   */
-  private $medkoeberPostby;
 
   /**
    * @var \Grund
@@ -260,14 +257,73 @@ class Salgshistorik
    */
   private $koeberPostby;
 
+  /**
+   * @var \AppBundle\Entity\Postby
+   *
+   * @ORM\ManyToOne(targetEntity="Postby")
+   * @ORM\JoinColumns({
+   *   @ORM\JoinColumn(name="medKoeberPostById", referencedColumnName="id")
+   * })
+   * @ORM\OrderBy({"postalcode" = "ASC"})
+   */
+  private $medkoeberPostby;
+
+  /**
+   * Salgshistorik constructor.
+   *
+   * @param Grund $grund
+   */
+  public function __construct(Grund $grund) {
+    $grund->addSalgshistorik($this);
+
+    $this->setSalgstype($grund->getSalgstype());
+    $this->setSalgStatus($grund->getSalgstatus());
+
+    $this->setResstart($grund->getResstart());
+    $this->setResslut($grund->getResslut());
+    $this->setTilbudstart($grund->getTilbudstart());
+    $this->setTilbudslut($grund->getTilbudslut());
+    $this->setAccept($grund->getAccept());
+    $this->setOvertagelse($grund->getOvertagelse());
+    $this->setSkoederekv($grund->getSkoederekv());
+    $this->setBeloebanvist($grund->getBeloebanvist());
+    $this->setAuktionstartdato($grund->getAuktionstartdato());
+    $this->setAuktionslutdato($grund->getAuktionslutdato());
+    $this->setMinbud($grund->getMinbud());
+    $this->setAntagetbud($grund->getAntagetbud());
+
+    $this->setKoeberNavn($grund->getKoeberNavn());
+    $this->setKoeberAdresse($grund->getKoeberAdresse());
+    $this->setKoeberPostby($grund->getKoeberPostby());
+    $this->setKoeberLand($grund->getKoeberLand());
+    $this->setKoeberTelefon($grund->getKoeberTelefon());
+    $this->setKoeberMobil($grund->getKoeberMobil());
+    $this->setKoeberEmail($grund->getKoeberEmail());
+
+    $this->setKoeberNotat($grund->getKoeberNotat());
+
+    $this->setMedkoeberNavn($grund->getMedkoeberNavn());
+    $this->setMedkoeberAdresse($grund->getMedkoeberAdresse());
+    $this->setMedkoeberPostby($grund->getMedkoeberPostby());
+    $this->setMedkoeberLand($grund->getMedkoeberLand());
+    $this->setMedkoeberTelefon($grund->getMedkoeberTelefon());
+    $this->setMedkoeberMobil($grund->getMedkoeberMobil());
+    $this->setMedkoeberEmail($grund->getMedkoeberEmail());
+  }
+
+  /**
+   * @return string
+   */
+  public function __toString() {
+    return __CLASS__;
+  }
 
   /**
    * Get id
    *
    * @return integer
    */
-  public function getId()
-  {
+  public function getId() {
     return $this->id;
   }
 
@@ -278,8 +334,7 @@ class Salgshistorik
    *
    * @return Salgshistorik
    */
-  public function setAarsag($aarsag)
-  {
+  public function setAarsag($aarsag) {
     $this->aarsag = $aarsag;
 
     return $this;
@@ -290,8 +345,7 @@ class Salgshistorik
    *
    * @return string
    */
-  public function getAarsag()
-  {
+  public function getAarsag() {
     return $this->aarsag;
   }
 
@@ -346,8 +400,7 @@ class Salgshistorik
    *
    * @return Salgshistorik
    */
-  public function setResstart($resstart)
-  {
+  public function setResstart($resstart) {
     $this->resstart = $resstart;
 
     return $this;
@@ -358,8 +411,7 @@ class Salgshistorik
    *
    * @return \DateTime
    */
-  public function getResstart()
-  {
+  public function getResstart() {
     return $this->resstart;
   }
 
@@ -370,8 +422,7 @@ class Salgshistorik
    *
    * @return Salgshistorik
    */
-  public function setResslut($resslut)
-  {
+  public function setResslut($resslut) {
     $this->resslut = $resslut;
 
     return $this;
@@ -382,8 +433,7 @@ class Salgshistorik
    *
    * @return \DateTime
    */
-  public function getResslut()
-  {
+  public function getResslut() {
     return $this->resslut;
   }
 
@@ -394,8 +444,7 @@ class Salgshistorik
    *
    * @return Salgshistorik
    */
-  public function setTilbudstart($tilbudstart)
-  {
+  public function setTilbudstart($tilbudstart) {
     $this->tilbudstart = $tilbudstart;
 
     return $this;
@@ -406,8 +455,7 @@ class Salgshistorik
    *
    * @return \DateTime
    */
-  public function getTilbudstart()
-  {
+  public function getTilbudstart() {
     return $this->tilbudstart;
   }
 
@@ -418,8 +466,7 @@ class Salgshistorik
    *
    * @return Salgshistorik
    */
-  public function setTilbudslut($tilbudslut)
-  {
+  public function setTilbudslut($tilbudslut) {
     $this->tilbudslut = $tilbudslut;
 
     return $this;
@@ -430,8 +477,7 @@ class Salgshistorik
    *
    * @return \DateTime
    */
-  public function getTilbudslut()
-  {
+  public function getTilbudslut() {
     return $this->tilbudslut;
   }
 
@@ -442,8 +488,7 @@ class Salgshistorik
    *
    * @return Salgshistorik
    */
-  public function setAccept($accept)
-  {
+  public function setAccept($accept) {
     $this->accept = $accept;
 
     return $this;
@@ -454,8 +499,7 @@ class Salgshistorik
    *
    * @return \DateTime
    */
-  public function getAccept()
-  {
+  public function getAccept() {
     return $this->accept;
   }
 
@@ -466,8 +510,7 @@ class Salgshistorik
    *
    * @return Salgshistorik
    */
-  public function setOvertagelse($overtagelse)
-  {
+  public function setOvertagelse($overtagelse) {
     $this->overtagelse = $overtagelse;
 
     return $this;
@@ -478,8 +521,7 @@ class Salgshistorik
    *
    * @return \DateTime
    */
-  public function getOvertagelse()
-  {
+  public function getOvertagelse() {
     return $this->overtagelse;
   }
 
@@ -490,8 +532,7 @@ class Salgshistorik
    *
    * @return Salgshistorik
    */
-  public function setSkoederekv($skoederekv)
-  {
+  public function setSkoederekv($skoederekv) {
     $this->skoederekv = $skoederekv;
 
     return $this;
@@ -502,8 +543,7 @@ class Salgshistorik
    *
    * @return \DateTime
    */
-  public function getSkoederekv()
-  {
+  public function getSkoederekv() {
     return $this->skoederekv;
   }
 
@@ -514,8 +554,7 @@ class Salgshistorik
    *
    * @return Salgshistorik
    */
-  public function setBeloebanvist($beloebanvist)
-  {
+  public function setBeloebanvist($beloebanvist) {
     $this->beloebanvist = $beloebanvist;
 
     return $this;
@@ -526,8 +565,7 @@ class Salgshistorik
    *
    * @return \DateTime
    */
-  public function getBeloebanvist()
-  {
+  public function getBeloebanvist() {
     return $this->beloebanvist;
   }
 
@@ -538,8 +576,7 @@ class Salgshistorik
    *
    * @return Salgshistorik
    */
-  public function setAuktionstartdato($auktionstartdato)
-  {
+  public function setAuktionstartdato($auktionstartdato) {
     $this->auktionstartdato = $auktionstartdato;
 
     return $this;
@@ -550,8 +587,7 @@ class Salgshistorik
    *
    * @return \DateTime
    */
-  public function getAuktionstartdato()
-  {
+  public function getAuktionstartdato() {
     return $this->auktionstartdato;
   }
 
@@ -562,8 +598,7 @@ class Salgshistorik
    *
    * @return Salgshistorik
    */
-  public function setAuktionslutdato($auktionslutdato)
-  {
+  public function setAuktionslutdato($auktionslutdato) {
     $this->auktionslutdato = $auktionslutdato;
 
     return $this;
@@ -574,8 +609,7 @@ class Salgshistorik
    *
    * @return \DateTime
    */
-  public function getAuktionslutdato()
-  {
+  public function getAuktionslutdato() {
     return $this->auktionslutdato;
   }
 
@@ -586,8 +620,7 @@ class Salgshistorik
    *
    * @return Salgshistorik
    */
-  public function setMinbud($minbud)
-  {
+  public function setMinbud($minbud) {
     $this->minbud = $minbud;
 
     return $this;
@@ -598,8 +631,7 @@ class Salgshistorik
    *
    * @return float
    */
-  public function getMinbud()
-  {
+  public function getMinbud() {
     return $this->minbud;
   }
 
@@ -610,8 +642,7 @@ class Salgshistorik
    *
    * @return Salgshistorik
    */
-  public function setAntagetbud($antagetbud)
-  {
+  public function setAntagetbud($antagetbud) {
     $this->antagetbud = $antagetbud;
 
     return $this;
@@ -622,21 +653,19 @@ class Salgshistorik
    *
    * @return float
    */
-  public function getAntagetbud()
-  {
+  public function getAntagetbud() {
     return $this->antagetbud;
   }
 
   /**
    * Set navn
    *
-   * @param string $navn
+   * @param string $koeberNavn
    *
-   * @return Salgshistorik
+   * @return Grund
    */
-  public function setNavn($navn)
-  {
-    $this->navn = $navn;
+  public function setKoeberNavn($koeberNavn) {
+    $this->koeberNavn = $koeberNavn;
 
     return $this;
   }
@@ -646,21 +675,19 @@ class Salgshistorik
    *
    * @return string
    */
-  public function getNavn()
-  {
-    return $this->navn;
+  public function getKoeberNavn() {
+    return $this->koeberNavn;
   }
 
   /**
    * Set adresse
    *
-   * @param string $adresse
+   * @param string $koeberAdresse
    *
-   * @return Salgshistorik
+   * @return Grund
    */
-  public function setAdresse($adresse)
-  {
-    $this->adresse = $adresse;
+  public function setKoeberAdresse($koeberAdresse) {
+    $this->koeberAdresse = $koeberAdresse;
 
     return $this;
   }
@@ -670,21 +697,19 @@ class Salgshistorik
    *
    * @return string
    */
-  public function getAdresse()
-  {
-    return $this->adresse;
+  public function getKoeberAdresse() {
+    return $this->koeberAdresse;
   }
 
   /**
    * Set land
    *
-   * @param string $land
+   * @param string $koeberLand
    *
-   * @return Salgshistorik
+   * @return Grund
    */
-  public function setLand($land)
-  {
-    $this->land = $land;
+  public function setKoeberLand($koeberLand) {
+    $this->koeberLand = $koeberLand;
 
     return $this;
   }
@@ -694,21 +719,19 @@ class Salgshistorik
    *
    * @return string
    */
-  public function getLand()
-  {
-    return $this->land;
+  public function getKoeberLand() {
+    return $this->koeberLand;
   }
 
   /**
    * Set telefon
    *
-   * @param string $telefon
+   * @param string $koeberTelefon
    *
-   * @return Salgshistorik
+   * @return Grund
    */
-  public function setTelefon($telefon)
-  {
-    $this->telefon = $telefon;
+  public function setKoeberTelefon($koeberTelefon) {
+    $this->koeberTelefon = $koeberTelefon;
 
     return $this;
   }
@@ -718,21 +741,19 @@ class Salgshistorik
    *
    * @return string
    */
-  public function getTelefon()
-  {
-    return $this->telefon;
+  public function getKoeberTelefon() {
+    return $this->koeberTelefon;
   }
 
   /**
    * Set mobil
    *
-   * @param string $mobil
+   * @param string $koeberMobil
    *
-   * @return Salgshistorik
+   * @return Grund
    */
-  public function setMobil($mobil)
-  {
-    $this->mobil = $mobil;
+  public function setKoeberMobil($koeberMobil) {
+    $this->koeberMobil = $koeberMobil;
 
     return $this;
   }
@@ -742,21 +763,19 @@ class Salgshistorik
    *
    * @return string
    */
-  public function getMobil()
-  {
-    return $this->mobil;
+  public function getKoeberMobil() {
+    return $this->koeberMobil;
   }
 
   /**
    * Set koeberemail
    *
-   * @param string $koeberemail
+   * @param string $koeberEmail
    *
-   * @return Salgshistorik
+   * @return Grund
    */
-  public function setKoeberemail($koeberemail)
-  {
-    $this->koeberemail = $koeberemail;
+  public function setKoeberEmail($koeberEmail) {
+    $this->koeberEmail = $koeberEmail;
 
     return $this;
   }
@@ -766,21 +785,19 @@ class Salgshistorik
    *
    * @return string
    */
-  public function getKoeberemail()
-  {
-    return $this->koeberemail;
+  public function getKoeberEmail() {
+    return $this->koeberEmail;
   }
 
   /**
    * Set navn1
    *
-   * @param string $navn1
+   * @param string $medkoeberNavn
    *
-   * @return Salgshistorik
+   * @return Grund
    */
-  public function setNavn1($navn1)
-  {
-    $this->navn1 = $navn1;
+  public function setMedkoeberNavn($medkoeberNavn) {
+    $this->medkoeberNavn = $medkoeberNavn;
 
     return $this;
   }
@@ -790,21 +807,19 @@ class Salgshistorik
    *
    * @return string
    */
-  public function getNavn1()
-  {
-    return $this->navn1;
+  public function getMedkoeberNavn() {
+    return $this->medkoeberNavn;
   }
 
   /**
    * Set adresse1
    *
-   * @param string $adresse1
+   * @param string $medkoeberAdresse
    *
-   * @return Salgshistorik
+   * @return Grund
    */
-  public function setAdresse1($adresse1)
-  {
-    $this->adresse1 = $adresse1;
+  public function setMedkoeberAdresse($medkoeberAdresse) {
+    $this->medkoeberAdresse = $medkoeberAdresse;
 
     return $this;
   }
@@ -814,21 +829,19 @@ class Salgshistorik
    *
    * @return string
    */
-  public function getAdresse1()
-  {
-    return $this->adresse1;
+  public function getMedkoeberAdresse() {
+    return $this->medkoeberAdresse;
   }
 
   /**
    * Set land1
    *
-   * @param string $land1
+   * @param string $medkoeberLand
    *
-   * @return Salgshistorik
+   * @return Grund
    */
-  public function setLand1($land1)
-  {
-    $this->land1 = $land1;
+  public function setMedkoeberLand($medkoeberLand) {
+    $this->medkoeberLand = $medkoeberLand;
 
     return $this;
   }
@@ -838,21 +851,19 @@ class Salgshistorik
    *
    * @return string
    */
-  public function getLand1()
-  {
-    return $this->land1;
+  public function getMedkoeberLand() {
+    return $this->medkoeberLand;
   }
 
   /**
    * Set telefon1
    *
-   * @param string $telefon1
+   * @param string $medkoeberTelefon
    *
-   * @return Salgshistorik
+   * @return Grund
    */
-  public function setTelefon1($telefon1)
-  {
-    $this->telefon1 = $telefon1;
+  public function setMedkoeberTelefon($medkoeberTelefon) {
+    $this->medkoeberTelefon = $medkoeberTelefon;
 
     return $this;
   }
@@ -862,21 +873,19 @@ class Salgshistorik
    *
    * @return string
    */
-  public function getTelefon1()
-  {
-    return $this->telefon1;
+  public function getMedkoeberTelefon() {
+    return $this->medkoeberTelefon;
   }
 
   /**
    * Set mobil1
    *
-   * @param string $mobil1
+   * @param string $medkoeberMobil
    *
-   * @return Salgshistorik
+   * @return Grund
    */
-  public function setMobil1($mobil1)
-  {
-    $this->mobil1 = $mobil1;
+  public function setMedkoeberMobil($medkoeberMobil) {
+    $this->medkoeberMobil = $medkoeberMobil;
 
     return $this;
   }
@@ -886,21 +895,19 @@ class Salgshistorik
    *
    * @return string
    */
-  public function getMobil1()
-  {
-    return $this->mobil1;
+  public function getMedkoeberMobil() {
+    return $this->medkoeberMobil;
   }
 
   /**
    * Set medkoeberemail
    *
-   * @param string $medkoeberemail
+   * @param string $medkoeberEmail
    *
-   * @return Salgshistorik
+   * @return Grund
    */
-  public function setMedkoeberemail($medkoeberemail)
-  {
-    $this->medkoeberemail = $medkoeberemail;
+  public function setMedkoeberEmail($medkoeberEmail) {
+    $this->medkoeberEmail = $medkoeberEmail;
 
     return $this;
   }
@@ -910,21 +917,19 @@ class Salgshistorik
    *
    * @return string
    */
-  public function getMedkoeberemail()
-  {
-    return $this->medkoeberemail;
+  public function getMedkoeberEmail() {
+    return $this->medkoeberEmail;
   }
 
   /**
    * Set notat
    *
-   * @param string $notat
+   * @param string $koeberNotat
    *
-   * @return Salgshistorik
+   * @return Grund
    */
-  public function setNotat($notat)
-  {
-    $this->notat = $notat;
+  public function setKoeberNotat($koeberNotat) {
+    $this->koeberNotat = $koeberNotat;
 
     return $this;
   }
@@ -934,9 +939,8 @@ class Salgshistorik
    *
    * @return string
    */
-  public function getNotat()
-  {
-    return $this->notat;
+  public function getKoeberNotat() {
+    return $this->koeberNotat;
   }
 
   /**
@@ -944,10 +948,9 @@ class Salgshistorik
    *
    * @param \AppBundle\Entity\Postby $medkoeberPostby
    *
-   * @return Salgshistorik
+   * @return Grund
    */
-  public function setMedkoeberPostby(\AppBundle\Entity\Postby $medkoeberPostby = null)
-  {
+  public function setMedkoeberPostby(\AppBundle\Entity\Postby $medkoeberPostby = NULL) {
     $this->medkoeberPostby = $medkoeberPostby;
 
     return $this;
@@ -958,33 +961,8 @@ class Salgshistorik
    *
    * @return \AppBundle\Entity\Postby
    */
-  public function getMedkoeberPostby()
-  {
+  public function getMedkoeberPostby() {
     return $this->medkoeberPostby;
-  }
-
-  /**
-   * Set grundid
-   *
-   * @param \AppBundle\Entity\Grund $grund
-   *
-   * @return Salgshistorik
-   */
-  public function setGrund(\AppBundle\Entity\Grund $grund = null)
-  {
-    $this->grund = $grund;
-
-    return $this;
-  }
-
-  /**
-   * Get grundid
-   *
-   * @return \AppBundle\Entity\Grund
-   */
-  public function getGrund()
-  {
-    return $this->grund;
   }
 
   /**
@@ -992,10 +970,9 @@ class Salgshistorik
    *
    * @param \AppBundle\Entity\Postby $koeberPostby
    *
-   * @return Salgshistorik
+   * @return Grund
    */
-  public function setKoeberPostby(\AppBundle\Entity\Postby $koeberPostby = null)
-  {
+  public function setKoeberPostby(\AppBundle\Entity\Postby $koeberPostby = NULL) {
     $this->koeberPostby = $koeberPostby;
 
     return $this;
@@ -1006,13 +983,29 @@ class Salgshistorik
    *
    * @return \AppBundle\Entity\Postby
    */
-  public function getKoeberPostby()
-  {
+  public function getKoeberPostby() {
     return $this->koeberPostby;
   }
 
-  public function __toString()
-  {
-    return __CLASS__;
+  /**
+   * Set grundid
+   *
+   * @param \AppBundle\Entity\Grund $grund
+   *
+   * @return Salgshistorik
+   */
+  public function setGrund(\AppBundle\Entity\Grund $grund = NULL) {
+    $this->grund = $grund;
+
+    return $this;
+  }
+
+  /**
+   * Get grundid
+   *
+   * @return \AppBundle\Entity\Grund
+   */
+  public function getGrund() {
+    return $this->grund;
   }
 }

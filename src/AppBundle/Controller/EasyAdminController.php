@@ -2,10 +2,15 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Salgshistorik;
 use JavierEguiluz\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityNotFoundException;
 
+/**
+ * Class EasyAdminController
+ */
 class EasyAdminController extends BaseAdminController {
   /**
    * @Route("/", name="easyadmin")
@@ -14,10 +19,9 @@ class EasyAdminController extends BaseAdminController {
    *
    * @return RedirectResponse|Response
    */
-  public function indexAction(Request $request)
-  {
+  public function indexAction(Request $request) {
     $this->initialize($request);
-    if (null === $request->query->get('entity')) {
+    if (NULL === $request->query->get('entity')) {
       $frontPageUrl = $this->getFrontPageUrl();
       if ($frontPageUrl) {
         return $this->redirect($frontPageUrl);
@@ -27,42 +31,80 @@ class EasyAdminController extends BaseAdminController {
     return parent::indexAction($request);
   }
 
-  private function getFrontPageUrl() {
-    // Redirect to first "entity" entry in menu.
-    $menu = $this->get('easyadmin.config.manager')->getBackendConfig('design.menu');
-    $item = $this->getEntityItem($menu);
-    if ($item) {
-      $parameters = [
-          'entity' => $item['entity'],
-          'action' => 'list',
-          'menuIndex' => $item['menu_index'],
-          'submenuIndex' => $item['submenu_index'],
-        ] + $item['params'];
-      return $this->generateUrl('easyadmin', $parameters);
+  /**
+   * When persisting new 'Interessent', add relation to the relevant 'Grund'
+   *
+   * @param $entity
+   *
+   * @throws \Doctrine\ORM\EntityNotFoundException
+   */
+  public function prePersistInteressentEntity($entity) {
+    $id = $this->request->query->get('grundId');
+
+    if ($id) {
+      $repository = $this->getDoctrine()->getRepository('AppBundle:Grund');
+      $grund = $repository->find($id);
+    } else {
+      throw new \Doctrine\ORM\EntityNotFoundException('Grund id parameter missing');
+    }
+
+    if ($grund) {
+      $grund->addInteressent($entity);
+
+      $user = $this->getUser();
+      $grund->setCreatedBy((string) $user);
+      $grund->setUpdatedBy((string) $user);
+    } else {
+      throw new EntityNotFoundException(sprintf('Grund with id: %d not found', $id));
     }
   }
 
   /**
-   * Get first (depth first) menu item of type "entity".
+   * When creating a new 'Salgshistorik', call constructor with 'Grund' as argument to set all sales fields and
+   * relations
    *
-   * @param array $menu
-   * @return mixed|null
+   * @return Salgshistorik
+   *
+   * @throws \Doctrine\ORM\EntityNotFoundException
    */
-  private function getEntityItem(array $menu) {
-    foreach ($menu as $item) {
-      if ($item['type'] === 'entity') {
-        return $item;
-      }
-      if (isset($item['children'])) {
-        $subitem = $this->getEntityItem($item['children']);
-        if ($subitem) {
-          return $subitem;
-        }
-      }
+  public function createNewSalgshistorikEntity() {
+
+    $id = $this->request->query->get('grundId');
+
+    if ($id) {
+      $repository = $this->getDoctrine()->getRepository('AppBundle:Grund');
+      $grund = $repository->find($id);
+    } else {
+      throw new EntityNotFoundException('Grund id parameter missing');
     }
 
-    return null;
+    if ($grund) {
+      $salgshistorik = new Salgshistorik($grund);
+
+      $user = $this->getUser();
+      $salgshistorik->setCreatedBy((string) $user);
+      $salgshistorik->setUpdatedBy((string) $user);
+    } else {
+      throw new EntityNotFoundException(sprintf('Grund with id: %d not found', $id));
+    }
+
+    return $salgshistorik;
   }
+
+  /**
+   * When persisting new 'Salgshistorik', clear all 'salgs' fields on 'Grund'
+   *
+   * @param Salgshistorik $salgshistorik
+   */
+  public function prePersistSalgshistorikEntity(Salgshistorik $salgshistorik) {
+    if(!empty($salgshistorik->getGrund()->getActiveReservationer())) {
+      $translator = $this->get('translator');
+      $this->addFlash('info', $translator->trans('flash.buyer_available'));
+    }
+
+    $salgshistorik->getGrund()->clearSalgFields();
+  }
+
 
   /**
    * Creates Query Builder instance for all the records.
@@ -103,8 +145,7 @@ class EasyAdminController extends BaseAdminController {
           if ($i === 0) {
             // This is a join on the base entity
             $queryBuilder->leftJoin('entity.' . $joinParts[$i], $joinParts[$i]);
-          }
-          else {
+          } else {
             // Where joining on joins
             $queryBuilder->leftJoin($joinParts[$i - 1] . '.' . $joinParts[$i], $joinParts[$i]);
           }
@@ -140,23 +181,35 @@ class EasyAdminController extends BaseAdminController {
    *
    * @return QueryBuilder The Query Builder instance
    */
-  protected function createSearchQueryBuilder($entityClass, $searchQuery, array $searchableFields, $sortField = NULL, $sortDirection = NULL, $dqlFilter = NULL) {
+  protected function createSearchQueryBuilder(
+    $entityClass,
+    $searchQuery,
+    array $searchableFields,
+    $sortField = NULL,
+    $sortDirection = NULL,
+    $dqlFilter = NULL
+  ) {
 
     // Get the deafult query based on the search fields (- but missing relations)
-    $queryBuilder = parent::createSearchQueryBuilder($entityClass, $searchQuery, $searchableFields, $sortField, $sortDirection, $dqlFilter);
-//    return $queryBuilder;
+    $queryBuilder = parent::createSearchQueryBuilder(
+      $entityClass,
+      $searchQuery,
+      $searchableFields,
+      $sortField,
+      $sortDirection,
+      $dqlFilter
+    );
 
     // To search in fields in related entities we need to build our own joins and where
     $queryBuilder->resetDQLPart('join');
     $queryBuilder->resetDQLPart('where');
 
     // Maintain a list of added joins to avoid adding duplicates
-    $joins = array();
+    $joins = [];
 
     // Loop through search fields to add fields in relations
-    $queryParameters = array();
+    $queryParameters = [];
     foreach ($this->entity['search']['fields'] as $name => $metadata) {
-
       // Split the field name by '.' to get relations
       $joinParts = explode('.', $name);
       $countParts = count($joinParts);
@@ -166,19 +219,16 @@ class EasyAdminController extends BaseAdminController {
       $fieldDqlName = $name;
 
       // Building joins - Only process relations
-      if ($countParts > 1) {
-
+      if (1 < $countParts) {
         // We don't know the depth of the relations, so loop through the parts and add joins for all
         // The last element is the fieldname, so stop at count - 1
         for ($i = 0; $i < $countParts - 1; $i++) {
-
           // Check if join has been added allready
           if (!in_array($joinParts[$i], $joins)) {
-            if ($i === 0) {
+            if (0 === $i) {
               // This is a join on the base entity
               $queryBuilder->leftJoin('entity.' . $joinParts[$i], $joinParts[$i]);
-            }
-            else {
+            } else {
               // Where joining on joins
               $queryBuilder->leftJoin($joinParts[$i - 1] . '.' . $joinParts[$i], $joinParts[$i]);
             }
@@ -195,14 +245,17 @@ class EasyAdminController extends BaseAdminController {
 
       // Add 'where' clauses based on field type - largely identical to logic in parent logic
       // 'text' search made default to catch 'enum' types
-      $isNumericField = in_array($metadata['dataType'], array(
-        'integer',
-        'number',
-        'smallint',
-        'bigint',
-        'decimal',
-        'float'
-      ));
+      $isNumericField = in_array(
+        $metadata['dataType'],
+        [
+          'integer',
+          'number',
+          'smallint',
+          'bigint',
+          'decimal',
+          'float',
+        ]
+      );
 
       $isGuidField = 'guid' === $metadata['dataType'];
 
@@ -210,19 +263,23 @@ class EasyAdminController extends BaseAdminController {
         $queryBuilder->orWhere(sprintf('%s.%s = :exact_query', $entityDqlName, $fieldDqlName));
         // adding '0' turns the string into a numeric value
         $queryBuilder->setParameter('exact_query', 0 + $searchQuery);
-      } elseif ($isGuidField) {
-        // some databases don't support LOWER() on UUID fields
-        $queryBuilder->orWhere(sprintf('%s.%s IN (:words_query)', $entityDqlName, $fieldDqlName));
-        $queryBuilder->setParameter('words_query', explode(' ', $searchQuery));
-      } elseif ($metadata['dataType'] !== 'association' && !$metadata['virtual']) {
-        // Default: text search
-        $searchQuery = mb_strtolower($searchQuery);
+      } else {
+        if ($isGuidField) {
+          // some databases don't support LOWER() on UUID fields
+          $queryBuilder->orWhere(sprintf('%s.%s IN (:words_query)', $entityDqlName, $fieldDqlName));
+          $queryBuilder->setParameter('words_query', explode(' ', $searchQuery));
+        } else {
+          if ($metadata['dataType'] !== 'association' && !$metadata['virtual']) {
+            // Default: text search
+            $searchQuery = mb_strtolower($searchQuery);
 
-        $queryBuilder->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', $entityDqlName, $fieldDqlName));
-        $queryBuilder->setParameter('fuzzy_query', '%' . $searchQuery . '%');
+            $queryBuilder->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', $entityDqlName, $fieldDqlName));
+            $queryBuilder->setParameter('fuzzy_query', '%' . $searchQuery . '%');
 
-        $queryBuilder->orWhere(sprintf('LOWER(%s.%s) IN (:words_query)', $entityDqlName, $fieldDqlName));
-        $queryBuilder->setParameter('words_query', explode(' ', $searchQuery));
+            $queryBuilder->orWhere(sprintf('LOWER(%s.%s) IN (:words_query)', $entityDqlName, $fieldDqlName));
+            $queryBuilder->setParameter('words_query', explode(' ', $searchQuery));
+          }
+        }
       }
 
       // The parent queryBuilder only supports orderBy on direct relations so we reset and rebuild if it's deeper
@@ -243,4 +300,47 @@ class EasyAdminController extends BaseAdminController {
     return $queryBuilder;
   }
 
+  /**
+   * Return the URL of the EasyAdmin front page
+   *
+   * @return string
+   */
+  private function getFrontPageUrl() {
+    // Redirect to first "entity" entry in menu.
+    $menu = $this->get('easyadmin.config.manager')->getBackendConfig('design.menu');
+    $item = $this->getEntityItem($menu);
+    if ($item) {
+      $parameters = [
+          'entity' => $item['entity'],
+          'action' => 'list',
+          'menuIndex' => $item['menu_index'],
+          'submenuIndex' => $item['submenu_index'],
+        ] + $item['params'];
+
+      return $this->generateUrl('easyadmin', $parameters);
+    }
+  }
+
+  /**
+   * Get first (depth first) menu item of type "entity".
+   *
+   * @param array $menu
+   *
+   * @return mixed|null
+   */
+  private function getEntityItem(array $menu) {
+    foreach ($menu as $item) {
+      if ($item['type'] === 'entity') {
+        return $item;
+      }
+      if (isset($item['children'])) {
+        $subitem = $this->getEntityItem($item['children']);
+        if ($subitem) {
+          return $subitem;
+        }
+      }
+    }
+
+    return NULL;
+  }
 }

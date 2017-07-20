@@ -47,6 +47,9 @@ easy_admin:
                 title: 'Rediger Erhvervsgrund'
                 actions:
                     - { name: delete, roles: [ROLE_ADMIN] }
+                    - { name: interessent_create, type: 'route', icon: 'plus-square', css_class: 'btn btn_default', label: 'Opret Interessent', roles: [ROLE_ADMIN] }
+                    - { name: interessent_fetch, type: 'route', icon: 'caret-square-o-right', css_class: 'btn btn_default', label: 'Hent fra venteliste', roles: [ROLE_ADMIN] }
+                    - { name: sale_cancel, type: 'route', icon: 'minus-square', css_class: 'btn btn_default', label: 'Annuller salg', roles: [ROLE_ADMIN] }
 
             show: &erhvervsgrund_default_show
                 title: 'Erhvervsgrund'
@@ -150,7 +153,9 @@ easy_admin:
                 <<: *erhvervsgrund_default_list
 
             search: *erhvervsgrund_default_search
-            edit: *erhvervsgrund_default_edit
+            edit:
+                <<: *erhvervsgrund_default_edit
+                actions:
             show: *erhvervsgrund_default_show
             new: *erhvervsgrund_default_new
             form: *erhvervsgrund_default_form
@@ -186,7 +191,9 @@ easy_admin:
                                     type_options:
                                         data: !php/const:AppBundle\DBAL\Types\GrundSalgStatus::LEDIG
 
-            edit: *erhvervsgrund_default_edit
+            edit:
+                <<: *erhvervsgrund_default_edit
+                actions:
             show: *erhvervsgrund_default_show
             new: *erhvervsgrund_default_new
             form: *erhvervsgrund_default_form
@@ -204,7 +211,9 @@ easy_admin:
                 bulk: *erhvervsgrund_bulk
 
             search: *erhvervsgrund_default_search
-            edit: *erhvervsgrund_default_edit
+            edit:
+                <<: *erhvervsgrund_default_edit
+                actions:
             show: *erhvervsgrund_default_show
             new: *erhvervsgrund_default_new
             form: *erhvervsgrund_default_form

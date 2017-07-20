@@ -4,12 +4,16 @@
   white-space: nowrap;
 }
 
+.easyadmin-list thead tr th, .easyadmin-list tbody tr td, .easyadmin-list tfoot tr td {
+  vertical-align: middle;
+}
+
 .easyadmin-list td.no-results {
   text-align: center;
 }
 
 body.show .form-control {
-  height: 34px;
+  min-height: 34px;
 }
 
 span.form-control, span.form-inline .form-control {
@@ -17,7 +21,7 @@ span.form-control, span.form-inline .form-control {
   border: 0;
   border-radius: 0;
   box-shadow: none;
-  height: 34px;
+  min-height: 34px;
 }
 
 .meta-box {

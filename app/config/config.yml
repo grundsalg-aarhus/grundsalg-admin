@@ -18,6 +18,7 @@ imports:
     - { resource: easyadmin/admin/lokalsamfund.yml }
     - { resource: easyadmin/admin/user.yml }
     - { resource: easyadmin/reservation/interessent.yml }
+    - { resource: easyadmin/reservation/salgshistorik.yml }
     - { resource: easyadmin/services.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed

@@ -10,6 +10,14 @@ action:
     search: Søg
     show: Vis
 
+flash:
+    buyer_available: Bemærk at der er interessenter på venteliste
+    buyer_cannot_be_empty: Der skal angives en køber inden salg annulleres
+    buyer_not_empty: Der er allerede registreret en køber under salg
+    waitlist_allready_cancelled: Venteliste allerede annulleret
+    waitlist_cancelled: Venteliste annulleret
+    waitlist_fetched: Køber hentet fra ventelisten
+
 # If we use the 'form_label' widget directly the EasyAdmin 'label' value is not used
 Accept: Accept
 Beloebanvist: Beløb anvist
@@ -29,6 +37,7 @@ app:
       accept: Accept
       akrkorr1: á kr.
       annonceres: Annonceres
+      annullerSalgsBegrundelse: Begrundelse
       antagetbud: Antaget bud
       antalkorr1: Antal
       areal: Areal
@@ -109,6 +118,8 @@ app:
       medkoeber: Medkøber
       navn: Navn
       notat: Notat
+      reservationer: Venteliste til
+      venteliste: Venteliste
 
   lokalplan:
       nr: Nr.
@@ -124,9 +135,14 @@ app:
       postalcode: Postnr.
 
   salgshistorik:
-      navn: Navn
-      status: Status
+      aarsag: Årsag
+      aarsagTil: Årsag til annullering
       createdAt: Oprettet
+      grund: Grund
+      historiskstatus: Historisk Status
+      koeberNavn: Navn
+      salg: Salg
+      status: Status
 
   salgsomraade:
       annonceres: Annonceres
