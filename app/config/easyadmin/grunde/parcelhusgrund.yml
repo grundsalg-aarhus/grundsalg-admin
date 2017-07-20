@@ -50,10 +50,9 @@ easy_admin:
                 title: 'Rediger Parcelhusgrund'
                 actions:
                     - { name: delete, roles: [ROLE_ADMIN] }
-#                    - { name: 'waitlist', icon: 'plus-square', css_class: 'btn btn_default', label: 'Opret Interessent' }
-                    - { name: 'interessent_create', type: 'route', icon: 'plus-square', css_class: 'btn btn_default', label: 'Opret Interessent' }
-                    - { name: 'interessent_fetch', type: 'route', icon: 'caret-square-o-right', css_class: 'btn btn_default', label: 'Hent fra venteliste' }
-                    - { name: 'sale_cancel', type: 'route', icon: 'minus-square', css_class: 'btn btn_default', label: 'Annuller salg' }
+                    - { name: interessent_create, type: 'route', icon: 'plus-square', css_class: 'btn btn_default', label: 'Opret Interessent', roles: [ROLE_ADMIN] }
+                    - { name: interessent_fetch, type: 'route', icon: 'caret-square-o-right', css_class: 'btn btn_default', label: 'Hent fra venteliste', roles: [ROLE_ADMIN] }
+                    - { name: sale_cancel, type: 'route', icon: 'minus-square', css_class: 'btn btn_default', label: 'Annuller salg', roles: [ROLE_ADMIN] }
 
             show: &parcelhusgrund_default_show
                 title: 'Parcelhusgrund'
@@ -157,7 +156,9 @@ easy_admin:
                 <<: *parcelhusgrund_default_list
 
             search: *parcelhusgrund_default_search
-            edit: *parcelhusgrund_default_edit
+            edit:
+                <<: *parcelhusgrund_default_edit
+                actions:
             show: *parcelhusgrund_default_show
             new: *parcelhusgrund_default_new
             form: *parcelhusgrund_default_form
@@ -200,7 +201,9 @@ easy_admin:
                                         data: !php/const:AppBundle\DBAL\Types\GrundSalgStatus::LEDIG
 
             search: *parcelhusgrund_default_search
-            edit: *parcelhusgrund_default_edit
+            edit:
+                <<: *parcelhusgrund_default_edit
+                actions:
             show: *parcelhusgrund_default_show
             new: *parcelhusgrund_default_new
             form: *parcelhusgrund_default_form
@@ -218,7 +221,9 @@ easy_admin:
                 bulk: *parcelhusgrund_bulk
 
             search: *parcelhusgrund_default_search
-            edit: *parcelhusgrund_default_edit
+            edit:
+                <<: *parcelhusgrund_default_edit
+                actions:
             show: *parcelhusgrund_default_show
             new: *parcelhusgrund_default_new
             form: *parcelhusgrund_default_form
