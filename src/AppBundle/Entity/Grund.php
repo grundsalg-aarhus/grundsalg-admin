@@ -16,6 +16,7 @@ use AppBundle\DBAL\Types\SalgsType;
 use AppBundle\DBAL\Types\GrundStatus;
 use AppBundle\DBAL\Types\GrundSalgStatus;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
+use Psr\Log\NullLogger;
 
 /**
  * Grund
@@ -34,8 +35,11 @@ use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
  *   @ORM\Index(name="search_Grund_pris", columns={"pris"}),
  * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GrundRepository")
+ *
  * @InheritanceType("SINGLE_TABLE")
+ *
  * @DiscriminatorColumn(name="discr", type="string")
+ *
  * @DiscriminatorMap({"GRUND" = "Grund", "COLL" = "GrundCollection"})
  */
 class Grund {
@@ -43,7 +47,7 @@ class Grund {
   use TimestampableEntity;
 
   /**
-   * @var integer
+   * @var int
    *
    * @ORM\Column(name="id", type="integer", nullable=false)
    * @ORM\Id
@@ -55,6 +59,7 @@ class Grund {
    * @var GrundStatus
    *
    * @ORM\Column(name="status", type="GrundStatus", nullable=true)
+   *
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GrundStatus")
    */
   private $status;
@@ -63,6 +68,7 @@ class Grund {
    * @var GrundSalgStatus
    *
    * @ORM\Column(name="salgStatus", type="GrundSalgStatus", nullable=true)
+   *
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GrundSalgStatus")
    */
   private $salgstatus;
@@ -71,6 +77,7 @@ class Grund {
    * @var GrundPublicStatus
    *
    * @ORM\Column(name="publicStatus", type="GrundPublicStatus", nullable=true)
+   *
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GrundPublicStatus")
    */
   private $publicstatus;
@@ -86,6 +93,7 @@ class Grund {
    * @var GrundType
    *
    * @ORM\Column(name="type", type="GrundType", nullable=true)
+   *
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GrundType")
    */
   private $type;
@@ -126,7 +134,7 @@ class Grund {
   private $vej;
 
   /**
-   * @var integer
+   * @var int
    *
    * @ORM\Column(name="husNummer", type="integer", nullable=true)
    */
@@ -154,6 +162,7 @@ class Grund {
    * @var SalgsType
    *
    * @ORM\Column(name="salgsType", type="SalgsType", nullable=true)
+   *
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\SalgsType")
    */
   private $salgstype;
@@ -173,7 +182,7 @@ class Grund {
   private $auktionslutdato;
 
   /**
-   * @var boolean
+   * @var bool
    *
    * @ORM\Column(name="annonceres", type="boolean", nullable=true)
    */
@@ -253,12 +262,13 @@ class Grund {
    * @var string
    *
    * @ORM\Column(name="prisKorrektion1", type="Priskorrektion", nullable=true)
+   *
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\Priskorrektion")
    */
   private $priskorrektion1;
 
   /**
-   * @var integer
+   * @var int
    *
    * @ORM\Column(name="antalKorr1", type="integer", nullable=true)
    */
@@ -282,12 +292,13 @@ class Grund {
    * @var string
    *
    * @ORM\Column(name="prisKorrektion2", type="Priskorrektion", nullable=true)
+   *
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\Priskorrektion")
    */
   private $priskorrektion2;
 
   /**
-   * @var integer
+   * @var int
    *
    * @ORM\Column(name="antalKorr2", type="integer", nullable=true)
    */
@@ -311,12 +322,13 @@ class Grund {
    * @var string
    *
    * @ORM\Column(name="prisKorrektion3", type="Priskorrektion", nullable=true)
+   *
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\Priskorrektion")
    */
   private $priskorrektion3;
 
   /**
-   * @var integer
+   * @var int
    *
    * @ORM\Column(name="antalKorr3", type="integer", nullable=true)
    */
@@ -560,7 +572,7 @@ class Grund {
   /**
    * @var \AppBundle\Entity\Reservation
    *
-   * @OneToMany(targetEntity="Reservation", mappedBy="grund", cascade={"persist"}))
+   * @OneToMany(targetEntity="Reservation", mappedBy="grund", cascade={"persist", "remove"})
    */
   private $reservationer;
 
@@ -596,10 +608,10 @@ class Grund {
    *
    * @ORM\Column(name="SP_GEOMETRY", type="geometry", nullable=true)
    */
-  private $sp_geometry;
+  private $spGeometry;
 
   /**
-   * @var integer
+   * @var int
    *
    * @ORM\Column(name="srid", type="integer", nullable=true)
    */
@@ -619,11 +631,14 @@ class Grund {
    */
   private $pdfLink;
 
+  /**
+   * Grund constructor.
+   */
   public function __construct() {
     $this->reservationer = new ArrayCollection();
     $this->salgshistorik = new ArrayCollection();
-    $this->tilsluttet = array();
-    $this->annonceres = false;
+    $this->tilsluttet = [];
+    $this->annonceres = FALSE;
     $this->setSalgstype(SalgsType::KVADRATMETERPRIS);
   }
 
@@ -633,7 +648,8 @@ class Grund {
    * @return string
    */
   public function __toString() {
-    return $this->getVej() . ' ' . $this->getHusnummer() . $this->getBogstav() . ($this->getPostby() ? ', ' . $this->getPostby() : '');
+    return $this->getVej() . ' ' . $this->getHusnummer() . $this->getBogstav()
+      . ($this->getPostby() ? ', ' . $this->getPostby() : '');
   }
 
   /**
@@ -670,16 +686,14 @@ class Grund {
   /**
    * @return GrundPublicStatus
    */
-  public function getPublicstatus()
-  {
+  public function getPublicstatus() {
     return $this->publicstatus;
   }
 
   /**
    * @param GrundPublicStatus $publicstatus
    */
-  public function setPublicstatus($publicstatus)
-  {
+  public function setPublicstatus($publicstatus) {
     $this->publicstatus = $publicstatus;
   }
 
@@ -769,6 +783,13 @@ class Grund {
    */
   public function getMnr() {
     return $this->mnr;
+  }
+
+  /**
+   * @return string
+   */
+  public function getMnrSamlet() {
+    return $this->getMnr() . $this->getMnr2();
   }
 
   /**
@@ -994,16 +1015,14 @@ class Grund {
   /**
    * @return bool
    */
-  public function isAnnonceres(): bool
-  {
+  public function isAnnonceres(): bool {
     return $this->annonceres;
   }
 
   /**
    * @param bool $annonceres
    */
-  public function setAnnonceres(bool $annonceres)
-  {
+  public function setAnnonceres(bool $annonceres) {
     $this->annonceres = $annonceres;
   }
 
@@ -2150,10 +2169,16 @@ class Grund {
     return $this->reservationer;
   }
 
+  /**
+   * @param Reservation $reservation
+   */
   public function addReservation(Reservation $reservation) {
     $this->reservationer->add($reservation);
   }
 
+  /**
+   * @param Interessent $interessent
+   */
   public function addInteressent(Interessent $interessent) {
     $reservation = new Reservation();
     $reservation->setGrund($this);
@@ -2208,11 +2233,11 @@ class Grund {
   }
 
   /**
-   * Set salgsomraadeid
+   * Set salgsomraade
    *
-   * @param \AppBundle\Entity\Salgsomraade $salgsomraadeid
+   * @param Salgsomraade|NULL $salgsomraade
    *
-   * @return Grund
+   * @return $this
    */
   public function setSalgsomraade(\AppBundle\Entity\Salgsomraade $salgsomraade = NULL) {
     $this->salgsomraade = $salgsomraade;
@@ -2233,14 +2258,14 @@ class Grund {
    * @return \CrEOF\Spatial\DBAL\Types\Geography
    */
   public function getSpGeometry() {
-    return $this->sp_geometry;
+    return $this->spGeometry;
   }
 
   /**
-   * @param \CrEOF\Spatial\PHP\Types\Geography\Polygon $sp_geometry
+   * @param \CrEOF\Spatial\PHP\Types\Geography\Polygon $spGeometry
    */
-  public function setSpGeometry(\CrEOF\Spatial\PHP\Types\Geography\Polygon $sp_geometry) {
-    $this->sp_geometry = $sp_geometry;
+  public function setSpGeometry(\CrEOF\Spatial\PHP\Types\Geography\Polygon $spGeometry) {
+    $this->spGeometry = $spGeometry;
   }
 
   /**
@@ -2296,13 +2321,45 @@ class Grund {
    * @return string
    */
   public function getVisStatus() {
-    if($this->getSalgstatus() === GrundSalgStatus::LEDIG) {
-      return strval($this->getStatus());
+    if ($this->getSalgstatus() === GrundSalgStatus::LEDIG) {
+      $status = strval($this->getStatus());
     } else {
-      return strval($this->getSalgstatus());
+      $status = strval($this->getSalgstatus());
     }
+
+    return $status;
   }
 
+  /**
+   * Clear all 'date' and 'koeber' fields
+   */
+  public function clearSalgFields() {
+    $this->setResstart(NULL);
+    $this->setResslut(NULL);
+    $this->setTilbudstart(NULL);
+    $this->setTilbudslut(NULL);
+    $this->setAccept(NULL);
+    $this->setOvertagelse(NULL);
+    $this->setSkoederekv(NULL);
+    $this->setBeloebanvist(NULL);
+    $this->setAntagetbud(NULL);
 
+    $this->setKoeberNavn(NULL);
+    $this->setKoeberAdresse(NULL);
+    $this->setKoeberPostby(NULL);
+    $this->setKoeberLand(NULL);
+    $this->setKoeberTelefon(NULL);
+    $this->setKoeberMobil(NULL);
+    $this->setKoeberEmail(NULL);
 
+    $this->setKoeberNotat(NULL);
+
+    $this->setMedkoeberNavn(NULL);
+    $this->setMedkoeberAdresse(NULL);
+    $this->setMedkoeberPostby(NULL);
+    $this->setMedkoeberLand(NULL);
+    $this->setMedkoeberTelefon(NULL);
+    $this->setMedkoeberMobil(NULL);
+    $this->setMedkoeberEmail(NULL);
+  }
 }

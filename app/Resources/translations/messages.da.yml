@@ -29,6 +29,7 @@ app:
       accept: Accept
       akrkorr1: á kr.
       annonceres: Annonceres
+      annullerSalgsBegrundelse: Begrundelse
       antagetbud: Antaget bud
       antalkorr1: Antal
       areal: Areal
@@ -126,9 +127,14 @@ app:
       postalcode: Postnr.
 
   salgshistorik:
-      navn: Navn
-      status: Status
+      aarsag: Årsag
+      aarsagTil: Årsag til annullering
       createdAt: Oprettet
+      grund: Grund
+      historiskstatus: Historisk Status
+      koeberNavn: Navn
+      salg: Salg
+      status: Status
 
   salgsomraade:
       annonceres: Annonceres
@@ -172,3 +178,4 @@ user:
 
 'Cannot delete %name%': '"%name%" kan ikke slettes'
 '%name% is referenced by %count% entities': 'one: "%name%" bruges af %count% datapost | some: "%name%" bruges af %count% dataposter'
+'Byer cannot be empty': 'Der skal angives en køber inden salg annulleres'

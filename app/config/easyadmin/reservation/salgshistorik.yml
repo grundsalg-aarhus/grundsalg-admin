@@ -1,0 +1,91 @@
+easy_admin:
+    entities:
+        salgshistorik:
+            class: AppBundle\Entity\Salgshistorik
+            actions:
+                - { name: -delete }
+                - { name: -edit }
+
+            form:
+                fields: &salgshistorik_form_fields
+                    - { type: 'group', css_class: 'col-md-6', label: 'app.grund.grund', readonly: true, type_options: { disabled: true }}
+                    - { property: koeberNavn, label: 'app.grund.koeberNavn', readonly: true, type_options: { disabled: true }}
+                    - { property: koeberAdresse, label: 'app.grund.koeberAdresse', readonly: true, type_options: { disabled: true }}
+                    - { property: koeberPostby, label: 'app.grund.koeberPostby', readonly: true, type_options: { disabled: true }}
+                    - { property: koeberLand, label: 'app.grund.koeberLand', readonly: true, type_options: { disabled: true }}
+                    - { property: koeberTelefon, label: 'app.grund.koeberTelefon', readonly: true, type_options: { disabled: true }}
+                    - { property: koeberMobil, label: 'app.grund.koeberMobil', readonly: true, type_options: { disabled: true }}
+                    - { property: koeberEmail, label: 'app.grund.koeberEmail', readonly: true, type_options: { disabled: true }}
+
+                    - { type: 'group', css_class: 'col-md-6', label: 'app.interessent.medkoeber' }
+                    - { property: medkoeberNavn, label: 'app.grund.medkoeberNavn', readonly: true, type_options: { disabled: true }}
+                    - { property: medkoeberAdresse, label: 'app.grund.medkoeberAdresse', readonly: true, type_options: { disabled: true }}
+                    - { property: medkoeberPostby, label: 'app.grund.medkoeberPostby', readonly: true, type_options: { disabled: true }}
+                    - { property: medkoeberLand, label: 'app.grund.medkoeberLand', readonly: true, type_options: { disabled: true }}
+                    - { property: medkoeberTelefon, label: 'app.grund.medkoeberTelefon', readonly: true, type_options: { disabled: true }}
+                    - { property: medkoeberMobil, label: 'app.grund.medkoeberMobil', readonly: true, type_options: { disabled: true }}
+                    - { property: medkoeberEmail, label: 'app.grund.medkoeberEmail', readonly: true, type_options: { disabled: true }}
+
+                    - { type: 'group', css_class: 'col-xs-12', label: 'app.salgshistorik.aarsag' }
+                    - { property: aarsag, label: 'app.salgshistorik.aarsag' }
+
+            edit:
+                roles: [ROLE_EDITOR]
+                title: 'Annuller Salg'
+                fields:
+                    <<: *salgshistorik_form_fields
+
+            show:
+                title: 'Historisk Salg'
+
+                fields:
+                    - { type: 'group', css_class: 'col-md-12', label: 'app.grund.grund' }
+                    - { property: grund.gid, css_class: 'col-md-6', label: 'app.grund.gid' }
+                    - { property: grund.mnrSamlet, css_class: 'col-md-6', label: 'app.grund.mnr' }
+                    - { property: grund, css_class: 'col-md-6', label: 'app.salgshistorik.grund' }
+                    - { property: grund.ejerlav, css_class: 'col-md-6', label: 'app.grund.ejerlav' }
+
+                    - { type: 'group', css_class: 'col-md-12', label: 'app.salgshistorik.historiskstatus' }
+                    - { property: salgstype, css_class: 'col-md-6', label: 'app.grund.salgstype' }
+                    - { property: salgstatus, css_class: 'col-md-6', label: 'app.grund.salgstatus' }
+
+                    - { type: 'group', css_class: 'col-md-12', label: 'app.salgshistorik.salg' }
+                    - { property: 'resstart', css_class: 'col-md-6', label: 'app.grund.resstart' }
+                    - { property: 'resslut', css_class: 'col-md-6', label: 'app.grund.resslut' }
+                    - { property: 'auktionstartdato', css_class: 'col-md-6', label: 'app.grund.auktionstartdato' }
+                    - { property: 'auktionslutdato', css_class: 'col-md-6', label: 'app.grund.auktionslutdato' }
+                    - { property: 'tilbudstart', css_class: 'col-md-6', label: 'app.grund.tilbudstart' }
+                    - { property: 'tilbudslut', css_class: 'col-md-6', label: 'app.grund.tilbudslut' }
+                    - { property: 'accept', css_class: 'col-md-6', label: 'app.grund.accept' }
+                    - { property: 'overtagelse', css_class: 'col-md-6', label: 'app.grund.overtagelse' }
+                    - { property: 'skoederekv', css_class: 'col-md-6', label: 'app.grund.skoederekv' }
+                    - { property: 'beloebanvist', css_class: 'col-md-6', label: 'app.grund.beloebanvist' }
+                    - { property: 'minbud', css_class: 'col-md-6', label: 'app.grund.minbud' }
+                    - { property: 'antagetbud', css_class: 'new-row col-md-6', label: 'app.grund.antagetbud' }
+
+                    - { type: 'group', css_class: 'col-md-12', label: 'app.salgshistorik.aarsagTil' }
+                    - { property: aarsag, label: 'app.salgshistorik.aarsag' }
+
+                    - { type: 'group', css_class: 'col-md-6', label: 'app.grund.koeber' }
+                    - { property: koeberNavn, label: 'app.grund.koeberNavn' }
+                    - { property: koeberAdresse, label: 'app.grund.koeberAdresse' }
+                    - { property: koeberPostby, label: 'app.grund.koeberPostby' }
+                    - { property: koeberLand, label: 'app.grund.koeberLand' }
+                    - { property: koeberTelefon, label: 'app.grund.koeberTelefon' }
+                    - { property: koeberMobil, label: 'app.grund.koeberMobil' }
+                    - { property: koeberEmail, label: 'app.grund.koeberEmail' }
+
+                    - { type: 'group', css_class: 'col-md-6', label: 'app.interessent.medkoeber' }
+                    - { property: medkoeberNavn, label: 'app.grund.medkoeberNavn' }
+                    - { property: medkoeberAdresse, label: 'app.grund.medkoeberAdresse' }
+                    - { property: medkoeberPostby, label: 'app.grund.medkoeberPostby' }
+                    - { property: medkoeberLand, label: 'app.grund.medkoeberLand' }
+                    - { property: medkoeberTelefon, label: 'app.grund.medkoeberTelefon' }
+                    - { property: medkoeberMobil, label: 'app.grund.medkoeberMobil' }
+                    - { property: medkoeberEmail, label: 'app.grund.medkoeberEmail' }
+
+                    - { type: 'group', css_class: 'col-xs-12', label: 'app.interessent.notat' }
+                    - { property: koeberNotat, label: 'app.interessent.notat' }
+
+
+

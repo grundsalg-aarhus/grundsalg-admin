@@ -68,52 +68,17 @@
 <div class="nav-tabs-custom">
   <ul class="nav nav-tabs">
     <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">{{ 'app.grund.oplysninger' | trans }}</a></li>
-    <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">{{ 'app.grund.lokalplan' | trans }}</a></li>
-    <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">{{ 'app.grund.landinspektoer' | trans }}</a></li>
-    <li class=""><a href="#tab_4" data-toggle="tab" aria-expanded="false">{{ 'app.grund.salg' | trans }}</a></li>
-    <li class=""><a href="#tab_5" data-toggle="tab" aria-expanded="false">{{ 'app.grund.venteliste' | trans }} ({{ entity.reservationer | length }})</a></li>
-    <li class=""><a href="#tab_6" data-toggle="tab" aria-expanded="false">{{ 'app.grund.historiskeSalg' | trans }} ({{ entity.salgshistorik | length }})</a></li>
+    <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">{{ 'app.grund.salgsomraade' | trans }}</a></li>
+    <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">{{ 'app.grund.lokalplan' | trans }}</a></li>
+    <li class=""><a href="#tab_4" data-toggle="tab" aria-expanded="false">{{ 'app.grund.landinspektoer' | trans }}</a></li>
+    <li class=""><a href="#tab_5" data-toggle="tab" aria-expanded="false">{{ 'app.grund.salg' | trans }}</a></li>
+    <li class=""><a href="#tab_6" data-toggle="tab" aria-expanded="false">{{ 'app.grund.venteliste' | trans }} ({{ entity.reservationer | length }})</a></li>
+    <li class=""><a href="#tab_7" data-toggle="tab" aria-expanded="false">{{ 'app.grund.historiskeSalg' | trans }} ({{ entity.salgshistorik | length }})</a></li>
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="tab_1">
 
       <div class="row">
-
-        <div class="field-group col-xs-12">
-          <div class="box box-default">
-            <div class="box-header with-border">
-              <h3 class="box-title">{{ 'app.salgsomraade.salgsomraade' | trans }}</h3>
-            </div>
-            <div class="box-body">
-              <div class="row">
-                <div class="col-md-6">
-                  {{ form_row(form.salgsomraade) }}
-                </div>
-                <div class="col-md-6">
-                  {% if entity.salgsomraade %}
-                    {{ grundsalg.entity_value('app.salgsomraade.annonceres', entity.salgsomraade.annonceres ) }}
-                  {% else %}
-                    {{ grundsalg.entity_value('app.salgsomraade.annonceres' ) }}
-                  {% endif %}
-                </div>
-                <div class="col-md-6">
-                  {% if entity.salgsomraade %}
-                    {{ grundsalg.entity_value('app.salgsomraade.titel', entity.salgsomraade.titel ) }}
-                  {% else %}
-                    {{ grundsalg.entity_value('app.salgsomraade.titel' ) }}
-                  {% endif %}
-                </div>
-                <div class="col-md-6">
-                  {% if entity.salgsomraade %}
-                    {{ grundsalg.entity_value('app.grund.psp', entity.salgsomraade.sagsnr ) }}
-                  {% else %}
-                    {{ grundsalg.entity_value('app.grund.psp' ) }}
-                  {% endif %}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
         <div class="field-group col-xs-12">
           <div class="box box-default">
@@ -303,8 +268,52 @@
       </div>
 
     </div>
+
     <!-- /.tab-pane -->
     <div class="tab-pane" id="tab_2">
+      <div class="row">
+
+        <div class="field-group col-xs-12">
+          <div class="box box-default">
+            <div class="box-header with-border">
+              <h3 class="box-title">{{ 'app.salgsomraade.salgsomraade' | trans }}</h3>
+            </div>
+            <div class="box-body">
+              <div class="row">
+                <div class="col-md-6">
+                  {{ form_row(form.salgsomraade) }}
+                </div>
+                <div class="col-md-6">
+                  {% if entity.salgsomraade %}
+                    {{ grundsalg.entity_value('app.salgsomraade.annonceres', entity.salgsomraade.annonceres ) }}
+                  {% else %}
+                    {{ grundsalg.entity_value('app.salgsomraade.annonceres' ) }}
+                  {% endif %}
+                </div>
+                <div class="col-md-6">
+                  {% if entity.salgsomraade %}
+                    {{ grundsalg.entity_value('app.salgsomraade.titel', entity.salgsomraade.titel ) }}
+                  {% else %}
+                    {{ grundsalg.entity_value('app.salgsomraade.titel' ) }}
+                  {% endif %}
+                </div>
+                <div class="col-md-6">
+                  {% if entity.salgsomraade %}
+                    {{ grundsalg.entity_value('app.grund.psp', entity.salgsomraade.sagsnr ) }}
+                  {% else %}
+                    {{ grundsalg.entity_value('app.grund.psp' ) }}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- /.tab-pane -->
+    <div class="tab-pane" id="tab_3">
       <div class="row">
 
         {# Lokalplan #}
@@ -329,7 +338,7 @@
                   <dd>{{ entity.salgsomraade.lokalplan.telefon }}</dd>
                   <dd>
                     <br>
-                    <a class="btn btn default" href="{{ path('easyadmin', parameters = {'action': 'edit', 'entity': 'lokalplan', 'id': entity.salgsomraade.lokalplan.id}) }}">Vis Lokalplan</a>
+                    <a class="btn btn default" href="{{ path('easyadmin', parameters = {'action': 'edit', 'entity': 'lokalplan', 'id': entity.salgsomraade.lokalplan.id, 'referer': app.request.requestUri}) }}">Vis Lokalplan</a>
                   </dd>
                 </dl>
               {% else %}
@@ -395,7 +404,7 @@
       </div>
     </div>
     <!-- /.tab-pane -->
-    <div class="tab-pane" id="tab_3">
+    <div class="tab-pane" id="tab_4">
       <div class="row">
         <div class="field-group col-xs-12">
           <div class="box box-default">
@@ -430,7 +439,7 @@
                 {% if entity.landinspektoer %}
                   <dd>
                     <br>
-                    <a class="btn btn default" href="{{ path('easyadmin', parameters = {'action': 'edit', 'entity': 'landinspektoer', 'id': entity.landinspektoer.id }) }}">Vis Landinspektør</a>
+                    <a class="btn btn default" href="{{ path('easyadmin', parameters = {'action': 'edit', 'entity': 'landinspektoer', 'id': entity.landinspektoer.id, 'referer': app.request.requestUri }) }}">Vis Landinspektør</a>
                   </dd>
                 {% endif %}
               </dl>
@@ -440,7 +449,7 @@
       </div>
     </div>
     <!-- /.tab-pane -->
-    <div class="tab-pane" id="tab_4">
+    <div class="tab-pane" id="tab_5">
       <div class="row">
         <div class="field-group col-xs-12">
           <div class="box box-default">
@@ -648,7 +657,7 @@
 
 
     <!-- /.tab-pane -->
-    <div class="tab-pane" id="tab_5">
+    <div class="tab-pane" id="tab_6">
       <div class="row">
         <div class="field-group col-xs-12">
           <table class="table table-striped easyadmin-list">
@@ -667,10 +676,10 @@
                 <td>{{ reservation.interessent.koeberNavn }}</td>
                 <td>{{ reservation.interessent.koeberAdresse }}</td>
                 <td>{{ reservation.createdAt | date }}</td>
-                <td>{{ reservation.annulleret ? 'label.yes' | trans }}</td>
+                <td>{{ reservation.annulleret ? '(Venteliste annulleret)' | trans }}</td>
                 <td class="actions">
-                  <a class="btn btn default" href="{{ path('easyadmin', parameters = {'action': 'show', 'entity': 'interessent', 'id': reservation.interessent.id }) }}">{{ 'action.show' | trans }}</a>
-                  <a class="btn btn default" href="{{ path('easyadmin', parameters = {'action': 'edit', 'entity': 'interessent', 'id': reservation.interessent.id }) }}">{{ 'action.edit' | trans }}</a>
+                  <a class="btn btn default" href="{{ path('easyadmin', parameters = {'action': 'show', 'entity': 'interessent', 'id': reservation.interessent.id, 'referer': app.request.requestUri }) }}">{{ 'action.show' | trans }}</a>
+                  <a class="btn btn default" href="{{ path('easyadmin', parameters = {'action': 'edit', 'entity': 'interessent', 'id': reservation.interessent.id, 'referer': app.request.requestUri }) }}">{{ 'action.edit' | trans }}</a>
                 </td>
               </tr>
             {% endfor %}
@@ -680,23 +689,27 @@
       </div>
     </div>
     <!-- /.tab-pane -->
-    <div class="tab-pane" id="tab_6">
+    <div class="tab-pane" id="tab_7">
       <div class="row">
         <div class="field-group col-xs-12">
           <table class="table table-striped easyadmin-list">
             <thead>
             <tr>
-              <th>{{ 'app.salgshistorik.navn' | trans }}</th>
+              <th>{{ 'app.salgshistorik.koeberNavn' | trans }}</th>
               <th>{{ 'app.salgshistorik.status' | trans }}</th>
               <th>{{ 'app.salgshistorik.createdAt' | trans }}</th>
+              <th></th>
             </tr>
             </thead>
             <tbody>
             {% for salg in entity.salgshistorik %}
               <tr>
-                <td>{{ salg.navn }}</td>
+                <td>{{ salg.koeberNavn }}</td>
                 <td>{{ salg.salgStatus }}</td>
                 <td>{{ salg.createdAt | date }}</td>
+                <td class="actions">
+                  <a class="btn btn default" href="{{ path('easyadmin', parameters = {'action': 'show', 'entity': 'salgshistorik', 'id': salg.id, 'referer': app.request.requestUri }) }}">{{ 'action.show' | trans }}</a>
+                </td>
               </tr>
             {% endfor %}
             </tbody>
@@ -709,9 +722,9 @@
   <!-- /.tab-content -->
 </div>
 
-{% include "easy_admin/_includes/_blameable.html.twig" %}
-
 {{ form_rest(form) }}
+
+{% include "easy_admin/_includes/_blameable.html.twig" %}
 
 <div class="row">
   <div class="col-xs-12 form-actions">

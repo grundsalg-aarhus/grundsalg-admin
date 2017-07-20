@@ -47,11 +47,13 @@ easy_admin:
                 title: 'Rediger Interessent'
                 actions:
                     - { name: -delete }
+                    - { name: 'interessent_cancel', type: 'route', icon: 'minus-square', css_class: 'btn btn_default', label: 'Annuller venteliste' }
 
             show:
                 title: 'Interessent'
                 actions:
                     - { name: -delete }
+
                 fields:
                     - { type: 'group', css_class: 'col-md-6', label: 'app.interessent.koeber' }
                     - { property: koeberNavn, label: 'app.grund.koeberNavn' }
