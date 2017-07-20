@@ -92,7 +92,7 @@ class Grund {
   /**
    * @var GrundType
    *
-   * @ORM\Column(name="type", type="GrundType", nullable=true)
+   * @ORM\Column(name="type", type="GrundType", nullable=false)
    *
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GrundType")
    */
@@ -101,14 +101,14 @@ class Grund {
   /**
    * @var string
    *
-   * @ORM\Column(name="mnr", type="string", length=20, nullable=true)
+   * @ORM\Column(name="mnr", type="string", length=20, nullable=false)
    */
   private $mnr;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="mnr2", type="string", length=20, nullable=true)
+   * @ORM\Column(name="mnr2", type="string", length=20, nullable=false)
    */
   private $mnr2;
 
@@ -161,7 +161,7 @@ class Grund {
   /**
    * @var SalgsType
    *
-   * @ORM\Column(name="salgsType", type="SalgsType", nullable=true)
+   * @ORM\Column(name="salgsType", type="SalgsType", nullable=false)
    *
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\SalgsType")
    */
@@ -588,7 +588,7 @@ class Grund {
    *
    * @ORM\ManyToOne(targetEntity="Lokalsamfund")
    * @ORM\JoinColumns({
-   *   @ORM\JoinColumn(name="lokalsamfundId", referencedColumnName="id")
+   *   @ORM\JoinColumn(name="lokalsamfundId", referencedColumnName="id", nullable=false)
    * })
    */
   private $lokalsamfund;
@@ -598,7 +598,7 @@ class Grund {
    *
    * @ORM\ManyToOne(targetEntity="Salgsomraade", fetch="EAGER")
    * @ORM\JoinColumns({
-   *   @ORM\JoinColumn(name="salgsomraadeId", referencedColumnName="id")
+   *   @ORM\JoinColumn(name="salgsomraadeId", referencedColumnName="id", nullable=false)
    * })
    */
   private $salgsomraade;
@@ -639,6 +639,7 @@ class Grund {
     $this->salgshistorik = new ArrayCollection();
     $this->tilsluttet = [];
     $this->annonceres = FALSE;
+    $this->setStatus(GrundStatus::LEDIG);
     $this->setSalgstype(SalgsType::KVADRATMETERPRIS);
   }
 
