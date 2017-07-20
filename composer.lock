@@ -3729,16 +3729,16 @@
     "packages-dev": [
         {
             "name": "aakb/php-coding-standard",
-            "version": "1.0.6",
+            "version": "1.0.7",
             "source": {
                 "type": "git",
                 "url": "git@github.com:aakb/php-coding-standard.git",
-                "reference": "bc219248ed638c53f60518da0c8d6520d4ebd677"
+                "reference": "898846c178f378eeb6975a43bdabfbd8276ae217"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aakb/php-coding-standard/zipball/bc219248ed638c53f60518da0c8d6520d4ebd677",
-                "reference": "bc219248ed638c53f60518da0c8d6520d4ebd677",
+                "url": "https://api.github.com/repos/aakb/php-coding-standard/zipball/898846c178f378eeb6975a43bdabfbd8276ae217",
+                "reference": "898846c178f378eeb6975a43bdabfbd8276ae217",
                 "shasum": ""
             },
             "require": {
@@ -3777,10 +3777,10 @@
                 "phpcs"
             ],
             "support": {
-                "source": "https://github.com/aakb/php-coding-standard/tree/1.0.6",
+                "source": "https://github.com/aakb/php-coding-standard/tree/1.0.7",
                 "issues": "https://github.com/aakb/php-coding-standard/issues"
             },
-            "time": "2017-07-19T14:18:10+00:00"
+            "time": "2017-07-20T08:21:16+00:00"
         },
         {
             "name": "behat/behat",
