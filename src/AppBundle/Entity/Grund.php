@@ -129,14 +129,14 @@ class Grund {
   /**
    * @var string
    *
-   * @ORM\Column(name="vej", type="string", length=60, nullable=true)
+   * @ORM\Column(name="vej", type="string", length=60, nullable=false)
    */
   private $vej;
 
   /**
    * @var int
    *
-   * @ORM\Column(name="husNummer", type="integer", nullable=true)
+   * @ORM\Column(name="husNummer", type="integer", nullable=false)
    */
   private $husnummer;
 
