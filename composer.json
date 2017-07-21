@@ -36,6 +36,7 @@
         "symfony/polyfill-apcu": "^1.0",
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
+        "sensio/generator-bundle": "^3.0",
         "incenteev/composer-parameter-handler": "^2.0",
         "braincrafted/bootstrap-bundle": "~2",
         "yavin/symfony-init-controller": "~0.4",
@@ -51,7 +52,6 @@
     },
     "require-dev": {
         "behatch/contexts": "^2.6",
-        "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^3.0",
         "behat/behat": "^3.1",
         "fzaninotto/faker": "^1.6",

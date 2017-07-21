@@ -78,7 +78,6 @@ easy_admin:
                 - { entity: 'salgsomraade', label: 'Salgsområder' }
                 - { entity: 'opkoeb', label: 'Opkøb' }
                 - { entity: 'interessent', label: 'Interessenter' }
-                - { entity: 'salgshistorik', label: 'Salgshistorik' }
             - label: 'Admin'
               roles: [ROLE_ADMIN]
               icon: 'wrench'
