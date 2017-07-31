@@ -136,7 +136,7 @@ class Grund {
   /**
    * @var int
    *
-   * @ORM\Column(name="husNummer", type="integer", nullable=false)
+   * @ORM\Column(name="husNummer", type="integer", nullable=true)
    */
   private $husnummer;
 

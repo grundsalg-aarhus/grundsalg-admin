@@ -19,7 +19,7 @@ class Version20170721090959 extends AbstractMigration {
       'Migration can only be executed safely on \'mysql\'.'
     );
 
-    $this->addSql('ALTER TABLE Grund CHANGE vej vej VARCHAR(60) NOT NULL, CHANGE husNummer husNummer INT NOT NULL');
+    $this->addSql('ALTER TABLE Grund CHANGE vej vej VARCHAR(60) NOT NULL');
   }
 
   /**
@@ -33,7 +33,7 @@ class Version20170721090959 extends AbstractMigration {
     );
 
     $this->addSql(
-      'ALTER TABLE Grund CHANGE vej vej VARCHAR(60) DEFAULT NULL COLLATE utf8_general_ci, CHANGE husNummer husNummer INT DEFAULT NULL'
+      'ALTER TABLE Grund CHANGE vej vej VARCHAR(60) DEFAULT NULL COLLATE utf8_general_ci'
     );
   }
 }
