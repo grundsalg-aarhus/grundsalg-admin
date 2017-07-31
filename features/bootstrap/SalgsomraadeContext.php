@@ -92,7 +92,7 @@ class SalgsomraadeContext extends BaseContext implements Context, KernelAwareCon
 //      ];
 
       $salgsomraade = new \AppBundle\Entity\Salgsomraade();
-      $salgsomraade->setType($row['Type']);
+      $salgsomraade->setType($row['Grund']);
       $salgsomraade->setTitel($row['Titel']);
       $salgsomraade->setVej($row['Vej']);
       $salgsomraade->setAnnonceres($row['Annonceres']);

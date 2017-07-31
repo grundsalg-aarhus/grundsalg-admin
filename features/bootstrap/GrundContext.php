@@ -76,10 +76,33 @@ class GrundContext extends BaseContext implements Context, KernelAwareContext
     $count = count($rows);
 
     $generator = \Faker\Factory::create('da_DK');
+    $generator->addProvider(new \AppBundle\Faker\Provider\Grund($generator));
     $populator = new Faker\ORM\Doctrine\Populator($generator, $this->manager);
+    $populator->addEntity('AppBundle\Entity\Lokalsamfund', 10);
     $populator->addEntity('AppBundle\Entity\Lokalplan', 10);
-    $populator->addEntity('AppBundle\Entity\Salgsomraade', 10);
-    $populator->addEntity('AppBundle\Entity\Grund', $count);
+    $populator->addEntity('AppBundle\Entity\Landinspektoer', 10);
+    $populator->addEntity('AppBundle\Entity\Delomraade', 10);
+    $populator->addEntity('AppBundle\Entity\Salgsomraade', 10, array(
+      'type' => function() use ($generator) { return $generator->type(); },
+    ));
+    $populator->addEntity('AppBundle\Entity\Grund', $count, array(
+      'type' => function() use ($generator) { return $generator->type(); },
+      'salgsType' => function() use ($generator) { return $generator->salgsType(); },
+      'accept' => null,
+      'annonceres' => null,
+      'antagetbud' => null,
+      'auktionslutdato' => null,
+      'auktionstartdato' => null,
+      'beloebanvist' => null,
+      'datoannonce' => null,
+      'datoannonce1' => null,
+      'overtagelse' => null,
+      'resslut' => null,
+      'resstart' => null,
+      'skoederekv' => null,
+      'tilbudslut' => null,
+      'tilbudstart' => null,
+    ));
     $populator->execute();
 
     $accessor = PropertyAccess::createPropertyAccessor();
@@ -93,6 +116,14 @@ class GrundContext extends BaseContext implements Context, KernelAwareContext
         switch ($field) {
           case 'DatoAnnonce':
             $value = new DateTime($row['DatoAnnonce']);
+            $accessor->setValue($grund, $field, $value);
+            break;
+          case 'auktionstartdato':
+            $value = new DateTime($row['auktionstartdato']);
+            $accessor->setValue($grund, $field, $value);
+            break;
+          case 'auktionslutdato':
+            $value = new DateTime($row['auktionslutdato']);
             $accessor->setValue($grund, $field, $value);
             break;
           case 'Salgsomraade':
