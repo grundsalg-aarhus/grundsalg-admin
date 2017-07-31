@@ -29,7 +29,6 @@ easy_admin:
                     - { property: 'prism2', label: 'app.grund.prism2' }
 
                     - { property: 'status', label: 'app.grund.status', type: 'AppBundle\Form\Field\GrundStatus' }
-#                    - { property: 'visStatus', label: 'app.grund.salgstatus', type: 'text', , readonly: true, type_options: { disabled: true } }
                     - { property: 'salgstype', label: 'app.grund.salgstype', type: 'AppBundle\Form\Field\SalgsType' }
                     - { property: 'annonceres', label: 'app.grund.annonceres' }
                     - { property: 'datoAnnonce', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoAnnonce' }

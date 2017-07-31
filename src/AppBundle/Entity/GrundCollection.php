@@ -41,8 +41,13 @@ class GrundCollection extends Grund {
     parent::__construct();
 
     $this->grunde = new ArrayCollection();
+    $this->grunde->add(new Grund());
     $this->setStatus(GrundStatus::FREMTIDIG);
     $this->setSalgstatus(GrundSalgStatus::LEDIG);
+
+    // Set values for requried fields to avoid validation errors.
+    $this->setMnr('abc');
+    $this->setMnr2('abc');
   }
 
   /**

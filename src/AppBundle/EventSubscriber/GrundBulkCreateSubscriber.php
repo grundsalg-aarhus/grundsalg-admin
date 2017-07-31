@@ -48,7 +48,6 @@ class GrundBulkCreateSubscriber implements EventSubscriberInterface {
     }
 
     foreach ($collection->getGrunde() as $grund) {
-
       $grund->setSalgsomraade($collection->getSalgsomraade());
 
       $grund->setType($collection->getType());
@@ -63,6 +62,8 @@ class GrundBulkCreateSubscriber implements EventSubscriberInterface {
       $grund->setAnnonceres($collection->isAnnonceres());
       $grund->setDatoannonce($collection->getDatoannonce());
       $grund->setDatoannonce1($collection->getDatoannonce1());
+      $grund->setAuktionstartdato($collection->getAuktionstartdato());
+      $grund->setAuktionslutdato($collection->getAuktionslutdato());
       $grund->setTilsluttet($collection->getTilsluttet());
 
       $this->em->persist($grund);
