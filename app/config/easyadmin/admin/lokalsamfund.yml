@@ -22,6 +22,10 @@ easy_admin:
                 roles: [ROLE_ADMIN]
                 title: 'Rediger Lokalsamfund'
 
+            new:
+                roles: [ROLE_ADMIN]
+                title: 'Opret Lokalsamfund'
+
             form:
                 fields: &lokalsamfund_form_fields
                     - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Lokalsamfund' }

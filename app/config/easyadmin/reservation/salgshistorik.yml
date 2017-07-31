@@ -5,6 +5,7 @@ easy_admin:
             actions:
                 - { name: -delete }
                 - { name: -edit }
+                - { name: -new }
 
             form:
                 fields: &salgshistorik_form_fields

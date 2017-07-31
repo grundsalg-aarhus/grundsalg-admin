@@ -7,7 +7,7 @@ easy_admin:
                 title: 'Interessenter'
                 sort: [koeberNavn, 'ASC']
                 actions:
-                    <<: *default_list_actions
+                    - { name: -new }
                 fields:
                     - { property: koeberNavn, label: 'app.grund.koeberNavn' }
                     - { property: koeberEmail, label: 'app.grund.koeberEmail' }

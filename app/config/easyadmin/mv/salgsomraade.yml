@@ -26,6 +26,10 @@ easy_admin:
                 roles: [ROLE_EDITOR]
                 title: 'Rediger Salgsområde'
 
+            new:
+                roles: [ROLE_EDITOR]
+                title: 'Opret Salgsområde'
+
             form:
                 fields: &salgsomraade_form_fields
                     - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Delområde' }

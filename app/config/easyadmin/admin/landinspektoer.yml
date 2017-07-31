@@ -24,6 +24,10 @@ easy_admin:
                 roles: [ROLE_ADMIN]
                 title: 'Rediger Landinspektør'
 
+            new:
+                roles: [ROLE_ADMIN]
+                title: 'Opret Landinspektør'
+
             form:
                 fields: &landinspektoer_form_fields
                     - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Landinspektør' }
