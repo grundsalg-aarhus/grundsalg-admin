@@ -1,4 +1,4 @@
-{% extends "@EasyAdmin/default/show.html.twig" %}
+{% extends "easy_admin/show.html.twig" %}
 
 {% macro entity_row(label, field = null) %}
   <div class="form-group field-entity">
@@ -276,28 +276,28 @@
                 <div class="box-body">
                   <div class="row">
                     <div class="col-md-6">
-                        {{ grundsalg.entity_row('app.grund.salgsomraade', entity.salgsomraade ) }}
+                      {{ grundsalg.entity_row('app.grund.salgsomraade', entity.salgsomraade ) }}
                     </div>
                     <div class="col-md-6">
-                        {% if entity.salgsomraade %}
-                            {{ grundsalg.entity_row('app.salgsomraade.annonceres', entity.salgsomraade.annonceres ) }}
-                        {% else %}
-                            {{ grundsalg.entity_row('app.salgsomraade.annonceres' ) }}
-                        {% endif %}
+                      {% if entity.salgsomraade %}
+                        {{ grundsalg.entity_row('app.salgsomraade.annonceres', entity.salgsomraade.annonceres ) }}
+                      {% else %}
+                        {{ grundsalg.entity_row('app.salgsomraade.annonceres' ) }}
+                      {% endif %}
                     </div>
                     <div class="col-md-6">
-                        {% if entity.salgsomraade %}
-                            {{ grundsalg.entity_row('app.salgsomraade.titel', entity.salgsomraade.titel ) }}
-                        {% else %}
-                            {{ grundsalg.entity_row('app.salgsomraade.titel' ) }}
-                        {% endif %}
+                      {% if entity.salgsomraade %}
+                        {{ grundsalg.entity_row('app.salgsomraade.titel', entity.salgsomraade.titel ) }}
+                      {% else %}
+                        {{ grundsalg.entity_row('app.salgsomraade.titel' ) }}
+                      {% endif %}
                     </div>
                     <div class="col-md-6">
-                        {% if entity.salgsomraade %}
-                            {{ grundsalg.entity_row('app.grund.psp', entity.salgsomraade.sagsnr ) }}
-                        {% else %}
-                            {{ grundsalg.entity_row('app.grund.psp' ) }}
-                        {% endif %}
+                      {% if entity.salgsomraade %}
+                        {{ grundsalg.entity_row('app.grund.psp', entity.salgsomraade.sagsnr ) }}
+                      {% else %}
+                        {{ grundsalg.entity_row('app.grund.psp' ) }}
+                      {% endif %}
                     </div>
                   </div>
                 </div>
@@ -333,7 +333,9 @@
                       <dd>{{ entity.salgsomraade.lokalplan.telefon }}</dd>
                       <dd>
                         <br>
-                        <a class="btn btn default" href="{{ path('easyadmin', parameters = {'action': 'edit', 'entity': 'lokalplan', 'id': entity.salgsomraade.lokalplan.id, referer: app.request.query.get('referer') }) }}">Vis Lokalplan</a>
+                        <a class="btn btn default"
+                           href="{{ path('easyadmin', parameters = {'action': 'edit', 'entity': 'lokalplan', 'id': entity.salgsomraade.lokalplan.id, referer: app.request.query.get('referer') }) }}">Vis
+                          Lokalplan</a>
                       </dd>
                     </dl>
                   {% else %}
@@ -434,7 +436,9 @@
                     {% if entity.landinspektoer %}
                       <dd>
                         <br>
-                        <a class="btn btn default" href="{{ path('easyadmin', parameters = {'action': 'edit', 'entity': 'landinspektoer', 'id': entity.landinspektoer.id, referer: app.request.query.get('referer') }) }}">Vis Landinspektør</a>
+                        <a class="btn btn default"
+                           href="{{ path('easyadmin', parameters = {'action': 'edit', 'entity': 'landinspektoer', 'id': entity.landinspektoer.id, referer: app.request.query.get('referer') }) }}">Vis
+                          Landinspektør</a>
                       </dd>
                     {% endif %}
                   </dl>
@@ -604,7 +608,8 @@
                     <td>{{ reservation.interessent.createdAt | date }}</td>
                     <td>{{ reservation.annulleret ? 'label.yes' | trans }}</td>
                     <td>
-                      <a class="btn btn-default" href="{{ path('easyadmin', parameters = {'action': 'show', 'entity': 'interessent', 'id': reservation.interessent.id, referer: app.request.query.get('referer') }) }}">{{ 'action.show' | trans }}</a>
+                      <a class="btn btn-default"
+                         href="{{ path('easyadmin', parameters = {'action': 'show', 'entity': 'interessent', 'id': reservation.interessent.id, referer: app.request.query.get('referer') }) }}">{{ 'action.show' | trans }}</a>
                     </td>
                   </tr>
                 {% endfor %}
@@ -633,7 +638,8 @@
                     <td>{{ salg.salgStatus }}</td>
                     <td>{{ salg.createdAt | date }}</td>
                     <td class="actions">
-                      <a class="btn btn default" href="{{ path('easyadmin', parameters = {'action': 'show', 'entity': 'salgshistorik', 'id': salg.id, 'referer': app.request.requestUri }) }}">{{ 'action.show' | trans }}</a>
+                      <a class="btn btn default"
+                         href="{{ path('easyadmin', parameters = {'action': 'show', 'entity': 'salgshistorik', 'id': salg.id, 'referer': app.request.requestUri }) }}">{{ 'action.show' | trans }}</a>
                     </td>
                   </tr>
                 {% endfor %}
@@ -667,16 +673,21 @@
     </div>
   </div>
 
+
   {% block delete_form %}
-    {{ include('@EasyAdmin/default/includes/_delete_form.html.twig', {
-      view: 'show',
-      referer: app.request.query.get('referer', ''),
-      delete_form: delete_form,
-      _translation_domain: _entity_config.translation_domain,
-      _trans_parameters: _trans_parameters,
-      _entity_config: _entity_config,
-    }, with_context = false) }}
-  {% endblock delete_form %}
+    {% if can_delete(entity) %}
+      {{ include('@EasyAdmin/default/includes/_delete_form.html.twig', {
+        view: 'show',
+        referer: app.request.query.get('referer', ''),
+        delete_form: delete_form,
+        _translation_domain: _entity_config.translation_domain,
+        _trans_parameters: _trans_parameters,
+        _entity_config: _entity_config,
+      }, with_context = false) }}
+    {% else %}
+      {% include 'easy_admin/_includes/_cannot_delete_message.html.twig' %}
+    {% endif %}
+  {% endblock %}
 
   <script src="/js/grund-form-show.js"></script>
 

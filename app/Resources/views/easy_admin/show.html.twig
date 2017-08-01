@@ -66,7 +66,8 @@
                           {{ easyadmin_render_field_for_show_view(_entity_config.name, entity, metadata) }}
                         </div>
                         {% if metadata.help|default('') != '' %}
-                          <span class="help-block"><i class="fa fa-info-circle"></i> {{ metadata.help|trans|raw }}</span>
+                          <span class="help-block"><i
+                                class="fa fa-info-circle"></i> {{ metadata.help|trans|raw }}</span>
                         {% endif %}
                       </div>
                     </div>
