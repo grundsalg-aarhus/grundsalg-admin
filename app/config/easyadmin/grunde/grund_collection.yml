@@ -31,8 +31,8 @@ easy_admin:
                     - { property: 'status', label: 'app.grund.status', type: 'AppBundle\Form\Field\GrundStatus' }
                     - { property: 'salgstype', label: 'app.grund.salgstype', type: 'AppBundle\Form\Field\SalgsType' }
                     - { property: 'annonceres', label: 'app.grund.annonceres' }
-                    - { property: 'datoAnnonce', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoAnnonce' }
-                    - { property: 'datoAnnonce1', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoAnnonce1' }
+                    - { property: 'datoannonce', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoannonce' }
+                    - { property: 'datoannonce1', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoannonce1' }
                     - { property: 'tilsluttet', label: 'app.grund.tilsluttet', type: 'AppBundle\Form\Field\TilslutningsType', type_options: { expanded : true, multiple : true } }
 
                     - { property: 'auktionstartdato', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.auktionstartdato' }

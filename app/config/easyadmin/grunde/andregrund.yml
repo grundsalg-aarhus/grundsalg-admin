@@ -79,8 +79,8 @@ easy_admin:
                     - { property: 'status', label: 'app.grund.status', type: 'AppBundle\Form\Field\GrundStatus' }
                     - { property: 'publicstatus', label: 'app.grund.publicstatus', type: 'AppBundle\Form\Field\GrundPublicStatus' }
                     - { property: 'annonceres', label: 'app.grund.annonceres' }
-                    - { property: 'datoAnnonce', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoAnnonce' }
-                    - { property: 'datoAnnonce1', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoAnnonce1' }
+                    - { property: 'datoannonce', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoannonce' }
+                    - { property: 'datoannonce1', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoannonce1' }
 
                     - { property: 'auktionstartdato', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.auktionstartdato' }
                     - { property: 'auktionslutdato', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.auktionslutdato' }

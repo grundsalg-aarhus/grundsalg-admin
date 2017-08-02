@@ -49,8 +49,8 @@ app:
       beloebanvist: Beløb anvist
       bogstav: Bogstav
       bruttoareal: Samlet areal
-      datoAnnonce: Annonce-dato
-      datoAnnonce1: 1. Annonce-dato
+      datoannonce: Annonce-dato
+      datoannonce1: 1. Annonce-dato
       delareal: Delareal
       ejerlav: Ejerlav
       fastpris: Fastpris
