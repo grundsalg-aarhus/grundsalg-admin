@@ -269,9 +269,9 @@ class EasyAdminController extends BaseAdminController {
           $queryBuilder->orWhere(sprintf('%s.%s IN (:words_query)', $entityDqlName, $fieldDqlName));
           $queryBuilder->setParameter('words_query', explode(' ', $searchQuery));
         } else {
-          // Associations (countparts > 1) are 'virtual' but we want to add them anyway
-          if (!$metadata['virtual'] || 1 < $countParts) {
-            // Default: text search
+          // Fields on associations (countparts > 1) are 'virtual' but we want to add them anyway
+          if (($metadata['dataType'] !== 'association' && !$metadata['virtual']) || 1 < $countParts) {
+              // Default: text search
             $searchQuery = mb_strtolower($searchQuery);
 
             $queryBuilder->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', $entityDqlName, $fieldDqlName));
