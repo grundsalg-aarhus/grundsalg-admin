@@ -186,3 +186,4 @@ user:
 
 'Cannot delete %name%': '"%name%" kan ikke slettes'
 '%name% is referenced by %count% entities': 'one: "%name%" bruges af %count% datapost | some: "%name%" bruges af %count% dataposter'
+'@count entities updated': '@count grunde flyttet'

@@ -2,6 +2,7 @@
 
 namespace AppBundle\CalculationService;
 
+use AppBundle\DBAL\Types\GrundType;
 use AppBundle\Entity\Grund;
 use AppBundle\DBAL\Types\SalgsType;
 use AppBundle\DBAL\Types\GrundStatus;
@@ -53,6 +54,7 @@ class GrundCalculator implements EventSubscriber
     }
 
     $this->calculate($grund, false, $changeset);
+    $this->setLedigStatus($grund, $changeset);
   }
 
   /**
@@ -69,6 +71,73 @@ class GrundCalculator implements EventSubscriber
     $this->calculateToDates($grund);
     $this->calculateBruttoAreal($grund);
     $this->calculatePris($grund);
+  }
+
+  /**
+   * Update status when grund set "ledig"
+   *
+   * "Copy-paste" from legacy system (Servlets/GRund.java: setLedigStatus)
+   *
+   * @param Grund $grund
+   * @param array $changeset
+   */
+  private function setLedigStatus(Grund $grund, array $changeset = array())
+  {
+    $changeKeys = array('status');
+
+    // This should only be true if it's a bulk update
+    if ($this->arrayKeyExist($changeKeys, $changeset) && $changeset['status'][1] === GrundStatus::LEDIG) {
+
+      // Status have allready changed on the entity. We need the old one.
+      $status = $changeset['status'][0];
+      $type = $grund->getType();
+
+      if($status === GrundStatus::ANNONCERET || ($status === GrundStatus::FREMTIDIG) && !$grund->isAnnonceres()) {
+        $grund->setStatus(GrundStatus::LEDIG);
+      } else if ($status === GrundStatus::AUKTION_SLUT) {
+        if($type === GrundType::PARCELHUS) {
+          $grund->setSalgstype(SalgsType::FASTPRIS);
+
+          $this->clearStatusFields($grund);
+          $this->clearAuktionsDateFields($grund);
+        } else if($type === GrundType::STORPARCEL) {
+          $grund->setSalgstype(SalgsType::ETGM2);
+
+          $this->clearStatusFields($grund);
+          $this->clearAuktionsDateFields($grund);
+        } else if($type === GrundType::ERHVERV) {
+          $grund->setSalgstype(SalgsType::KVADRATMETERPRIS);
+
+          $this->clearStatusFields($grund);
+          $this->clearAuktionsDateFields($grund);
+        } else if($type === GrundType::ANDRE) {
+          $grund->setSalgstype(SalgsType::FASTPRIS);
+
+          $this->clearStatusFields($grund);
+          $this->clearAuktionsDateFields($grund);
+        }
+      }
+    }
+  }
+
+  /**
+   * "Copy-paste" from legacy system (Servlets/GRund.java: clearDateFields)
+   *
+   * @param Grund $grund
+   */
+  private function clearStatusFields(Grund $grund){
+    $grund->setStatus(GrundStatus::LEDIG);
+    $grund->setSalgstatus(GrundSalgStatus::LEDIG);
+  }
+
+  /**
+   * "Copy-paste" from legacy system (Servlets/GRund.java: clearDateFields)
+   *
+   * @param Grund $grund
+   */
+  private function clearAuktionsDateFields(Grund $grund){
+    $grund->setAuktionstartdato(null);
+    $grund->setAuktionslutdato(null);
   }
 
   /**
