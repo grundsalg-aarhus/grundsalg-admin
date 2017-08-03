@@ -104,18 +104,21 @@ class ApiController extends Controller {
   public function salgsomraadeAction(Request $request, $udstykningsId) {
     $em = $this->getDoctrine()->getManager();
     $area = $em->getRepository('AppBundle:Salgsomraade')->findOneById($udstykningsId);
+    $data = [];
 
-    $data = [
-      'id' => $area->getId(),
-      'type' => $area->getType(),
-      'title' => $area->getTitel(),
-      'vej' => $area->getVej(),
-      'city' => $area->getPostby() ? $area->getPostby()->getCity() : null,
-      'postalCode' => $area->getPostby() ? $area->getPostby()->getPostalcode() : null,
-      'geometry' => $area->getSpGeometryArray(),
-      'srid' => $area->getSrid(),
-      'publish' => $area->isAnnonceres(),
-    ];
+    if ($area->isAnnonceres()) {
+      $data = [
+        'id' => $area->getId(),
+        'type' => $area->getType(),
+        'title' => $area->getTitel(),
+        'vej' => $area->getVej(),
+        'city' => $area->getPostby() ? $area->getPostby()->getCity() : NULL,
+        'postalCode' => $area->getPostby() ? $area->getPostby()->getPostalcode() : NULL,
+        'geometry' => $area->getSpGeometryArray(),
+        'srid' => $area->getSrid(),
+        'publish' => $area->isAnnonceres(),
+      ];
+    }
 
     $response = $this->json($data);
     $response->headers->set('Access-Control-Allow-Origin', '*');
