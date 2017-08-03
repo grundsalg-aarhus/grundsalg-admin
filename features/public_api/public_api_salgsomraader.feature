@@ -31,7 +31,6 @@ Feature: Public API
     """
     And print last JSON response
 
-  @debug
   Scenario: GeoJSON is returned correctly
     When I send a "GET" request to "public/api/udstykning/1"
     Then the response status code should be 200

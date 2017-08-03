@@ -4,9 +4,9 @@ default:
   suites:
     default:
       contexts:
-        - AuthenticationContext: { doctrine: "@doctrine" }
         - DatabaseSetupContext: { doctrine: "@doctrine" }
         - GrundContext: { doctrine: "@doctrine" }
+        - DelomraadeContext: { doctrine: "@doctrine" }
         - SalgsomraadeContext: { doctrine: "@doctrine" }
         - JsonValidationContext
         - UserContext: { doctrine: "@doctrine" }
@@ -27,5 +27,6 @@ default:
       base_url: "grundsalg.vm/"
       sessions:
         default:
+#          goutte: ~
           symfony2: ~
     Behatch\Extension: ~
