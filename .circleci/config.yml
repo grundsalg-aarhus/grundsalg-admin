@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/php:7.1-apache-browsers
+      - image: circleci/php:7.0.18-apache-browsers
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -24,6 +24,12 @@ jobs:
           - v1-dependencies-{{ checksum "composer.json" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
+
+      - run:
+          name: Add PHP extensions
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y php-zip
 
       - run:
           name: Install Composer
