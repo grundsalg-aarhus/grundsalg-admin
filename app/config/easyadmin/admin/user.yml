@@ -7,8 +7,7 @@ easy_admin:
                 roles: [ROLE_ADMIN]
                 title: 'Brugere'
                 sort: ['name', 'ASC']
-                actions:
-                    <<: *default_list_actions
+
                 fields:
                     - { property: enabled, label: 'Aktiv' }
                     - { property: username, label: 'Brugernavn' }

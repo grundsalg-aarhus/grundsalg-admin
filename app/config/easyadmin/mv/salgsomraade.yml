@@ -6,8 +6,7 @@ easy_admin:
             list:
                 title: 'Salgsområder'
                 sort: ['titel', 'ASC']
-                actions:
-                    <<: *default_list_actions
+
                 fields:
                     - {property: kpl1234Combined, label: 'KPL'}
                     - {property: o123Combined, label: 'LP-område'}

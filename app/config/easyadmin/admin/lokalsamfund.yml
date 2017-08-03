@@ -6,8 +6,7 @@ easy_admin:
             list:
                 title: 'Lokalsamfund'
                 sort: ['name', 'ASC']
-                actions:
-                    <<: *default_list_actions
+
                 fields:
                     - { property: active, label: 'Aktiv' }
                     - { property: number, label: 'Nr.', css_class: 'text-right', format: '%.0f' }
