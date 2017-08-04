@@ -21,7 +21,6 @@ Feature: Login
     Then the response status code should be 200
     Then I should see "Log ud"
 
-  @debug
   Scenario: Logout works
     When I am logged in with role "Admin"
     And I go to "/"

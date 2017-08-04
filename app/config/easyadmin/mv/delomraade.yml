@@ -11,7 +11,7 @@ easy_admin:
                     - { property: kpl1234Combined, label: 'KPL' }
                     - { property: o123Combined, label: 'Område' }
                     - anvendelse
-                    - mulighedfor
+                    - { property: mulighedfor, label: 'Mulighed for' }
                     - lokalplan
 
             search:

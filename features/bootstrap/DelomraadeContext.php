@@ -77,6 +77,7 @@ class DelomraadeContext extends BaseContext implements Context, KernelAwareConte
 
     $generator = \Faker\Factory::create('da_DK');
     $generator->addProvider(new \AppBundle\Faker\Provider\Grund($generator));
+    $generator->addProvider(new \AppBundle\Faker\Provider\Delomraade($generator));
     $populator = new Faker\ORM\Doctrine\Populator($generator, $this->manager);
     $populator->addEntity('AppBundle\Entity\Lokalsamfund', 10);
     $populator->addEntity('AppBundle\Entity\Lokalplan', 10);
@@ -89,13 +90,16 @@ class DelomraadeContext extends BaseContext implements Context, KernelAwareConte
 
     for ($i = 0; $i < $count; $i++) {
       $row = $rows[$i];
-      $grund = $this->manager->getRepository('AppBundle:Delomraade')->find($i + 1);
+      $delomraade = $this->manager->getRepository('AppBundle:Delomraade')->find($i + 1);
 
       foreach ($row as $field => $value) {
 
         switch ($field) {
+//          case 'kpl4':
+//            $delomraade->setKpl4($value);
+//            break;
           default:
-            $accessor->setValue($grund, $field, $value);
+            $accessor->setValue($delomraade, $field, $value);
         }
 
       }

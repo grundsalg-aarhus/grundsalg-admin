@@ -10,6 +10,7 @@ namespace AppBundle\Faker\Provider;
 
 use AppBundle\DBAL\Types\Anvendelse;
 use AppBundle\DBAL\Types\GrundType;
+use AppBundle\DBAL\Types\Kpl4;
 use AppBundle\DBAL\Types\SalgsType;
 use Faker\Provider\Base;
 
@@ -19,4 +20,7 @@ class Delomraade extends Base {
     return Anvendelse::AABEN_LAV_BEBYGGELSE;
   }
 
+  public function kpl4() {
+    return Kpl4::BL;
+  }
 }

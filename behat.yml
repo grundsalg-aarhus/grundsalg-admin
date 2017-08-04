@@ -27,6 +27,5 @@ default:
       base_url: "grundsalg.vm/"
       sessions:
         default:
-#          goutte: ~
           symfony2: ~
     Behatch\Extension: ~
