@@ -77,9 +77,14 @@ class GrundContext extends BaseContext implements Context, KernelAwareContext
 
     $generator = \Faker\Factory::create('da_DK');
     $generator->addProvider(new \AppBundle\Faker\Provider\Grund($generator));
+    $generator->addProvider(new \AppBundle\Faker\Provider\Lokalplan($generator));
+
     $populator = new Faker\ORM\Doctrine\Populator($generator, $this->manager);
+
     $populator->addEntity('AppBundle\Entity\Lokalsamfund', 10);
-    $populator->addEntity('AppBundle\Entity\Lokalplan', 10);
+    $populator->addEntity('AppBundle\Entity\Lokalplan', 10, array(
+      'nr' => function() use ($generator) { return $generator->nr(); },
+    ));
     $populator->addEntity('AppBundle\Entity\Landinspektoer', 10);
     $populator->addEntity('AppBundle\Entity\Delomraade', 10);
     $populator->addEntity('AppBundle\Entity\Salgsomraade', 10, array(
