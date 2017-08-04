@@ -8,18 +8,18 @@ jobs:
     docker:
       # specify the version you desire here
       - image: php:7.1-apache
-          environment:
-            APP_ENV: circleci
+        environment:
+          APP_ENV: circleci
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       - image: circleci/mysql:latest
-          environment:
-            - MYSQL_ROOT_PASSWORD=circleci
-            - MYSQL_USER=circleci
-            - MYSQL_PASSWORD=circleci
-            - MYSQL_DATABASE=circle_test
+        environment:
+          - MYSQL_ROOT_PASSWORD=circleci
+          - MYSQL_USER=circleci
+          - MYSQL_PASSWORD=circleci
+          - MYSQL_DATABASE=circle_test
 
     working_directory: /var/www/html
 
