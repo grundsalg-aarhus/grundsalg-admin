@@ -6,5 +6,5 @@ doctrine:
     dbal:
         host:     "127.0.0.1"
         dbname:   "circle_test"
-        user:     "ubuntu"
-        password: ""
+        user:     "circleci"
+        password: "circleci"
