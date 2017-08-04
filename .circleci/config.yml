@@ -10,6 +10,23 @@ jobs:
       - image: php:7.1-apache
         environment:
           APP_ENV: test
+          database_host: 127.0.0.1
+          database_port: null
+          database_name: circle_test
+          database_user: ubuntu
+          database_password: ''
+          server_version: 5.5
+          mailer_transport: smtp
+          mailer_host: 127.0.0.1
+          mailer_user: null
+          mailer_password: null
+          secret: ThisTokenIsNotSoSecretChangeIt
+          grundsalg_web_address: null
+          grundsalg_web_address_username: null
+          grundsalg_web_address_password: null
+          crs_properties_href: 'http://spatialreference.org/ref/epsg/25832/proj4/'
+          crs_properties_type: proj4
+          grundsalg_first_year: 2006
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
