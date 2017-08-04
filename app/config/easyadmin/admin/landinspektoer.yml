@@ -6,6 +6,7 @@ easy_admin:
             list:
                 title: 'Landinspektører'
                 sort: ['navn', 'ASC']
+
                 fields:
                     - { property: active, label: 'Aktiv' }
                     - { property: navn }

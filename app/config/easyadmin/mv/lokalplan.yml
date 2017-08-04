@@ -6,6 +6,7 @@ easy_admin:
             list:
                 title: 'Lokalplaner'
                 sort: ['titel', 'ASC']
+
                 fields:
                     - { property: nr, label: 'LPNr' }
                     - titel

@@ -41,10 +41,9 @@
 
               <th data-property-name="{{ metadata.property }}" class="{{ isSortingField ? 'sorted' }} {{ metadata.virtual ? 'virtual' }} {{ metadata.dataType|lower }} {{ metadata.css_class }}">
                 {% if metadata.sortable %}
-                  <a href="{{ path('easyadmin', _request_parameters|merge({ sortField: metadata.property, sortDirection: nextSortDirection })) }}">
-                    <i class="fa {{ _column_icon }}"></i>
-                    {{ _column_label|raw }}
-                  </a>
+                {% spaceless %}
+                  <a href="{{ path('easyadmin', _request_parameters|merge({ sortField: metadata.property, sortDirection: nextSortDirection })) }}"><i class="fa {{ _column_icon }}"></i>{{ _column_label|raw }}</a>
+                {% endspaceless %}
                 {% else %}
                   <span>{{ _column_label|raw }}</span>
                 {% endif %}

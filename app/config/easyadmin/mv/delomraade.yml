@@ -6,11 +6,12 @@ easy_admin:
             list:
                 title: 'Delområder'
                 sort: ['id', 'ASC']
+
                 fields:
                     - { property: kpl1234Combined, label: 'KPL' }
                     - { property: o123Combined, label: 'Område' }
                     - anvendelse
-                    - mulighedfor
+                    - { property: mulighedfor, label: 'Mulighed for' }
                     - lokalplan
 
             search:
