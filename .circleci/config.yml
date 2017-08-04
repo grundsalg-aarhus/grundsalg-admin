@@ -7,14 +7,16 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/php:7.0.18-apache-browsers
+      - image: php:7.1-apache
+        environment:
+          APP_ENV: test
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
-      - image: circleci/mysql:latest
+#      - image: circleci/mysql:latest
 
-    working_directory: ~/repo
+    working_directory: /var/www/html
 
     steps:
       - run:
