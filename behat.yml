@@ -11,8 +11,8 @@ default:
         - JsonValidationContext
         - UserContext: { doctrine: "@doctrine" }
         - Behat\MinkExtension\Context\MinkContext
-        - Sanpi\Behatch\Context\RestContext
-        - Sanpi\Behatch\Context\JsonContext
+        - Behatch\Context\RestContext
+        - Behatch\Context\JsonContext
   extensions:
     Behat\Symfony2Extension:
       kernel:

@@ -9,7 +9,7 @@ jobs:
       # specify the version you desire here
       - image: php:7.1-apache
         environment:
-          APP_ENV: test
+          APP_ENV: circleci
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -25,7 +25,7 @@ jobs:
 
       - run:
           name: Install PHP extensions
-          command: docker-php-ext-install zip
+          command: docker-php-ext-install zip pdo
 
       - checkout
       # Download and cache dependencies
