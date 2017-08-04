@@ -6,8 +6,6 @@ easy_admin:
             list:
                 title: 'Lokalplaner'
                 sort: ['titel', 'ASC']
-                actions:
-                    <<: *default_list_actions
                 fields:
                     - { property: nr, label: 'LPNr' }
                     - titel
