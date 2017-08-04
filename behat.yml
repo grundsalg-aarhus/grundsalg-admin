@@ -26,6 +26,7 @@ default:
     Sanpi\Behatch\Extension: ~
 
 circleci:
+  extensions:
     Behat\Symfony2Extension:
       kernel:
         env: "circleci"
