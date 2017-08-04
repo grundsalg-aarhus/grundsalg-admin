@@ -16,12 +16,6 @@
             "Tests\\": "tests/"
         }
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:aakb/php-coding-standard.git"
-        }
-    ],
     "require": {
         "php": ">=5.5.9",
         "symfony/symfony": "~3.2",
@@ -70,9 +64,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
-            "vendor/bin/phpcs --config-set installed_paths vendor/aakb/php-coding-standard",
-            "cp -f vendor/aakb/php-coding-standard/hooks/pre-commit .git/hooks/pre-commit",
-            "chmod 755 .git/hooks/pre-commit"
+
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
@@ -81,9 +73,6 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
-            "vendor/bin/phpcs --config-set installed_paths vendor/aakb/php-coding-standard",
-            "cp -f vendor/aakb/php-coding-standard/hooks/pre-commit .git/hooks/pre-commit",
-            "chmod 755 .git/hooks/pre-commit"
         ]
     },
     "extra": {
