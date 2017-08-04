@@ -21,15 +21,15 @@ jobs:
     steps:
       - run:
           name: Apt-get update
-          command: sudo apt-get update && apt-get install -y zlib*
+          command: apt-get update && apt-get install -y zlib*
 
       - run:
           name: Install PHP extensions - zip
-          command: sudo docker-php-ext-install zip && sudo docker-php-ext-enable zip
+          command: docker-php-ext-install zip && docker-php-ext-enable zip
 
       - run:
           name: Install PHP extensions - pdo_mysql
-          command: sudo docker-php-ext-install pdo_mysql && sudo docker-php-ext-enable pdo_mysql
+          command: docker-php-ext-install pdo_mysql && docker-php-ext-enable pdo_mysql
 
       - checkout
       # Download and cache dependencies
