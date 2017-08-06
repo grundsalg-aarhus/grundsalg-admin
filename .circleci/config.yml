@@ -50,6 +50,12 @@ jobs:
       - run: composer install --no-interaction
 
       - run:
+          name: Display PHP information
+          command: |
+            php -v
+            php -i
+
+      - run:
           name: Wait for db
           command: dockerize -wait tcp://localhost:3306 -timeout 1m
 
