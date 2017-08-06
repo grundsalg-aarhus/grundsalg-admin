@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: php:7.0.18-fpm
+      - image: php:7.0.18-apache-browsers
         environment:
           APP_ENV: circleci
 
