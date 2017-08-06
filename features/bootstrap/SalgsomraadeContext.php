@@ -78,7 +78,9 @@ class SalgsomraadeContext extends BaseContext implements Context, KernelAwareCon
     $generator->addProvider(new \AppBundle\Faker\Provider\Grund($generator));
     $populator = new Faker\ORM\Doctrine\Populator($generator, $this->manager);
     $populator->addEntity('AppBundle\Entity\Lokalsamfund', 10);
-    $populator->addEntity('AppBundle\Entity\Lokalplan', 10);
+    $populator->addEntity('AppBundle\Entity\Lokalplan', 10, array(
+      'nr' => function() use ($generator) { return $generator->nr(); },
+    ));
     $populator->addEntity('AppBundle\Entity\Landinspektoer', 10);
     $populator->addEntity('AppBundle\Entity\Delomraade', 10);
     $populator->addEntity('AppBundle\Entity\Salgsomraade', 10, array(
