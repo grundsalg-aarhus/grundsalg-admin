@@ -23,7 +23,6 @@ Feature: Visning af Delområder
     And I follow "Delområder"
     And I follow "Rediger"
     And I should see "Rediger Delområde"
-    And I put a breakpoint
 
   Scenario: Reader can NOT edit a Delområde
     When I am logged in with role "Reader"
@@ -31,7 +30,6 @@ Feature: Visning af Delområder
     And I follow "Delområder"
     Then I should not see "Rediger"
     And I follow "Vis"
-    And I put a breakpoint
     Then I should not see "Slet"
 
   @dropSchema
