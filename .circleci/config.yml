@@ -10,7 +10,7 @@ jobs:
       - image: circleci/php:7.0.22-apache-browsers
         environment:
           APP_ENV: circleci
-          MEMORY_LIMIT: 256MB
+          memory_limit: 256MB
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
