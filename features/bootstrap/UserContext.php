@@ -93,7 +93,7 @@ class UserContext extends BaseContext implements Context, KernelAwareContext
     // the firewall context defaults to the firewall name
     $firewallContext = 'main';
 
-    $token = new UsernamePasswordToken('test', null, $firewallContext, array($role));
+    $token = new UsernamePasswordToken($role, null, $firewallContext, array($role));
     $session->set('_security_'.$firewallContext, serialize($token));
     $session->save();
 
