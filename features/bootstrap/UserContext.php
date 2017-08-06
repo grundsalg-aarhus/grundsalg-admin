@@ -86,6 +86,8 @@ class UserContext extends BaseContext implements Context, KernelAwareContext
    */
   public function iAmLoggedInWithRole($role) {
     $session = $this->container->get('session');
+    $session->invalidate();
+
     $client = $this->getSession()->getDriver()->getClient();
 
     $role = 'ROLE_'.strtoupper($role);

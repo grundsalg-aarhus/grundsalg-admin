@@ -8,13 +8,13 @@ Feature: Visning af Delområder
 
   @createSchema
 
-#  Scenario: Admin can edit a Delområde
-#    When I am logged in with role "Admin"
-#    And I go to "/"
-#    And I follow "Delområder"
-#    And I follow "Rediger"
-#    Then the response status code should be 200
-#    And I should see "Rediger Delområde"
+  Scenario: Admin can edit a Delområde
+    When I am logged in with role "Admin"
+    And I go to "/"
+    And I follow "Delområder"
+    And I follow "Rediger"
+    Then the response status code should be 200
+    And I should see "Rediger Delområde"
 
   @debug
   Scenario: Editor can edit a Delområde
