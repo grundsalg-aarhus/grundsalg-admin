@@ -8,28 +8,30 @@ Feature: Visning af Delområder
 
   @createSchema
 
-  Scenario: Admin can edit a Delområde
-    When I am logged in with role "Admin"
-    And I go to "/"
-    And I follow "Delområder"
-    And I follow "Rediger"
-    Then the response status code should be 200
-    And I should see "Rediger Delområde"
+#  Scenario: Admin can edit a Delområde
+#    When I am logged in with role "Admin"
+#    And I go to "/"
+#    And I follow "Delområder"
+#    And I follow "Rediger"
+#    Then the response status code should be 200
+#    And I should see "Rediger Delområde"
 
+  @debug
   Scenario: Editor can edit a Delområde
     When I am logged in with role "Editor"
     And I go to "/"
     And I follow "Delområder"
     And I follow "Rediger"
     And I should see "Rediger Delområde"
+    And I put a breakpoint
 
-  @debug
   Scenario: Reader can NOT edit a Delområde
     When I am logged in with role "Reader"
     And I go to "/"
     And I follow "Delområder"
     Then I should not see "Rediger"
     And I follow "Vis"
+    And I put a breakpoint
     Then I should not see "Slet"
 
   @dropSchema

@@ -82,7 +82,7 @@ class DelomraadeContext extends BaseContext implements Context, KernelAwareConte
     $populator->addEntity('AppBundle\Entity\Lokalsamfund', 10);
     $populator->addEntity('AppBundle\Entity\Lokalplan', 10);
     $populator->addEntity('AppBundle\Entity\Landinspektoer', 10);
-    $populator->addEntity('AppBundle\Entity\Delomraade', 10);
+    $populator->addEntity('AppBundle\Entity\Delomraade', $count);
 
     $populator->execute();
 
