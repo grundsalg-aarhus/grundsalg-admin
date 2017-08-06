@@ -28,7 +28,7 @@ jobs:
           name: Apt-get update
           command: sudo apt-get update && sudo apt-get install -y zlib* wget
 
-      - run:
+#      - run:
           # Prevent race conditions by waiting for services with Dockerize
           # https://discuss.circleci.com/t/prevent-race-conditions-by-waiting-for-services-with-dockerize/11215
 #          name: install dockerize
