@@ -95,9 +95,6 @@ class DelomraadeContext extends BaseContext implements Context, KernelAwareConte
       foreach ($row as $field => $value) {
 
         switch ($field) {
-//          case 'kpl4':
-//            $delomraade->setKpl4($value);
-//            break;
           default:
             $accessor->setValue($delomraade, $field, $value);
         }
