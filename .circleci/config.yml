@@ -28,13 +28,13 @@ jobs:
           name: Apt-get update
           command: sudo apt-get update && sudo apt-get install -y zlib* wget
 
-      - run:
-          name: Install PHP extensions - zip
-          command: sudo docker-php-ext-install zip && sudo docker-php-ext-enable zip
-
-      - run:
-          name: Install PHP extensions - pdo_mysql
-          command:  sudo docker-php-ext-install pdo_mysql && sudo docker-php-ext-enable pdo_mysql
+#      - run:
+#          name: Install PHP extensions - zip
+#          command: sudo docker-php-ext-install zip && sudo docker-php-ext-enable zip
+#
+#      - run:
+#          name: Install PHP extensions - pdo_mysql
+#          command:  sudo docker-php-ext-install pdo_mysql && sudo docker-php-ext-enable pdo_mysql
 
       - checkout
       # Download and cache dependencies
@@ -44,15 +44,9 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run:
-          name: Install Composer
-          command: |
-            php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-            php -r "if (hash_file('SHA384', 'composer-setup.php') === trim(file_get_contents('https://composer.github.io/installer.sig'))) { echo 'Installer verified'; } else { echo 'Installer invalid'; unlink('composer-setup.php'); } echo PHP_EOL;"
-            php composer-setup.php
-            php -r "unlink('composer-setup.php');"
+      - run: composer self-update
 
-      - run: php composer.phar install --no-interaction
+      - run: composer install --no-interaction
 
       - run:
           name: Wait for db
