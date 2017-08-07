@@ -36,7 +36,7 @@ app:
   grund:
       accept: Accept
       akrkorr1: á kr.
-      annonceres: Annonceres
+      annonceres: I udbud
       annullerSalgsBegrundelse: Begrundelse
       antagetbud: Antaget bud
       antalkorr1: Antal
@@ -145,7 +145,7 @@ app:
       status: Status
 
   salgsomraade:
-      annonceres: Annonceres
+      annonceres: Synligt på Web
       nr: Nr.
       salgsomraade: Salgsområde
       titel: Titel

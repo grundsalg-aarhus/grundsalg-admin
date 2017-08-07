@@ -12,7 +12,7 @@ easy_admin:
                     - {property: o123Combined, label: 'LP-område'}
                     - {property: nr, label: 'SONr'}
                     - type
-                    - { property: annonceres, label: 'app.grund.annonceres' }
+                    - { property: annonceres, label: 'app.salgsomraade.annonceres' }
                     - titel
 
             search:
@@ -47,7 +47,7 @@ easy_admin:
                     - { property: landinspektoer, label: 'Landinsp.', css_class: 'col-sm-6' }
 
                     - { type: 'divider' }
-                    - { property: annonceres, label: 'Annonceres', css_class: 'col-sm-12' }
+                    - { property: annonceres, label: 'app.salgsomraade.annonceres', css_class: 'col-sm-12' }
                     - { property: tilsluttet, label: 'Tilsluttet', css_class: 'col-sm-12', type: 'AppBundle\Form\Field\TilslutningsType', type_options: { expanded : true, multiple : true }, help: 'Prisen indeholder helt eller delvis tilslutning til ovenstående' }
 
             show:
