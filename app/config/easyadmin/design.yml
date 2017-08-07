@@ -97,6 +97,3 @@ easy_admin:
                 - { label: 'Andre grunde pr. område', route: 'grundsalg_statistics_omraade_overview', params: { type: 'Andre' } }
                 - { label: 'Alle grunde', icon: 'table', route: 'grundsalg_statistics_alle_grunde' }
                 - { label: 'Rapporter', icon: 'table', route: 'grundsalg_report' }
-            - label: 'Log ud'
-              icon: 'sign-out'
-              route: 'fos_user_security_logout'
