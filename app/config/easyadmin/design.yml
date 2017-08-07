@@ -3,10 +3,6 @@ easy_admin:
         brand_color: '#157fcc'
         color_scheme: 'light'
         form_theme: 'easy_admin/form/bootstrap_3_horizontal_layout.html.twig'
-#        form_theme: 'easy_admin/form/bootstrap_3_layout.html.twig'
-
-        templates:
-            layout: 'easy_admin/layout.html.twig'
 
         assets:
             css:
