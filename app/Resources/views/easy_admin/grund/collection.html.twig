@@ -81,27 +81,6 @@
             <div class="col-md-6">
               {{ form_row(form.salgsomraade) }}
             </div>
-            <div class="col-md-6">
-              {% if entity.salgsomraade %}
-                {{ grundsalg.entity_value('app.salgsomraade.annonceres', entity.salgsomraade.annonceres ) }}
-              {% else %}
-                {{ grundsalg.entity_value('app.salgsomraade.annonceres' ) }}
-              {% endif %}
-            </div>
-            <div class="col-md-6">
-              {% if entity.salgsomraade %}
-                {{ grundsalg.entity_value('app.salgsomraade.titel', entity.salgsomraade.titel ) }}
-              {% else %}
-                {{ grundsalg.entity_value('app.salgsomraade.titel' ) }}
-              {% endif %}
-            </div>
-            <div class="col-md-6">
-              {% if entity.salgsomraade %}
-                {{ grundsalg.entity_value('app.grund.psp', entity.salgsomraade.sagsnr ) }}
-              {% else %}
-                {{ grundsalg.entity_value('app.grund.psp' ) }}
-              {% endif %}
-            </div>
           </div>
         </div>
       </div>
@@ -115,22 +94,35 @@
         <div class="box-body">
           <div class="row">
             <div class="col-md-6">
-              {{ form_row(form.type) }}
+              <div class="field-section ">
+                <h2>
+                  {{ 'app.grund.status' | trans }}
+                </h2>
+              </div>
 
-              {{ form_row(form.ejerlav) }}
-              {{ form_row(form.vej) }}
-
-              {{ form_row(form.postby) }}
-              {{ form_row(form.lokalsamfund) }}
-              {{ form_row(form.landinspektoer) }}
-              {{ form_row(form.prism2) }}
-
-            </div>
-            <div class="col-md-6">
               {{ grundsalg.entity_value('app.grund.salgstatus', entity.visStatus ) }}
               <div class="js-status">{{ form_row(form.status) }}</div>
               {{ form_row(form.salgstype) }}
 
+              <div class="col-xs-12 ">
+                <div class="field-divider">
+                  <hr>
+                </div>
+              </div>
+
+              {{ form_row(form.ejerlav) }}
+              {{ form_row(form.vej) }}
+
+              <div class="col-xs-12 ">
+                <div class="field-divider">
+                  <hr>
+                </div>
+              </div>
+
+              {{ form_row(form.prism2) }}
+
+            </div>
+            <div class="col-md-6">
               <div class="field-section ">
                 <h2>
                   {{ 'app.grund.annonceres' | trans }}

@@ -641,7 +641,7 @@ class Grund {
     $this->annonceres = FALSE;
     $this->setType(GrundType::PARCELHUS);
     $this->setStatus(GrundStatus::LEDIG);
-    $this->setSalgstype(SalgsType::KVADRATMETERPRIS);
+    $this->setSalgstype(SalgsType::AUKTION);
   }
 
   /**

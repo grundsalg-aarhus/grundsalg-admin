@@ -103,6 +103,7 @@ app:
       salgstatus: Status
       salgstype: Salgstype
       skoederekv: Skøde rekv.
+      status: Status
       tilbudslut: til og med
       tilbudstart: Tilbud
       tilsluttet: Tilsluttet
