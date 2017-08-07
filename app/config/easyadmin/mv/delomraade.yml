@@ -5,14 +5,14 @@ easy_admin:
             controller:
             list:
                 title: 'Delområder'
-                sort: ['id', 'ASC']
+                sort: ['anvendelse', 'ASC']
 
                 fields:
                     - { property: kpl1234Combined, label: 'KPL' }
                     - { property: o123Combined, label: 'Område' }
                     - anvendelse
                     - { property: mulighedfor, label: 'Mulighed for' }
-                    - lokalplan
+                    - { property: lokalplan.titel, label: 'Lokalplan' }
 
             search:
                 fields:
