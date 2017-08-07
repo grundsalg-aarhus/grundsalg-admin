@@ -89,13 +89,6 @@ class Salgsomraade
   private $vej;
 
   /**
-   * @var string
-   *
-   * @ORM\Column(name="gisUrl", type="string", length=255, nullable=true)
-   */
-  private $gisurl;
-
-  /**
    * @var array
    *
    * @ORM\Column(name="tilsluttet", type="array", nullable=true)
@@ -362,30 +355,6 @@ class Salgsomraade
   public function getVej()
   {
     return $this->vej;
-  }
-
-  /**
-   * Set gisurl
-   *
-   * @param string $gisurl
-   *
-   * @return Salgsomraade
-   */
-  public function setGisurl($gisurl)
-  {
-    $this->gisurl = $gisurl;
-
-    return $this;
-  }
-
-  /**
-   * Get gisurl
-   *
-   * @return string
-   */
-  public function getGisurl()
-  {
-    return $this->gisurl;
   }
 
   /**

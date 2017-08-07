@@ -45,7 +45,6 @@ easy_admin:
                     - { property: sagsnr, label: 'PSP', css_class: 'col-sm-6' }
                     - { property: vej, css_class: 'col-sm-6' }
                     - { property: landinspektoer, label: 'Landinsp.', css_class: 'col-sm-6' }
-                    - { property: gisurl, label: 'URL t. GIS.', css_class: 'col-sm-6', type: url }
 
                     - { type: 'divider' }
                     - { property: annonceres, label: 'Annonceres', css_class: 'col-sm-12' }
