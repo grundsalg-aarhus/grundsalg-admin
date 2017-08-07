@@ -23,7 +23,6 @@ Feature: Visning af Delområder
     And I follow "Rediger"
     And I should see "Rediger Delområde"
 
-  @debug
   Scenario: Reader can NOT edit a Delområde
     When I am logged in with role "Reader"
     And I go to "/"
