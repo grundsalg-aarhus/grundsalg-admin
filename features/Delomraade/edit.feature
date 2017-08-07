@@ -16,7 +16,6 @@ Feature: Visning af Delområder
     Then the response status code should be 200
     And I should see "Rediger Delområde"
 
-  @debug
   Scenario: Editor can edit a Delområde
     When I am logged in with role "Editor"
     And I go to "/"
