@@ -108,7 +108,7 @@ class Grund {
   /**
    * @var string
    *
-   * @ORM\Column(name="mnr2", type="string", length=20, nullable=false)
+   * @ORM\Column(name="mnr2", type="string", length=20, nullable=true)
    */
   private $mnr2;
 
