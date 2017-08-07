@@ -15,8 +15,6 @@ easy_admin:
                 title: 'Alle Parcelhusgrunde'
                 sort: ['vej', 'ASC']
                 dql_filter: entity.type = 'Parcelhusgrund'
-                actions:
-                    <<: *default_list_actions
 
                 fields:
                     - { property: vej, label: 'app.grund.vej' }

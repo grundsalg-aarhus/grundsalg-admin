@@ -15,8 +15,7 @@ easy_admin:
                 title: 'Alle Grunde'
                 sort: ['vej', 'ASC']
                 dql_filter: entity.type = 'Andre'
-                actions:
-                    <<: *default_list_actions
+
                 fields:
                     - { property: vej, label: 'app.grund.vej' }
                     - { property: husnummer, label: 'app.grund.husnummer', css_class: 'text-right', format: '%.0f' }
