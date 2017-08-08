@@ -1,5 +1,7 @@
 {% extends '@EasyAdmin/default/layout.html.twig' %}
 
+{% block content_title %}Rapporter{% endblock %}
+
 {% block main %}
   <form action="{{ path('grundsalg_report_generate') }}" class="form-horizontal">
     <div class="form-group">
