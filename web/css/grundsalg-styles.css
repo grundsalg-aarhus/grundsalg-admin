@@ -81,7 +81,7 @@ span.form-control, span.form-inline .form-control {
   border-right: 1px solid #CCC;
 }
 
-.number input, .number {
+.number input, .number, .field-number {
   text-align: right;
 }
 
