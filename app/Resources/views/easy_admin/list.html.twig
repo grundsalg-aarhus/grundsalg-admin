@@ -7,6 +7,7 @@
   <form method="POST" id="list-form">
 
   {% block bulk_actions_top %}
+    {% if is_granted('ROLE_EDITOR') %}
     <div class="bulk-actions">
       {% if paginator.currentPageResults.count > 0 %}
         {% if _bulk_actions %}
@@ -21,6 +22,7 @@
         </div>
       {% endif %}
     </div>
+    {% endif %}
   {% endblock %}
 
   <div class="table-responsive">

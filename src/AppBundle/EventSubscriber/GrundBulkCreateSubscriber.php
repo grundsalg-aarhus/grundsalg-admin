@@ -43,12 +43,12 @@ class GrundBulkCreateSubscriber implements EventSubscriberInterface {
   public function bulkCreateGrund(GenericEvent $event)
   {
     $collection = $event->getSubject();
-    $salgsomraade = $collection->getSalgsomraade();
-    $collection->setLokalsamfund($salgsomraade->getLokalplan()->getLokalsamfund());
-
     if (!($collection instanceof GrundCollection)) {
       return;
     }
+
+    $salgsomraade = $collection->getSalgsomraade();
+    $collection->setLokalsamfund($salgsomraade->getLokalplan()->getLokalsamfund());
 
     foreach ($collection->getGrunde() as $grund) {
 
