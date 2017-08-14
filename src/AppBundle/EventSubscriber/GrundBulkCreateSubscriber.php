@@ -10,6 +10,7 @@ namespace AppBundle\EventSubscriber;
 
 use AppBundle\Entity\Grund;
 use AppBundle\Entity\GrundCollection;
+use AppBundle\Entity\Salgsomraade;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -42,20 +43,24 @@ class GrundBulkCreateSubscriber implements EventSubscriberInterface {
   public function bulkCreateGrund(GenericEvent $event)
   {
     $collection = $event->getSubject();
-
     if (!($collection instanceof GrundCollection)) {
       return;
     }
 
-    foreach ($collection->getGrunde() as $grund) {
-      $grund->setSalgsomraade($collection->getSalgsomraade());
+    $salgsomraade = $collection->getSalgsomraade();
+    $collection->setLokalsamfund($salgsomraade->getLokalplan()->getLokalsamfund());
 
-      $grund->setType($collection->getType());
+    foreach ($collection->getGrunde() as $grund) {
+
+
+      $grund->setSalgsomraade($salgsomraade);
+      $grund->setPostby($salgsomraade->getPostby());
+      $grund->setLandinspektoer($salgsomraade->getLandinspektoer());
+      $grund->setLokalsamfund($salgsomraade->getLokalplan()->getLokalsamfund());
+      $grund->setType($salgsomraade->getType());
+
       $grund->setEjerlav($collection->getEjerlav());
       $grund->setVej($collection->getVej());
-      $grund->setPostby($collection->getPostby());
-      $grund->setLokalsamfund($collection->getLokalsamfund());
-      $grund->setLandinspektoer($collection->getLandinspektoer());
       $grund->setPrism2($collection->getPrism2());
 
       $grund->setSalgstype($collection->getSalgstype());

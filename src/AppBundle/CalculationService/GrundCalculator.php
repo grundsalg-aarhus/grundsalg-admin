@@ -71,6 +71,24 @@ class GrundCalculator implements EventSubscriber
     $this->calculateToDates($grund);
     $this->calculateBruttoAreal($grund);
     $this->calculatePris($grund);
+    $this->setDatoannonce1($grund, $isNew, $changeset);
+  }
+
+  /**
+   * Remember the first date for 'annonceres'
+   *
+   * @param Grund $grund
+   * @param bool $isNew
+   * @param array $changeset
+   */
+  private function setDatoannonce1(Grund $grund, bool $isNew, array $changeset = array()) {
+    $changeKeys = array('datoannonce');
+
+    if ($isNew || $this->arrayKeyExist($changeKeys, $changeset)) {
+      if($grund->getDatoannonce() && !$grund->getDatoannonce1()) {
+        $grund->setDatoannonce1($grund->getDatoannonce());
+      }
+    }
   }
 
   /**

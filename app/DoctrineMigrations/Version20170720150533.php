@@ -34,7 +34,6 @@ class Version20170720150533 extends AbstractMigration {
             CHANGE salgsomraadeId salgsomraadeId INT NOT NULL, 
             CHANGE type type ENUM(\'Parcelhusgrund\', \'Erhvervsgrund\', \'Storparcel\', \'Andre\', \'Off. formål\', \'Centergrund\') NOT NULL COMMENT \'(DC2Type:GrundType)\', 
             CHANGE mnr mnr VARCHAR(20) NOT NULL, 
-            CHANGE mnr2 mnr2 VARCHAR(20) NOT NULL, 
             CHANGE lokalsamfundId lokalsamfundId INT NOT NULL, 
             CHANGE salgsType salgsType ENUM(\'Auktion\', \'Etgm2\', \'Fastpris\', \'Kvadratmeterpris\') NOT NULL COMMENT \'(DC2Type:SalgsType)\''
     );
@@ -56,7 +55,12 @@ class Version20170720150533 extends AbstractMigration {
     );
 
     $this->addSql(
-      'ALTER TABLE Grund CHANGE type type ENUM(\'Parcelhusgrund\', \'Erhvervsgrund\', \'Storparcel\', \'Andre\', \'Off. formål\', \'Centergrund\') DEFAULT NULL COLLATE utf8_general_ci COMMENT \'(DC2Type:GrundType)\', CHANGE mnr mnr VARCHAR(20) DEFAULT NULL COLLATE utf8_general_ci, CHANGE mnr2 mnr2 VARCHAR(20) DEFAULT NULL COLLATE utf8_general_ci, CHANGE salgsType salgsType ENUM(\'Auktion\', \'Etgm2\', \'Fastpris\', \'Kvadratmeterpris\') DEFAULT NULL COLLATE utf8_general_ci COMMENT \'(DC2Type:SalgsType)\', CHANGE lokalsamfundId lokalsamfundId INT DEFAULT NULL, CHANGE salgsomraadeId salgsomraadeId INT DEFAULT NULL'
+      'ALTER TABLE Grund 
+            CHANGE type type ENUM(\'Parcelhusgrund\', \'Erhvervsgrund\', \'Storparcel\', \'Andre\', \'Off. formål\', \'Centergrund\') DEFAULT NULL COLLATE utf8_general_ci COMMENT \'(DC2Type:GrundType)\', 
+            CHANGE mnr mnr VARCHAR(20) DEFAULT NULL COLLATE utf8_general_ci, 
+            CHANGE salgsType salgsType ENUM(\'Auktion\', \'Etgm2\', \'Fastpris\', \'Kvadratmeterpris\') DEFAULT NULL COLLATE utf8_general_ci COMMENT \'(DC2Type:SalgsType)\', 
+            CHANGE lokalsamfundId lokalsamfundId INT DEFAULT NULL, 
+            CHANGE salgsomraadeId salgsomraadeId INT DEFAULT NULL'
     );
   }
 }

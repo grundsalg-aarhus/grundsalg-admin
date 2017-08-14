@@ -7,6 +7,7 @@ default:
         - DatabaseSetupContext: { doctrine: "@doctrine" }
         - GrundContext: { doctrine: "@doctrine" }
         - DelomraadeContext: { doctrine: "@doctrine" }
+        - LokalplanContext: { doctrine: "@doctrine" }
         - SalgsomraadeContext: { doctrine: "@doctrine" }
         - JsonValidationContext
         - UserContext: { doctrine: "@doctrine" }

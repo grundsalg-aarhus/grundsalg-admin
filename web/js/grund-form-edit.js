@@ -7,7 +7,6 @@
         grundShowHidePriceFields();
         grundShowHideEtagem2();
         grundShowHideAnnoceres();
-        grundSetReadOnlyDatoannonce();
         grundShowHideSalgsFields();
 
         $('[id$=_annonceres]').on('click', grundShowHideAnnoceres);
@@ -107,17 +106,6 @@
         }
     }
 
-    var grundSetReadOnlyDatoannonce = function() {
-        var status = $('[id$=_status]').val();
-        var datoannonceInput = $('[id$=_datoannonce]');
-
-        if ((status === 'Fremtidig') || (status === 'Annonceret')) {
-            datoannonceInput.prop('readonly', true);
-        } else {
-            datoannonceInput.prop('readonly', false);
-        }
-    }
-
     var grundShowHideEtagem2 = function () {
         var type = $('[id$=_type]').val();
 
@@ -176,6 +164,7 @@
         var prism2Input = $('[id$=_prism2]');
         var minBudInput = $('[id$=_minbud]');
         var maxetagem2Input = $('[id$=_maxetagem2]');
+        var minBudShow = $('.js-minBudShow span.form-control');
 
         var areal = arealInput.grundParseFloat();
         var arealvej = arealvejInput.grundParseFloat();
@@ -195,6 +184,7 @@
                     minbud = bruttoareal * prism2;
                 }
                 minBudInput.grundFloatToString(minbud);
+                minBudShow.text(minBudInput.val());
             }
         }
     }
@@ -284,9 +274,22 @@
                 salgsprisumomsInput.grundFloatToString(salgsprisumoms);
             }
 
+        } else if (salgsType == 'Auktion') {
+            var antagetbudInput = $('[id$=_antagetbud]');
+            var antagetbud = antagetbudInput.val();
+
+            var acceptInput = $('[id$=_accept]');
+            var accept = acceptInput.val();
+
+            var salgsprisumomsInput = $('[id$=_salgsprisumoms]');
+            var salgsprisumoms = salgsprisumomsInput.val();
+
+            if (antagetbud && accept) {
+                salgsprisumoms = 0.8 * antagetbud;
+                salgsprisumomsInput.grundFloatToString(salgsprisumoms);
+            }
         }
     }
-
 
 }(jQuery));
 

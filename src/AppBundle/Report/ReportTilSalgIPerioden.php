@@ -160,6 +160,22 @@ class ReportTilSalgIPerioden extends Report {
       $totals['res'],
       $totals['disp'],
     ]);
+
+    $this->writeRow(['']);
+
+    $this->writeRow(
+      ['1) Fastpris: Der er en fastpris for grundene(e). Auktion: Salg ved auktion.']
+    );
+    $this->writeRow(
+      ['2) Udbudt før eller i perioden og usolgt ved periodens begyndelse.']
+    );
+    $this->writeRow(
+      ['3) Solgt betyder, at skødet er underskrevet og at betaling er modtaget .']
+    );
+    $this->writeRow(
+      ['4) Omfatter grunde der på udtræksdato er tilbudt eller reserveret samt evt. grunde der ikke er frit disponible pga. auktion.']
+    );
+
   }
 
   /**
@@ -355,12 +371,18 @@ class ReportTilSalgIPerioden extends Report {
       $col6Total . '/' . (int) round($col6Total / 80.0),
     ]);
 
-    $this->writeRow([]);
-    $this->writeRow([]);
+    $this->writeRow(['']);
+    $this->writeRow(['']);
     $this->writeRow([
       'Maksimalt antal etm2/boliger á 80 m2.',
+    ]);
+    $this->writeRow([
       '1) Etgm2: Prisen er efter den tilladte byggeret. Auktion:Salg ved Auktion.',
+    ]);
+    $this->writeRow([
       '2) Solgt betyder, har at skøde er underskrevet og at udbetalingen er modtaget.',
+    ]);
+    $this->writeRow([
       '3) Omfatter storparceller der på udtræksdatoen er tilbudt eller reserveret samt evt. storparceller der ikke er frit disponible pga. auktion',
     ]);
   }
@@ -581,9 +603,11 @@ class ReportTilSalgIPerioden extends Report {
       }
 
       foreach ($lines as $vej => $cols) {
+        $d=1;
+
         $this->writeRow([
           $cols[1],
-          $this->formatNumber($cols[2]),
+          $cols[2],
           $cols[3],
           $cols[4],
           $cols[5],
@@ -609,13 +633,6 @@ class ReportTilSalgIPerioden extends Report {
       ($dispCountTotal > 0 ? $dispCountTotal . '/' . $dispTotal : ''),
     ]);
 
-    $this->writeRow([
-      NULL,
-      NULL,
-      NULL,
-      '1) Solgt: Betyder at skødet er underskrevet og at udbetalingen er modtaget.',
-      '2) Omfatter grunde der på udtræksdato er tilbudt ellerreserveret samt evt. grunde, der ikke er frit disponible pga. auktion.',
-    ]);
   }
 
 }

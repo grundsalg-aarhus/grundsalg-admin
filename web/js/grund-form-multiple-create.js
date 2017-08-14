@@ -158,7 +158,7 @@
 
     var grundSetReadOnlyDatoannonce = function() {
         var status = $('[id$=_status]').val();
-        var datoannonceInput = $('[id$=_datoannonce]');
+        var datoannonceInput = $('[id$=_datoannonce1]');
 
         if ((status === 'Fremtidig') || (status === 'Annonceret')) {
             datoannonceInput.prop('readonly', true);

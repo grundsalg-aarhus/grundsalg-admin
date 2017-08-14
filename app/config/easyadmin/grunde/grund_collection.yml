@@ -20,12 +20,8 @@ easy_admin:
                     - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Salgsomraade' }
                     - { property: 'salgsomraade', label: 'app.grund.salgsomraade', css_class: 'col-sm-6' }
 
-                    - { property: 'type', label: 'app.grund.type', type: 'AppBundle\Form\Field\GrundType' }
                     - { property: 'ejerlav', label: 'app.grund.ejerlav' }
                     - { property: 'vej', label: 'app.grund.vej' }
-                    - { property: 'postby', label: 'app.grund.postby' }
-                    - { property: 'lokalsamfund', label: 'app.grund.lokalsamfund' }
-                    - { property: 'landinspektoer', label: 'app.grund.landinspektoer' }
                     - { property: 'prism2', label: 'app.grund.prism2' }
 
                     - { property: 'status', label: 'app.grund.status', type: 'AppBundle\Form\Field\GrundStatus' }

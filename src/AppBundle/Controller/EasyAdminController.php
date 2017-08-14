@@ -260,9 +260,9 @@ class EasyAdminController extends BaseAdminController {
       $isGuidField = 'guid' === $metadata['dataType'];
 
       if ($isNumericField && is_numeric($searchQuery)) {
-        $queryBuilder->orWhere(sprintf('%s.%s = :exact_query', $entityDqlName, $fieldDqlName));
+        $queryBuilder->orWhere(sprintf('%s.%s = :numeric_query', $entityDqlName, $fieldDqlName));
         // adding '0' turns the string into a numeric value
-        $queryBuilder->setParameter('exact_query', 0 + $searchQuery);
+        $queryBuilder->setParameter('numeric_query', 0 + $searchQuery);
       } else {
         if ($isGuidField) {
           // some databases don't support LOWER() on UUID fields
