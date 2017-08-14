@@ -35,7 +35,11 @@ jobs:
 
       - run:
           name: Install PHP extensions - pdo_mysql
-          command:  sudo docker-php-ext-install pdo_mysql && sudo docker-php-ext-enable pdo_mysql
+          command: sudo docker-php-ext-install pdo_mysql && sudo docker-php-ext-enable pdo_mysql
+
+      - run:
+          name: Set custom PHP config
+          command: memory_limit => 512MB => 512MB | sudo tee /usr/local/etc/php/php.ini
 
       - checkout
       # Download and cache dependencies
