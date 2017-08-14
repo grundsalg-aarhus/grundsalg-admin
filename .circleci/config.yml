@@ -39,7 +39,7 @@ jobs:
 
       - run:
           name: Set custom PHP config
-          command: memory_limit => 512MB => 512MB | sudo tee /usr/local/etc/php/php.ini
+          command: echo memory_limit => 512MB => 512MB | sudo tee /usr/local/etc/php/php.ini
 
       - checkout
       # Download and cache dependencies
