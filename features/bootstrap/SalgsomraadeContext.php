@@ -76,6 +76,8 @@ class SalgsomraadeContext extends BaseContext implements Context, KernelAwareCon
 
     $generator = \Faker\Factory::create('da_DK');
     $generator->addProvider(new \AppBundle\Faker\Provider\Grund($generator));
+    $generator->addProvider(new \AppBundle\Faker\Provider\Lokalplan($generator));
+    
     $populator = new Faker\ORM\Doctrine\Populator($generator, $this->manager);
     $populator->addEntity('AppBundle\Entity\Lokalsamfund', 10);
     $populator->addEntity('AppBundle\Entity\Lokalplan', 10, array(
