@@ -40,10 +40,5 @@ Feature: Oprettelse af Salgsområder
     And I follow "Salgsområder"
     Then I should not see "Tilføj"
 
-  Scenario: Reader cannot create a Lokalplan
-    When I am logged in with role "Reader"
-    And I go to "/?action=new&entity=salgsomraade"
-    Then the response status code should not be 200
-
   @dropSchema
   Scenario: Drop schema
