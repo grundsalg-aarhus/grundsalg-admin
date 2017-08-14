@@ -1,5 +1,5 @@
 Feature: Login
-  Som bruger af systemet har jeg  behov for at kunne logge ind
+  Som bruger af systemet har jeg  behov for at kunne logge ind/ud
 
   Background:
     Given the following users exist:
@@ -10,7 +10,7 @@ Feature: Login
 
   @createSchema
 
-  Scenario: Login screen works
+  Scenario: Login and logout works
     When I go to "/"
     Then the response status code should be 200
     And I should see "Fagsystem log ind"
@@ -19,13 +19,10 @@ Feature: Login
       | Kodeord    | admin |
     And I press "Log ind"
     Then the response status code should be 200
-    Then I should see "Log ud"
-
-  Scenario: Logout works
-    When I am logged in with role "Admin"
-    And I go to "/"
-    And I follow "Log ud"
+    And I should see "Log ud"
+    When I follow "Log ud"
     Then I should see "Fagsystem log ind"
+
 
   @dropSchema
   Scenario: Drop schema

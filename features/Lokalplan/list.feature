@@ -26,7 +26,6 @@ Feature: Visning af Lokalplan
     And I follow "Forbrugsandel"
     Then I should see "Areal ved Gungdyvej"
 
-  @debug
   Scenario: List should be searchable - numeric
     When I am logged in with role "Admin"
     And I go to "/?entity=lokalplan&action=list"

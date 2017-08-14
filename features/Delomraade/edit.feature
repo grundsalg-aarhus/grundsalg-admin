@@ -15,6 +15,7 @@ Feature: Visning af Delområder
     And I follow "Rediger"
     Then the response status code should be 200
     And I should see "Rediger Delområde"
+    And I should see an ".action-delete" element
 
   Scenario: Editor can edit a Delområde
     When I am logged in with role "Editor"
@@ -22,6 +23,7 @@ Feature: Visning af Delområder
     And I follow "Delområder"
     And I follow "Rediger"
     And I should see "Rediger Delområde"
+    And I should not see an ".action-delete" element
 
   Scenario: Reader can NOT edit a Delområde
     When I am logged in with role "Reader"
@@ -29,7 +31,7 @@ Feature: Visning af Delområder
     And I follow "Delområder"
     Then I should not see "Rediger"
     And I follow "Vis"
-    Then I should not see "Slet"
+    And I should not see an ".action-delete" element
 
   @dropSchema
   Scenario: Drop schema

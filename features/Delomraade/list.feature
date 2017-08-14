@@ -38,7 +38,6 @@ Feature: Visning af Delområder
     Then I should see "Erhverv"
     And I should not see "Åben-lav bebyggelse"
 
-  @debug
   Scenario: List should be searchable - numbers
     When I am logged in with role "Admin"
     And I go to "/"
