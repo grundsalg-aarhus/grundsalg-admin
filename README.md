@@ -1,5 +1,7 @@
 # Grundsalg Fagsystem
 
+[![CircleCI](https://circleci.com/gh/grundsalg-aarhus/grundsalg-admin.svg?style=svg&circle-token=de75551962f2199272098c112abf4a3bf0b4d674)](https://circleci.com/gh/grundsalg-aarhus/grundsalg-admin)
+
 ## Project Setup
 
 See [Readme](https://github.com/aakb/vagrant/blob/development/grundsalg/README.md)
