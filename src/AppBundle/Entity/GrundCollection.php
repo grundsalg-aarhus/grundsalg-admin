@@ -31,7 +31,6 @@ use AppBundle\Validator\Constraints as GrundAssert;
  *
  * @ORM\Entity
  *
- * @GrundAssert\LokalsamfundNotNull
  */
 class GrundCollection extends Grund {
 
