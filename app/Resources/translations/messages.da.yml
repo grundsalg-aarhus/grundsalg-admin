@@ -124,6 +124,7 @@ app:
 
   lokalplan:
       nr: Nr.
+      opkoeb: Opkøb
 
   meta:
       created_at: Oprettet den
