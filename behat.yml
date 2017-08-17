@@ -4,6 +4,7 @@ default:
   suites:
     default:
       contexts:
+        - DebugContext: { doctrine: "@doctrine" }
         - DatabaseSetupContext: { doctrine: "@doctrine" }
         - GrundContext: { doctrine: "@doctrine" }
         - DelomraadeContext: { doctrine: "@doctrine" }

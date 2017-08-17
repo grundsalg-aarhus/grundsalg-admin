@@ -29,8 +29,8 @@ Feature: Oprettelse af Salgsområder
     And I follow "Tilføj"
     Then the response status code should be 200
     And I should see "Opret Salgsområde"
-    When I fill in the following:
-      | Titel | Test område |
+#    When I fill in the following:
+#      | Titel | Test område |
     And I press "Gem"
     Then the response status code should be 200
 
