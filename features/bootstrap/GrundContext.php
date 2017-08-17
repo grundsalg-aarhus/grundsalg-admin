@@ -28,44 +28,8 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 /**
  * Defines user features
  */
-class GrundContext extends BaseContext implements Context, KernelAwareContext
+class GrundContext extends FakerContext implements Context, KernelAwareContext
 {
-  private $kernel;
-  private $container;
-
-  public function setKernel(KernelInterface $kernel)
-  {
-    $this->kernel = $kernel;
-    $this->container = $this->kernel->getContainer();
-  }
-
-  /**
-   * @var ManagerRegistry
-   */
-  private $doctrine;
-  /**
-   * @var \Doctrine\Common\Persistence\ObjectManager
-   */
-  private $manager;
-
-  private $request;
-
-  /**
-   * Initializes context.
-   *
-   * Every scenario gets its own context instance.
-   * You can also pass arbitrary arguments to the
-   * context constructor through behat.yml.
-   */
-  public function __construct(ManagerRegistry $doctrine, Request $request)
-  {
-    $this->doctrine = $doctrine;
-    $this->manager = $doctrine->getManager();
-    $this->schemaTool = new SchemaTool($this->manager);
-    $this->classes = $this->manager->getMetadataFactory()->getAllMetadata();
-    $this->request = $request;
-  }
-
   /**
    * @Given the following grunde exist:
    */
@@ -75,39 +39,7 @@ class GrundContext extends BaseContext implements Context, KernelAwareContext
     $rows = $table->getHash();
     $count = count($rows);
 
-    $generator = \Faker\Factory::create('da_DK');
-    $generator->addProvider(new \AppBundle\Faker\Provider\Grund($generator));
-    $generator->addProvider(new \AppBundle\Faker\Provider\Lokalplan($generator));
-
-    $populator = new Faker\ORM\Doctrine\Populator($generator, $this->manager);
-    $populator->addEntity('AppBundle\Entity\Lokalsamfund', 10);
-    $populator->addEntity('AppBundle\Entity\Lokalplan', 10, array(
-      'nr' => function() use ($generator) { return $generator->nr(); },
-    ));
-    $populator->addEntity('AppBundle\Entity\Landinspektoer', 10);
-    $populator->addEntity('AppBundle\Entity\Delomraade', 10);
-    $populator->addEntity('AppBundle\Entity\Salgsomraade', 10, array(
-      'type' => function() use ($generator) { return $generator->type(); },
-    ));
-    $populator->addEntity('AppBundle\Entity\Grund', $count, array(
-      'type' => function() use ($generator) { return $generator->type(); },
-      'salgsType' => function() use ($generator) { return $generator->salgsType(); },
-      'accept' => null,
-      'annonceres' => null,
-      'antagetbud' => null,
-      'auktionslutdato' => null,
-      'auktionstartdato' => null,
-      'beloebanvist' => null,
-      'datoannonce' => null,
-      'datoannonce1' => null,
-      'overtagelse' => null,
-      'resslut' => null,
-      'resstart' => null,
-      'skoederekv' => null,
-      'tilbudslut' => null,
-      'tilbudstart' => null,
-    ));
-    $populator->execute();
+    $this->populateWithFaker($count);
 
     $accessor = PropertyAccess::createPropertyAccessor();
 

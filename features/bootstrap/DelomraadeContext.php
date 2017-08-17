@@ -28,65 +28,15 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 /**
  * Defines user features
  */
-class DelomraadeContext extends BaseContext implements Context, KernelAwareContext
-{
-  private $kernel;
-  private $container;
-
-  public function setKernel(KernelInterface $kernel)
-  {
-    $this->kernel = $kernel;
-    $this->container = $this->kernel->getContainer();
-  }
-
-  /**
-   * @var ManagerRegistry
-   */
-  private $doctrine;
-  /**
-   * @var \Doctrine\Common\Persistence\ObjectManager
-   */
-  private $manager;
-
-  private $request;
-
-  /**
-   * Initializes context.
-   *
-   * Every scenario gets its own context instance.
-   * You can also pass arbitrary arguments to the
-   * context constructor through behat.yml.
-   */
-  public function __construct(ManagerRegistry $doctrine, Request $request)
-  {
-    $this->doctrine = $doctrine;
-    $this->manager = $doctrine->getManager();
-    $this->schemaTool = new SchemaTool($this->manager);
-    $this->classes = $this->manager->getMetadataFactory()->getAllMetadata();
-    $this->request = $request;
-  }
-
+class DelomraadeContext extends FakerContext implements Context, KernelAwareContext {
   /**
    * @Given the following delomraader exist:
    */
-  public function theFollowingDelomraaderExist(TableNode $table)
-  {
-
+  public function theFollowingDelomraaderExist(TableNode $table) {
     $rows = $table->getHash();
     $count = count($rows);
 
-    $generator = \Faker\Factory::create('da_DK');
-    $generator->addProvider(new \AppBundle\Faker\Provider\Grund($generator));
-    $generator->addProvider(new \AppBundle\Faker\Provider\Delomraade($generator));
-    $generator->addProvider(new \AppBundle\Faker\Provider\Lokalplan($generator));
-
-    $populator = new Faker\ORM\Doctrine\Populator($generator, $this->manager);
-    $populator->addEntity('AppBundle\Entity\Lokalsamfund', 10);
-    $populator->addEntity('AppBundle\Entity\Lokalplan', 10);
-    $populator->addEntity('AppBundle\Entity\Landinspektoer', 10);
-    $populator->addEntity('AppBundle\Entity\Delomraade', $count);
-
-    $populator->execute();
+    $this->populateWithFaker($count);
 
     $accessor = PropertyAccess::createPropertyAccessor();
 

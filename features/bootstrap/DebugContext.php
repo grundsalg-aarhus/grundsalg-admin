@@ -70,7 +70,7 @@ class DebugContext extends BaseContext implements Context, KernelAwareContext
   /**
    * @AfterStep
    */
-  public function takeScreenshotAfterFailedStep(AfterStepScope $scope)
+  public function dumpHtmlAfterFailedStep(AfterStepScope $scope)
   {
     if (99 === $scope->getTestResult()->getResultCode()) {
       $html_data = $this->getSession()->getDriver()->getContent();
