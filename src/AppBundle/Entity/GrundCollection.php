@@ -30,7 +30,7 @@ use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
  *
  * @ORM\Entity
  */
-class GrundCollection extends Grund 
+class GrundCollection extends Grund {
 
   /**
    * @var \AppBundle\Entity\Grund
