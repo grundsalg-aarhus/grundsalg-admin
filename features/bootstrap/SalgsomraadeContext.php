@@ -102,6 +102,13 @@ class SalgsomraadeContext extends BaseContext implements Context, KernelAwareCon
           case 'Geometry':
             $salgsomradde->setSpGeometry($this->hydrateWKT($value));
             break;
+          case 'Lokalplan':
+            $lokalplan = ('null' == $value) ? NULL : $value;
+            if($lokalplan) {
+              $lokalplan = $this->manager->getRepository('AppBundle:Lokalplan')->find($value);
+            }
+            $salgsomradde->setLokalplan($lokalplan);
+            break;
           default:
             $accessor->setValue($salgsomradde, $field, $value);
         }
@@ -115,7 +122,6 @@ class SalgsomraadeContext extends BaseContext implements Context, KernelAwareCon
     }
 
     $this->manager->flush();
-
   }
 
   /**

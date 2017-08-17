@@ -12,6 +12,7 @@ use AppBundle\DBAL\Types\SalgsType;
 use AppBundle\DBAL\Types\GrundStatus;
 use AppBundle\DBAL\Types\GrundSalgStatus;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
+use AppBundle\Validator\Constraints as GrundAssert;
 
 /**
  * GrundCollection
@@ -29,6 +30,8 @@ use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
  * are deleted once they become redundant.
  *
  * @ORM\Entity
+ *
+ * @GrundAssert\LokalsamfundNotNull
  */
 class GrundCollection extends Grund {
 
@@ -36,6 +39,16 @@ class GrundCollection extends Grund {
    * @var \AppBundle\Entity\Grund
    */
   private $grunde;
+
+  /**
+   * @var \AppBundle\Entity\Salgsomraade
+   *
+   * @ORM\ManyToOne(targetEntity="Salgsomraade", fetch="EAGER")
+   * @ORM\JoinColumns({
+   *   @ORM\JoinColumn(name="salgsomraadeId", referencedColumnName="id", nullable=false)
+   * })
+   */
+  private $salgsomraade;
 
   public function __construct() {
     parent::__construct();
