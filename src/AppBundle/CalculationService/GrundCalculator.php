@@ -54,7 +54,7 @@ class GrundCalculator implements EventSubscriber
     }
 
     $this->calculate($grund, false, $changeset);
-    $this->setLedigStatus($grund, $changeset);
+    $this->setLedigStatusBulk($grund, $changeset);
   }
 
   /**
@@ -66,12 +66,14 @@ class GrundCalculator implements EventSubscriber
    */
   private function calculate(Grund $grund, bool $isNew, array $changeset = array())
   {
-    $this->calculateStatus($grund, $isNew, $changeset);
-    $this->calculateSalgstatus($grund, $isNew, $changeset);
-    $this->calculateToDates($grund);
-    $this->calculateBruttoAreal($grund);
-    $this->calculatePris($grund);
-    $this->setDatoannonce1($grund, $isNew, $changeset);
+	  $this->setDatoannonce1($grund, $isNew, $changeset);
+	  $this->clearDatoAnnonceFields($grund, $isNew, $changeset);
+
+	  $this->calculateStatus($grund, $isNew, $changeset);
+	  $this->calculateSalgstatus($grund, $isNew, $changeset);
+	  $this->calculateToDates($grund);
+	  $this->calculateBruttoAreal($grund);
+	  $this->calculatePris($grund);
   }
 
   /**
@@ -91,15 +93,32 @@ class GrundCalculator implements EventSubscriber
     }
   }
 
+	/**
+	 * Clear 'DatoAnnonce' fields if 'annonceres' is false
+	 *
+	 * @param Grund $grund
+	 */
+	private function clearDatoAnnonceFields(Grund $grund, bool $isNew, array $changeset = array()) {
+		$changeKeys = array('annonceres');
+
+		if ($isNew || $this->arrayKeyExist($changeKeys, $changeset)) {
+			if(!$grund->isAnnonceres()) {
+				$grund->setDatoannonce( null );
+				$grund->setDatoannonce1( null );
+			}
+		}
+	}
+
   /**
    * Update status when grund set "ledig"
+   * (Should only run on 'bulk' update)
    *
-   * "Copy-paste" from legacy system (Servlets/GRund.java: setLedigStatus)
+   * "Copy-paste" from legacy system (Servlets/Grund.java: setLedigStatus)
    *
    * @param Grund $grund
    * @param array $changeset
    */
-  private function setLedigStatus(Grund $grund, array $changeset = array())
+  private function setLedigStatusBulk(Grund $grund, array $changeset = array())
   {
     $changeKeys = array('status');
 
@@ -139,7 +158,7 @@ class GrundCalculator implements EventSubscriber
   }
 
   /**
-   * "Copy-paste" from legacy system (Servlets/GRund.java: clearDateFields)
+   * "Copy-paste" from legacy system (Servlets/Grund.java: clearDateFields)
    *
    * @param Grund $grund
    */
@@ -149,7 +168,7 @@ class GrundCalculator implements EventSubscriber
   }
 
   /**
-   * "Copy-paste" from legacy system (Servlets/GRund.java: clearDateFields)
+   * "Copy-paste" from legacy system (Servlets/Grund.java: clearDateFields)
    *
    * @param Grund $grund
    */
@@ -207,6 +226,9 @@ class GrundCalculator implements EventSubscriber
         } // Ny ell. 'Skal-annonceres' grund - ingen annonce dato endnu: Fremtidig
         elseif (($isNew || $grund->isAnnonceres()) && !$grund->getDatoannonce()) {
           $grund->setStatus(GrundStatus::FREMTIDIG);
+        } // Grund 'retur' til 'fremtidig' hvis salgtype ændres - RC1 feedback aug. 2017
+        elseif ($grund->getStatus() === GrundStatus::ANNONCERET && !$grund->getDatoannonce()) {
+	        $grund->setStatus(GrundStatus::FREMTIDIG);
         } // Ny ell. 'Annonceret' grund - annoncedato i fremtiden: Fremtidig
         elseif (($isNew || $grund->getStatus() === GrundStatus::ANNONCERET) && $grund->getDatoannonce() && $grund->getDatoannonce() > $today) {
           $grund->setStatus(GrundStatus::FREMTIDIG);
