@@ -1,9 +1,12 @@
 default:
+  formatters:
+      progress: true
   calls:
     error_reporting: 16383 # E_ALL & ~E_USER_DREPRECATED
   suites:
     default:
       contexts:
+        - DebugContext: { doctrine: "@doctrine" }
         - DatabaseSetupContext: { doctrine: "@doctrine" }
         - GrundContext: { doctrine: "@doctrine" }
         - DelomraadeContext: { doctrine: "@doctrine" }
