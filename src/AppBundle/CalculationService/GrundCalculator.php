@@ -11,330 +11,342 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 
-class GrundCalculator implements EventSubscriber
-{
+class GrundCalculator implements EventSubscriber {
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getSubscribedEvents()
-  {
-    return [
-      'prePersist',
-      'preUpdate'
-    ];
-  }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getSubscribedEvents() {
+		return [
+			'prePersist',
+			'preUpdate',
+		];
+	}
 
-  /**
-   * @param LifecycleEventArgs $args
-   */
-  public function prePersist(LifecycleEventArgs $args)
-  {
-    $grund = $args->getObject();
+	/**
+	 * @param LifecycleEventArgs $args
+	 */
+	public function prePersist( LifecycleEventArgs $args ) {
+		$grund = $args->getObject();
 
-    // only act on "Grund" entity
-    if (!$grund instanceof Grund) {
-      return;
-    }
+		// only act on "Grund" entity
+		if ( ! $grund instanceof Grund ) {
+			return;
+		}
 
-    $this->calculate($grund, true);
-  }
+		$this->calculate( $grund, true );
+	}
 
-  /**
-   * @param LifecycleEventArgs $args
-   */
-  public function preUpdate(LifecycleEventArgs $args)
-  {
-    $grund = $args->getObject();
-    $changeset = $args->getEntityChangeSet();
+	/**
+	 * @param LifecycleEventArgs $args
+	 */
+	public function preUpdate( LifecycleEventArgs $args ) {
+		$grund     = $args->getObject();
+		$changeset = $args->getEntityChangeSet();
 
-    // only act on "Grund" entity
-    if (!$grund instanceof Grund) {
-      return;
-    }
+		// only act on "Grund" entity
+		if ( ! $grund instanceof Grund ) {
+			return;
+		}
 
-    $this->calculate($grund, false, $changeset);
-    $this->setLedigStatus($grund, $changeset);
-  }
+		$this->calculate( $grund, false, $changeset );
+		$this->setLedigStatusBulk( $grund, $changeset );
+	}
 
-  /**
-   * Calculate and set properties on Grund entity
-   *
-   * @param Grund $grund
-   * @param bool $isNew
-   * @param array $changeset
-   */
-  private function calculate(Grund $grund, bool $isNew, array $changeset = array())
-  {
-    $this->calculateStatus($grund, $isNew, $changeset);
-    $this->calculateSalgstatus($grund, $isNew, $changeset);
-    $this->calculateToDates($grund);
-    $this->calculateBruttoAreal($grund);
-    $this->calculatePris($grund);
-    $this->setDatoannonce1($grund, $isNew, $changeset);
-  }
+	/**
+	 * Calculate and set properties on Grund entity
+	 *
+	 * @param Grund $grund
+	 * @param bool $isNew
+	 * @param array $changeset
+	 */
+	private function calculate( Grund $grund, bool $isNew, array $changeset = [] ) {
+		$this->setDatoannonce1( $grund, $isNew, $changeset );
+		$this->clearDatoAnnonceFields( $grund, $isNew, $changeset );
 
-  /**
-   * Remember the first date for 'annonceres'
-   *
-   * @param Grund $grund
-   * @param bool $isNew
-   * @param array $changeset
-   */
-  private function setDatoannonce1(Grund $grund, bool $isNew, array $changeset = array()) {
-    $changeKeys = array('datoannonce');
+		$this->calculateStatus( $grund, $isNew, $changeset );
+		$this->calculateSalgstatus( $grund, $isNew, $changeset );
+		$this->calculateToDates( $grund );
+		$this->calculateBruttoAreal( $grund );
+		$this->calculatePris( $grund );
+	}
 
-    if ($isNew || $this->arrayKeyExist($changeKeys, $changeset)) {
-      if($grund->getDatoannonce() && !$grund->getDatoannonce1()) {
-        $grund->setDatoannonce1($grund->getDatoannonce());
-      }
-    }
-  }
+	/**
+	 * Remember the first date for 'annonceres'
+	 *
+	 * @param Grund $grund
+	 * @param bool $isNew
+	 * @param array $changeset
+	 */
+	private function setDatoannonce1( Grund $grund, bool $isNew, array $changeset = [] ) {
+		$changeKeys = [ 'datoannonce' ];
 
-  /**
-   * Update status when grund set "ledig"
-   *
-   * "Copy-paste" from legacy system (Servlets/GRund.java: setLedigStatus)
-   *
-   * @param Grund $grund
-   * @param array $changeset
-   */
-  private function setLedigStatus(Grund $grund, array $changeset = array())
-  {
-    $changeKeys = array('status');
+		if ( $isNew || $this->arrayKeyExist( $changeKeys, $changeset ) ) {
+			if ( $grund->getDatoannonce() && ! $grund->getDatoannonce1() ) {
+				$grund->setDatoannonce1( $grund->getDatoannonce() );
+			}
+		}
+	}
 
-    // This should only be true if it's a bulk update
-    if ($this->arrayKeyExist($changeKeys, $changeset) && $changeset['status'][1] === GrundStatus::LEDIG) {
+	/**
+	 * Clear 'DatoAnnonce' fields if 'annonceres' is false
+	 *
+	 * @param Grund $grund
+	 */
+	private function clearDatoAnnonceFields( Grund $grund, bool $isNew, array $changeset = [] ) {
+		$changeKeys = [ 'annonceres' ];
 
-      // Status have allready changed on the entity. We need the old one.
-      $status = $changeset['status'][0];
-      $type = $grund->getType();
+		if ( $isNew || $this->arrayKeyExist( $changeKeys, $changeset ) ) {
+			if ( ! $grund->isAnnonceres() ) {
+				$grund->setDatoannonce( null );
+				$grund->setDatoannonce1( null );
+			}
+		}
+	}
 
-      if($status === GrundStatus::ANNONCERET || ($status === GrundStatus::FREMTIDIG) && !$grund->isAnnonceres()) {
-        $grund->setStatus(GrundStatus::LEDIG);
-      } else if ($status === GrundStatus::AUKTION_SLUT) {
-        if($type === GrundType::PARCELHUS) {
-          $grund->setSalgstype(SalgsType::FASTPRIS);
+	/**
+	 * Update status when grund set "ledig"
+	 * (Should only run on 'bulk' update)
+	 *
+	 * "Copy-paste" from legacy system (Servlets/Grund.java: setLedigStatus)
+	 *
+	 * @param Grund $grund
+	 * @param array $changeset
+	 */
+	private function setLedigStatusBulk( Grund $grund, array $changeset = [] ) {
+		$changeKeys = [ 'status' ];
 
-          $this->clearStatusFields($grund);
-          $this->clearAuktionsDateFields($grund);
-        } else if($type === GrundType::STORPARCEL) {
-          $grund->setSalgstype(SalgsType::ETGM2);
+		// This should only be true if it's a bulk update
+		if ( $this->arrayKeyExist( $changeKeys, $changeset ) && $changeset['status'][1] === GrundStatus::LEDIG ) {
 
-          $this->clearStatusFields($grund);
-          $this->clearAuktionsDateFields($grund);
-        } else if($type === GrundType::ERHVERV) {
-          $grund->setSalgstype(SalgsType::KVADRATMETERPRIS);
+			// Status have allready changed on the entity. We need the old one.
+			$status = $changeset['status'][0];
+			$type   = $grund->getType();
 
-          $this->clearStatusFields($grund);
-          $this->clearAuktionsDateFields($grund);
-        } else if($type === GrundType::ANDRE) {
-          $grund->setSalgstype(SalgsType::FASTPRIS);
+			if ( $status === GrundStatus::ANNONCERET || ( $status === GrundStatus::FREMTIDIG ) && ! $grund->isAnnonceres() ) {
+				$grund->setStatus( GrundStatus::LEDIG );
+			} else if ( $status === GrundStatus::AUKTION_SLUT ) {
+				if ( $type === GrundType::PARCELHUS ) {
+					$grund->setSalgstype( SalgsType::FASTPRIS );
 
-          $this->clearStatusFields($grund);
-          $this->clearAuktionsDateFields($grund);
-        }
-      }
-    }
-  }
+					$this->clearStatusFields( $grund );
+					$this->clearAuktionsDateFields( $grund );
+				} else if ( $type === GrundType::STORPARCEL ) {
+					$grund->setSalgstype( SalgsType::ETGM2 );
 
-  /**
-   * "Copy-paste" from legacy system (Servlets/GRund.java: clearDateFields)
-   *
-   * @param Grund $grund
-   */
-  private function clearStatusFields(Grund $grund){
-    $grund->setStatus(GrundStatus::LEDIG);
-    $grund->setSalgstatus(GrundSalgStatus::LEDIG);
-  }
+					$this->clearStatusFields( $grund );
+					$this->clearAuktionsDateFields( $grund );
+				} else if ( $type === GrundType::ERHVERV ) {
+					$grund->setSalgstype( SalgsType::KVADRATMETERPRIS );
 
-  /**
-   * "Copy-paste" from legacy system (Servlets/GRund.java: clearDateFields)
-   *
-   * @param Grund $grund
-   */
-  private function clearAuktionsDateFields(Grund $grund){
-    $grund->setAuktionstartdato(null);
-    $grund->setAuktionslutdato(null);
-  }
+					$this->clearStatusFields( $grund );
+					$this->clearAuktionsDateFields( $grund );
+				} else if ( $type === GrundType::ANDRE ) {
+					$grund->setSalgstype( SalgsType::FASTPRIS );
 
-  /**
-   * Update status base on dates for auktion, reserveret, etc.
-   *
-   * "Copy-paste" from legacy system (A - WorkflowMixin.js: setStatusField)
-   *
-   * @param Grund $grund
-   * @param bool $isNew
-   * @param array $changeset
-   */
-  private function calculateStatus(Grund $grund, bool $isNew, array $changeset = array())
-  {
+					$this->clearStatusFields( $grund );
+					$this->clearAuktionsDateFields( $grund );
+				}
+			}
+		}
+	}
 
-    $changeKeys = array('annonceres', 'salgstype', 'auktionstartdato', 'auktionslutdato', 'datoannonce');
+	/**
+	 * "Copy-paste" from legacy system (Servlets/Grund.java: clearDateFields)
+	 *
+	 * @param Grund $grund
+	 */
+	private function clearStatusFields( Grund $grund ) {
+		$grund->setStatus( GrundStatus::LEDIG );
+		$grund->setSalgstatus( GrundSalgStatus::LEDIG );
+	}
 
-    if ($isNew || $this->arrayKeyExist($changeKeys, $changeset)) {
+	/**
+	 * "Copy-paste" from legacy system (Servlets/Grund.java: clearDateFields)
+	 *
+	 * @param Grund $grund
+	 */
+	private function clearAuktionsDateFields( Grund $grund ) {
+		$grund->setAuktionstartdato( null );
+		$grund->setAuktionslutdato( null );
+	}
 
-      $today = new \DateTime();
-      $today->setTime(12, 0);
+	/**
+	 * Update status base on dates for auktion, reserveret, etc.
+	 *
+	 * "Copy-paste" from legacy system (A - WorkflowMixin.js: setStatusField)
+	 *
+	 * @param Grund $grund
+	 * @param bool $isNew
+	 * @param array $changeset
+	 */
+	private function calculateStatus( Grund $grund, bool $isNew, array $changeset = [] ) {
 
-      if ($grund->getSalgstype() === SalgsType::AUKTION) {
-        // Auktion slut dato i fortid: Auktion slut
-        if ($grund->getAuktionslutdato() && $grund->getAuktionslutdato() < $today) {
-          $grund->setStatus(GrundStatus::AUKTION_SLUT);
-        } // Ny ell. 'Fremtidig'/'Annonceret' grund - annonce dato i fortiden: Annonceret
-        elseif (($isNew || $grund->getStatus() === GrundStatus::FREMTIDIG || $grund->getStatus() === GrundStatus::ANNONCERET) && $grund->getDatoannonce() && $grund->getDatoannonce() <= $today) {
-          $grund->setStatus(GrundStatus::ANNONCERET);
-        } // Auktion slut dato i fremtid: Fremtidig
-        elseif ($grund->getAuktionslutdato() && $grund->getAuktionslutdato() > $today) {
-          $grund->setStatus(GrundStatus::FREMTIDIG);
-        } // Ingen auktion start dato: Fremtidig
-        elseif (!$grund->getAuktionstartdato()) {
-          $grund->setStatus(GrundStatus::FREMTIDIG);
-        } // Ny - ingen annonce dato: Fremtidig
-        elseif ($isNew && !$grund->getDatoannonce()) {
-          $grund->setStatus(GrundStatus::FREMTIDIG);
-        } // Ny ell. 'Annonceret' grund - annoncedato i fremtiden: Fremtidig
-        elseif (($isNew || $grund->getStatus() === GrundStatus::ANNONCERET) && $grund->getDatoannonce() && $grund->getDatoannonce() > $today) {
-          $grund->setStatus(GrundStatus::FREMTIDIG);
-        }
+		$changeKeys = [ 'annonceres', 'salgstype', 'auktionstartdato', 'auktionslutdato', 'datoannonce' ];
 
-        // Salgstype anden end Auktion
-      } else {
+		if ( $isNew || $this->arrayKeyExist( $changeKeys, $changeset ) ) {
 
-        // Ny ell. 'Fremtidig'/'Annonceret' grund - annonce dato i fortiden: Annonceret
-        if (($isNew || $grund->getStatus() === GrundStatus::FREMTIDIG || $grund->getStatus() === GrundStatus::ANNONCERET) && $grund->getDatoannonce() && $grund->getDatoannonce() <= $today) {
-          $grund->setStatus(GrundStatus::ANNONCERET);
-        } // Ny ell. 'Skal-annonceres' grund - ingen annonce dato endnu: Fremtidig
-        elseif (($isNew || $grund->isAnnonceres()) && !$grund->getDatoannonce()) {
-          $grund->setStatus(GrundStatus::FREMTIDIG);
-        } // Ny ell. 'Annonceret' grund - annoncedato i fremtiden: Fremtidig
-        elseif (($isNew || $grund->getStatus() === GrundStatus::ANNONCERET) && $grund->getDatoannonce() && $grund->getDatoannonce() > $today) {
-          $grund->setStatus(GrundStatus::FREMTIDIG);
-        }
-      }
-    }
-  }
+			$today = new \DateTime();
+			$today->setTime( 12, 0 );
 
-  /**
-   * Update salgstatus base on dates for auktion, reserveret, etc.
-   *
-   * "Copy-paste" from legacy system (A - WorkflowMixin.js: setSalgstatusField)
-   *
-   * @param Grund $grund
-   * @param bool $isNew
-   * @param array $changeset
-   */
-  private function calculateSalgstatus(Grund $grund, bool $isNew, array $changeset = array())
-  {
-    $changeKeys = array('beloebanvist', 'skoederekv', 'accept', 'auktionstartdato', 'auktionslutdato', 'tilbudstart');
+			if ( $grund->getSalgstype() === SalgsType::AUKTION ) {
+				// Auktion slut dato i fortid: Auktion slut
+				if ( $grund->getAuktionslutdato() && $grund->getAuktionslutdato() < $today ) {
+					$grund->setStatus( GrundStatus::AUKTION_SLUT );
+				} // Ny ell. 'Fremtidig'/'Annonceret' grund - annonce dato i fortiden: Annonceret
+				else if ( ( $isNew || $grund->getStatus() === GrundStatus::FREMTIDIG || $grund->getStatus() === GrundStatus::ANNONCERET ) && $grund->getDatoannonce() && $grund->getDatoannonce() <= $today ) {
+					$grund->setStatus( GrundStatus::ANNONCERET );
+				} // Auktion slut dato i fremtid: Fremtidig
+				else if ( $grund->getAuktionslutdato() && $grund->getAuktionslutdato() > $today ) {
+					$grund->setStatus( GrundStatus::FREMTIDIG );
+				} // Ingen auktion start dato: Fremtidig
+				else if ( ! $grund->getAuktionstartdato() ) {
+					$grund->setStatus( GrundStatus::FREMTIDIG );
+				} // Ny - ingen annonce dato: Fremtidig
+				else if ( $isNew && ! $grund->getDatoannonce() ) {
+					$grund->setStatus( GrundStatus::FREMTIDIG );
+				} // Ny ell. 'Annonceret' grund - annoncedato i fremtiden: Fremtidig
+				else if ( ( $isNew || $grund->getStatus() === GrundStatus::ANNONCERET ) && $grund->getDatoannonce() && $grund->getDatoannonce() > $today ) {
+					$grund->setStatus( GrundStatus::FREMTIDIG );
+				}
 
-    if ($isNew || $this->arrayKeyExist($changeKeys, $changeset)) {
+				// Salgstype anden end Auktion
+			} else {
 
-      $today = new \DateTime();
-      $today->setTime(12, 0);
+				// Ny ell. 'Fremtidig'/'Annonceret' grund - annonce dato i fortiden: Annonceret
+				if ( ( $isNew || $grund->getStatus() === GrundStatus::FREMTIDIG || $grund->getStatus() === GrundStatus::ANNONCERET ) && $grund->getDatoannonce() && $grund->getDatoannonce() <= $today ) {
+					$grund->setStatus( GrundStatus::ANNONCERET );
+				} // Ny ell. 'Skal-annonceres' grund - ingen annonce dato endnu: Fremtidig
+				else if ( ( $isNew || $grund->isAnnonceres() ) && ! $grund->getDatoannonce() ) {
+					$grund->setStatus( GrundStatus::FREMTIDIG );
+				} // Grund 'retur' til 'fremtidig' hvis salgtype ændres - RC1 feedback aug. 2017
+				else if ( $grund->getStatus() === GrundStatus::ANNONCERET && ! $grund->getDatoannonce() ) {
+					$grund->setStatus( GrundStatus::FREMTIDIG );
+				} // Ny ell. 'Annonceret' grund - annoncedato i fremtiden: Fremtidig
+				else if ( ( $isNew || $grund->getStatus() === GrundStatus::ANNONCERET ) && $grund->getDatoannonce() && $grund->getDatoannonce() > $today ) {
+					$grund->setStatus( GrundStatus::FREMTIDIG );
+				}
+			}
+		}
+	}
 
-      if ($grund->getBeloebanvist()) {
-        $grund->setSalgstatus(GrundSalgStatus::SOLGT);
-      } elseif ($grund->getSkoederekv()) {
-        $grund->setSalgstatus(GrundSalgStatus::SKOEDE_REKVIRERET);
-      } elseif ($grund->getAccept()) {
-        $grund->setSalgstatus(GrundSalgStatus::ACCEPTERET);
-      } elseif ($grund->getAuktionstartdato() && $grund->getAuktionslutdato() && $grund->getAuktionslutdato() < $today) {
-        $grund->setSalgstatus(GrundSalgStatus::AUKTION_SLUT);
-      } elseif ($grund->getTilbudstart()) {
-        $grund->setSalgstatus(GrundSalgStatus::TILBUD_SENDT);
-      } elseif ($grund->getResstart()) {
-        $grund->setSalgstatus(GrundSalgStatus::RESERVERET);
-      } else {
-        $grund->setSalgstatus(GrundSalgStatus::LEDIG);
-      }
-    }
-  }
+	/**
+	 * Update salgstatus base on dates for auktion, reserveret, etc.
+	 *
+	 * "Copy-paste" from legacy system (A - WorkflowMixin.js: setSalgstatusField)
+	 *
+	 * @param Grund $grund
+	 * @param bool $isNew
+	 * @param array $changeset
+	 */
+	private function calculateSalgstatus( Grund $grund, bool $isNew, array $changeset = [] ) {
+		$changeKeys = [ 'annonceres', 'salgstype', 'auktionstartdato', 'auktionslutdato', 'datoannonce', 'resstart', 'resslut',
+			'beloebanvist', 'skoederekv', 'accept', 'auktionstartdato', 'auktionslutdato', 'tilbudstart' ];
 
-  /**
-   * If the are not set, update 'til og med' dates base on their respective 'fra' dates
-   *
-   * "Copy-paste" from legacy system
-   *
-   * @param \AppBundle\Entity\Grund $grund
-   */
-  private function calculateToDates(Grund $grund)
-  {
+		if ( $isNew || $this->arrayKeyExist( $changeKeys, $changeset ) ) {
 
-    // Default reservation is 14 days
-    if ($grund->getResstart() && !$grund->getResslut()) {
-      $endDay = clone $grund->getResstart();
-      $endDay->add(new \DateInterval('P14D'));
+			$today = new \DateTime();
+			$today->setTime( 12, 0 );
 
-      $grund->setResslut($endDay);
-    }
+			if ( $grund->getBeloebanvist() ) {
+				$grund->setSalgstatus( GrundSalgStatus::SOLGT );
+			} else if ( $grund->getSkoederekv() ) {
+				$grund->setSalgstatus( GrundSalgStatus::SKOEDE_REKVIRERET );
+			} else if ( $grund->getAccept() ) {
+				$grund->setSalgstatus( GrundSalgStatus::ACCEPTERET );
+			} else if ( $grund->getAuktionstartdato() && $grund->getAuktionslutdato() && $grund->getAuktionslutdato() < $today ) {
+				$grund->setSalgstatus( GrundSalgStatus::AUKTION_SLUT );
+			} else if ( $grund->getTilbudstart() ) {
+				$grund->setSalgstatus( GrundSalgStatus::TILBUD_SENDT );
+			} else if ( $grund->getResstart() ) {
+				$grund->setSalgstatus( GrundSalgStatus::RESERVERET );
+			} else {
+				$grund->setSalgstatus( GrundSalgStatus::LEDIG );
+			}
+		}
+	}
 
-    // Default 'tilbud' is 28 days
-    if ($grund->getTilbudstart() && !$grund->getTilbudslut()) {
-      $endDay = clone $grund->getTilbudstart();
-      $endDay->add(new \DateInterval('P28D'));
+	/**
+	 * If the are not set, update 'til og med' dates base on their respective 'fra' dates
+	 *
+	 * "Copy-paste" from legacy system
+	 *
+	 * @param \AppBundle\Entity\Grund $grund
+	 */
+	private function calculateToDates( Grund $grund ) {
 
-      $grund->setTilbudslut($endDay);
-    }
+		// Default reservation is 14 days
+		if ( $grund->getResstart() && ! $grund->getResslut() ) {
+			$endDay = clone $grund->getResstart();
+			$endDay->add( new \DateInterval( 'P14D' ) );
 
-  }
+			$grund->setResslut( $endDay );
+		}
 
-  /**
-   * Calulate Bruttoareal
-   *
-   * @param Grund $grund
-   */
-  private function calculateBruttoAreal(Grund $grund)
-  {
-    $grund->setBruttoareal($grund->getAreal() - $grund->getArealvej() - $grund->getArealkotelet());
-  }
+		// Default 'tilbud' is 28 days
+		if ( $grund->getTilbudstart() && ! $grund->getTilbudslut() ) {
+			$endDay = clone $grund->getTilbudstart();
+			$endDay->add( new \DateInterval( 'P28D' ) );
 
-  /**
-   * Calculate price
-   *
-   * @param Grund $grund
-   */
-  private function calculatePris(Grund $grund)
-  {
+			$grund->setTilbudslut( $endDay );
+		}
 
-    if ($grund->getSalgstype() == SalgsType::KVADRATMETERPRIS || $grund->getSalgstype() == SalgsType::ETGM2) {
+	}
 
-      $grund->setPriskoor1($grund->getAntalkorr1() * $grund->getAkrkorr1());
-      $grund->setPriskoor2($grund->getAntalkorr2() * $grund->getAkrkorr2());
-      $grund->setPriskoor3($grund->getAntalkorr3() * $grund->getAkrkorr3());
+	/**
+	 * Calulate Bruttoareal
+	 *
+	 * @param Grund $grund
+	 */
+	private function calculateBruttoAreal( Grund $grund ) {
+		$grund->setBruttoareal( $grund->getAreal() - $grund->getArealvej() - $grund->getArealkotelet() );
+	}
 
-      if ($grund->getPrism2() > 0) {
-        $prisExKorr = $grund->getBruttoareal() * $grund->getPrism2();
-        $pris = $prisExKorr + $grund->getPriskoor1() + $grund->getPriskoor2() + $grund->getPriskoor3();
+	/**
+	 * Calculate price
+	 *
+	 * @param Grund $grund
+	 */
+	private function calculatePris( Grund $grund ) {
 
-        $grund->setPris($pris);
-      }
+		if ( $grund->getSalgstype() == SalgsType::KVADRATMETERPRIS || $grund->getSalgstype() == SalgsType::ETGM2 ) {
 
-    } else if ($grund->getSalgstype() == 'Fastpris') {
+			$grund->setPriskoor1( $grund->getAntalkorr1() * $grund->getAkrkorr1() );
+			$grund->setPriskoor2( $grund->getAntalkorr2() * $grund->getAkrkorr2() );
+			$grund->setPriskoor3( $grund->getAntalkorr3() * $grund->getAkrkorr3() );
 
-      if ($grund->getFastpris() && $grund->getAccept()) {
-        $grund->setSalgsprisumoms(0.8 * $grund->getFastpris());
-      }
+			if ( $grund->getPrism2() > 0 ) {
+				$prisExKorr = $grund->getBruttoareal() * $grund->getPrism2();
+				$pris       = $prisExKorr + $grund->getPriskoor1() + $grund->getPriskoor2() + $grund->getPriskoor3();
 
-    }
-  }
+				$grund->setPris( $pris );
+			}
 
-  /**
-   * Check if at least one value in $needles exists as a key in $haystack
-   *
-   * @param array $needles
-   * @param array $haystack
-   * @return bool
-   */
-  private function arrayKeyExist(array $needles, array $haystack)
-  {
-    foreach ($needles as $needle) {
-      if (array_key_exists($needle, $haystack)) {
-        return true;
-      }
-    }
+		} else if ( $grund->getSalgstype() == 'Fastpris' ) {
 
-    return false;
-  }
+			if ( $grund->getFastpris() && $grund->getAccept() ) {
+				$grund->setSalgsprisumoms( 0.8 * $grund->getFastpris() );
+			}
+
+		}
+	}
+
+	/**
+	 * Check if at least one value in $needles exists as a key in $haystack
+	 *
+	 * @param array $needles
+	 * @param array $haystack
+	 *
+	 * @return bool
+	 */
+	private function arrayKeyExist( array $needles, array $haystack ) {
+		foreach ( $needles as $needle ) {
+			if ( array_key_exists( $needle, $haystack ) ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 
 }

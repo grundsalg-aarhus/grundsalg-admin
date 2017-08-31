@@ -40,16 +40,6 @@ class GrundCollection extends Grund {
    */
   private $grunde;
 
-  /**
-   * @var \AppBundle\Entity\Salgsomraade
-   *
-   * @ORM\ManyToOne(targetEntity="Salgsomraade", fetch="EAGER")
-   * @ORM\JoinColumns({
-   *   @ORM\JoinColumn(name="salgsomraadeId", referencedColumnName="id", nullable=false)
-   * })
-   */
-  private $salgsomraade;
-
   public function __construct() {
     parent::__construct();
 
