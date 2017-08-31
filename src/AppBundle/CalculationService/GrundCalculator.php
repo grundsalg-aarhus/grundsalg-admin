@@ -240,7 +240,8 @@ class GrundCalculator implements EventSubscriber {
 	 * @param array $changeset
 	 */
 	private function calculateSalgstatus( Grund $grund, bool $isNew, array $changeset = [] ) {
-		$changeKeys = [ 'beloebanvist', 'skoederekv', 'accept', 'auktionstartdato', 'auktionslutdato', 'tilbudstart' ];
+		$changeKeys = [ 'annonceres', 'salgstype', 'auktionstartdato', 'auktionslutdato', 'datoannonce', 'resstart', 'resslut',
+			'beloebanvist', 'skoederekv', 'accept', 'auktionstartdato', 'auktionslutdato', 'tilbudstart' ];
 
 		if ( $isNew || $this->arrayKeyExist( $changeKeys, $changeset ) ) {
 
