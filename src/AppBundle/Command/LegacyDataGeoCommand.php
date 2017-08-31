@@ -64,8 +64,8 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
                   $stmt = $connection->prepare($sql);
                   $stmt->bindValue(1, $row['WKT']);
                   $stmt->bindValue(2, $row['srid']);
-                  $stmt->bindValue(3, $row['MI_STYLE']);
-                  $stmt->bindValue(4, $row['srid']);
+                  $stmt->bindValue(3, $row['srid']);
+                  $stmt->bindValue(4, $row['MI_STYLE']);
                   $stmt->bindValue(5, $pdflink);
                   $stmt->bindValue(6, $fagsystemID);
                   $stmt->execute();
@@ -291,9 +291,9 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
 
     $c = count($result);
     if($c === 0 && !$this->validateVejExistInFagsystem($vej)) {
-      $this->countChanges($table, 'NEW vej, Grund INSERTED', $this->changeCount);
-      $this->printWarning('NEW vej, Grund INSERTED: ' . $table . ' / ' . $adresse . ', m2: ' . $m2 . ', pris: ' . $pris . ', gPris: ' . $grundPris . ' matches ' . $c . ' rows');
-      return $this->insertGrund($vej, $husnummer, $bogstav, $grundType, $m2, $status);
+//      $this->countChanges($table, 'NEW vej, Grund INSERTED', $this->changeCount);
+//      $this->printWarning('NEW vej, Grund INSERTED: ' . $table . ' / ' . $adresse . ', m2: ' . $m2 . ', pris: ' . $pris . ', gPris: ' . $grundPris . ' matches ' . $c . ' rows');
+//      return $this->insertGrund($vej, $husnummer, $bogstav, $grundType, $m2, $status);
     } else if ($c === 1) {
       $this->countChanges($table, 'Grund matched', $this->changeCount);
       return $result[0]['id'];

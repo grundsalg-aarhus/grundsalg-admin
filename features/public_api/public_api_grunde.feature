@@ -5,21 +5,21 @@ Feature: Public API
 
   Background:
     Given the following grunde exist:
-      | Vej       | Husnummer | Bogstav | Salgsomraade | Annonceres | DatoAnnonce |
-      | Førstevej | 13        |         | 1            | 1          | -1 day      |
-      | Førstevej | 11        |         | 1            | 1          | -1 day      |
-      | Andenvej  | 171       | A       | 1            | 1          | -1 day      |
-      | Andenvej  | 171       | C       | 1            | 1          | -1 day      |
-      | Andenvej  | 171       | B       | 1            | 1          | -1 day      |
-      | Tredjevej | 1         |         | 2            | 0          | -1 day      |
-      | Tredjevej | 3         |         | 2            | 1          | -1 day      |
-      | Tredjevej | 5         |         | 2            | 1          | -1 day      |
-      | Fjerdevej | 3         | B       | 3            | 1          | -1 day      |
-      | Fjerdevej | 3         | C       | 3            | 1          | +1 day      |
-      | Åvej      | 7         |         | 4            | 1          | -1 day      |
-      | Ældstevej | 3         |         | 4            | 1          | -1 day      |
-      | Østervej  | 5         |         | 4            | 1          | -1 day      |
-      | Zebravej  | 1         |         | 4            | 1          | -1 day      |
+      | Vej       | Husnummer | Bogstav | Salgsomraade | Annonceres | DatoAnnonce | Type           |
+      | Førstevej | 13        |         | 1            | 1          | -1 day      | Parcelhusgrund |
+      | Førstevej | 11        |         | 1            | 1          | -1 day      | Parcelhusgrund |
+      | Andenvej  | 171       | A       | 1            | 1          | -1 day      | Parcelhusgrund |
+      | Andenvej  | 171       | C       | 1            | 1          | -1 day      | Parcelhusgrund |
+      | Andenvej  | 171       | B       | 1            | 1          | -1 day      | Parcelhusgrund |
+      | Tredjevej | 1         |         | 2            | 0          | -1 day      | Parcelhusgrund |
+      | Tredjevej | 3         |         | 2            | 1          | -1 day      | Parcelhusgrund |
+      | Tredjevej | 5         |         | 2            | 1          | -1 day      | Parcelhusgrund |
+      | Fjerdevej | 3         | B       | 3            | 1          | -1 day      | Parcelhusgrund |
+      | Fjerdevej | 3         | C       | 3            | 1          | +1 day      | Parcelhusgrund |
+      | Åvej      | 7         |         | 4            | 1          | -1 day      | Parcelhusgrund |
+      | Ældstevej | 3         |         | 4            | 1          | -1 day      | Parcelhusgrund |
+      | Østervej  | 5         |         | 4            | 1          | -1 day      | Parcelhusgrund |
+      | Zebravej  | 1         |         | 4            | 1          | -1 day      | Parcelhusgrund |
 
 
   Scenario: Response is OK and JSON

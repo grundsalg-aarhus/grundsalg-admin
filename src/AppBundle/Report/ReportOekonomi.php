@@ -51,10 +51,16 @@ class ReportOekonomi extends Report {
     }
 
     $this->writeRow([
-      'I alt',
-      $enddate->format('d-m-Y'),
+      '',
+      'I alt '.$enddate->format('d-m-Y'),
+      '',
+      '',
       $headline,
+      '',
+      '',
       $enddate->format('d-m-Y'),
+      '',
+      '',
     ]);
 
     $this->writeRow([

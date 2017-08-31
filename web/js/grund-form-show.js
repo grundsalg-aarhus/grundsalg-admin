@@ -41,9 +41,9 @@
         var annonceres = $('#app_grund_annonceres span').text().trim();
 
         if (annonceres !== 'Nej') {
-            $('.js-datoAnnonce').show();
+            $('.js-datoannonce').show();
         } else {
-            $('.js-datoAnnonce').hide();
+            $('.js-datoannonce').hide();
         }
     }
 

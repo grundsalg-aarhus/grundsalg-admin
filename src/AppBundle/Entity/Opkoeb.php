@@ -46,7 +46,7 @@ class Opkoeb
   /**
    * @var string
    *
-   * @ORM\Column(name="matrik2", type="string", length=50, nullable=false)
+   * @ORM\Column(name="matrik2", type="string", length=50, nullable=true)
    */
   private $matrik2;
 

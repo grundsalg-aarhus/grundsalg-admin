@@ -24,7 +24,7 @@ use AppBundle\Entity\Tagging;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
- * Class for deciding if entities can be deleted without voilating referential integrety.
+ * Class for deciding if entities can be deleted without violating referential integrety.
  */
 class IntegrityManager
 {
@@ -76,6 +76,7 @@ class IntegrityManager
       }
     }
 
+//    return array('total' => 5);
     return $references ?: TRUE;
   }
 
@@ -101,7 +102,7 @@ class IntegrityManager
         return !isset($association['inherited']) && $association['targetEntity'] === get_class($entity);
       });
       foreach ($associations as $association) {
-        if (isset($association['inversedBy']) && isset($entityAssociations[$association['inversedBy']]) && !$entityAssociations[$association['inversedBy']]['isCascadeRemove']) {
+        if (!isset($association['inversedBy']) || (isset($entityAssociations[$association['inversedBy']]) && !$entityAssociations[$association['inversedBy']]['isCascadeRemove'])) {
           $className = $association['sourceEntity'];
           if (!isset($allAssociations[$className])) {
             $allAssociations[$className] = [];

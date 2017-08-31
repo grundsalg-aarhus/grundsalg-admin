@@ -108,7 +108,7 @@ class Grund {
   /**
    * @var string
    *
-   * @ORM\Column(name="mnr2", type="string", length=20, nullable=false)
+   * @ORM\Column(name="mnr2", type="string", length=20, nullable=true)
    */
   private $mnr2;
 
@@ -136,7 +136,7 @@ class Grund {
   /**
    * @var int
    *
-   * @ORM\Column(name="husNummer", type="integer", nullable=false)
+   * @ORM\Column(name="husNummer", type="integer", nullable=true)
    */
   private $husnummer;
 
@@ -639,8 +639,9 @@ class Grund {
     $this->salgshistorik = new ArrayCollection();
     $this->tilsluttet = [];
     $this->annonceres = FALSE;
+    $this->setType(GrundType::PARCELHUS);
     $this->setStatus(GrundStatus::LEDIG);
-    $this->setSalgstype(SalgsType::KVADRATMETERPRIS);
+    $this->setSalgstype(SalgsType::AUKTION);
   }
 
   /**

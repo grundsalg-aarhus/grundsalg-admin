@@ -36,7 +36,7 @@ app:
   grund:
       accept: Accept
       akrkorr1: á kr.
-      annonceres: Annonceres
+      annonceres: I udbud
       annullerSalgsBegrundelse: Begrundelse
       antagetbud: Antaget bud
       antalkorr1: Antal
@@ -49,8 +49,8 @@ app:
       beloebanvist: Beløb anvist
       bogstav: Bogstav
       bruttoareal: Samlet areal
-      datoAnnonce: Annonce-dato
-      datoAnnonce1: 1. Annonce-dato
+      datoannonce: Annonce-dato
+      datoannonce1: 1. Annonce-dato
       delareal: Delareal
       ejerlav: Ejerlav
       fastpris: Fastpris
@@ -94,7 +94,7 @@ app:
       priskorrektion1: Priskorrektioner
       prism2: Pris pr. m²
       psp: PSP
-      publicstatus: Off. status
+      publicstatus: Webstatus
       resslut: til og med
       resstart: Reservation
       salg: Salg
@@ -103,6 +103,7 @@ app:
       salgstatus: Status
       salgstype: Salgstype
       skoederekv: Skøde rekv.
+      status: Status
       tilbudslut: til og med
       tilbudstart: Tilbud
       tilsluttet: Tilsluttet
@@ -123,6 +124,7 @@ app:
 
   lokalplan:
       nr: Nr.
+      opkoeb: Opkøb
 
   meta:
       created_at: Oprettet den
@@ -145,7 +147,7 @@ app:
       status: Status
 
   salgsomraade:
-      annonceres: Annonceres
+      annonceres: Synligt på Web
       nr: Nr.
       salgsomraade: Salgsområde
       titel: Titel
@@ -186,3 +188,4 @@ user:
 
 'Cannot delete %name%': '"%name%" kan ikke slettes'
 '%name% is referenced by %count% entities': 'one: "%name%" bruges af %count% datapost | some: "%name%" bruges af %count% dataposter'
+'@count entities updated': '@count grunde flyttet'

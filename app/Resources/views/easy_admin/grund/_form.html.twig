@@ -1,5 +1,5 @@
-{% macro entity_value(label, field = null) %}
-  <div class="form-group field-entity">
+{% macro entity_value(label, field = null, classes = null) %}
+  <div class="form-group field-entity {{ classes }}">
     <label class="col-sm-2 control-label">{{ label | trans }}</label>
     <div class="col-sm-10">
       <span class="form-control">
@@ -123,9 +123,9 @@
                     </h2>
                   </div>
                   {{ form_row(form.annonceres) }}
-                  <div class="js-datoAnnonce">
-                  {{ form_row(form.datoAnnonce) }}
-                  {{ form_row(form.datoAnnonce1) }}
+                  <div class="js-datoannonce">
+                  {{ form_row(form.datoannonce) }}
+                  {{ form_row(form.datoannonce1) }}
                   </div>
 
                   <div class="js-auktion-wrapper">
@@ -572,17 +572,19 @@
                     </div>
                   </div>
 
-                  <div class="form-group  field-number js-fastpris">
-                    <label class="col-sm-2 control-label">{{ 'app.grund.salgsprisumoms' | trans }}</label>
-                    <div class="col-sm-10 js-readonly number">
-                      {{ form_widget(form.salgsprisumoms) }}
-                    </div>
-                  </div>
+                  {{ grundsalg.entity_value('app.grund.minbud', entity.minbud, 'field-number js-minBudShow') }}
 
-                  <div class="form-group  field-number js-antagetbud-wrapper">
+                  <div class="form-group field-number js-antagetbud-wrapper js-pris-calc">
                     <label class="col-sm-2 control-label">{{ 'app.grund.antagetbud' | trans }}</label>
                     <div class="col-sm-10 number">
                       {{ form_widget(form.antagetbud) }}
+                    </div>
+                  </div>
+
+                  <div class="form-group field-number js-fastpris js-auktion-wrapper">
+                    <label class="col-sm-2 control-label">{{ 'app.grund.salgsprisumoms' | trans }}</label>
+                    <div class="col-sm-10 js-readonly number">
+                      {{ form_widget(form.salgsprisumoms) }}
                     </div>
                   </div>
 

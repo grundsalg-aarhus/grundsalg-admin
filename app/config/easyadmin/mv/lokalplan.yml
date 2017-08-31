@@ -6,8 +6,7 @@ easy_admin:
             list:
                 title: 'Lokalplaner'
                 sort: ['titel', 'ASC']
-                actions:
-                    <<: *default_list_actions
+
                 fields:
                     - { property: nr, label: 'LPNr' }
                     - titel
@@ -28,6 +27,10 @@ easy_admin:
             edit:
                 roles: [ROLE_EDITOR]
                 title: 'Rediger Lokalplan'
+
+            new:
+                roles: [ROLE_EDITOR]
+                title: 'Opret Lokalplan'
 
             form:
                 fields: &lokalplan_form_fields

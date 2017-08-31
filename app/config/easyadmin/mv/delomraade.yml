@@ -5,15 +5,14 @@ easy_admin:
             controller:
             list:
                 title: 'Delområder'
-                sort: ['id', 'ASC']
-                actions:
-                    <<: *default_list_actions
+                sort: ['anvendelse', 'ASC']
+
                 fields:
                     - { property: kpl1234Combined, label: 'KPL' }
                     - { property: o123Combined, label: 'Område' }
                     - anvendelse
-                    - mulighedfor
-                    - lokalplan
+                    - { property: mulighedfor, label: 'Mulighed for' }
+                    - { property: lokalplan.titel, label: 'Lokalplan' }
 
             search:
                 fields:
@@ -24,6 +23,10 @@ easy_admin:
             edit:
                 roles: [ROLE_EDITOR]
                 title: 'Rediger Delområde'
+
+            new:
+                roles: [ROLE_EDITOR]
+                title: 'Opret Delområde'
 
             form:
                 fields: &delomraade_form_fields

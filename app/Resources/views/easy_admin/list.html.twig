@@ -7,6 +7,7 @@
   <form method="POST" id="list-form">
 
   {% block bulk_actions_top %}
+    {% if is_granted('ROLE_EDITOR') %}
     <div class="bulk-actions">
       {% if paginator.currentPageResults.count > 0 %}
         {% if _bulk_actions %}
@@ -21,6 +22,7 @@
         </div>
       {% endif %}
     </div>
+    {% endif %}
   {% endblock %}
 
   <div class="table-responsive">
@@ -39,12 +41,14 @@
               {% set _column_label = (metadata.label ?: field|humanize)|trans(_trans_parameters) %}
               {% set _column_icon = isSortingField ? (nextSortDirection == 'DESC' ? 'fa-caret-up' : 'fa-caret-down') : 'fa-sort' %}
 
-              <th data-property-name="{{ metadata.property }}" class="{{ isSortingField ? 'sorted' }} {{ metadata.virtual ? 'virtual' }} {{ metadata.dataType|lower }}">
-                {# Condition on 'sortable' removed to make all columns sortable #}
-                <a href="{{ path('easyadmin', _request_parameters|merge({ sortField: metadata.property, sortDirection: nextSortDirection })) }}">
-                  <i class="fa {{ _column_icon }}"></i>
-                  {{ _column_label|raw }}
-                </a>
+              <th data-property-name="{{ metadata.property }}" class="{{ isSortingField ? 'sorted' }} {{ metadata.virtual ? 'virtual' }} {{ metadata.dataType|lower }} {{ metadata.css_class }}">
+                {% if metadata.sortable %}
+                {% spaceless %}
+                  <a href="{{ path('easyadmin', _request_parameters|merge({ sortField: metadata.property, sortDirection: nextSortDirection })) }}"><i class="fa {{ _column_icon }}"></i>{{ _column_label|raw }}</a>
+                {% endspaceless %}
+                {% else %}
+                  <span>{{ _column_label|raw }}</span>
+                {% endif %}
               </th>
             {% endfor %}
 

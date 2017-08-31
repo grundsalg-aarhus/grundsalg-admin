@@ -15,8 +15,6 @@ easy_admin:
                 title: 'Alle Storparceller'
                 sort: ['vej', 'ASC']
                 dql_filter: entity.type = 'Storparcel'
-                actions:
-                    <<: *default_list_actions
 
                 fields:
                     - { property: vej, label: 'app.grund.vej' }
@@ -80,8 +78,8 @@ easy_admin:
                     - { property: 'status', label: 'app.grund.status', type: 'AppBundle\Form\Field\GrundStatus' }
                     - { property: 'publicstatus', label: 'app.grund.publicstatus', type: 'AppBundle\Form\Field\GrundPublicStatus' }
                     - { property: 'annonceres', label: 'app.grund.annonceres' }
-                    - { property: 'datoAnnonce', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoAnnonce' }
-                    - { property: 'datoAnnonce1', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoAnnonce1' }
+                    - { property: 'datoannonce', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoannonce' }
+                    - { property: 'datoannonce1', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoannonce1' }
 
                     - { property: 'auktionstartdato', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.auktionstartdato' }
                     - { property: 'auktionslutdato', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.auktionslutdato' }
@@ -229,8 +227,17 @@ easy_admin:
                 title: 'Auktion slut Storparceller'
                 dql_filter: entity.type = 'Storparcel' AND entity.status='Auktion slut' AND entity.salgstatus != 'Solgt' AND entity.salgstatus != 'Accepteret' AND entity.salgstatus != 'Skøde rekvireret' AND entity.salgstatus != 'Skøde annulleret'
 
-                # Import default values
-                <<: *storparcel_default_list
+                fields:
+                    - { property: vej, label: 'app.grund.vej' }
+                    - { property: husnummer, label: 'app.grund.husnummer', css_class: 'text-right', format: '%.0f' }
+                    - { property: postby.postalcode, css_class: 'text-right', label: 'app.postby.postalcode' }
+                    - { property: postby.city, label: 'app.postby.city' }
+                    - { property: annonceres, label: 'app.grund.annonceres' }
+                    - { property: salgsomraade.titel, label: 'app.grund.salgsomraade' }
+                    - { property: salgsomraade.lokalplan.nr, label: 'app.lokalplan.nr' }
+                    - { property: salgstype, label: 'app.grund.salgstype' }
+                    - { property: areal, label: 'app.grund.areal', css_class: 'text-right', format: '%.0f' }
+                    - { property: minbud, label: 'app.grund.minbud', css_class: 'text-right' }
                 bulk: *storparcel_bulk
 
             search: *storparcel_default_search
@@ -280,6 +287,18 @@ easy_admin:
             list:
                 title: 'Accepterede Storparceller'
                 dql_filter: entity.type = 'Storparcel' AND (entity.status='Ledig' OR entity.status='Auktion Slut') AND (entity.salgstatus = 'Accepteret' OR entity.salgstatus = 'Skøde rekvireret' OR entity.salgstatus = 'Skøde annulleret')
+
+                fields:
+                    - { property: vej, label: 'app.grund.vej' }
+                    - { property: husnummer, label: 'app.grund.husnummer', css_class: 'text-right', format: '%.0f' }
+                    - { property: postby.postalcode, css_class: 'text-right', label: 'app.postby.postalcode' }
+                    - { property: postby.city, label: 'app.postby.city' }
+                    - { property: annonceres, label: 'app.grund.annonceres' }
+                    - { property: salgsomraade.titel, label: 'app.grund.salgsomraade' }
+                    - { property: salgsomraade.lokalplan.nr, label: 'app.lokalplan.nr' }
+                    - { property: salgstatus, label: 'app.grund.salgstatus' }
+                    - { property: areal, label: 'app.grund.areal', css_class: 'text-right', format: '%.0f' }
+                    - { property: pris, label: 'app.grund.pris', css_class: 'text-right' }
 
                 # Import default values
                 <<: *storparcel_default_list

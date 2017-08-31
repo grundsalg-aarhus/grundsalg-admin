@@ -7,7 +7,6 @@
         grundShowHidePriceFields();
         grundShowHideEtagem2();
         grundShowHideAnnoceres();
-        grundSetReadOnlyDatoannonce();
         grundShowHideSalgsFields();
 
         $('[id$=_annonceres]').on('click', grundShowHideAnnoceres);
@@ -101,20 +100,9 @@
         var annonceres = $('[id$=_annonceres]').is(":checked");
 
         if (annonceres) {
-            $('.js-datoAnnonce').show();
+            $('.js-datoannonce').show();
         } else {
-            $('.js-datoAnnonce').hide();
-        }
-    }
-
-    var grundSetReadOnlyDatoannonce = function() {
-        var status = $('[id$=_status]').val();
-        var datoAnnonceInput = $('[id$=_datoAnnonce]');
-
-        if ((status === 'Fremtidig') || (status === 'Annonceret')) {
-            datoAnnonceInput.prop('readonly', true);
-        } else {
-            datoAnnonceInput.prop('readonly', false);
+            $('.js-datoannonce').hide();
         }
     }
 
@@ -176,6 +164,7 @@
         var prism2Input = $('[id$=_prism2]');
         var minBudInput = $('[id$=_minbud]');
         var maxetagem2Input = $('[id$=_maxetagem2]');
+        var minBudShow = $('.js-minBudShow span.form-control');
 
         var areal = arealInput.grundParseFloat();
         var arealvej = arealvejInput.grundParseFloat();
@@ -195,6 +184,7 @@
                     minbud = bruttoareal * prism2;
                 }
                 minBudInput.grundFloatToString(minbud);
+                minBudShow.text(minBudInput.val());
             }
         }
     }
@@ -284,9 +274,22 @@
                 salgsprisumomsInput.grundFloatToString(salgsprisumoms);
             }
 
+        } else if (salgsType == 'Auktion') {
+            var antagetbudInput = $('[id$=_antagetbud]');
+            var antagetbud = antagetbudInput.val();
+
+            var acceptInput = $('[id$=_accept]');
+            var accept = acceptInput.val();
+
+            var salgsprisumomsInput = $('[id$=_salgsprisumoms]');
+            var salgsprisumoms = salgsprisumomsInput.val();
+
+            if (antagetbud && accept) {
+                salgsprisumoms = 0.8 * antagetbud;
+                salgsprisumomsInput.grundFloatToString(salgsprisumoms);
+            }
         }
     }
-
 
 }(jQuery));
 

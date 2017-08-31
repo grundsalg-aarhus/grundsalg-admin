@@ -6,8 +6,7 @@ easy_admin:
             list:
                 title: 'Landinspektører'
                 sort: ['navn', 'ASC']
-                actions:
-                    <<: *default_list_actions
+
                 fields:
                     - { property: active, label: 'Aktiv' }
                     - { property: navn }
@@ -23,6 +22,10 @@ easy_admin:
             edit:
                 roles: [ROLE_ADMIN]
                 title: 'Rediger Landinspektør'
+
+            new:
+                roles: [ROLE_ADMIN]
+                title: 'Opret Landinspektør'
 
             form:
                 fields: &landinspektoer_form_fields

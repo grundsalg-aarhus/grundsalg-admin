@@ -57,6 +57,23 @@ class EasyAdminConfigManager extends ConfigManager {
       }
     }
 
+    // We have modified createListQueryBuilder to work with associations,
+    // so we need to set 'sortable' => true on those fields for the list templates to pick it up
+    if(is_array($config) && array_key_exists('entities', $config)) {
+      foreach ($config['entities'] as &$entity) {
+        if(is_array($entity) && array_key_exists('list', $entity)) {
+          foreach ($entity['list']['fields'] as $fieldName => &$fieldConfig) {
+            $fieldParts = explode('.', $fieldName);
+            $countParts = count($fieldParts);
+
+            if ($countParts > 1) {
+              $fieldConfig['sortable'] = TRUE;
+            }
+          }
+        }
+      }
+    }
+
     $this->cache[$cacheKey] = $config;
 
     return $config;

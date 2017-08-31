@@ -3,7 +3,7 @@ easy_admin:
 
     list:
         max_results: 100
-        actions: &default_list_actions
+        actions:
             - { name: show, css_class: 'btn btn-default' }
             - { name: edit, css_class: 'btn btn-default', roles: [ROLE_EDITOR] }
             - { name: search }

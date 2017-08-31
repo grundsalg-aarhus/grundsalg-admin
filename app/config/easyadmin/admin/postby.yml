@@ -6,8 +6,7 @@ easy_admin:
             list:
                 title: 'Postnr. / By'
                 sort: ['postalcode', 'ASC']
-                actions:
-                    <<: *default_list_actions
+
                 fields:
                     - { property: postalcode, label: 'Postnr', css_class: 'text-right', format: '%.0f' }
                     - { property: city, label: 'By' }
@@ -20,6 +19,10 @@ easy_admin:
             edit:
                 roles: [ROLE_ADMIN]
                 title: 'Rediger Postnr. / By'
+
+            new:
+                roles: [ROLE_ADMIN]
+                title: 'Opret Postnr. / By'
 
             form:
                 fields: &postby_form_fields

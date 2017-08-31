@@ -150,20 +150,20 @@
         var annonceres = $('[id$=_annonceres]').is(":checked");
 
         if (annonceres) {
-            $('.js-datoAnnonce').show();
+            $('.js-datoannonce').show();
         } else {
-            $('.js-datoAnnonce').hide();
+            $('.js-datoannonce').hide();
         }
     }
 
     var grundSetReadOnlyDatoannonce = function() {
         var status = $('[id$=_status]').val();
-        var datoAnnonceInput = $('[id$=_datoAnnonce]');
+        var datoannonceInput = $('[id$=_datoannonce1]');
 
         if ((status === 'Fremtidig') || (status === 'Annonceret')) {
-            datoAnnonceInput.prop('readonly', true);
+            datoannonceInput.prop('readonly', true);
         } else {
-            datoAnnonceInput.prop('readonly', false);
+            datoannonceInput.prop('readonly', false);
         }
     }
 

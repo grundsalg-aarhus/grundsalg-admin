@@ -20,6 +20,9 @@ use SebastianBergmann\Diff\Differ;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Behatch\HttpCall\Request;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
+use Symfony\Component\BrowserKit\Cookie;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 /**
  * Defines user features
@@ -71,15 +74,42 @@ class UserContext extends BaseContext implements Context, KernelAwareContext
       $email = $username . '@example.com';
       $password = isset($row['password']) ? $row['password'] : uniqid();
       $roles = isset($row['roles']) ? preg_split('/\s*,\s*/', $row['roles'], -1, PREG_SPLIT_NO_EMPTY) : [];
-      $groups = isset($row['groups']) ? preg_split('/\s*,\s*/', $row['groups'], -1, PREG_SPLIT_NO_EMPTY) : [];
 
-      $this->createUser($username, $email, $password, $roles, $groups);
+      $this->createUser($username, $email, $password, $roles);
     }
   }
 
-  private function createUser(string $username, string $email, string $password, array $roles, array $groups) {
-    $groups = $this->createGroups($groups);
+  /**
+   * Creates a user with role and logs in
+   *
+   * @When /^(?:|I )am logged in with role "(?P<role>[^"]+)"$/
+   */
+  public function iAmLoggedInWithRole($role) {
+    $session = $this->container->get('session');
+    $session->invalidate();
 
+    $client = $this->getSession()->getDriver()->getClient();
+
+    $role = 'ROLE_'.strtoupper($role);
+
+    // the firewall context defaults to the firewall name
+    $firewallContext = 'main';
+
+    $token = new UsernamePasswordToken($role, null, $firewallContext, array($role));
+    $session->set('_security_'.$firewallContext, serialize($token));
+    $session->save();
+
+    $cookie = new Cookie($session->getName(), $session->getId());
+    $client->getCookieJar()->set($cookie);
+  }
+
+  /**
+   * @param string $username
+   * @param string $email
+   * @param string $password
+   * @param array $roles
+   */
+  private function createUser(string $username, string $email, string $password, array $roles) {
     $userManager = $this->container->get('fos_user.user_manager');
 
     $user = $userManager->findUserBy(['username' => $username ]);
@@ -93,27 +123,7 @@ class UserContext extends BaseContext implements Context, KernelAwareContext
       ->setEmail($email)
       ->setRoles($roles);
 
-    foreach ($groups as $group) {
-      $user->addGroup($group);
-    }
     $userManager->updateUser($user);
-  }
-
-  private function createGroups(array $names, array $roles = null) {
-    $groups = new ArrayCollection();
-    $repository = $this->manager->getRepository(Group::class);
-
-    foreach ($names as $name) {
-      $group = $repository->findOneBy(['name' => $name]);
-      if (!$group) {
-        $group = new Group($name, $roles ?: []);
-        $this->manager->persist($group);
-        $this->manager->flush();
-      }
-      $groups[] = $group;
-    }
-
-    return $groups;
   }
 
 }

@@ -12,6 +12,7 @@ use AppBundle\DBAL\Types\SalgsType;
 use AppBundle\DBAL\Types\GrundStatus;
 use AppBundle\DBAL\Types\GrundSalgStatus;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
+use AppBundle\Validator\Constraints as GrundAssert;
 
 /**
  * GrundCollection
@@ -29,6 +30,8 @@ use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
  * are deleted once they become redundant.
  *
  * @ORM\Entity
+ *
+ * @GrundAssert\LokalsamfundNotNull
  */
 class GrundCollection extends Grund {
 
@@ -41,8 +44,13 @@ class GrundCollection extends Grund {
     parent::__construct();
 
     $this->grunde = new ArrayCollection();
+    $this->grunde->add(new Grund());
     $this->setStatus(GrundStatus::FREMTIDIG);
     $this->setSalgstatus(GrundSalgStatus::LEDIG);
+
+    // Set values for requried fields to avoid validation errors.
+    $this->setMnr('abc');
+    $this->setMnr2('abc');
   }
 
   /**

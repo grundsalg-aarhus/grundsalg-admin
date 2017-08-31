@@ -99,7 +99,7 @@ class EasyAdminController extends BaseAdminController {
   public function prePersistSalgshistorikEntity(Salgshistorik $salgshistorik) {
     if(!empty($salgshistorik->getGrund()->getActiveReservationer())) {
       $translator = $this->get('translator');
-      $this->addFlash('info', $translator->trans('flash.buyer_available'));
+      $this->addFlash('warning', $translator->trans('flash.buyer_available'));
     }
 
     $salgshistorik->getGrund()->clearSalgFields();
@@ -260,17 +260,18 @@ class EasyAdminController extends BaseAdminController {
       $isGuidField = 'guid' === $metadata['dataType'];
 
       if ($isNumericField && is_numeric($searchQuery)) {
-        $queryBuilder->orWhere(sprintf('%s.%s = :exact_query', $entityDqlName, $fieldDqlName));
+        $queryBuilder->orWhere(sprintf('%s.%s = :numeric_query', $entityDqlName, $fieldDqlName));
         // adding '0' turns the string into a numeric value
-        $queryBuilder->setParameter('exact_query', 0 + $searchQuery);
+        $queryBuilder->setParameter('numeric_query', 0 + $searchQuery);
       } else {
         if ($isGuidField) {
           // some databases don't support LOWER() on UUID fields
           $queryBuilder->orWhere(sprintf('%s.%s IN (:words_query)', $entityDqlName, $fieldDqlName));
           $queryBuilder->setParameter('words_query', explode(' ', $searchQuery));
         } else {
-          if ($metadata['dataType'] !== 'association' && !$metadata['virtual']) {
-            // Default: text search
+          // Fields on associations (countparts > 1) are 'virtual' but we want to add them anyway
+          if (($metadata['dataType'] !== 'association' && !$metadata['virtual']) || 1 < $countParts) {
+              // Default: text search
             $searchQuery = mb_strtolower($searchQuery);
 
             $queryBuilder->orWhere(sprintf('LOWER(%s.%s) LIKE :fuzzy_query', $entityDqlName, $fieldDqlName));

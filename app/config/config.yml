@@ -82,6 +82,8 @@ doctrine:
           charset: utf8mb4
           collate: utf8mb4_danish_ci
         server_version: "%server_version%"
+        # Ignore mapinfo metadata tables
+        schema_filter: ~^(?!mapinfo_)~
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
         #     e.g. database_path: "%kernel.root_dir%/data/data.db3"

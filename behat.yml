@@ -4,15 +4,21 @@ default:
   suites:
     default:
       contexts:
-        - AuthenticationContext: { doctrine: "@doctrine" }
         - DatabaseSetupContext: { doctrine: "@doctrine" }
         - GrundContext: { doctrine: "@doctrine" }
+        - DelomraadeContext: { doctrine: "@doctrine" }
+        - LokalplanContext: { doctrine: "@doctrine" }
         - SalgsomraadeContext: { doctrine: "@doctrine" }
         - JsonValidationContext
         - UserContext: { doctrine: "@doctrine" }
         - Behat\MinkExtension\Context\MinkContext
-        - Sanpi\Behatch\Context\RestContext
-        - Sanpi\Behatch\Context\JsonContext
+        - behatch:context:browser
+        - behatch:context:debug
+        - behatch:context:system
+        - behatch:context:json
+        - behatch:context:table
+        - behatch:context:rest
+        - behatch:context:xml
   extensions:
     Behat\Symfony2Extension:
       kernel:
@@ -23,4 +29,10 @@ default:
       sessions:
         default:
           symfony2: ~
-    Sanpi\Behatch\Extension: ~
+    Behatch\Extension: ~
+
+circleci:
+  extensions:
+    Behat\Symfony2Extension:
+      kernel:
+        env: "circleci"

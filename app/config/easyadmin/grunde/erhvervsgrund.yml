@@ -15,8 +15,6 @@ easy_admin:
                 title: 'Alle Erhvervsgrunde'
                 sort: ['vej', 'ASC']
                 dql_filter: entity.type = 'Erhvervsgrund'
-                actions:
-                    <<: *default_list_actions
 
                 fields:
                     - { property: vej, label: 'app.grund.vej' }
@@ -80,8 +78,8 @@ easy_admin:
                     - { property: 'status', label: 'app.grund.status', type: 'AppBundle\Form\Field\GrundStatus' }
                     - { property: 'publicstatus', label: 'app.grund.publicstatus', type: 'AppBundle\Form\Field\GrundPublicStatus' }
                     - { property: 'annonceres', label: 'app.grund.annonceres' }
-                    - { property: 'datoAnnonce', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoAnnonce' }
-                    - { property: 'datoAnnonce1', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoAnnonce1' }
+                    - { property: 'datoannonce', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoannonce' }
+                    - { property: 'datoannonce1', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.datoannonce1' }
 
                     - { property: 'auktionstartdato', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.auktionstartdato' }
                     - { property: 'auktionslutdato', type: 'date', type_options: { widget: 'single_text' }, label: 'app.grund.auktionslutdato' }
@@ -226,8 +224,17 @@ easy_admin:
                 title: 'Auktion slut Erhvervsgrunde'
                 dql_filter: entity.type = 'Erhvervsgrund' AND entity.status='Auktion slut' AND entity.salgstatus != 'Solgt' AND entity.salgstatus != 'Accepteret' AND entity.salgstatus != 'Skøde rekvireret' AND entity.salgstatus != 'Skøde annulleret'
 
-                # Import default values
-                <<: *erhvervsgrund_default_list
+                fields:
+                    - { property: vej, label: 'app.grund.vej' }
+                    - { property: husnummer, label: 'app.grund.husnummer', css_class: 'text-right', format: '%.0f' }
+                    - { property: postby.postalcode, css_class: 'text-right', label: 'app.postby.postalcode' }
+                    - { property: postby.city, label: 'app.postby.city' }
+                    - { property: annonceres, label: 'app.grund.annonceres' }
+                    - { property: salgsomraade.titel, label: 'app.grund.salgsomraade' }
+                    - { property: salgsomraade.lokalplan.nr, label: 'app.lokalplan.nr' }
+                    - { property: salgstype, label: 'app.grund.salgstype' }
+                    - { property: areal, label: 'app.grund.areal', css_class: 'text-right', format: '%.0f' }
+                    - { property: minbud, label: 'app.grund.minbud', css_class: 'text-right' }
                 bulk: *erhvervsgrund_bulk
 
             search: *erhvervsgrund_default_search
@@ -273,6 +280,18 @@ easy_admin:
         accepterede_erhvervsgrund:
             class: AppBundle\Entity\Grund
             templates: *default_erhvervsgrund_templates
+
+            fields:
+                - { property: vej, label: 'app.grund.vej' }
+                - { property: husnummer, label: 'app.grund.husnummer', css_class: 'text-right', format: '%.0f' }
+                - { property: postby.postalcode, css_class: 'text-right', label: 'app.postby.postalcode' }
+                - { property: postby.city, label: 'app.postby.city' }
+                - { property: annonceres, label: 'app.grund.annonceres' }
+                - { property: salgsomraade.titel, label: 'app.grund.salgsomraade' }
+                - { property: salgsomraade.lokalplan.nr, label: 'app.lokalplan.nr' }
+                - { property: salgstatus, label: 'app.grund.salgstatus' }
+                - { property: areal, label: 'app.grund.areal', css_class: 'text-right', format: '%.0f' }
+                - { property: pris, label: 'app.grund.pris', css_class: 'text-right' }
 
             list:
                 title: 'Accepterede Erhvervsgrunde'
