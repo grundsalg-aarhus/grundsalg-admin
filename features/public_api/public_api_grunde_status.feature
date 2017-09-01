@@ -27,18 +27,5 @@ Feature: Public API
     When I send a "GET" request to "public/api/udstykning/1/grunde"
     Then the JSON node "grunde" should have 10 elements
 
-  Scenario: Grunde have the correct public status
-    When I send a "GET" request to "public/api/udstykning/1/grunde"
-    Then the JSON node "grunde[0].status" should be equal to "Solgt"
-    Then the JSON node "grunde[1].status" should be equal to "I udbud"
-    Then the JSON node "grunde[2].status" should be equal to "Ledig"
-    Then the JSON node "grunde[3].status" should be equal to "Ledig"
-    Then the JSON node "grunde[4].status" should be equal to "Reserveret"
-    Then the JSON node "grunde[5].status" should be equal to "Solgt"
-    Then the JSON node "grunde[6].status" should be equal to "Solgt"
-    Then the JSON node "grunde[7].status" should be equal to "Solgt"
-    Then the JSON node "grunde[8].status" should be equal to "Solgt"
-    Then the JSON node "grunde[9].status" should be equal to "I udbud"
-
   @dropSchema
   Scenario: Drop schema

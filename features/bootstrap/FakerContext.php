@@ -80,7 +80,6 @@ class FakerContext extends BaseContext implements Context, KernelAwareContext
       'type' => function() use ($generator) { return $generator->type(); },
       'salgsType' => function() use ($generator) { return $generator->salgsType(); },
       'accept' => null,
-      'annonceres' => null,
       'antagetbud' => null,
       'auktionslutdato' => null,
       'auktionstartdato' => null,
