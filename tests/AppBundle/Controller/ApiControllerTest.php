@@ -30,74 +30,58 @@ class ApiControllerTest extends TestCase {
 	 * Ledig / Solgt = Solgt
 	 * Auktion slut / Solgt = Solgt
 	 * annonceret / ledig = i udbud.
+	 *
+	 * @param $status
+	 * @param $salgstatus
+	 * @param $publicStatus
+	 *
+	 * @dataProvider providerTestGetPublicStatus
 	 */
-	public function testGetPublicStatus() {
+	public function testGetPublicStatus( $status, $salgstatus, $publicStatus ) {
 
 		$grund      = new Grund();
 		$controller = new ApiController();
 
+		$grund->setStatus( $status );
+		$grund->setSalgstatus( $salgstatus );
+
+		$public = $this->invokeMethod( $controller, 'getPublicStatus', [ $grund ] );
+
+		$this->assertEquals( $publicStatus, $public );
+
+	}
+
+	/**
+	 * GRUND-255:
+	 *
+	 * Accepteret = solgt
+	 * fremtidig / Ledig = Fremtidig
+	 * Ledig/Ledig = Ledig
+	 * Solgt / Ledig = ledig
+	 * Ledig/ reserveret = Reserveret
+	 * Ledig/ skøde rekvireret = solgt
+	 * Auktion slut / Skøde rekvireret = Solgt
+	 * Ledig / Solgt = Solgt
+	 * Auktion slut / Solgt = Solgt
+	 * annonceret / ledig = i udbud.
+	 *
+	 * @return array
+	 */
+	public function providerTestGetPublicStatus() {
+
 		// status | salgStatus = webstatus
-
-		// Fremtidig | Accepteret = Solgt
-		$grund->setStatus( GrundStatus::FREMTIDIG );
-		$grund->setSalgstatus( GrundSalgStatus::ACCEPTERET );
-		$public = $this->invokeMethod( $controller, 'getPublicStatus', [ $grund ] );
-		$this->assertEquals( GrundPublicStatus::SOLGT, $public );
-
-		// Fremtidig | Ledig = Fremtidig
-		$grund->setStatus( GrundStatus::FREMTIDIG );
-		$grund->setSalgstatus( GrundSalgStatus::LEDIG );
-		$public = $this->invokeMethod( $controller, 'getPublicStatus', [ $grund ] );
-		$this->assertEquals( GrundPublicStatus::FREMTIDIG, $public );
-
-		// Ledig | Ledig = Ledig
-		$grund->setStatus( GrundStatus::LEDIG );
-		$grund->setSalgstatus( GrundSalgStatus::LEDIG );
-		$public = $this->invokeMethod( $controller, 'getPublicStatus', [ $grund ] );
-		$this->assertEquals( GrundPublicStatus::LEDIG, $public );
-
-		// Solgt | Ledig = Ledig
-		$grund->setStatus( GrundStatus::SOLGT );
-		$grund->setSalgstatus( GrundSalgStatus::LEDIG );
-		$public = $this->invokeMethod( $controller, 'getPublicStatus', [ $grund ] );
-		$this->assertEquals( GrundPublicStatus::LEDIG, $public );
-
-		// Ledig | Reserveret = Reserveret
-		$grund->setStatus( GrundStatus::LEDIG );
-		$grund->setSalgstatus( GrundSalgStatus::RESERVERET );
-		$public = $this->invokeMethod( $controller, 'getPublicStatus', [ $grund ] );
-		$this->assertEquals( GrundPublicStatus::RESERVERET, $public );
-
-		// Ledig | Skøde rekvireret = Solgt
-		$grund->setStatus( GrundStatus::LEDIG );
-		$grund->setSalgstatus( GrundSalgStatus::SKOEDE_REKVIRERET );
-		$public = $this->invokeMethod( $controller, 'getPublicStatus', [ $grund ] );
-		$this->assertEquals( GrundPublicStatus::SOLGT, $public );
-
-		// Auktion slut | Skøde rekvireret = Solgt
-		$grund->setStatus( GrundStatus::AUKTION_SLUT );
-		$grund->setSalgstatus( GrundSalgStatus::SKOEDE_REKVIRERET );
-		$public = $this->invokeMethod( $controller, 'getPublicStatus', [ $grund ] );
-		$this->assertEquals( GrundPublicStatus::SOLGT, $public );
-
-		// Ledig | Solgt = Solgt
-		$grund->setStatus( GrundStatus::LEDIG );
-		$grund->setSalgstatus( GrundSalgStatus::SOLGT );
-		$public = $this->invokeMethod( $controller, 'getPublicStatus', [ $grund ] );
-		$this->assertEquals( GrundPublicStatus::SOLGT, $public );
-
-		// Auktion slut | Solgt = Solgt
-		$grund->setStatus( GrundStatus::AUKTION_SLUT );
-		$grund->setSalgstatus( GrundSalgStatus::SOLGT );
-		$public = $this->invokeMethod( $controller, 'getPublicStatus', [ $grund ] );
-		$this->assertEquals( GrundPublicStatus::SOLGT, $public );
-
-		// Annonceret | Ledig = I udbud
-		$grund->setStatus( GrundStatus::ANNONCERET );
-		$grund->setSalgstatus( GrundSalgStatus::LEDIG );
-		$public = $this->invokeMethod( $controller, 'getPublicStatus', [ $grund ] );
-		$this->assertEquals( GrundPublicStatus::I_UDBUD, $public );
-
+		return [
+			[ GrundStatus::FREMTIDIG, GrundSalgStatus::ACCEPTERET, GrundPublicStatus::SOLGT ],
+			[ GrundStatus::FREMTIDIG, GrundSalgStatus::LEDIG, GrundPublicStatus::FREMTIDIG ],
+			[ GrundStatus::LEDIG, GrundSalgStatus::LEDIG, GrundPublicStatus::LEDIG ],
+			[ GrundStatus::SOLGT, GrundSalgStatus::LEDIG, GrundPublicStatus::LEDIG ],
+			[ GrundStatus::LEDIG, GrundSalgStatus::RESERVERET, GrundPublicStatus::RESERVERET ],
+			[ GrundStatus::LEDIG, GrundSalgStatus::SKOEDE_REKVIRERET, GrundPublicStatus::SOLGT ],
+			[ GrundStatus::AUKTION_SLUT, GrundSalgStatus::SKOEDE_REKVIRERET, GrundPublicStatus::SOLGT ],
+			[ GrundStatus::LEDIG, GrundSalgStatus::SOLGT, GrundPublicStatus::SOLGT ],
+			[ GrundStatus::AUKTION_SLUT, GrundSalgStatus::SOLGT, GrundPublicStatus::SOLGT ],
+			[ GrundStatus::ANNONCERET, GrundSalgStatus::LEDIG, GrundPublicStatus::I_UDBUD ],
+		];
 	}
 
 	/**
