@@ -1,0 +1,17 @@
+services:
+#    itk_doctrine_integrity.example:
+#        class: ITK\DoctrineIntegrityBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+  itk_doctrine_integrity.itk_doctrine_integrity_extension:
+    class: ITK\DoctrineIntegrityBundle\Twig\Extension\ITKDoctrineIntegrityExtension
+    arguments: ['@itk_doctrine_integrity.integrity_manager']
+    public: false
+    tags:
+      - { name: twig.extension }
+
+  itk_doctrine_integrity.integrity_manager:
+    class: ITK\DoctrineIntegrityBundle\Service\IntegrityManager
+    public: false
+    arguments:
+        - '@doctrine.orm.entity_manager'

@@ -1,26 +1,7 @@
 <?php
 
-namespace AppBundle\Service;
+namespace ITK\DoctrineIntegrityBundle\Service;
 
-use AppBundle\Entity\Delomraade;
-use AppBundle\Entity\Event;
-use AppBundle\Entity\Grund;
-use AppBundle\Entity\Interessent;
-use AppBundle\Entity\Keyword;
-use AppBundle\Entity\KeywordValue;
-use AppBundle\Entity\Landinspektoer;
-use AppBundle\Entity\Lokalplan;
-use AppBundle\Entity\Lokalsamfund;
-use AppBundle\Entity\Occurrence;
-use AppBundle\Entity\Opkoeb;
-use AppBundle\Entity\Organizer;
-use AppBundle\Entity\Place;
-use AppBundle\Entity\Postby;
-use AppBundle\Entity\Reservation;
-use AppBundle\Entity\Salgshistorik;
-use AppBundle\Entity\Salgsomraade;
-use AppBundle\Entity\Tag;
-use AppBundle\Entity\Tagging;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
@@ -76,7 +57,6 @@ class IntegrityManager
       }
     }
 
-//    return array('total' => 5);
     return $references ?: TRUE;
   }
 
