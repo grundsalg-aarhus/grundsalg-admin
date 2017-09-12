@@ -99,7 +99,6 @@ class GrundCalculator implements EventSubscriber {
 		if ( $isNew || $this->arrayKeyExist( $changeKeys, $changeset ) ) {
 			if ( ! $grund->isAnnonceres() ) {
 				$grund->setDatoannonce( null );
-				$grund->setDatoannonce1( null );
 			}
 		}
 	}
