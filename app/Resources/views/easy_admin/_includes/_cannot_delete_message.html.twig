@@ -4,7 +4,7 @@
       <div class="modal-body">
         <h4>{{ 'Cannot delete %name%' | trans({'%name%': entity | trim }) }}</h4>
 
-        {% set info = get_cannot_delete_info(entity) %}
+        {% set info = get_not_deleteable_info(entity) %}
 
         {% transchoice info.total with {'%name%': entity | trim} %}
         %name% is referenced by %count% entities
