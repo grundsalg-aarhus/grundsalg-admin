@@ -21,7 +21,6 @@ Feature: Public API
       | Østervej  | 5         |         | 4            | 1          | -1 day      | Parcelhusgrund |
       | Zebravej  | 1         |         | 4            | 1          | -1 day      | Parcelhusgrund |
 
-
   Scenario: Response is OK and JSON
     When I send a "GET" request to "public/api/udstykning/1/grunde"
     Then the response status code should be 200

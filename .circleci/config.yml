@@ -68,4 +68,5 @@ jobs:
           key: v1-dependencies-{{ checksum "composer.lock" }}
 
       # run tests!
+      - run: vendor/bin/phpunit
       - run: vendor/bin/behat --profile=circleci

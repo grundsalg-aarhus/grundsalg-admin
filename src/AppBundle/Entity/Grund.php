@@ -184,7 +184,7 @@ class Grund {
   /**
    * @var bool
    *
-   * @ORM\Column(name="annonceres", type="boolean", nullable=true)
+   * @ORM\Column(name="annonceres", type="boolean", nullable=false)
    */
   private $annonceres;
 

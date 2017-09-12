@@ -219,9 +219,6 @@ class GrundCalculator implements EventSubscriber {
 				} // Ny ell. 'Skal-annonceres' grund - ingen annonce dato endnu: Fremtidig
 				else if ( ( $isNew || $grund->isAnnonceres() ) && ! $grund->getDatoannonce() ) {
 					$grund->setStatus( GrundStatus::FREMTIDIG );
-				} // Grund 'retur' til 'fremtidig' hvis salgtype ændres - RC1 feedback aug. 2017
-				else if ( $grund->getStatus() === GrundStatus::ANNONCERET && ! $grund->getDatoannonce() ) {
-					$grund->setStatus( GrundStatus::FREMTIDIG );
 				} // Ny ell. 'Annonceret' grund - annoncedato i fremtiden: Fremtidig
 				else if ( ( $isNew || $grund->getStatus() === GrundStatus::ANNONCERET ) && $grund->getDatoannonce() && $grund->getDatoannonce() > $today ) {
 					$grund->setStatus( GrundStatus::FREMTIDIG );
