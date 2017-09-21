@@ -1,6 +1,6 @@
 <?php
 
-namespace ITK\DoctrineIntegrityBundle\Tests\Entity;
+namespace Itk\DoctrineIntegrityBundle\Tests\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;

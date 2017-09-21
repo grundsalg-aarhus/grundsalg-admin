@@ -27,7 +27,7 @@ class AppKernel extends Kernel
       new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
 
       new AppBundle\AppBundle(),
-      new ITK\DoctrineIntegrityBundle\ITKDoctrineIntegrityBundle(),
+      new Itk\DoctrineIntegrityBundle\ItkDoctrineIntegrityBundle(),
     ];
 
     if (in_array($this->getEnvironment(), ['dev', 'test', 'circleci'], true)) {

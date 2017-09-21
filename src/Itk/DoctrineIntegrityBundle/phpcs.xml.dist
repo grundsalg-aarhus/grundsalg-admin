@@ -2,7 +2,7 @@
 <ruleset name="PHP_CodeSniffer">
  <description>The coding standard.</description>
 
- <file>ITKDoctrineIntegrityBundle.php</file>
+ <file>ItkDoctrineIntegrityBundle.php</file>
  <file>DependencyInjection/</file>
  <file>Resources/</file>
  <file>Service/</file>

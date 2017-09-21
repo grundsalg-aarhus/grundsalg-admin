@@ -6,16 +6,16 @@
  * Time: 22.05.
  */
 
-namespace ITK\DoctrineIntegrityBundle\Tests;
+namespace Itk\DoctrineIntegrityBundle\Tests;
 
 use Doctrine\DBAL\Exception\DriverException;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\ORM\Tools\Setup;
-use ITK\DoctrineIntegrityBundle\Service\IntegrityManager;
-use ITK\DoctrineIntegrityBundle\Tests\Entity\Author;
-use ITK\DoctrineIntegrityBundle\Tests\Entity\BlogPost;
-use ITK\DoctrineIntegrityBundle\Tests\Entity\Comment;
-use ITK\DoctrineIntegrityBundle\Tests\Entity\User;
+use Itk\DoctrineIntegrityBundle\Service\IntegrityManager;
+use Itk\DoctrineIntegrityBundle\Tests\Entity\Author;
+use Itk\DoctrineIntegrityBundle\Tests\Entity\BlogPost;
+use Itk\DoctrineIntegrityBundle\Tests\Entity\Comment;
+use Itk\DoctrineIntegrityBundle\Tests\Entity\User;
 
 /**
  * @coversNothing
@@ -51,9 +51,9 @@ class IntegrityManagerTest extends \PHPUnit\Framework\TestCase
         $schemaTool->dropDatabase();
         $schemaTool->createSchema(
             [
-                $this->em->getClassMetadata('ITK\DoctrineIntegrityBundle\Tests\Entity\BlogPost'),
-                $this->em->getClassMetadata('ITK\DoctrineIntegrityBundle\Tests\Entity\Comment'),
-                $this->em->getClassMetadata('ITK\DoctrineIntegrityBundle\Tests\Entity\User'),
+                $this->em->getClassMetadata(BlogPost::class),
+                $this->em->getClassMetadata(Comment::class),
+                $this->em->getClassMetadata(User::class),
             ]
         );
     }
@@ -78,7 +78,7 @@ class IntegrityManagerTest extends \PHPUnit\Framework\TestCase
         $expected = [
             'total' => 2,
             'references' => [
-                'ITK\DoctrineIntegrityBundle\Tests\Entity\BlogPost' => [
+                'Itk\DoctrineIntegrityBundle\Tests\Entity\BlogPost' => [
                     'author' => 2,
                 ],
             ],

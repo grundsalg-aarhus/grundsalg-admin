@@ -1,6 +1,6 @@
 <?php
 
-namespace ITK\DoctrineIntegrityBundle\DependencyInjection;
+namespace Itk\DoctrineIntegrityBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  *
  * @see http://symfony.com/doc/current/cookbook/bundles/extension.html
  */
-class ITKDoctrineIntegrityExtension extends Extension
+class ItkDoctrineIntegrityExtension extends Extension
 {
     /**
      * {@inheritdoc}

@@ -1,13 +1,13 @@
 <?php
 
-namespace ITK\DoctrineIntegrityBundle\Twig\Extension;
+namespace Itk\DoctrineIntegrityBundle\Twig\Extension;
 
-use ITK\DoctrineIntegrityBundle\Service\IntegrityManager;
+use Itk\DoctrineIntegrityBundle\Service\IntegrityManager;
 
 /**
  * Class TwigExtension.
  */
-class ITKDoctrineIntegrityExtension extends \Twig_Extension
+class ItkDoctrineIntegrityExtension extends \Twig_Extension
 {
     /**
      * @var IntegrityManager
