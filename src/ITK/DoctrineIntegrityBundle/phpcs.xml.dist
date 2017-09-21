@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<ruleset name="PHP_CodeSniffer">
+ <description>The coding standard.</description>
+
+ <file>ITKDoctrineIntegrityBundle.php</file>
+ <file>DependencyInjection/</file>
+ <file>Resources/</file>
+ <file>Service/</file>
+ <file>Tests/</file>
+ <file>Twig/</file>
+
+ <arg value="p"/>
+
+ <rule ref="PSR2"/>
+</ruleset>

@@ -4,15 +4,11 @@ namespace ITK\DoctrineIntegrityBundle\Twig\Extension;
 
 use ITK\DoctrineIntegrityBundle\Service\IntegrityManager;
 
-
 /**
  * Class TwigExtension.
- *
- * @package AdminBundle\Twig\Extension
  */
 class ITKDoctrineIntegrityExtension extends \Twig_Extension
 {
-
     /**
      * @var IntegrityManager
      */
@@ -56,7 +52,7 @@ class ITKDoctrineIntegrityExtension extends \Twig_Extension
     /**
      * @param $entity
      *
-     * @return array|bool|null
+     * @return null|array|bool
      */
     public function getCannotDeleteInfo($entity)
     {
@@ -64,5 +60,4 @@ class ITKDoctrineIntegrityExtension extends \Twig_Extension
 
         return is_array($info) ? $info : null;
     }
-
 }

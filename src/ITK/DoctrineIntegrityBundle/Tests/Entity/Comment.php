@@ -6,10 +6,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToone;
-use ITK\DoctrineIntegrityBundle\Tests\Entity\BlogPost;
 
 /**
- * Comment
+ * Comment.
  *
  * @ORM\Table(name="comment")
  * @ORM\Entity
@@ -36,14 +35,14 @@ class Comment
     private $blogPost;
 
     /**
-     * Bidirectional - Many comments are favorited by many users (INVERSE SIDE)
+     * Bidirectional - Many comments are favorited by many users (INVERSE SIDE).
      *
      * @ManyToMany(targetEntity="User", mappedBy="favorites")
      */
     private $userFavorites;
 
     /**
-     * Bidirectional - Many Comments are authored by one user (OWNING SIDE)
+     * Bidirectional - Many Comments are authored by one user (OWNING SIDE).
      *
      * @ManyToOne(targetEntity="User", inversedBy="commentsAuthored")
      */
@@ -96,5 +95,4 @@ class Comment
     {
         $this->userFavorites->add($user);
     }
-
 }

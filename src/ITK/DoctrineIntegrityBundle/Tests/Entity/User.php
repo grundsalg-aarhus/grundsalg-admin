@@ -4,16 +4,14 @@ namespace ITK\DoctrineIntegrityBundle\Tests\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\GeneratedValue;
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\OneToMany;
 
 /**
- * User
+ * User.
  *
  * @ORM\Table(name="user")
  * @ORM\Entity
@@ -37,7 +35,7 @@ class User
     private $blogPosts;
 
     /**
-     * Bidirectional - Many users have Many favorite comments (OWNING SIDE)
+     * Bidirectional - Many users have Many favorite comments (OWNING SIDE).
      *
      * @ManyToMany(targetEntity="Comment", inversedBy="userFavorites")
      * @JoinTable(name="user_favorite_comments")
@@ -45,7 +43,7 @@ class User
     private $favorites;
 
     /**
-     * Unidirectional - Many users have marked many comments as read
+     * Unidirectional - Many users have marked many comments as read.
      *
      * @ManyToMany(targetEntity="Comment")
      * @JoinTable(name="user_read_comments")
@@ -53,14 +51,14 @@ class User
     private $commentsRead;
 
     /**
-     * Bidirectional - One-To-Many (INVERSE SIDE)
+     * Bidirectional - One-To-Many (INVERSE SIDE).
      *
      * @OneToMany(targetEntity="Comment", mappedBy="author")
      */
     private $commentsAuthored;
 
     /**
-     * Unidirectional - Many-To-One
+     * Unidirectional - Many-To-One.
      *
      * @ManyToOne(targetEntity="Comment")
      */
@@ -89,21 +87,24 @@ class User
     /**
      * @param Comment $comment
      */
-    public function addFavorite(Comment $comment) {
+    public function addFavorite(Comment $comment)
+    {
         $this->favorites->add($comment);
     }
 
     /**
      * @param Comment $comment
      */
-    public function addCommentsRead(Comment $comment) {
+    public function addCommentsRead(Comment $comment)
+    {
         $this->commentsRead->add($comment);
     }
 
     /**
      * @param Comment $comment
      */
-    public function addCommentsAuthored(Comment $comment) {
+    public function addCommentsAuthored(Comment $comment)
+    {
         $this->commentsAuthored->add($comment);
     }
 
@@ -114,5 +115,4 @@ class User
     {
         $this->firstComment = $firstComment;
     }
-
 }

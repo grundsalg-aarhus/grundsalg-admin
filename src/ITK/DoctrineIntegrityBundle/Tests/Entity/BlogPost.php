@@ -5,10 +5,9 @@ namespace ITK\DoctrineIntegrityBundle\Tests\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToMany;
-use ITK\DoctrineIntegrityBundle\Tests\Entity\Author;
 
 /**
- * BlogPost
+ * BlogPost.
  *
  * @ORM\Table(name="blogpost")
  * @ORM\Entity
@@ -65,5 +64,4 @@ class BlogPost
         $this->comments->add($comment);
         $comment->setBlogPost($this);
     }
-
 }

@@ -3,31 +3,31 @@
  * Created by PhpStorm.
  * User: turegjorup
  * Date: 06/09/2017
- * Time: 22.05
+ * Time: 22.05.
  */
 
 namespace ITK\DoctrineIntegrityBundle\Tests;
 
 use Doctrine\DBAL\Exception\DriverException;
-use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
-use ITK\DoctrineIntegrityBundle\Service\IntegrityManager;
 use Doctrine\ORM\Tools\SchemaTool;
+use Doctrine\ORM\Tools\Setup;
+use ITK\DoctrineIntegrityBundle\Service\IntegrityManager;
 use ITK\DoctrineIntegrityBundle\Tests\Entity\Author;
 use ITK\DoctrineIntegrityBundle\Tests\Entity\BlogPost;
-use Doctrine\ORM\Tools\Setup;
-use Doctrine\ORM\EntityManager;
 use ITK\DoctrineIntegrityBundle\Tests\Entity\Comment;
 use ITK\DoctrineIntegrityBundle\Tests\Entity\User;
 
+/**
+ * @coversNothing
+ */
 class IntegrityManagerTest extends \PHPUnit\Framework\TestCase
 {
-
     private $em;
-    private $integrityManager = null;
+    private $integrityManager;
 
     public function setUp()
     {
-        $paths  = [realpath(__DIR__.'/Entity')];
+        $paths = [realpath(__DIR__.'/Entity')];
         $config = Setup::createAnnotationMetadataConfiguration($paths, true, null, null, false);
         $config->setQueryCacheImpl(new \Doctrine\Common\Cache\ArrayCache());
 
@@ -56,13 +56,12 @@ class IntegrityManagerTest extends \PHPUnit\Framework\TestCase
                 $this->em->getClassMetadata('ITK\DoctrineIntegrityBundle\Tests\Entity\User'),
             ]
         );
-
     }
 
     public function testOneToMany()
     {
-        $author1   = new User();
-        $author2   = new User();
+        $author1 = new User();
+        $author2 = new User();
         $blogpost1 = new BlogPost();
         $blogpost2 = new BlogPost();
 
@@ -76,19 +75,19 @@ class IntegrityManagerTest extends \PHPUnit\Framework\TestCase
         $this->em->flush();
 
         $canDelete = $this->integrityManager->canDelete($author1);
-        $expected  = [
-            'total'      => 2,
+        $expected = [
+            'total' => 2,
             'references' => [
                 'ITK\DoctrineIntegrityBundle\Tests\Entity\BlogPost' => [
                     'author' => 2,
                 ],
             ],
         ];
-        $this->assertEquals($expected, $canDelete, '@OneToMany: Author with two blogPosts should not be deleteable');
+        $this->assertSame($expected, $canDelete, '@OneToMany: Author with two blogPosts should not be deleteable');
 
         $canDelete = $this->integrityManager->canDelete($author2);
-        $expected  = true;
-        $this->assertEquals($expected, $canDelete, '@OneToMany: Author without any blogPosts should be deleteable');
+        $expected = true;
+        $this->assertSame($expected, $canDelete, '@OneToMany: Author without any blogPosts should be deleteable');
 
         $this->em->remove($author2);
         $this->em->flush();
@@ -111,8 +110,8 @@ class IntegrityManagerTest extends \PHPUnit\Framework\TestCase
         $this->em->flush();
 
         $canDelete = $this->integrityManager->canDelete($blogPost);
-        $expected  = true;
-        $this->assertEquals($expected, $canDelete, '@OneToMany: BlogPost with comments should be deleteable because of cascade={remove} on comments');
+        $expected = true;
+        $this->assertSame($expected, $canDelete, '@OneToMany: BlogPost with comments should be deleteable because of cascade={remove} on comments');
 
         $this->em->remove($blogPost);
         $this->em->flush();
@@ -120,7 +119,7 @@ class IntegrityManagerTest extends \PHPUnit\Framework\TestCase
 
     public function testManyToOne()
     {
-        $author1   = new User();
+        $author1 = new User();
         $blogPost1 = new BlogPost();
         $blogPost2 = new BlogPost();
 
@@ -133,9 +132,9 @@ class IntegrityManagerTest extends \PHPUnit\Framework\TestCase
         $this->em->flush();
 
         $canDelete = $this->integrityManager->canDelete($blogPost1);
-        $expected  = true;
+        $expected = true;
 
-        $this->assertEquals($expected, $canDelete, '@ManyToOne: BlogPost should always be deleteable');
+        $this->assertSame($expected, $canDelete, '@ManyToOne: BlogPost should always be deleteable');
 
         $this->em->remove($blogPost1);
         $this->em->flush();
@@ -154,8 +153,8 @@ class IntegrityManagerTest extends \PHPUnit\Framework\TestCase
         $this->em->flush();
 
         $canDelete = $this->integrityManager->canDelete($comment1);
-        $expected  = true;
-        $this->assertEquals($expected, $canDelete, '@ManyToOne: Comment should always be deleteable');
+        $expected = true;
+        $this->assertSame($expected, $canDelete, '@ManyToOne: Comment should always be deleteable');
 
         $this->em->remove($comment1);
         $this->em->flush();
@@ -163,7 +162,7 @@ class IntegrityManagerTest extends \PHPUnit\Framework\TestCase
 
     public function testManyToManyBidirectional()
     {
-        $user     = new User();
+        $user = new User();
         $comment1 = new Comment();
         $comment2 = new Comment();
 
@@ -176,12 +175,12 @@ class IntegrityManagerTest extends \PHPUnit\Framework\TestCase
         $this->em->flush();
 
         $canDelete = $this->integrityManager->canDelete($user);
-        $expected  = true;
-        $this->assertEquals($expected, $canDelete, '@ManyToMany/Bidirectional/OwningSide: User should always be deleteable');
+        $expected = true;
+        $this->assertSame($expected, $canDelete, '@ManyToMany/Bidirectional/OwningSide: User should always be deleteable');
 
         $canDelete = $this->integrityManager->canDelete($comment1);
-        $expected  = true;
-        $this->assertEquals($expected, $canDelete, '@ManyToMany/Bidirectional/InverseSide: Comment should always be deleteable');
+        $expected = true;
+        $this->assertSame($expected, $canDelete, '@ManyToMany/Bidirectional/InverseSide: Comment should always be deleteable');
 
         $this->em->remove($user);
         $this->em->flush();
@@ -192,7 +191,7 @@ class IntegrityManagerTest extends \PHPUnit\Framework\TestCase
 
     public function testManyToManyUnidirectional()
     {
-        $user     = new User();
+        $user = new User();
         $comment1 = new Comment();
         $comment2 = new Comment();
 
@@ -205,12 +204,12 @@ class IntegrityManagerTest extends \PHPUnit\Framework\TestCase
         $this->em->flush();
 
         $canDelete = $this->integrityManager->canDelete($user);
-        $expected  = true;
-        $this->assertEquals($expected, $canDelete, '@ManyToMany/Unidirectional/OwningSide: User should always be deleteable');
+        $expected = true;
+        $this->assertSame($expected, $canDelete, '@ManyToMany/Unidirectional/OwningSide: User should always be deleteable');
 
         $canDelete = $this->integrityManager->canDelete($comment1);
-        $expected  = true;
-        $this->assertEquals($expected, $canDelete, '@ManyToMany/Unidirectional/InverseSide: Comment should always be deleteable');
+        $expected = true;
+        $this->assertSame($expected, $canDelete, '@ManyToMany/Unidirectional/InverseSide: Comment should always be deleteable');
 
         $this->em->remove($user);
         $this->em->flush();
@@ -218,5 +217,4 @@ class IntegrityManagerTest extends \PHPUnit\Framework\TestCase
         $this->em->remove($comment1);
         $this->em->flush();
     }
-
 }
