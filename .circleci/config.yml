@@ -48,7 +48,7 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-composer
 
-      - run: composer self-update
+      - run: sudo composer self-update
 
       - run: composer install --no-interaction
 
@@ -68,4 +68,5 @@ jobs:
           key: v1-dependencies-{{ checksum "composer.lock" }}
 
       # run tests!
+      - run: vendor/bin/phpunit
       - run: vendor/bin/behat --profile=circleci

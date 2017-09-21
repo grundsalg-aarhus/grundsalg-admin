@@ -16,6 +16,7 @@ flash:
     buyer_not_empty: Der er allerede registreret en køber under salg
     waitlist_allready_cancelled: Venteliste allerede annulleret
     waitlist_cancelled: Venteliste annulleret
+    waitlist_empty: Kan ikke hente køber. Ventelisten er tom.
     waitlist_fetched: Køber hentet fra ventelisten
 
 # If we use the 'form_label' widget directly the EasyAdmin 'label' value is not used
