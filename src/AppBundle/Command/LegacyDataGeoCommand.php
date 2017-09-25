@@ -54,8 +54,8 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
 
           if (isset($row['ID']) && $row['ID'] !== 0) {
             if (strpos($table, 'Grunde') !== false) {
-              $fagsystemID = $this->matchToGrund($table, $row['Adresse'], $row['Pris'], $row['Grundpris'], $row['m2'], $row['Status']);
-              $pdflink = $this->getUrlFromString($table, $row['Adresse_link']);
+              $fagsystemID = $this->matchToGrund($table, $row);
+              $pdflink = $this->getUrlFromString($table, $row);
 
               if ($fagsystemID) {
                 try {
@@ -82,7 +82,7 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
               // If we know the match between web<>fagsystem then use that, else best guess.
               $fagsystemID = $this->matchToOmraadeStatic($table, $row['ID']);
               if(!$fagsystemID) {
-                $fagsystemID = $this->matchToOmraade($table, $row['OmraadeNavn'], $row['Info1_overskr']);
+                $fagsystemID = $this->matchToOmraade($table, $row);
               }
 
               if($fagsystemID) {
@@ -121,7 +121,7 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
 
   /**
    * Match "Web" Salgsomrader to "Fag" Salgsomraader from staic tables of matches.
-   * These are the areas we hjave confirmed as matched.
+   * These are the areas we have confirmed as matched.
    *
    * @param $table
    * @param $id
@@ -177,18 +177,46 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
     }
   }
 
+  private function getOmraadeType($table) {
+      switch ($table) {
+          case 'OmraaderBolig':
+              return 'Parcelhusgrund';
 
-  private function matchToOmraade($table, $OmraadeNavn, $info1_overskr)
+          case 'OmraaderErhverv':
+              return 'Erhvervsgrund';
+
+          case 'OmraaderStorParcel':
+              return 'Storparcel';
+
+          case 'FremtidigeOmraaderBolig':
+              return 'Parcelhusgrund';
+
+          case 'FremtidigeOmraaderErhverv':
+              return 'Erhvervsgrund';
+
+          case 'FremtidigeOmraaderStorParcel':
+              return 'Storparcel';
+
+          default:
+              return FALSE;
+      }
+  }
+
+  private function matchToOmraade($table, $row)
   {
-    $lokalplanNumber = $this->getNumberFromString($table, $OmraadeNavn, $info1_overskr);
+    $omraadeNavn = $row['OmraadeNavn'];
+    $omraadeType = $this->getOmraadeType($table);
+    $info1_overskr = $row['Info1_overskr'];
+    $lokalplanNumber = $this->getNumberFromString($table, $row, $omraadeNavn, $info1_overskr);
 
     $connection = $this->getContainer()->get('doctrine.dbal.default_connection');
 
-    $sql = 'SELECT s.id, lp.nr FROM Salgsomraade s LEFT JOIN Lokalplan lp ON s.lokalplanId = lp.id WHERE lp.nr = ?';
+    $sql = 'SELECT s.id, s.type, lp.nr FROM Salgsomraade s LEFT JOIN Lokalplan lp ON s.lokalplanId = lp.id WHERE lp.nr = ? AND s.type = ?';
 
     try {
       $stmt = $connection->prepare($sql);
       $stmt->bindValue(1, $lokalplanNumber);
+      $stmt->bindValue(2, $omraadeType);
       $stmt->execute();
 
       $result = $stmt->fetchAll();
@@ -202,20 +230,26 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
       return $result[0]['id'];
     } else if ($c === 0) {
       $this->countChanges($table, 'Omraade ZERO matches', $this->changeCount);
-      $this->printWarning('Omraade ZERO matches: ' . $table . ' / ' . $OmraadeNavn . ', Lokalplan: ' . $info1_overskr . ' matches ' . $c . ' rows');
+      $this->printWarning($table, $row, 'Omraade ZERO matches: ' . $table . ' / ' . $omraadeNavn . ', Lokalplan: ' . $info1_overskr . ' matches ' . $c . ' rows');
     } else {
       $this->countChanges($table, 'Omraade MULTIPLE matches', $this->changeCount);
-      $this->printWarning('Omraade MULTIPLE matches: ' . $table . ' / ' . $OmraadeNavn . ', Lokalplan: ' . $info1_overskr . ' matches ' . $c . ' rows');
+      $this->printWarning($table, $row, 'Omraade MULTIPLE matches: ' . $table . ' / ' . $omraadeNavn . ', Lokalplan: ' . $info1_overskr . ' matches ' . $c . ' rows');
     }
 
     return false;
   }
 
-  private function matchToGrund($table, $adresse, $pris, $grundPris, $m2, $status)
+  private function matchToGrund($table, $row)
   {
+    $adresse = $row['Adresse'];
+    $pris = $row['Pris'];
+    $grundPris = $row['Grundpris'];
+    $m2 = $row['m2'];
+    $status = $row['Status'];
+
     $connection = $this->getContainer()->get('doctrine.dbal.default_connection');
 
-    $husnummer = $this->getNumberFromString($table, '', $adresse);
+    $husnummer = $this->getNumberFromString($table, $row,'', $adresse);
     $grundType = $this->getGrundtypeFromTableName($table);
     $vej = $this->getVejnavn($adresse);
     $bogstav = $this->getBogstav($adresse, $husnummer);
@@ -290,52 +324,19 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
     }
 
     $c = count($result);
-    if($c === 0 && !$this->validateVejExistInFagsystem($vej)) {
-//      $this->countChanges($table, 'NEW vej, Grund INSERTED', $this->changeCount);
-//      $this->printWarning('NEW vej, Grund INSERTED: ' . $table . ' / ' . $adresse . ', m2: ' . $m2 . ', pris: ' . $pris . ', gPris: ' . $grundPris . ' matches ' . $c . ' rows');
-//      return $this->insertGrund($vej, $husnummer, $bogstav, $grundType, $m2, $status);
-    } else if ($c === 1) {
+    if ($c === 1) {
       $this->countChanges($table, 'Grund matched', $this->changeCount);
       return $result[0]['id'];
     } else if($c === 0) {
       $this->countChanges($table, 'Grund ZERO matches', $this->changeCount);
-      $this->printWarning('Grund ZERO matches: ' . $table . ' / ' . $adresse . ', m2: ' . $m2 . ', pris: ' . $pris . ', gPris: ' . $grundPris . ' matches ' . $c . ' rows');
+      $this->printWarning($table, $row, 'Grund ZERO matches: ' . $table . '#' . $row['ID'] . ' / ' . $adresse . ', m2: ' . $m2 . ', pris: ' . $pris . ', gPris: ' . $grundPris . ' matches ' . $c . ' rows');
     } else {
       $this->countChanges($table, 'Grund MULTIPLE matches', $this->changeCount);
-      $this->printWarning('Grund MULTIPLE matches: ' . $table . ' / ' . $adresse . ', m2: ' . $m2 . ', pris: ' . $pris . ', gPris: ' . $grundPris . ' matches ' . $c . ' rows');
+      $this->printWarning($table, $row,'Grund MULTIPLE matches: ' . $table . '#' . $row['ID'] . ' / ' . $adresse . ', m2: ' . $m2 . ', pris: ' . $pris . ', gPris: ' . $grundPris . ' matches ' . $c . ' rows');
     }
 
     return false;
 
-  }
-
-  private function insertGrund($vej, $husnummer, $bogstav, $grundType, $m2, $status) {
-    $connection = $this->getContainer()->get('doctrine.dbal.default_connection');
-
-    try {
-      $sql = 'INSERT INTO Grund (vej, husNummer, bogstav, grundType, areal, status, annonceresEj, createdDate, modifiedDate, createdBy, modifiedBy) VALUES (?, ? ,?, ?, ?, ?, ?, NOW(), NOW(), ?, ?)';
-      $stmt = $connection->prepare($sql);
-      $stmt->bindValue(1, $vej);
-      $stmt->bindValue(2, $husnummer);
-      $stmt->bindValue(3, $bogstav);
-      $stmt->bindValue(4, $grundType);
-      $stmt->bindValue(5, $m2);
-      $stmt->bindValue(6, $status);
-      $stmt->bindValue(7, true);
-      $stmt->bindValue(8, 'Geo/Web import');
-      $stmt->bindValue(9, 'Geo/Web import');
-      $stmt->execute();
-
-      $id = $connection->lastInsertId();
-    } catch (ForeignKeyConstraintViolationException $e) {
-      throw $e;
-    }
-
-    if(!in_array($vej, $this->newRoads)) {
-      $this->newRoads[] = $vej;
-    }
-
-    return $id;
   }
 
   private function getVejnavn($adresse) {
@@ -348,32 +349,6 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
     }
 
     return $vej;
-  }
-
-  private function validateVejExistInFagsystem($vej) {
-    $connection = $this->getContainer()->get('doctrine.dbal.default_connection');
-
-    // If road has been added by this script return false
-    if(in_array($vej, $this->newRoads)) {
-      return false;
-    }
-
-    try {
-      $sql = 'SELECT * FROM Grund WHERE vej LIKE ?';
-      $stmt = $connection->prepare($sql);
-      $stmt->bindValue(1, $vej. '%');
-      $stmt->execute();
-
-      $result = $stmt->fetchAll();
-    } catch (ForeignKeyConstraintViolationException $e) {
-      throw $e;
-    }
-
-    if(count($result) > 0) {
-      return true;
-    }
-
-    return false;
   }
 
   private function getGrundtypeFromTableName($table) {
@@ -392,7 +367,7 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
     }
   }
 
-  private function getNumberFromString($table, $OmraadeNavn, $str)
+  private function getNumberFromString($table, $row, $OmraadeNavn, $str)
   {
     if (!empty(trim($str))) {
       $regex = '/\d+/';
@@ -405,7 +380,7 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
       }
 
       $this->countChanges($table, 'String is non-empty, but no number found', $this->changeCount);
-      $this->printWarning('Warning: ' . $table . ' / ' . $OmraadeNavn . ' - String: "' . $str . '" is non-empty, but no number found!');
+      $this->printWarning($table, $row, 'Warning: ' . $table . ' / ' . $OmraadeNavn . ' - String: "' . $str . '" is non-empty, but no number found!');
     }
 
     return null;
@@ -426,8 +401,10 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
     return null;
   }
 
-  private function getUrlFromString($table, $str)
+  private function getUrlFromString($table, $row)
   {
+    $str = $row['Adresse_link'];
+
     if (!empty(trim($str))) {
       $regex = '/href=([\'"])(.*?)\1/';
       preg_match_all($regex, $str, $matches);
@@ -442,18 +419,18 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
             $url = substr($url, 0, -1);
           }
 
-          return $this->validateURL($table, $url) ? $url : null;
+          return $this->validateURL($table, $row, $url) ? $url : null;
         }
       }
 
       $this->countChanges($table, 'String is non-empty, but no URL found', $this->changeCount);
-      $this->printWarning('String: "' . $str . '" is non-empty, but no URL found!');
+      $this->printWarning($table, $row,'String: "' . $str . '" is non-empty, but no URL found!');
     }
 
     return null;
   }
 
-  private function validateURL($table, $url)
+  private function validateURL($table, $row, $url)
   {
     if (empty($url)) {
       throw new \Exception('Error: $url cannot be empty');
@@ -468,7 +445,7 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
     } catch (ClientException $e) {
       if ($e->getCode() === 404) {
         $this->countChanges($table, '404 - URL not found', $this->changeCount);
-        $this->printWarning('404 - URL not found: ' . $url);
+        $this->printWarning($table, $row, '404 - URL not found: ' . $url);
 
         return false;
       } else {
@@ -482,14 +459,15 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
 
   /**
    * Set value in import row.
+   *
    * @param string $message
    *   The warning message.
    */
-  private function printWarning($message)
+  private function printWarning($table, $row, $message)
   {
     $output = $this->output instanceof ConsoleOutputInterface ? $this->output->getErrorOutput() : $this->output;
 
-    $output->writeln(sprintf('<comment>Warning: %s</comment>', $message));
+    $output->writeln(sprintf('<comment>Warning: %s#%d: %s</comment>', $table, $row['ID'], $message));
   }
 
   /**
