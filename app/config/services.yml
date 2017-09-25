@@ -25,13 +25,6 @@ services:
     tags:
       - { name: twig.extension }
 
-  app.twig_extension_easy_admin:
-    class: AppBundle\Twig\Extension\EasyAdminExtension
-    arguments: ['@security.token_storage', '@security.access.decision_manager', '@translator', '@app.integrity_manager']
-    public: false
-    tags:
-      - { name: twig.extension }
-
   app.calculation.salgsomraade:
     class: AppBundle\CalculationService\SalgsomraadeCalculator
     tags:
@@ -71,9 +64,3 @@ services:
     arguments: [ "@doctrine.orm.entity_manager" ]
     tags:
       - { name: kernel.event_subscriber }
-
-  app.integrity_manager:
-    class: AppBundle\Service\IntegrityManager
-    public: false
-    arguments:
-        - '@doctrine.orm.entity_manager'

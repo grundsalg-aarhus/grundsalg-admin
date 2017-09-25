@@ -29,7 +29,7 @@
 {% endblock %}
 
 {% block delete_form %}
-	{% if can_delete(entity) %}
+	{% if entity is deleteable %}
 		{{ parent() }}
 	{% else %}
 		{% include 'easy_admin/_includes/_cannot_delete_message.html.twig' %}
