@@ -120,7 +120,7 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
   }
 
   /**
-   * Match "Web" Salgsomrader to "Fag" Salgsomraader from staic tables of matches.
+   * Match "Web" Salgsomrader to "Fag" Salgsomraader from static tables of matches.
    * These are the areas we have confirmed as matched.
    *
    * @param $table
