@@ -83,7 +83,6 @@ class ApiController extends Controller {
     }
 
     $response = $this->json($list);
-    $response->headers->set('Access-Control-Allow-Origin', '*');
 
     return $response;
   }
@@ -121,7 +120,6 @@ class ApiController extends Controller {
     }
 
     $response = $this->json($data);
-    $response->headers->set('Access-Control-Allow-Origin', '*');
 
     return $response;
   }
