@@ -23,6 +23,7 @@ class AppKernel extends Kernel
       new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
       new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
       new Fresh\DoctrineEnumBundle\FreshDoctrineEnumBundle(),
+      new Nelmio\CorsBundle\NelmioCorsBundle(),
 
       new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
 
