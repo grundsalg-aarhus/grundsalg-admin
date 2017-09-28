@@ -6,18 +6,18 @@
  * Time: 22.05
  */
 
-namespace ITK\DoctrineIntegrityBundle\Tests;
+namespace Itk\DoctrineIntegrityBundle\Tests;
 
 use Doctrine\DBAL\Exception\DriverException;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
-use ITK\DoctrineIntegrityBundle\Service\IntegrityManager;
+use Itk\DoctrineIntegrityBundle\Service\IntegrityManager;
 use Doctrine\ORM\Tools\SchemaTool;
-use ITK\DoctrineIntegrityBundle\Tests\Entity\Author;
-use ITK\DoctrineIntegrityBundle\Tests\Entity\BlogPost;
+use Itk\DoctrineIntegrityBundle\Tests\Entity\Author;
+use Itk\DoctrineIntegrityBundle\Tests\Entity\BlogPost;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
-use ITK\DoctrineIntegrityBundle\Tests\Entity\Comment;
-use ITK\DoctrineIntegrityBundle\Tests\Entity\User;
+use Itk\DoctrineIntegrityBundle\Tests\Entity\Comment;
+use Itk\DoctrineIntegrityBundle\Tests\Entity\User;
 
 class IntegrityManagerTest extends \PHPUnit\Framework\TestCase
 {
@@ -51,9 +51,9 @@ class IntegrityManagerTest extends \PHPUnit\Framework\TestCase
         $schemaTool->dropDatabase();
         $schemaTool->createSchema(
             [
-                $this->em->getClassMetadata('ITK\DoctrineIntegrityBundle\Tests\Entity\BlogPost'),
-                $this->em->getClassMetadata('ITK\DoctrineIntegrityBundle\Tests\Entity\Comment'),
-                $this->em->getClassMetadata('ITK\DoctrineIntegrityBundle\Tests\Entity\User'),
+                $this->em->getClassMetadata('Itk\DoctrineIntegrityBundle\Tests\Entity\BlogPost'),
+                $this->em->getClassMetadata('Itk\DoctrineIntegrityBundle\Tests\Entity\Comment'),
+                $this->em->getClassMetadata('Itk\DoctrineIntegrityBundle\Tests\Entity\User'),
             ]
         );
 
@@ -79,7 +79,7 @@ class IntegrityManagerTest extends \PHPUnit\Framework\TestCase
         $expected  = [
             'total'      => 2,
             'references' => [
-                'ITK\DoctrineIntegrityBundle\Tests\Entity\BlogPost' => [
+                'Itk\DoctrineIntegrityBundle\Tests\Entity\BlogPost' => [
                     'author' => 2,
                 ],
             ],

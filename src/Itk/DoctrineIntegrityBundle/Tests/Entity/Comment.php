@@ -1,12 +1,12 @@
 <?php
 
-namespace ITK\DoctrineIntegrityBundle\Tests\Entity;
+namespace Itk\DoctrineIntegrityBundle\Tests\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToone;
-use ITK\DoctrineIntegrityBundle\Tests\Entity\BlogPost;
+use Itk\DoctrineIntegrityBundle\Tests\Entity\BlogPost;
 
 /**
  * Comment
