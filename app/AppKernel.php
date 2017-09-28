@@ -5,59 +5,59 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 
 class AppKernel extends Kernel
 {
-  public function registerBundles()
-  {
-    $bundles = [
-      new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-      new Symfony\Bundle\SecurityBundle\SecurityBundle(),
-      new Symfony\Bundle\TwigBundle\TwigBundle(),
-      new Symfony\Bundle\MonologBundle\MonologBundle(),
-      new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
-      new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
-      new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+    public function registerBundles()
+    {
+        $bundles = [
+            new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new Symfony\Bundle\SecurityBundle\SecurityBundle(),
+            new Symfony\Bundle\TwigBundle\TwigBundle(),
+            new Symfony\Bundle\MonologBundle\MonologBundle(),
+            new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
+            new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+            new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
-      new FOS\UserBundle\FOSUserBundle(),
-      new WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),
-      new Braincrafted\Bundle\BootstrapBundle\BraincraftedBootstrapBundle(),
-      new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
-      new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
-      new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-      new Fresh\DoctrineEnumBundle\FreshDoctrineEnumBundle(),
-      new Nelmio\CorsBundle\NelmioCorsBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
+            new WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),
+            new Braincrafted\Bundle\BootstrapBundle\BraincraftedBootstrapBundle(),
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new Fresh\DoctrineEnumBundle\FreshDoctrineEnumBundle(),
+            new Nelmio\CorsBundle\NelmioCorsBundle(),
 
-      new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
+            new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
 
-      new AppBundle\AppBundle(),
-      new ITK\DoctrineIntegrityBundle\ITKDoctrineIntegrityBundle(),
-    ];
+            new AppBundle\AppBundle(),
+            new ITK\DoctrineIntegrityBundle\ITKDoctrineIntegrityBundle(),
+        ];
 
-    if (in_array($this->getEnvironment(), ['dev', 'test', 'circleci'], true)) {
-      $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
-      $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
-      $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
-      $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+        if (in_array($this->getEnvironment(), ['dev', 'test', 'circleci'], true)) {
+            $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
+            $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
+            $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
+            $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+        }
+
+        return $bundles;
     }
 
-    return $bundles;
-  }
+    public function getRootDir()
+    {
+        return __DIR__;
+    }
 
-  public function getRootDir()
-  {
-    return __DIR__;
-  }
+    public function getCacheDir()
+    {
+        return dirname(__DIR__).'/var/cache/'.$this->getEnvironment();
+    }
 
-  public function getCacheDir()
-  {
-    return dirname(__DIR__) . '/var/cache/' . $this->getEnvironment();
-  }
+    public function getLogDir()
+    {
+        return dirname(__DIR__).'/var/logs';
+    }
 
-  public function getLogDir()
-  {
-    return dirname(__DIR__) . '/var/logs';
-  }
-
-  public function registerContainerConfiguration(LoaderInterface $loader)
-  {
-    $loader->load($this->getRootDir() . '/config/config_' . $this->getEnvironment() . '.yml');
-  }
+    public function registerContainerConfiguration(LoaderInterface $loader)
+    {
+        $loader->load($this->getRootDir().'/config/config_'.$this->getEnvironment().'.yml');
+    }
 }
