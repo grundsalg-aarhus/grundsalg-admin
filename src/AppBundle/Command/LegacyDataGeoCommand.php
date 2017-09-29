@@ -53,32 +53,43 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
                 foreach ($rows as $row) {
 
                     if (isset($row['ID']) && $row['ID'] !== 0) {
-              
 
+                        // GRUNDE
                         if (strpos($table, 'Grunde') !== false) {
-                            $fagsystemID = $this->matchToGrund($table, $row);
+                            // If we know the match between web<>fagsystem then use that, else best guess.
+                            $fagsystemID = $this->matchToGrundStatic($table, $row['ID']);
+                            if ( ! $fagsystemID) {
+                                $fagsystemID = $this->matchToGrund($table, $row);
+                            }
+
                             $pdflink     = $this->getUrlFromString($table, $row);
 
                             if ($fagsystemID) {
-                                try {
-                                    $sql = 'UPDATE Grund SET SP_GEOMETRY = ST_GEOMFROMTEXT(?, ?), srid = ?, MI_STYLE = ?, pdflink = ? WHERE id = ?';
 
-                                    $stmt = $connection->prepare($sql);
-                                    $stmt->bindValue(1, $row['WKT']);
-                                    $stmt->bindValue(2, $row['srid']);
-                                    $stmt->bindValue(3, $row['srid']);
-                                    $stmt->bindValue(4, $row['MI_STYLE']);
-                                    $stmt->bindValue(5, $pdflink);
-                                    $stmt->bindValue(6, $fagsystemID);
-                                    $stmt->execute();
+                                $fagsystemID = is_array($fagsystemID) ? $fagsystemID : [$fagsystemID];
 
-                                } catch (ForeignKeyConstraintViolationException $e) {
-                                    throw $e;
+                                foreach ($fagsystemID as $id) {
+                                    try {
+                                        $sql = 'UPDATE Grund SET SP_GEOMETRY = ST_GEOMFROMTEXT(?, ?), srid = ?, MI_STYLE = ?, pdflink = ? WHERE id = ?';
+
+                                        $stmt = $connection->prepare($sql);
+                                        $stmt->bindValue(1, $row['WKT']);
+                                        $stmt->bindValue(2, $row['srid']);
+                                        $stmt->bindValue(3, $row['srid']);
+                                        $stmt->bindValue(4, $row['MI_STYLE']);
+                                        $stmt->bindValue(5, $pdflink);
+                                        $stmt->bindValue(6, $id);
+                                        $stmt->execute();
+
+                                    } catch (ForeignKeyConstraintViolationException $e) {
+                                        throw $e;
+                                    }
                                 }
                             }
 
                         }
 
+                        // OMRAADER
                         if (strpos($table, 'Omraader') !== false) {
 
                             // If we know the match between web<>fagsystem then use that, else best guess.
@@ -121,6 +132,47 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
 
     }
 
+    private function matchToGrundStatic($table, $id)
+    {
+
+        $erhvervMatchArray = [
+            57  => [2428],
+            85  => [278],
+            141 => [1136],
+            191 => [1152],
+            191 => [1153],
+            192 => [1153],
+            193 => [1154],
+            194 => [1155],
+            195 => [1156],
+            196 => [1157],
+            197 => [1158],
+            212 => [1557],
+            213 => [1556],
+            214 => [1555],
+            215 => [1558],
+            216 => [1559],
+            217 => [1563],
+            218 => [1562],
+            219 => [1561],
+            221 => [1560],
+            227 => [1568],
+            228 => [1569],
+            229 => [1570],
+            230 => [1571],
+            231 => [1572],
+            232 => [1573],
+            233 => [1574],
+            234 => [1575],
+            235 => [1576],
+            236 => [1577],
+            250 => [1638],
+        ];
+
+        return array_key_exists($id, $erhvervMatchArray) ? $erhvervMatchArray[$id] : false;
+
+    }
+
     /**
      * Match "Web" Salgsomrader to "Fag" Salgsomraader from static tables of matches.
      * These are the areas we have confirmed as matched.
@@ -132,8 +184,8 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
      */
     private function matchToOmraadeStatic($table, $id)
     {
-
-        $parcelhusgrundMatchArray = [
+        // WebID / FagsID(s)
+        $boligMatchArray = [
             711 => [223],
             780 => [112],
             854 => [170],
@@ -149,7 +201,7 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
             878 => [40],
         ];
 
-        $erhvervsgrundMatchArray = [
+        $erhvervMatchArray = [
             27    => [7],
             374   => [25, 26],
             868   => [66],
@@ -168,12 +220,21 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
 
         switch ($table) {
             case 'OmraaderBolig':
-                return array_key_exists($id, $parcelhusgrundMatchArray) ? $parcelhusgrundMatchArray[$id] : false;
+                return array_key_exists($id, $boligMatchArray) ? $boligMatchArray[$id] : false;
 
             case 'OmraaderErhverv':
-                return array_key_exists($id, $erhvervsgrundMatchArray) ? $erhvervsgrundMatchArray[$id] : false;
+                return array_key_exists($id, $erhvervMatchArray) ? $erhvervMatchArray[$id] : false;
 
             case 'OmraaderStorParcel':
+                return array_key_exists($id, $storparcelMatchArray) ? $storparcelMatchArray[$id] : false;
+
+            case 'FremtidigeOmraaderBolig':
+                return array_key_exists($id, $boligMatchArray) ? $boligMatchArray[$id] : false;
+
+            case 'FremtidigeOmraaderErhverv':
+                return array_key_exists($id, $erhvervMatchArray) ? $erhvervMatchArray[$id] : false;
+
+            case 'FremtidigeOmraaderStorParcel':
                 return array_key_exists($id, $storparcelMatchArray) ? $storparcelMatchArray[$id] : false;
 
             default:
