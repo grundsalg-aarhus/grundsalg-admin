@@ -42,7 +42,8 @@
         "javiereguiluz/easyadmin-bundle": "1.16.10",
         "fresh/doctrine-enum-bundle": "~5.0",
         "beberlei/DoctrineExtensions": "^1.0",
-        "box/spout": "^2.7"
+        "box/spout": "^2.7",
+        "nelmio/cors-bundle": "^1.5"
     },
     "require-dev": {
         "behatch/contexts": "^2.6",
