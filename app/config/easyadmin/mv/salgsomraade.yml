@@ -45,6 +45,7 @@ easy_admin:
                     - { property: sagsnr, label: 'PSP', css_class: 'col-sm-6' }
                     - { property: vej, css_class: 'col-sm-6' }
                     - { property: landinspektoer, label: 'Landinsp.', css_class: 'col-sm-6' }
+                    - { property: hasSpGeometry, label: 'app.grund.spGeometry', css_class: 'col-sm-6', type: 'checkbox', readonly: true, type_options: { disabled: true, required: false } }
 
                     - { type: 'divider' }
                     - { property: annonceres, label: 'app.salgsomraade.annonceres', css_class: 'col-sm-12' }
@@ -53,4 +54,22 @@ easy_admin:
             show:
                 title: 'Salgsområde'
                 fields:
-                    <<: *salgsomraade_form_fields
+                    - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Delområde' }
+                    - { property: delomraade, label: 'Delområde', type_options: { required: true } }
+                    - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Salgsområde' }
+                    - { property: nr, label: 'Nr', css_class: 'col-sm-4', readonly: true, type_options: { disabled: true, required: false }}
+                    - { property: matrikkel1, label: 'Matr.nr', css_class: 'col-sm-4' }
+                    - { property: matrikkel2, label: false, css_class: 'col-sm-4' }
+                    - { type: 'divider' }
+                    - { property: titel, label: 'Titel', css_class: 'col-sm-6' }
+                    - { property: ejerlav, css_class: 'col-sm-6' }
+                    - { property: type, css_class: 'col-sm-6', type: 'AppBundle\Form\Field\GrundType' }
+                    - { property: postby, css_class: 'col-sm-6' }
+                    - { property: sagsnr, label: 'PSP', css_class: 'col-sm-6' }
+                    - { property: vej, css_class: 'col-sm-6' }
+                    - { property: landinspektoer, label: 'Landinsp.', css_class: 'col-sm-6' }
+                    - { property: hasSpGeometry, label: 'app.grund.spGeometry', css_class: 'col-sm-6', type: 'boolean', readonly: true, type_options: { disabled: true, required: false } }
+
+                    - { type: 'divider' }
+                    - { property: annonceres, label: 'app.salgsomraade.annonceres', css_class: 'col-sm-12' }
+                    - { property: tilsluttet, label: 'Tilsluttet', css_class: 'col-sm-12', type: 'AppBundle\Form\Field\TilslutningsType', type_options: { expanded : true, multiple : true }, help: 'Prisen indeholder helt eller delvis tilslutning til ovenstående' }

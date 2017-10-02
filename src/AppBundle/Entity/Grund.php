@@ -17,6 +17,7 @@ use AppBundle\DBAL\Types\GrundStatus;
 use AppBundle\DBAL\Types\GrundSalgStatus;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 use Psr\Log\NullLogger;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Grund

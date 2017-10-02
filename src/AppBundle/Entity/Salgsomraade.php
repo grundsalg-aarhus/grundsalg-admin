@@ -162,7 +162,7 @@ class Salgsomraade
    *
    * @ORM\Column(name="SP_GEOMETRY", type="geometry", nullable=true)
    */
-  private $sp_geometry;
+  private $spGeometry;
 
   /**
    * @var integer
@@ -532,21 +532,28 @@ class Salgsomraade
     $this->annonceres = $annonceres;
   }
 
-
   /**
    * @return \CrEOF\Spatial\DBAL\Types\Geography
    */
   public function getSpGeometry()
   {
-    return $this->sp_geometry;
+    return $this->spGeometry;
   }
 
   /**
-   * @param \CrEOF\Spatial\DBAL\Types\Geography $sp_geometry
+   * @return \CrEOF\Spatial\DBAL\Types\Geography
    */
-  public function setSpGeometry($sp_geometry)
+  public function hasSpGeometry()
   {
-    $this->sp_geometry = $sp_geometry;
+    return empty($this->spGeometry);
+  }
+
+  /**
+   * @param \CrEOF\Spatial\DBAL\Types\Geography $spGeometry
+   */
+  public function setSpGeometry($spGeometry)
+  {
+    $this->spGeometry = $spGeometry;
   }
 
   /**
