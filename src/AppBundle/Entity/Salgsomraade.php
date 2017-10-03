@@ -545,7 +545,7 @@ class Salgsomraade
    */
   public function hasSpGeometry()
   {
-    return empty($this->spGeometry);
+    return !empty($this->spGeometry);
   }
 
   /**
