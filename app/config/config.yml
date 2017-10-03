@@ -179,6 +179,8 @@ knp_paginator:
 nelmio_cors:
     paths:
         '^/public/api/':
+            allow_credentials: false
             allow_origin: ['*']
-            allow_methods: ['GET']
+            allow_headers: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept']
+            allow_methods: ['GET', 'OPTIONS']
             max_age: 3600
