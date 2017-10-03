@@ -86,6 +86,12 @@ class ApiController extends Controller
 
         $response = $this->json($list);
 
+        $response->setPrivate();
+        $response->setMaxAge(0);
+        $response->setSharedMaxAge(0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+
         return $response;
     }
 
@@ -123,6 +129,12 @@ class ApiController extends Controller
         }
 
         $response = $this->json($data);
+
+        $response->setPrivate();
+        $response->setMaxAge(0);
+        $response->setSharedMaxAge(0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
 
         return $response;
     }
