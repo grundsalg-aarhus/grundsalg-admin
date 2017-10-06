@@ -220,4 +220,110 @@ class ApiController extends Controller
         return PublicStatus::SOLGT;
 
     }
+
+    private function isWaitingPeriod(Grund $grund, $numberOfDays = 6)
+    {
+
+    }
+
+    /**
+     * @param Grund $grund
+     * @param int $numberOfDays
+     *
+     * @return \DateTime
+     */
+    private function getWaitingPeriodEndDay(Grund $grund, $numberOfDays = 6)
+    {
+        $endDay = $grund->getAccept();
+        $count = 0;
+
+        while($count < $numberOfDays) {
+            $endDay->add(new \DateInterval('P1D'));
+            if($this->isWeekDay($endDay)) {
+                $count++;
+            }
+        }
+
+        return $endDay;
+    }
+
+    /**
+     * Check if given date is neither saturday, sunday or a bank holiday
+     *
+     * @param \DateTime $dateTime
+     *
+     * @return bool
+     */
+    private function isWeekDay(\DateTime $dateTime)
+    {
+        if($dateTime->format('N') > 5 || $this->isChangingBankHoliday($dateTime) || $this->isFixedBankHoliday($dateTime)) {
+            return FALSE;
+        }
+
+        return TRUE;
+    }
+
+    /**
+     * Check if a given day is a bank holiday that falls on the same date each year.
+     *
+     * Checks for 'Nytårsdag', 'Grundlovsdag', 'Juleaften', 'Juledag', '2. Juledag', 'Nytårsaften'
+     *
+     * @param \DateTime $dateTime
+     *
+     * @return bool
+     */
+    private function isFixedBankHoliday(\DateTime $dateTime)
+    {
+        $date = $dateTime->format('m-d');
+
+        switch ($date) {
+            case '01-01': // Nytårsdag
+                return true;
+            case '06-05': // Grundlovsdag
+                return true;
+            case '12-24':  // Juleaften
+                return true;
+            case '12-25': // Juledag
+                return true;
+            case '12-26': // 2. Juledag
+                return true;
+            case '12-31': // Nytårsaften
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Check if a given day is a bank holiday where the date is defined by easter
+     *
+     * Checks for Palmesøndag, Skærtorsdag, Langfredag, Påskedag, 2. Påskedag, Store bededag,
+     * Kristi Himmelfartsdag, Pinsedag, 2. Pinsedag
+     *
+     * @param \DateTime $dateTime
+     *
+     * @return bool
+     */
+    private function isChangingBankHoliday(\DateTime $dateTime)
+    {
+        $dateTime->setTime(0,0,0);
+        $timestamp = $dateTime->getTimestamp();
+
+        $oneday = 86400;   // (60*60*24)
+        $year   = intval(date('Y'));
+        $easter = mktime(0, 0, 0, 3, (21 + (easter_days($year))), $year);
+
+        $holidays   = [];
+        $holidays[] = $easter - (7 * $oneday);  // Palmesøndag
+        $holidays[] = $easter - (3 * $oneday);  // Skærtorsdag
+        $holidays[] = $easter - (2 * $oneday);  // Langfredag
+        $holidays[] = $easter;                  // Påskedag
+        $holidays[] = $easter + (1 * $oneday);  // 2. påskedag
+        $holidays[] = $easter + (26 * $oneday); // Store bededag
+        $holidays[] = $easter + (39 * $oneday); // Kristi Himmelfartsdag
+        $holidays[] = $easter + (49 * $oneday); // Pinsedag
+        $holidays[] = $easter + (50 * $oneday); // 2. pinsedag
+
+        return in_array($timestamp, $holidays);
+    }
 }
