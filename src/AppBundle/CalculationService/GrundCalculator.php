@@ -300,32 +300,51 @@ class GrundCalculator implements EventSubscriber {
 
 	/**
 	 * Calculate price
+     *
+     * "Copy-paste" from legacy system (GrundForm.js: calculatePris)
 	 *
 	 * @param Grund $grund
 	 */
 	private function calculatePris( Grund $grund ) {
-
 		if ( $grund->getSalgstype() == SalgsType::KVADRATMETERPRIS || $grund->getSalgstype() == SalgsType::ETGM2 ) {
-
 			$grund->setPriskoor1( $grund->getAntalkorr1() * $grund->getAkrkorr1() );
 			$grund->setPriskoor2( $grund->getAntalkorr2() * $grund->getAkrkorr2() );
 			$grund->setPriskoor3( $grund->getAntalkorr3() * $grund->getAkrkorr3() );
 
-			if ( $grund->getPrism2() > 0 ) {
-				$prisExKorr = $grund->getBruttoareal() * $grund->getPrism2();
-				$pris       = $prisExKorr + $grund->getPriskoor1() + $grund->getPriskoor2() + $grund->getPriskoor3();
+			$this->calculatePrisExKorr( $grund );
 
-				$grund->setPris( $pris );
-			}
+            $pris = $grund->getPrisfoerkorrektion() + $grund->getPriskoor1() + $grund->getPriskoor2() + $grund->getPriskoor3();
+            $grund->setPris( $pris );
+		} else if ( $grund->getSalgstype() == SalgsType::FASTPRIS ) {
+            $grund->setPris($grund->getFastpris());
+		} else if ( $grund->getSalgstype() == SalgsType::AUKTION ) {
+		    $grund->setPris($grund->getAntagetbud());
+        }
 
-		} else if ( $grund->getSalgstype() == 'Fastpris' ) {
+        $date = \DateTime::createFromFormat('Y-m-d', '2011-01-01');
 
-			if ( $grund->getFastpris() && $grund->getAccept() ) {
-				$grund->setSalgsprisumoms( 0.8 * $grund->getFastpris() );
-			}
-
-		}
+        if($grund->getAccept()) {
+            if($grund->getAccept() < $date) {
+                $grund->setSalgsprisumoms(0);
+            } else {
+                $grund->setSalgsprisumoms($grund->getPris() * 0.8);
+            }
+        } else {
+            $grund->setSalgsprisumoms(0);
+        }
 	}
+
+	private function calculatePrisExKorr( Grund $grund ) {
+	    $prism2 = $grund->getPrism2() ? $grund->getPrism2() : 0;
+	    $maxetm2 = $grund->getMaxetagem2() ? $grund->getMaxetagem2() : 0;
+	    $bareal = $grund->getBruttoareal() ? $grund->getBruttoareal() : 0;
+
+	    if($grund->getType() === GrundType::STORPARCEL) {
+	        $grund->setPrisfoerkorrektion($prism2 * $maxetm2);
+        } else {
+	        $grund->setPrisfoerkorrektion($prism2 * $bareal);
+        }
+    }
 
 	/**
 	 * Check if at least one value in $needles exists as a key in $haystack
