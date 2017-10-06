@@ -213,6 +213,10 @@ class ApiController extends Controller
             return PublicStatus::I_UDBUD;
         }
 
+        if ($status === Status::AUKTION_SLUT) {
+            return PublicStatus::I_UDBUD;
+        }
+
         return PublicStatus::SOLGT;
 
     }
