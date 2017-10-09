@@ -187,7 +187,7 @@ class ApiController extends Controller
         }
 
         if($grund->getType() !== GrundType::PARCELHUS) {
-            return $minpris ? $minpris * 0.8 : 0;
+            $minpris =  $minpris ? $minpris * 0.8 : 0;
         }
 
         $minpris = $minpris ?? 0;
