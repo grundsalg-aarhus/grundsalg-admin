@@ -8,6 +8,9 @@ services:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
 
+  grundsalg.public_status:
+    class: AppBundle\Service\GrundsalgPublicStatusService
+
   grundsalg.communication:
     class: AppBundle\Service\GrundsalgCommunicationService
     arguments: ['%grundsalg_web%', '%grundsalg_web_username%', '%grundsalg_web_password%']
