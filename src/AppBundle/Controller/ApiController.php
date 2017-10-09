@@ -158,7 +158,7 @@ class ApiController extends Controller
         }
 
         if($grund->getType() !== GrundType::PARCELHUS) {
-            return $grund->getSalgsprisumoms() ?? 0;
+            return intval($grund->getSalgsprisumoms());
         }
 
         $pris = $grund->getPris() ?? 0;
