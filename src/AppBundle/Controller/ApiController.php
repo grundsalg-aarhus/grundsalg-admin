@@ -53,7 +53,7 @@ class ApiController extends Controller
                 $properties['id']      = $grund->getId();
                 $properties['address'] = trim($grund->getVej().' '.$grund->getHusnummer().$grund->getBogstav());
                 $properties['status']  = $publicStatusService->getPublicStatus($grund);
-                $properties['area_m2'] = $grund->getAreal();
+                $properties['area_m2'] = intval($grund->getAreal());
                 // @TODO which fields to map for prices?
                 $properties['minimum_price'] = $this->getPublicMinPris($grund);
                 $properties['sale_price']    = $this->getPublicPris($grund);
@@ -77,7 +77,7 @@ class ApiController extends Controller
                 $data['id']      = $grund->getId();
                 $data['address'] = trim($grund->getVej().' '.$grund->getHusnummer().$grund->getBogstav());
                 $data['status']  = $publicStatusService->getPublicStatus($grund);
-                $data['area_m2'] = $grund->getAreal();
+                $data['area_m2'] = intval($grund->getAreal());
                 $data['minimum_price'] = $this->getPublicMinPris($grund);
                 $data['sale_price']    = $this->getPublicPris($grund);
                 $data['pdf_link']      = $grund->getPdfLink();
@@ -161,7 +161,9 @@ class ApiController extends Controller
             return $grund->getSalgsprisumoms() ?? 0;
         }
 
-        return $grund->getPris() ?? 0;
+        $pris = $grund->getPris() ?? 0;
+
+        return intval($pris);
     }
 
     /**
@@ -188,7 +190,9 @@ class ApiController extends Controller
             return $minpris ? $minpris * 0.8 : 0;
         }
 
-        return $minpris ?? 0;
+        $minpris = $minpris ?? 0;
+
+        return intval($minpris);
     }
 
 }
