@@ -164,16 +164,31 @@ class ApiController extends Controller
         return $grund->getPris() ?? 0;
     }
 
+    /**
+     * Get the public min pris
+     *
+     * @param Grund $grund
+     *
+     * @return \AppBundle\Entity\decimal|float|int
+     */
     private function getPublicMinPris(Grund $grund)
     {
         switch ($grund->getSalgstype()) {
             case SalgsType::AUKTION:
-                return $grund->getMinbud();
+                $minpris = $grund->getMinbud();
+                break;
             case SalgsType::FASTPRIS:
-                return $grund->getFastpris();
+                $minpris = $grund->getFastpris();
+                break;
             default:
-                return $grund->getPris();
+                $minpris = $grund->getPris();
         }
+
+        if($grund->getType() !== GrundType::PARCELHUS) {
+            return $minpris ? $minpris * 0.8 : 0;
+        }
+
+        return $minpris ?? 0;
     }
 
 }
