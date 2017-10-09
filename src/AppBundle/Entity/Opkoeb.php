@@ -81,14 +81,14 @@ class Opkoeb
   /**
    * @var string
    *
-   * @ORM\Column(name="pris", type="float", precision=16, scale=2, nullable=false)
+   * @ORM\Column(name="pris", type="decimal", precision=16, scale=2, nullable=false)
    */
   private $pris;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="procentAfLP", type="float", precision=12, scale=2, nullable=true)
+   * @ORM\Column(name="procentAfLP", type="decimal", precision=12, scale=2, nullable=true)
    */
   private $procentaflp;
 

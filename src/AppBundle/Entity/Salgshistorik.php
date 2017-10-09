@@ -131,16 +131,16 @@ class Salgshistorik {
   private $auktionslutdato;
 
   /**
-   * @var float
+   * @var decimal
    *
-   * @ORM\Column(name="minBud", type="float", precision=10, scale=0, nullable=true)
+   * @ORM\Column(name="minBud", type="decimal", precision=12, scale=2, nullable=true)
    */
   private $minbud;
 
   /**
-   * @var float
+   * @var decimal
    *
-   * @ORM\Column(name="antagetBud", type="float", precision=10, scale=0, nullable=true)
+   * @ORM\Column(name="antagetBud", type="decimal", precision=12, scale=2, nullable=true)
    */
   private $antagetbud;
 
@@ -616,7 +616,7 @@ class Salgshistorik {
   /**
    * Set minbud
    *
-   * @param float $minbud
+   * @param decimal $minbud
    *
    * @return Salgshistorik
    */
@@ -629,7 +629,7 @@ class Salgshistorik {
   /**
    * Get minbud
    *
-   * @return float
+   * @return decimal
    */
   public function getMinbud() {
     return $this->minbud;
@@ -638,7 +638,7 @@ class Salgshistorik {
   /**
    * Set antagetbud
    *
-   * @param float $antagetbud
+   * @param decimal $antagetbud
    *
    * @return Salgshistorik
    */
@@ -651,7 +651,7 @@ class Salgshistorik {
   /**
    * Get antagetbud
    *
-   * @return float
+   * @return decimal
    */
   public function getAntagetbud() {
     return $this->antagetbud;

@@ -211,51 +211,51 @@ class Grund {
   private $tilsluttet;
 
   /**
-   * @var float
+   * @var decimal
    *
-   * @ORM\Column(name="maxEtageM2", type="float", precision=10, scale=0, nullable=true)
+   * @ORM\Column(name="maxEtageM2", type="decimal", precision=12, scale=2, nullable=true)
    */
   private $maxetagem2;
 
   /**
-   * @var float
+   * @var decimal
    *
-   * @ORM\Column(name="areal", type="float", precision=10, scale=0, nullable=true)
+   * @ORM\Column(name="areal", type="decimal", precision=12, scale=2, nullable=true)
    */
   private $areal;
 
   /**
-   * @var float
+   * @var decimal
    *
-   * @ORM\Column(name="arealVej", type="float", precision=10, scale=0, nullable=true)
+   * @ORM\Column(name="arealVej", type="decimal", precision=12, scale=2, nullable=true)
    */
   private $arealvej;
 
   /**
-   * @var float
+   * @var decimal
    *
-   * @ORM\Column(name="arealKotelet", type="float", precision=10, scale=0, nullable=true)
+   * @ORM\Column(name="arealKotelet", type="decimal", precision=12, scale=2, nullable=true)
    */
   private $arealkotelet;
 
   /**
-   * @var float
+   * @var decimal
    *
-   * @ORM\Column(name="bruttoAreal", type="float", precision=10, scale=0, nullable=true)
+   * @ORM\Column(name="bruttoAreal", type="decimal", precision=12, scale=2, nullable=true)
    */
   private $bruttoareal;
 
   /**
-   * @var float
+   * @var decimal
    *
-   * @ORM\Column(name="prisM2", type="float", precision=10, scale=0, nullable=true)
+   * @ORM\Column(name="prisM2", type="decimal", precision=12, scale=2, nullable=true)
    */
   private $prism2;
 
   /**
-   * @var float
+   * @var decimal
    *
-   * @ORM\Column(name="prisFoerKorrektion", type="float", precision=10, scale=0, nullable=true)
+   * @ORM\Column(name="prisFoerKorrektion", type="decimal", precision=12, scale=2, nullable=true)
    */
   private $prisfoerkorrektion;
 
@@ -276,16 +276,16 @@ class Grund {
   private $antalkorr1;
 
   /**
-   * @var float
+   * @var decimal
    *
-   * @ORM\Column(name="aKrKorr1", type="float", precision=10, scale=0, nullable=true)
+   * @ORM\Column(name="aKrKorr1", type="decimal", precision=12, scale=2, nullable=true)
    */
   private $akrkorr1;
 
   /**
-   * @var float
+   * @var decimal
    *
-   * @ORM\Column(name="prisKoor1", type="float", precision=10, scale=0, nullable=true)
+   * @ORM\Column(name="prisKoor1", type="decimal", precision=12, scale=2, nullable=true)
    */
   private $priskoor1;
 
@@ -306,16 +306,16 @@ class Grund {
   private $antalkorr2;
 
   /**
-   * @var float
+   * @var decimal
    *
-   * @ORM\Column(name="aKrKorr2", type="float", precision=10, scale=0, nullable=true)
+   * @ORM\Column(name="aKrKorr2", type="decimal", precision=12, scale=2, nullable=true)
    */
   private $akrkorr2;
 
   /**
-   * @var float
+   * @var decimal
    *
-   * @ORM\Column(name="prisKoor2", type="float", precision=10, scale=0, nullable=true)
+   * @ORM\Column(name="prisKoor2", type="decimal", precision=12, scale=2, nullable=true)
    */
   private $priskoor2;
 
@@ -336,37 +336,37 @@ class Grund {
   private $antalkorr3;
 
   /**
-   * @var float
+   * @var decimal
    *
-   * @ORM\Column(name="aKrKorr3", type="float", precision=10, scale=0, nullable=true)
+   * @ORM\Column(name="aKrKorr3", type="decimal", precision=12, scale=2, nullable=true)
    */
   private $akrkorr3;
 
   /**
-   * @var float
+   * @var decimal
    *
-   * @ORM\Column(name="prisKoor3", type="float", precision=10, scale=0, nullable=true)
+   * @ORM\Column(name="prisKoor3", type="decimal", precision=12, scale=2, nullable=true)
    */
   private $priskoor3;
 
   /**
-   * @var float
+   * @var decimal
    *
-   * @ORM\Column(name="pris", type="float", precision=10, scale=0, nullable=true)
+   * @ORM\Column(name="pris", type="decimal", precision=12, scale=2, nullable=true)
    */
   private $pris;
 
   /**
-   * @var float
+   * @var decimal
    *
-   * @ORM\Column(name="fastPris", type="float", precision=10, scale=0, nullable=true)
+   * @ORM\Column(name="fastPris", type="decimal", precision=12, scale=2, nullable=true)
    */
   private $fastpris;
 
   /**
-   * @var float
+   * @var decimal
    *
-   * @ORM\Column(name="minBud", type="float", precision=10, scale=0, nullable=true)
+   * @ORM\Column(name="minBud", type="decimal", precision=12, scale=2, nullable=true)
    */
   private $minbud;
 
@@ -444,16 +444,16 @@ class Grund {
   private $overtagelse;
 
   /**
-   * @var float
+   * @var decimal
    *
-   * @ORM\Column(name="antagetBud", type="float", precision=10, scale=0, nullable=true)
+   * @ORM\Column(name="antagetBud", type="decimal", precision=12, scale=2, nullable=true)
    */
   private $antagetbud;
 
   /**
-   * @var float
+   * @var decimal
    *
-   * @ORM\Column(name="salgsPrisUMoms", type="float", precision=10, scale=0, nullable=true)
+   * @ORM\Column(name="salgsPrisUMoms", type="decimal", precision=12, scale=2, nullable=true)
    */
   private $salgsprisumoms;
 
@@ -1090,7 +1090,7 @@ class Grund {
   /**
    * Set maxetagem2
    *
-   * @param float $maxetagem2
+   * @param decimal $maxetagem2
    *
    * @return Grund
    */
@@ -1103,7 +1103,7 @@ class Grund {
   /**
    * Get maxetagem2
    *
-   * @return float
+   * @return decimal
    */
   public function getMaxetagem2() {
     return $this->maxetagem2;
@@ -1112,7 +1112,7 @@ class Grund {
   /**
    * Set areal
    *
-   * @param float $areal
+   * @param decimal $areal
    *
    * @return Grund
    */
@@ -1125,7 +1125,7 @@ class Grund {
   /**
    * Get areal
    *
-   * @return float
+   * @return decimal
    */
   public function getAreal() {
     return $this->areal;
@@ -1134,7 +1134,7 @@ class Grund {
   /**
    * Set arealvej
    *
-   * @param float $arealvej
+   * @param decimal $arealvej
    *
    * @return Grund
    */
@@ -1147,7 +1147,7 @@ class Grund {
   /**
    * Get arealvej
    *
-   * @return float
+   * @return decimal
    */
   public function getArealvej() {
     return $this->arealvej;
@@ -1156,7 +1156,7 @@ class Grund {
   /**
    * Set arealkotelet
    *
-   * @param float $arealkotelet
+   * @param decimal $arealkotelet
    *
    * @return Grund
    */
@@ -1169,7 +1169,7 @@ class Grund {
   /**
    * Get arealkotelet
    *
-   * @return float
+   * @return decimal
    */
   public function getArealkotelet() {
     return $this->arealkotelet;
@@ -1178,7 +1178,7 @@ class Grund {
   /**
    * Set bruttoareal
    *
-   * @param float $bruttoareal
+   * @param decimal $bruttoareal
    *
    * @return Grund
    */
@@ -1191,7 +1191,7 @@ class Grund {
   /**
    * Get bruttoareal
    *
-   * @return float
+   * @return decimal
    */
   public function getBruttoareal() {
     return $this->bruttoareal;
@@ -1200,7 +1200,7 @@ class Grund {
   /**
    * Set prism2
    *
-   * @param float $prism2
+   * @param decimal $prism2
    *
    * @return Grund
    */
@@ -1213,7 +1213,7 @@ class Grund {
   /**
    * Get prism2
    *
-   * @return float
+   * @return decimal
    */
   public function getPrism2() {
     return $this->prism2;
@@ -1222,7 +1222,7 @@ class Grund {
   /**
    * Set prisfoerkorrektion
    *
-   * @param float $prisfoerkorrektion
+   * @param decimal $prisfoerkorrektion
    *
    * @return Grund
    */
@@ -1235,7 +1235,7 @@ class Grund {
   /**
    * Get prisfoerkorrektion
    *
-   * @return float
+   * @return decimal
    */
   public function getPrisfoerkorrektion() {
     return $this->prisfoerkorrektion;
@@ -1288,7 +1288,7 @@ class Grund {
   /**
    * Set akrkorr1
    *
-   * @param float $akrkorr1
+   * @param decimal $akrkorr1
    *
    * @return Grund
    */
@@ -1301,7 +1301,7 @@ class Grund {
   /**
    * Get akrkorr1
    *
-   * @return float
+   * @return decimal
    */
   public function getAkrkorr1() {
     return $this->akrkorr1;
@@ -1310,7 +1310,7 @@ class Grund {
   /**
    * Set priskoor1
    *
-   * @param float $priskoor1
+   * @param decimal $priskoor1
    *
    * @return Grund
    */
@@ -1323,7 +1323,7 @@ class Grund {
   /**
    * Get priskoor1
    *
-   * @return float
+   * @return decimal
    */
   public function getPriskoor1() {
     return $this->priskoor1;
@@ -1376,7 +1376,7 @@ class Grund {
   /**
    * Set akrkorr2
    *
-   * @param float $akrkorr2
+   * @param decimal $akrkorr2
    *
    * @return Grund
    */
@@ -1389,7 +1389,7 @@ class Grund {
   /**
    * Get akrkorr2
    *
-   * @return float
+   * @return decimal
    */
   public function getAkrkorr2() {
     return $this->akrkorr2;
@@ -1398,7 +1398,7 @@ class Grund {
   /**
    * Set priskoor2
    *
-   * @param float $priskoor2
+   * @param decimal $priskoor2
    *
    * @return Grund
    */
@@ -1411,7 +1411,7 @@ class Grund {
   /**
    * Get priskoor2
    *
-   * @return float
+   * @return decimal
    */
   public function getPriskoor2() {
     return $this->priskoor2;
@@ -1464,7 +1464,7 @@ class Grund {
   /**
    * Set akrkorr3
    *
-   * @param float $akrkorr3
+   * @param decimal $akrkorr3
    *
    * @return Grund
    */
@@ -1477,7 +1477,7 @@ class Grund {
   /**
    * Get akrkorr3
    *
-   * @return float
+   * @return decimal
    */
   public function getAkrkorr3() {
     return $this->akrkorr3;
@@ -1486,7 +1486,7 @@ class Grund {
   /**
    * Set priskoor3
    *
-   * @param float $priskoor3
+   * @param decimal $priskoor3
    *
    * @return Grund
    */
@@ -1499,7 +1499,7 @@ class Grund {
   /**
    * Get priskoor3
    *
-   * @return float
+   * @return decimal
    */
   public function getPriskoor3() {
     return $this->priskoor3;
@@ -1508,7 +1508,7 @@ class Grund {
   /**
    * Set pris
    *
-   * @param float $pris
+   * @param decimal $pris
    *
    * @return Grund
    */
@@ -1521,7 +1521,7 @@ class Grund {
   /**
    * Get pris
    *
-   * @return float
+   * @return decimal
    */
   public function getPris() {
     return $this->pris;
@@ -1530,7 +1530,7 @@ class Grund {
   /**
    * Set fastpris
    *
-   * @param float $fastpris
+   * @param decimal $fastpris
    *
    * @return Grund
    */
@@ -1543,7 +1543,7 @@ class Grund {
   /**
    * Get fastpris
    *
-   * @return float
+   * @return decimal
    */
   public function getFastpris() {
     return $this->fastpris;
@@ -1552,7 +1552,7 @@ class Grund {
   /**
    * Set minbud
    *
-   * @param float $minbud
+   * @param decimal $minbud
    *
    * @return Grund
    */
@@ -1565,7 +1565,7 @@ class Grund {
   /**
    * Get minbud
    *
-   * @return float
+   * @return decimal
    */
   public function getMinbud() {
     return $this->minbud;
@@ -1794,7 +1794,7 @@ class Grund {
   /**
    * Set antagetbud
    *
-   * @param float $antagetbud
+   * @param decimal $antagetbud
    *
    * @return Grund
    */
@@ -1807,7 +1807,7 @@ class Grund {
   /**
    * Get antagetbud
    *
-   * @return float
+   * @return decimal
    */
   public function getAntagetbud() {
     return $this->antagetbud;
@@ -1816,7 +1816,7 @@ class Grund {
   /**
    * Set salgsprisumoms
    *
-   * @param float $salgsprisumoms
+   * @param decimal $salgsprisumoms
    *
    * @return Grund
    */
@@ -1829,7 +1829,7 @@ class Grund {
   /**
    * Get salgsprisumoms
    *
-   * @return float
+   * @return decimal
    */
   public function getSalgsprisumoms() {
     return $this->salgsprisumoms;

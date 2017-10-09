@@ -112,7 +112,7 @@ class Lokalplan
   /**
    * @var string
    *
-   * @ORM\Column(name="forbrugsAndel", type="float", precision=18, scale=12, nullable=true)
+   * @ORM\Column(name="forbrugsAndel", type="decimal", precision=18, scale=12, nullable=true)
    */
   private $forbrugsandel;
 
