@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\DBAL\Types\GrundType;
+use AppBundle\DBAL\Types\SalgsType;
 use AppBundle\Entity\Grund;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -54,7 +55,7 @@ class ApiController extends Controller
                 $properties['status']  = $publicStatusService->getPublicStatus($grund);
                 $properties['area_m2'] = $grund->getAreal();
                 // @TODO which fields to map for prices?
-                $properties['minimum_price'] = $grund->getMinbud();
+                $properties['minimum_price'] = $this->getPublicMinPris($grund);
                 $properties['sale_price']    = $this->getPublicPris($grund);
                 $properties['pdf_link']      = $grund->getPdfLink();
 
@@ -77,7 +78,7 @@ class ApiController extends Controller
                 $data['address'] = trim($grund->getVej().' '.$grund->getHusnummer().$grund->getBogstav());
                 $data['status']  = $publicStatusService->getPublicStatus($grund);
                 $data['area_m2'] = $grund->getAreal();
-                $data['minimum_price'] = $grund->getMinbud();
+                $data['minimum_price'] = $this->getPublicMinPris($grund);
                 $data['sale_price']    = $this->getPublicPris($grund);
                 $data['pdf_link']      = $grund->getPdfLink();
 
@@ -161,6 +162,18 @@ class ApiController extends Controller
         }
 
         return $grund->getPris() ?? 0;
+    }
+
+    private function getPublicMinPris(Grund $grund)
+    {
+        switch ($grund->getSalgstype()) {
+            case SalgsType::AUKTION:
+                return $grund->getMinbud();
+            case SalgsType::FASTPRIS:
+                return $grund->getFastpris();
+            default:
+                return $grund->getPris();
+        }
     }
 
 }
