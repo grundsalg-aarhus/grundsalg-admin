@@ -314,11 +314,15 @@ class GrundCalculator implements EventSubscriber {
 			$this->calculatePrisExKorr( $grund );
 
             $pris = $grund->getPrisfoerkorrektion() + $grund->getPriskoor1() + $grund->getPriskoor2() + $grund->getPriskoor3();
+            $pris = $pris ?? 0;
+
             $grund->setPris( $pris );
 		} else if ( $grund->getSalgstype() == SalgsType::FASTPRIS ) {
-            $grund->setPris($grund->getFastpris());
+            $pris = $grund->getFastpris() ?? 0;
+		    $grund->setPris($pris);
 		} else if ( $grund->getSalgstype() == SalgsType::AUKTION ) {
-		    $grund->setPris($grund->getAntagetbud());
+		    $pris = $grund->getAntagetbud() ?? 0;
+		    $grund->setPris($pris);
         }
 
         $date = \DateTime::createFromFormat('Y-m-d', '2011-01-01');
