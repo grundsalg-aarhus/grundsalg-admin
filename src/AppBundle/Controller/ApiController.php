@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\DBAL\Types\GrundType;
 use AppBundle\Entity\Grund;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -54,7 +55,7 @@ class ApiController extends Controller
                 $properties['area_m2'] = $grund->getAreal();
                 // @TODO which fields to map for prices?
                 $properties['minimum_price'] = $grund->getMinbud();
-                $properties['sale_price']    = $grund->getPris();
+                $properties['sale_price']    = $this->getPublicPris($grund);
                 $properties['pdf_link']      = $grund->getPdfLink();
 
                 // Needed in the frontend/weblayer. If true popup will be enabled for the feature.
@@ -77,7 +78,7 @@ class ApiController extends Controller
                 $data['status']  = $publicStatusService->getPublicStatus($grund);
                 $data['area_m2'] = $grund->getAreal();
                 $data['minimum_price'] = $grund->getMinbud();
-                $data['sale_price']    = $grund->getPris();
+                $data['sale_price']    = $this->getPublicPris($grund);
                 $data['pdf_link']      = $grund->getPdfLink();
 
                 $list['grunde'][] = $data;
@@ -138,6 +139,28 @@ class ApiController extends Controller
         $response->headers->addCacheControlDirective('no-store', true);
 
         return $response;
+    }
+
+    /**
+     * Get the public display price accounting for the 6 day wait period for private sales.
+     *
+     * @param Grund $grund
+     *
+     * @return float|int
+     */
+    private function getPublicPris(Grund $grund)
+    {
+        $holidayService = $this->get('grundsalg.bank_holiday');
+
+        if($grund->getType() === GrundType::PARCELHUS && $holidayService->isWaitingPeriod($grund)) {
+            return 0;
+        }
+
+        if($grund->getType() !== GrundType::PARCELHUS) {
+            return $grund->getSalgsprisumoms() ?? 0;
+        }
+
+        return $grund->getPris() ?? 0;
     }
 
 }

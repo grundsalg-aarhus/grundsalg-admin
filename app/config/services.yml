@@ -8,6 +8,9 @@ services:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
 
+  grundsalg.bank_holiday:
+    class: AppBundle\Service\GrundsalgBankHolidayService
+
   grundsalg.public_status:
     class: AppBundle\Service\GrundsalgPublicStatusService
 
