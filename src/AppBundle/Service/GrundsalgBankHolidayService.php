@@ -116,6 +116,11 @@ class GrundsalgBankHolidayService
                 return true;
             case '12-31': // Nytårsaften
                 return true;
+
+            //------- TESTING FAKE 2017-10-20 -------//
+            case '10-20': // Test Fake
+                return true;
+
             default:
                 return false;
         }
@@ -175,6 +180,11 @@ class GrundsalgBankHolidayService
         $holidays[] = $feastOfTheAscension->format('m-d');
         $holidays[] = $pentecost->format('m-d');
         $holidays[] = $whitMonday->format('m-d');
+
+        //------- TESTING FAKE 2017-10-19 -------//
+        $fake = clone $easter;
+        $fake->add(new \DateInterval('P186D'));
+        $holidays[] = $fake->format('m-d');
 
         return in_array($day, $holidays);
     }

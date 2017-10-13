@@ -205,6 +205,10 @@ class GrundsalgBankHolidayServiceTest extends TestCase
         $date->setDate(2019, 6, 10);
         $this->assertTrue($this->invokeMethod($service, 'isChangingBankHoliday', [$date]));
 
+        //------- TESTING FAKE 2017-10-19 -------//
+        $date->setDate(2017, 10, 19);
+        $this->assertTrue($this->invokeMethod($service, 'isChangingBankHoliday', [$date]));
+
     }
 
     /**
@@ -247,6 +251,10 @@ class GrundsalgBankHolidayServiceTest extends TestCase
         $this->assertTrue($this->invokeMethod($service, 'isFixedBankHoliday', [$date]));
 
         $date->setDate(2017, 1, 1);
+        $this->assertTrue($this->invokeMethod($service, 'isFixedBankHoliday', [$date]));
+
+        //------- TESTING FAKE 2017-10-20 -------//
+        $date->setDate(2017, 10, 20);
         $this->assertTrue($this->invokeMethod($service, 'isFixedBankHoliday', [$date]));
     }
 
