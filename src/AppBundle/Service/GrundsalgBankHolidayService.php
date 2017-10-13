@@ -122,7 +122,7 @@ class GrundsalgBankHolidayService
     }
 
     /**
-     * Check if a given day is a bank holiday where the date is defined by easter
+     * Check if a given day is a bank holiday where the date is relative to easter
      *
      * Checks for Palmesøndag, Skærtorsdag, Langfredag, Påskedag, 2. Påskedag, Store bededag,
      * Kristi Himmelfartsdag, Pinsedag, 2. Pinsedag
@@ -135,10 +135,10 @@ class GrundsalgBankHolidayService
     {
         $day          = $dateTime->format('m-d');
         $year         = intval($dateTime->format('Y'));
-        $easterOffset = easter_days($year);
 
         $easter = new \DateTime();
         $easter->setDate($year, 3, 21);
+        $easterOffset = easter_days($year);
         $easter->add(new \DateInterval('P'.$easterOffset.'D'));
 
         $palmSunday = clone $easter;
