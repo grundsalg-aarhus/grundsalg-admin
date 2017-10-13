@@ -62,11 +62,11 @@ easy_admin:
                     - { property: matrikkel2, label: false, css_class: 'col-sm-4' }
                     - { type: 'divider' }
                     - { property: titel, label: 'Titel', css_class: 'col-sm-6' }
-                    - { property: ejerlav, css_class: 'col-sm-6' }
-                    - { property: type, css_class: 'col-sm-6', type: 'AppBundle\Form\Field\GrundType' }
-                    - { property: postby, css_class: 'col-sm-6' }
+                    - { property: ejerlav, label: 'Ejerlav', css_class: 'col-sm-6' }
+                    - { property: type, label: 'Type', css_class: 'col-sm-6', type: 'AppBundle\Form\Field\GrundType' }
+                    - { property: postby, label: 'Postnr/By', css_class: 'col-sm-6' }
                     - { property: sagsnr, label: 'PSP', css_class: 'col-sm-6' }
-                    - { property: vej, css_class: 'col-sm-6' }
+                    - { property: vej, label: 'Vej', css_class: 'col-sm-6' }
                     - { property: landinspektoer, label: 'Landinsp.', css_class: 'col-sm-6' }
                     - { property: hasSpGeometry, label: 'app.grund.spGeometry', css_class: 'col-sm-6', type: 'boolean', readonly: true, type_options: { disabled: true, required: false } }
 
