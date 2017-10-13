@@ -132,6 +132,15 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
 
     }
 
+    /**
+     * Match "Web" grunde to "Fag" grunde from static tables of matches.
+     * These are the plots we have confirmed as matched.
+     *
+     * @param $table
+     * @param $id
+     *
+     * @return bool|mixed
+     */
     private function matchToGrundStatic($table, $id)
     {
 
@@ -169,7 +178,19 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
             250 => [1638],
         ];
 
-        return array_key_exists($id, $erhvervMatchArray) ? $erhvervMatchArray[$id] : false;
+        $storparcelMatchArray = [
+            45 => [1687],
+        ];
+
+        switch ($table) {
+            case 'GrundeErhverv':
+                return array_key_exists($id, $erhvervMatchArray) ? $erhvervMatchArray[$id] : false;
+            case 'GrundeStorParcel':
+                return array_key_exists($id, $storparcelMatchArray) ? $storparcelMatchArray[$id] : false;
+            default:
+                return false;
+        }
+
 
     }
 
@@ -187,20 +208,23 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
         // WebID / FagsID(s)
         $boligMatchArray = [
             711 => [223],
-            768 => [114],
+            768 => [114, 292],
             780 => [112],
             818 => [272],
             823 => [141],
             854 => [170],
+//            980 => [292], - ses ikke i WebGis
+        ];
+
+        $fremtidigeBoligMatchArray = [
             994 => [276],
-            980 => [292],
         ];
 
         $storparcelMatchArray = [
-            763 => [32, 257],
+            763 => [32, 185, 257],
             768 => [1],
             878 => [40, 242],
-            1008 => [291]
+//            1008 => [291], - ses ikke i WebGis
         ];
 
         $erhvervMatchArray = [
@@ -209,10 +233,10 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
             359   => [18, 19, 20, 21],
             374   => [16, 17, 25, 26],
             411   => [6, 8, 9, 31, 32, 33, 34, 35, 36, 37, 95, 126, 153],
-            428   => [39, 40],
+            428   => [120, 121],
             546   => [47, 142],
             602   => [49, 147],
-            692   => [43, 55],
+            692   => [39, 40, 43, 55],
             760   => [86, 87],
             802   => [58, 61, 62, 116, 117],
             812   => [64, 98, 152, 234],
@@ -232,13 +256,7 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
                 return array_key_exists($id, $storparcelMatchArray) ? $storparcelMatchArray[$id] : false;
 
             case 'FremtidigeOmraaderBolig':
-                return array_key_exists($id, $boligMatchArray) ? $boligMatchArray[$id] : false;
-
-            case 'FremtidigeOmraaderErhverv':
-                return array_key_exists($id, $erhvervMatchArray) ? $erhvervMatchArray[$id] : false;
-
-            case 'FremtidigeOmraaderStorParcel':
-                return array_key_exists($id, $storparcelMatchArray) ? $storparcelMatchArray[$id] : false;
+                return array_key_exists($id, $fremtidigeBoligMatchArray) ? $fremtidigeBoligMatchArray[$id] : false;
 
             default:
                 return false;
