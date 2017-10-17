@@ -140,7 +140,7 @@ class GrundsalgPublicPropertiesService
      */
     public function getPublicPris(Grund $grund)
     {
-        if ($grund->getType() === GrundType::PARCELHUS && $this->bankHolidayService->isWaitingPeriod($grund)) {
+        if ($grund->getType() === GrundType::PARCELHUS && $grund->getSalgstype() === SalgsType::AUKTION && $this->bankHolidayService->isWaitingPeriod($grund)) {
             return 0;
         }
 
