@@ -13,10 +13,11 @@ use AppBundle\DBAL\Types\GrundPublicStatus;
 use AppBundle\DBAL\Types\GrundSalgStatus;
 use AppBundle\DBAL\Types\GrundStatus;
 use AppBundle\Entity\Grund;
-use AppBundle\Service\GrundsalgPublicStatusService;
+use AppBundle\Service\GrundsalgBankHolidayService;
+use AppBundle\Service\GrundsalgPublicPropertiesService;
 use PHPUnit\Framework\TestCase;
 
-class GrundsalgPublicStatusServiceTest extends TestCase
+class GrundsalgPublicPropertiesServiceTest extends TestCase
 {
 
     /**
@@ -43,7 +44,7 @@ class GrundsalgPublicStatusServiceTest extends TestCase
     {
 
         $grund   = new Grund();
-        $service = new GrundsalgPublicStatusService();
+        $service = new GrundsalgPublicPropertiesService(new GrundsalgBankHolidayService());
 
         $grund->setStatus($status);
         $grund->setSalgstatus($salgstatus);

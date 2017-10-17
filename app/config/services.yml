@@ -11,8 +11,9 @@ services:
   grundsalg.bank_holiday:
     class: AppBundle\Service\GrundsalgBankHolidayService
 
-  grundsalg.public_status:
-    class: AppBundle\Service\GrundsalgPublicStatusService
+  grundsalg.public_properties:
+    class: AppBundle\Service\GrundsalgPublicPropertiesService
+    arguments: ['@grundsalg.bank_holiday']
 
   grundsalg.communication:
     class: AppBundle\Service\GrundsalgCommunicationService

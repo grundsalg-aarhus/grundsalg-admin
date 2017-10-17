@@ -15,7 +15,7 @@ use AppBundle\DBAL\Types\GrundStatus;
 use AppBundle\DBAL\Types\GrundType;
 use AppBundle\Entity\Grund;
 use AppBundle\Service\GrundsalgBankHolidayService;
-use AppBundle\Service\GrundsalgPublicStatusService;
+use AppBundle\Service\GrundsalgPublicPropertiesService;
 use PHPUnit\Framework\TestCase;
 
 class GrundsalgBankHolidayServiceTest extends TestCase

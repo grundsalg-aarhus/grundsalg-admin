@@ -28,7 +28,7 @@ class ApiController extends Controller
         $em     = $this->getDoctrine()->getManager();
         $grunde = $em->getRepository('AppBundle:Grund')->getGrundeForSalgsOmraade($udstykningsId);
 
-        $publicStatusService = $this->get('grundsalg.public_status');
+        $publicPropertiesService = $this->get('grundsalg.public_properties');
 
         $list = [];
 
@@ -52,11 +52,11 @@ class ApiController extends Controller
 
                 $properties['id']      = $grund->getId();
                 $properties['address'] = trim($grund->getVej().' '.$grund->getHusnummer().$grund->getBogstav());
-                $properties['status']  = $publicStatusService->getPublicStatus($grund);
+                $properties['status']  = $publicPropertiesService->getPublicStatus($grund);
                 $properties['area_m2'] = intval($grund->getAreal());
                 // @TODO which fields to map for prices?
-                $properties['minimum_price'] = $this->getPublicMinPris($grund);
-                $properties['sale_price']    = $this->getPublicPris($grund);
+                $properties['minimum_price'] = $publicPropertiesService->getPublicMinPris($grund);
+                $properties['sale_price']    = $publicPropertiesService->getPublicPris($grund);
                 $properties['pdf_link']      = $grund->getPdfLink();
 
                 // Needed in the frontend/weblayer. If true popup will be enabled for the feature.
@@ -76,10 +76,10 @@ class ApiController extends Controller
                 $data            = [];
                 $data['id']      = $grund->getId();
                 $data['address'] = trim($grund->getVej().' '.$grund->getHusnummer().$grund->getBogstav());
-                $data['status']  = $publicStatusService->getPublicStatus($grund);
+                $data['status']  = $publicPropertiesService->getPublicStatus($grund);
                 $data['area_m2'] = intval($grund->getAreal());
-                $data['minimum_price'] = $this->getPublicMinPris($grund);
-                $data['sale_price']    = $this->getPublicPris($grund);
+                $data['minimum_price'] = $publicPropertiesService->getPublicMinPris($grund);
+                $data['sale_price']    = $publicPropertiesService->getPublicPris($grund);
                 $data['pdf_link']      = $grund->getPdfLink();
 
                 $list['grunde'][] = $data;
@@ -140,59 +140,6 @@ class ApiController extends Controller
         $response->headers->addCacheControlDirective('no-store', true);
 
         return $response;
-    }
-
-    /**
-     * Get the public display price accounting for the 6 day wait period for private sales.
-     *
-     * @param Grund $grund
-     *
-     * @return float|int
-     */
-    private function getPublicPris(Grund $grund)
-    {
-        $holidayService = $this->get('grundsalg.bank_holiday');
-
-        if($grund->getType() === GrundType::PARCELHUS && $holidayService->isWaitingPeriod($grund)) {
-            return 0;
-        }
-
-        if($grund->getType() !== GrundType::PARCELHUS) {
-            return intval($grund->getSalgsprisumoms());
-        }
-
-        $pris = $grund->getPris() ?? 0;
-
-        return intval($pris);
-    }
-
-    /**
-     * Get the public min pris
-     *
-     * @param Grund $grund
-     *
-     * @return \AppBundle\Entity\decimal|float|int
-     */
-    private function getPublicMinPris(Grund $grund)
-    {
-        switch ($grund->getSalgstype()) {
-            case SalgsType::AUKTION:
-                $minpris = $grund->getMinbud();
-                break;
-            case SalgsType::FASTPRIS:
-                $minpris = $grund->getFastpris();
-                break;
-            default:
-                $minpris = $grund->getPris();
-        }
-
-        if($grund->getType() !== GrundType::PARCELHUS) {
-            $minpris =  $minpris ? $minpris * 0.8 : 0;
-        }
-
-        $minpris = $minpris ?? 0;
-
-        return intval($minpris);
     }
 
 }

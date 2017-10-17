@@ -7,6 +7,8 @@
 
 namespace AppBundle\Service;
 
+use AppBundle\DBAL\Types\GrundType;
+use AppBundle\DBAL\Types\SalgsType;
 use AppBundle\Entity\Salgsomraade;
 use GuzzleHttp\Client;
 use AppBundle\Entity\Grund;
@@ -19,14 +21,16 @@ use AppBundle\DBAL\Types\GrundStatus as Status;
  *
  * @package AppBundle
  */
-class GrundsalgPublicStatusService
+class GrundsalgPublicPropertiesService
 {
+    private $bankHolidayService;
 
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(GrundsalgBankHolidayService $bankHolidayService)
     {
+        $this->bankHolidayService = $bankHolidayService;
     }
 
     /**
@@ -62,6 +66,21 @@ class GrundsalgPublicStatusService
         // Otherwise it depends on the combination of status and salgstatus
         $status     = $grund->getStatus();
         $salgStatus = $grund->getSalgstatus();
+
+        // If waiting period return 'ledig'  - This only applies to 'parcelhus' on 'auktion'
+        if ($grund->getType() === GrundType::PARCELHUS && $grund->getSalgstype() === SalgsType::AUKTION && $this->bankHolidayService->isWaitingPeriod($grund)) {
+            if ($status === Status::AUKTION_SLUT && $salgStatus === SalgStatus::SKOEDE_REKVIRERET) {
+                return PublicStatus::LEDIG;
+            }
+
+            if ($status === Status::AUKTION_SLUT && $salgStatus === SalgStatus::ACCEPTERET) {
+                return PublicStatus::LEDIG;
+            }
+
+            if ($status === Status::AUKTION_SLUT && $salgStatus === SalgStatus::SOLGT) {
+                return PublicStatus::LEDIG;
+            }
+        }
 
         if ($salgStatus === SalgStatus::ACCEPTERET) {
             return PublicStatus::SOLGT;
@@ -109,5 +128,57 @@ class GrundsalgPublicStatusService
 
         return PublicStatus::SOLGT;
 
+    }
+
+
+    /**
+     * Get the public display price accounting for the 6 day wait period for private sales.
+     *
+     * @param Grund $grund
+     *
+     * @return float|int
+     */
+    public function getPublicPris(Grund $grund)
+    {
+        if ($grund->getType() === GrundType::PARCELHUS && $this->bankHolidayService->isWaitingPeriod($grund)) {
+            return 0;
+        }
+
+        if ($grund->getType() !== GrundType::PARCELHUS) {
+            return intval($grund->getSalgsprisumoms());
+        }
+
+        $pris = $grund->getPris() ?? 0;
+
+        return intval($pris);
+    }
+
+    /**
+     * Get the public min pris
+     *
+     * @param Grund $grund
+     *
+     * @return \AppBundle\Entity\decimal|float|int
+     */
+    public function getPublicMinPris(Grund $grund)
+    {
+        switch ($grund->getSalgstype()) {
+            case SalgsType::AUKTION:
+                $minpris = $grund->getMinbud();
+                break;
+            case SalgsType::FASTPRIS:
+                $minpris = $grund->getFastpris();
+                break;
+            default:
+                $minpris = $grund->getPris();
+        }
+
+        if ($grund->getType() !== GrundType::PARCELHUS) {
+            $minpris = $minpris ? $minpris * 0.8 : 0;
+        }
+
+        $minpris = $minpris ?? 0;
+
+        return intval($minpris);
     }
 }
