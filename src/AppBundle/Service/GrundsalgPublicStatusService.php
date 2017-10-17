@@ -4,6 +4,7 @@
  * Contains the GrundsalgCommunicationService which handles synchronizations from
  * this system to the Grundsalg presentations web page.
  */
+
 namespace AppBundle\Service;
 
 use AppBundle\Entity\Salgsomraade;
@@ -18,16 +19,14 @@ use AppBundle\DBAL\Types\GrundStatus as Status;
  *
  * @package AppBundle
  */
-class GrundsalgPublicStatusService {
+class GrundsalgPublicStatusService
+{
 
-  /**
-   * Constructor
-   */
-  public function __construct() { }
-
-    public function isWaitingPeriod(Grund $grund, $numberOfDays = 6)
+    /**
+     * Constructor
+     */
+    public function __construct()
     {
-
     }
 
     /**
