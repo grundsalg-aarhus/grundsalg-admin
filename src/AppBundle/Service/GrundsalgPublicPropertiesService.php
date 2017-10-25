@@ -67,18 +67,18 @@ class GrundsalgPublicPropertiesService
         $status     = $grund->getStatus();
         $salgStatus = $grund->getSalgstatus();
 
-        // If waiting period return 'ledig'  - This only applies to 'parcelhus' on 'auktion'
+        // If waiting period return 'I Udbud'  - This only applies to 'parcelhus' on 'auktion'
         if ($grund->getType() === GrundType::PARCELHUS && $grund->getSalgstype() === SalgsType::AUKTION && $this->bankHolidayService->isWaitingPeriod($grund)) {
             if ($status === Status::AUKTION_SLUT && $salgStatus === SalgStatus::SKOEDE_REKVIRERET) {
-                return PublicStatus::LEDIG;
+                return PublicStatus::I_UDBUD;
             }
 
             if ($status === Status::AUKTION_SLUT && $salgStatus === SalgStatus::ACCEPTERET) {
-                return PublicStatus::LEDIG;
+                return PublicStatus::I_UDBUD;
             }
 
             if ($status === Status::AUKTION_SLUT && $salgStatus === SalgStatus::SOLGT) {
-                return PublicStatus::LEDIG;
+                return PublicStatus::I_UDBUD;
             }
         }
 
