@@ -56,7 +56,7 @@ class GrundsalgBankHolidayService
         }
 
         if ($grund->getType() === GrundType::PARCELHUS) {
-            $endDay = $grund->getAccept();
+            $endDay = clone $grund->getAccept();
             $count  = 0;
 
             while ($count < $numberOfDays) {
@@ -66,7 +66,7 @@ class GrundsalgBankHolidayService
                 }
             }
         } else {
-            $endDay = $grund->getAccept();
+            $endDay = clone $grund->getAccept();
         }
 
         $endDay->setTime(23, 59, 59);

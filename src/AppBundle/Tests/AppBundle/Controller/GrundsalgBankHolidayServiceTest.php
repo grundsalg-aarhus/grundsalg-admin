@@ -90,6 +90,43 @@ class GrundsalgBankHolidayServiceTest extends TestCase
         $this->assertEquals('2018-05-07T23:59:59', $endTime->format('Y-m-d\TH:i:s'));
     }
 
+    public function testGetWaitingPeriodEndDayIsIdempotent()
+    {
+        $service = new GrundsalgBankHolidayService();
+        $grund = new Grund();
+        $date = new \DateTime();
+
+        $grund->setType(GrundType::PARCELHUS);
+
+        $date->setDate(2017, 10, 10);
+        $grund->setAccept($date);
+        $endTime = $this->invokeMethod($service, 'getWaitingPeriodEndDay', [$grund]);
+        $this->assertEquals('2017-10-18T23:59:59', $endTime->format('Y-m-d\TH:i:s'));
+        $endTime = $this->invokeMethod($service, 'getWaitingPeriodEndDay', [$grund]);
+        $this->assertEquals('2017-10-18T23:59:59', $endTime->format('Y-m-d\TH:i:s'));
+
+        $date->setDate(2017, 12, 18);
+        $grund->setAccept($date);
+        $endTime = $this->invokeMethod($service, 'getWaitingPeriodEndDay', [$grund]);
+        $this->assertEquals('2017-12-28T23:59:59', $endTime->format('Y-m-d\TH:i:s'));
+        $endTime = $this->invokeMethod($service, 'getWaitingPeriodEndDay', [$grund]);
+        $this->assertEquals('2017-12-28T23:59:59', $endTime->format('Y-m-d\TH:i:s'));
+
+        $date->setDate(2018, 3, 23);
+        $grund->setAccept($date);
+        $endTime = $this->invokeMethod($service, 'getWaitingPeriodEndDay', [$grund]);
+        $this->assertEquals('2018-04-05T23:59:59', $endTime->format('Y-m-d\TH:i:s'));
+        $endTime = $this->invokeMethod($service, 'getWaitingPeriodEndDay', [$grund]);
+        $this->assertEquals('2018-04-05T23:59:59', $endTime->format('Y-m-d\TH:i:s'));
+
+        $date->setDate(2018, 5, 7);
+        $grund->setAccept($date);
+        $endTime = $this->invokeMethod($service, 'getWaitingPeriodEndDay', [$grund]);
+        $this->assertEquals('2018-05-16T23:59:59', $endTime->format('Y-m-d\TH:i:s'));
+        $endTime = $this->invokeMethod($service, 'getWaitingPeriodEndDay', [$grund]);
+        $this->assertEquals('2018-05-16T23:59:59', $endTime->format('Y-m-d\TH:i:s'));
+    }
+
     /**
      *
      */
