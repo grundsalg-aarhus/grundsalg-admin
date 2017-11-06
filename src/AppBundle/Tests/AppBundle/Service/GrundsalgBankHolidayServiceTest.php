@@ -6,7 +6,7 @@
  * Time: 13.35
  */
 
-namespace Tests\AppBundle\Controller;
+namespace Tests\AppBundle\Service;
 
 use AppBundle\Controller\ApiController;
 use AppBundle\DBAL\Types\GrundPublicStatus;

@@ -178,19 +178,26 @@ class GrundCalculator implements EventSubscriber {
 	 * @param Grund $grund
 	 * @param bool $isNew
 	 * @param array $changeset
+     * @param int $iteration
+     *
+     * @throws \Exception
 	 */
-	private function calculateStatus( Grund $grund, bool $isNew, array $changeset = [] ) {
+	private function calculateStatus( Grund $grund, bool $isNew, array $changeset = [], int $iteration = 0) {
 
 		$changeKeys = [ 'annonceres', 'salgstype', 'auktionstartdato', 'auktionslutdato', 'datoannonce' ];
+
+		$initialStatus = $grund->getStatus();
 
 		if ( $isNew || $this->arrayKeyExist( $changeKeys, $changeset ) ) {
 
 			$today = new \DateTime();
-			$today->setTime( 12, 0 );
+			$noonToday = clone $today;
+			$today->setTime(23, 59, 59);
+			$noonToday->setTime( 12, 0 );
 
 			if ( $grund->getSalgstype() === SalgsType::AUKTION ) {
 				// Auktion slut dato i fortid: Auktion slut
-				if ( $grund->getAuktionslutdato() && $grund->getAuktionslutdato() < $today ) {
+				if ( $grund->getAuktionslutdato() && $grund->getAuktionslutdato() < $noonToday ) {
 					$grund->setStatus( GrundStatus::AUKTION_SLUT );
 				} // Ny ell. 'Fremtidig'/'Annonceret' grund - annonce dato i fortiden: Annonceret
 				else if ( ( $isNew || $grund->getStatus() === GrundStatus::FREMTIDIG || $grund->getStatus() === GrundStatus::ANNONCERET ) && $grund->getDatoannonce() && $grund->getDatoannonce() <= $today ) {
@@ -221,9 +228,20 @@ class GrundCalculator implements EventSubscriber {
 				} // Ny ell. 'Annonceret' grund - annoncedato i fremtiden: Fremtidig
 				else if ( ( $isNew || $grund->getStatus() === GrundStatus::ANNONCERET ) && $grund->getDatoannonce() && $grund->getDatoannonce() > $today ) {
 					$grund->setStatus( GrundStatus::FREMTIDIG );
-				}
-			}
-		}
+                }
+            }
+        }
+
+        // In the legacy system this method is called a number of times allowing the result to stabilise. We mimic this behavior by calling recursively.
+        if ( $initialStatus !== $grund->getStatus()) {
+		    if($iteration > 5) {
+		        throw new \Exception("Status change infinite loop detected");
+            } else {
+		        $iteration++;
+		        $this->calculateStatus($grund, $isNew, $changeset, $iteration);
+            }
+        }
+
 	}
 
 	/**
