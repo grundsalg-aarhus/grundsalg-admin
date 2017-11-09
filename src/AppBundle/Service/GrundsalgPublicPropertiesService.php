@@ -133,14 +133,12 @@ class GrundsalgPublicPropertiesService
     public function getPublicPris(Grund $grund)
     {
         if ($grund->getType() === GrundType::PARCELHUS && $grund->getSalgstype() === SalgsType::AUKTION && $this->bankHolidayService->isWaitingPeriod($grund)) {
-            return 0;
+            $pris = 0;
+        } else if ($grund->getType() !== GrundType::PARCELHUS) {
+            $pris = intval($grund->getSalgsprisumoms()) ? $grund->getSalgsprisumoms() : $grund->getPris() * 0.8;
+        } else {
+            $pris = $grund->getPris() ?? 0;
         }
-
-        if ($grund->getType() !== GrundType::PARCELHUS) {
-            return intval($grund->getSalgsprisumoms());
-        }
-
-        $pris = $grund->getPris() ?? 0;
 
         return intval($pris);
     }

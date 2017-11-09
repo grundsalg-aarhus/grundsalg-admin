@@ -6,6 +6,7 @@ use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Rollerworks\Component\PasswordStrength\Validator\Constraints as RollerworksPassword;
 
 /**
  * @ORM\Entity
@@ -18,75 +19,98 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User extends BaseUser
 {
-  use BlameableEntity;
-  use TimestampableEntity;
+    use BlameableEntity;
+    use TimestampableEntity;
 
-  /**
-   * @var integer
-   *
-   * @ORM\Column(name="id", type="integer", nullable=false)
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
-  protected $id;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
 
-  /**
-   * @var string
-   *
-   * @ORM\Column(name="name", type="string", length=255, nullable=true)
-   */
-  protected $name;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     */
+    protected $name;
 
-  /**
-   * User constructor.
-   */
-  public function __construct()
-  {
-    parent::__construct();
-    $this->setEnabled(true);
-  }
+    /**
+     * Plain password. Used for model validation. Must not be persisted.
+     *
+     * @var string
+     *
+     * @RollerworksPassword\PasswordStrength(
+     *     minLength=8,
+     *     minStrength=3,
+     *     tooShortMessage="Kodeord skal være på mindst {{length}} tegn"
+     * )
+     * @RollerworksPassword\PasswordRequirements(
+     *     minLength=8,
+     *     requireLetters=true,
+     *     requireNumbers=true,
+     *     requireCaseDiff=true,
+     *     tooShortMessage="Kodeord skal være på mindst {{length}} tegn",
+     *     requireCaseDiffMessage="Kodeordet skal indeholde både store og små bogstaver",
+     *     missingNumbersMessage="Kodeordet skal indeholde tal",
+     *     missingSpecialCharacterMessage="Kodeordet skal indeholde specialtegn"
+     * )
+     */
+    protected $plainPassword;
 
-  /**
-   * Get id
-   *
-   * @return integer
-   */
-  public function getId()
-  {
-    return $this->id;
-  }
+    /**
+     * User constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setEnabled(true);
+    }
 
-  /**
-   * Set name
-   *
-   * @param string $name
-   *
-   * @return User
-   */
-  public function setName($name)
-  {
-    $this->name = $name;
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-    return $this;
-  }
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return User
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
 
-  /**
-   * Get name
-   *
-   * @return string
-   */
-  public function getName()
-  {
-    return $this->name;
-  }
+        return $this;
+    }
 
-  /**
-   * __toString
-   *
-   * @return string
-   */
-  public function __toString()
-  {
-    return isset($this->name) ? $this->name : $this->getUsernameCanonical();
-  }
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * __toString
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return isset($this->name) ? $this->name : $this->getUsernameCanonical();
+    }
 }

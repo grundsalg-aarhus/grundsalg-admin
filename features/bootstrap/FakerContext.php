@@ -76,6 +76,7 @@ class FakerContext extends BaseContext implements Context, KernelAwareContext
     ));
     $populator->addEntity('AppBundle\Entity\Salgsomraade', 10, array(
       'type' => function() use ($generator) { return $generator->type(); },
+      'srid' => null
     ));
     $populator->addEntity('AppBundle\Entity\Grund', $numberOfEntities, array(
       'type' => function() use ($generator) { return $generator->type(); },

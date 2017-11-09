@@ -25,12 +25,37 @@ easy_admin:
             edit:
                 roles: [ROLE_ADMIN]
                 title: 'Rediger Bruger'
+                fields:
+                    - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Bruger' }
+                    - { property: enabled, label: 'Aktiv' }
+                    - { property: username, label: 'Brugernavn' }
+                    - { property: name, label: 'Navn' }
+                    - { property: email, type: 'email', label: 'Email' }
+                    - { property: lastLogin, label: 'Sidst logget på', type: 'datetime', css_class: 'col-sm-12', readonly: true, type_options: { disabled: true, input: datetime, date_widget: 'single_text', time_widget: 'single_text' } }
+
+                    # if administrators are allowed to edit users' passwords and roles, add this:
+                    - { type: 'section', label: 'Adgang' }
+                    - { property: 'plainPassword', label: 'Nyt password', type: 'text', type_options: { required: false } }
+                    - { property: 'roles', label: 'Roller', type: 'choice', type_options: { multiple: true, expanded: true, choices: { 'READER': 'ROLE_READER', 'EDITOR': 'ROLE_EDITOR', 'ADMIN': 'ROLE_ADMIN', 'ADMIN CLEANUP ': 'ROLE_CLEANUP' } } }
 
             new:
                 roles: [ROLE_ADMIN]
                 title: 'Opret Bruger'
+                fields:
+                    - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Bruger' }
+                    - { property: enabled, label: 'Aktiv' }
+                    - { property: username, label: 'Brugernavn' }
+                    - { property: name, label: 'Navn' }
+                    - { property: email, type: 'email', label: 'Email' }
 
-            form:
+                    # if administrators are allowed to edit users' passwords and roles, add this:
+                    - { type: 'section', label: 'Adgang' }
+                    - { property: 'plainPassword', label: 'Nyt password', type: 'text', type_options: { required: true } }
+                    - { property: 'roles', label: 'Roller', type: 'choice', type_options: { multiple: true, expanded: true, choices: { 'READER': 'ROLE_READER', 'EDITOR': 'ROLE_EDITOR', 'ADMIN': 'ROLE_ADMIN', 'ADMIN CLEANUP ': 'ROLE_CLEANUP' } } }
+
+
+            show:
+                title: 'Bruger'
                 fields: &user_form_fields
                     - { type: 'group', css_class: 'col-sm-12 new-row', label: 'Bruger' }
                     - { property: enabled, label: 'Aktiv' }
@@ -41,10 +66,4 @@ easy_admin:
 
                     # if administrators are allowed to edit users' passwords and roles, add this:
                     - { type: 'section', label: 'Adgang' }
-                    - { property: 'plainPassword', label: 'Nyt password', type: 'text', type_options: { required: true } }
                     - { property: 'roles', label: 'Roller', type: 'choice', type_options: { multiple: true, expanded: true, choices: { 'READER': 'ROLE_READER', 'EDITOR': 'ROLE_EDITOR', 'ADMIN': 'ROLE_ADMIN', 'ADMIN CLEANUP ': 'ROLE_CLEANUP' } } }
-
-            show:
-                title: 'Bruger'
-                fields:
-                    <<: *user_form_fields
