@@ -585,7 +585,7 @@ class LegacyDataGeoCommand extends ContainerAwareCommand
         }
 
         // URL changed, but doesn't forward (july, 2017)
-        $content = str_ireplace('gis.aarhus.dk', 'webgis.aarhus.dk', $content);
+        $content = str_ireplace('//gis.aarhus.dk', '//webgis.aarhus.dk', $content);
 
         $data = @json_decode($content, true);
 
