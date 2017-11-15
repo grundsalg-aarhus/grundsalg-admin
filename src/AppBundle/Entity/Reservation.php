@@ -5,12 +5,15 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Reservation
  *
  * @ORM\Table(name="Reservation", indexes={@ORM\Index(name="fk_InteressentGrundMapping_interessentId", columns={"interessentId"}), @ORM\Index(name="fk_InteressentGrundMapping_grundId", columns={"grundId"})})
  * @ORM\Entity
+ *
+ * @Gedmo\Loggable
  */
 class Reservation
 {
@@ -30,6 +33,8 @@ class Reservation
    * @var string
    *
    * @ORM\Column(name="annulleret", type="boolean", nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $annulleret;
 
@@ -40,6 +45,8 @@ class Reservation
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="grundId", referencedColumnName="id")
    * })
+   *
+   * @Gedmo\Versioned
    */
   private $grund;
 
@@ -50,6 +57,8 @@ class Reservation
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="interessentId", referencedColumnName="id")
    * })
+   *
+   * @Gedmo\Versioned
    */
   private $interessent;
 

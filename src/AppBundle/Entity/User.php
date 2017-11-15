@@ -7,6 +7,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Rollerworks\Component\PasswordStrength\Validator\Constraints as RollerworksPassword;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
@@ -16,6 +17,8 @@ use Rollerworks\Component\PasswordStrength\Validator\Constraints as RollerworksP
  *   @ORM\Index(name="search_User_name", columns={"name"}),
  *   @ORM\Index(name="search_User_email", columns={"email"})
  * })
+ *
+ * @Gedmo\Loggable
  */
 class User extends BaseUser
 {
@@ -35,6 +38,8 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     *
+     * @Gedmo\Versioned
      */
     protected $name;
 
@@ -60,6 +65,27 @@ class User extends BaseUser
      * )
      */
     protected $plainPassword;
+
+    /**
+     * @var bool
+     *
+     * @Gedmo\Versioned
+     */
+    protected $enabled;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Versioned
+     */
+    protected $email;
+
+    /**
+     * @var array
+     *
+     * @Gedmo\Versioned
+     */
+    protected $roles;
 
     /**
      * User constructor.

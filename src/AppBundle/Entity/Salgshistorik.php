@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use AppBundle\DBAL\Types\SalgsType;
 use AppBundle\DBAL\Types\GrundSalgStatus;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Salgshistorik
@@ -20,6 +21,8 @@ use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
  *   @ORM\Index(name="fk_Salgshistorik_koeberPostById", columns={"koeberPostById"}),
  *   @ORM\Index(name="fk_Salgshistorik_medKoeberPostById", columns={"medKoeberPostById"})})
  * @ORM\Entity
+ *
+ * @Gedmo\Loggable
  */
 class Salgshistorik {
   use BlameableEntity;
@@ -39,6 +42,8 @@ class Salgshistorik {
    * @var string
    *
    * @ORM\Column(name="aarsag", type="text", nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $aarsag;
 
@@ -48,6 +53,8 @@ class Salgshistorik {
    * @ORM\Column(name="salgsType", type="SalgsType", nullable=true)
    *
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\SalgsType")
+   *
+   * @Gedmo\Versioned
    */
   private $salgstype;
 
@@ -57,6 +64,8 @@ class Salgshistorik {
    * @ORM\Column(name="salgStatus", type="GrundSalgStatus", nullable=true)
    *
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GrundSalgStatus")
+   *
+   * @Gedmo\Versioned
    */
   private $salgStatus;
 
@@ -64,6 +73,8 @@ class Salgshistorik {
    * @var \DateTime
    *
    * @ORM\Column(name="resStart", type="date", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $resstart;
 
@@ -71,6 +82,8 @@ class Salgshistorik {
    * @var \DateTime
    *
    * @ORM\Column(name="resSlut", type="date", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $resslut;
 
@@ -78,6 +91,8 @@ class Salgshistorik {
    * @var \DateTime
    *
    * @ORM\Column(name="tilbudStart", type="date", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $tilbudstart;
 
@@ -85,6 +100,8 @@ class Salgshistorik {
    * @var \DateTime
    *
    * @ORM\Column(name="tilbudSlut", type="date", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $tilbudslut;
 
@@ -92,6 +109,8 @@ class Salgshistorik {
    * @var \DateTime
    *
    * @ORM\Column(name="accept", type="date", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $accept;
 
@@ -99,6 +118,8 @@ class Salgshistorik {
    * @var \DateTime
    *
    * @ORM\Column(name="overtagelse", type="date", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $overtagelse;
 
@@ -106,6 +127,8 @@ class Salgshistorik {
    * @var \DateTime
    *
    * @ORM\Column(name="skoedeRekv", type="date", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $skoederekv;
 
@@ -113,6 +136,8 @@ class Salgshistorik {
    * @var \DateTime
    *
    * @ORM\Column(name="beloebAnvist", type="date", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $beloebanvist;
 
@@ -120,6 +145,8 @@ class Salgshistorik {
    * @var \DateTime
    *
    * @ORM\Column(name="auktionStartDato", type="date", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $auktionstartdato;
 
@@ -127,6 +154,8 @@ class Salgshistorik {
    * @var \DateTime
    *
    * @ORM\Column(name="auktionSlutDato", type="date", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $auktionslutdato;
 
@@ -134,6 +163,8 @@ class Salgshistorik {
    * @var decimal
    *
    * @ORM\Column(name="minBud", type="decimal", precision=12, scale=2, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $minbud;
 
@@ -141,6 +172,8 @@ class Salgshistorik {
    * @var decimal
    *
    * @ORM\Column(name="antagetBud", type="decimal", precision=12, scale=2, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $antagetbud;
 
@@ -148,6 +181,8 @@ class Salgshistorik {
    * @var string
    *
    * @ORM\Column(name="koeberNavn", type="string", length=255, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $koeberNavn;
 
@@ -155,6 +190,8 @@ class Salgshistorik {
    * @var string
    *
    * @ORM\Column(name="koeberAdresse", type="string", length=120, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $koeberAdresse;
 
@@ -162,6 +199,8 @@ class Salgshistorik {
    * @var string
    *
    * @ORM\Column(name="koeberLand", type="string", length=50, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $koeberLand;
 
@@ -169,6 +208,8 @@ class Salgshistorik {
    * @var string
    *
    * @ORM\Column(name="koeberTelefon", type="string", length=50, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $koeberTelefon;
 
@@ -176,6 +217,8 @@ class Salgshistorik {
    * @var string
    *
    * @ORM\Column(name="koeberMobil", type="string", length=50, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $koeberMobil;
 
@@ -183,6 +226,8 @@ class Salgshistorik {
    * @var string
    *
    * @ORM\Column(name="koeberEmail", type="string", length=120, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $koeberEmail;
 
@@ -190,6 +235,8 @@ class Salgshistorik {
    * @var string
    *
    * @ORM\Column(name="medkoeberNavn", type="string", length=255, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $medkoeberNavn;
 
@@ -197,6 +244,8 @@ class Salgshistorik {
    * @var string
    *
    * @ORM\Column(name="medkoeberAdresse", type="string", length=120, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $medkoeberAdresse;
 
@@ -204,6 +253,8 @@ class Salgshistorik {
    * @var string
    *
    * @ORM\Column(name="medkoeberLand", type="string", length=50, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $medkoeberLand;
 
@@ -211,6 +262,8 @@ class Salgshistorik {
    * @var string
    *
    * @ORM\Column(name="medkoeberTelefon", type="string", length=50, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $medkoeberTelefon;
 
@@ -218,6 +271,8 @@ class Salgshistorik {
    * @var string
    *
    * @ORM\Column(name="medkoeberMobil", type="string", length=50, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $medkoeberMobil;
 
@@ -225,6 +280,8 @@ class Salgshistorik {
    * @var string
    *
    * @ORM\Column(name="medkoeberEmail", type="string", length=120, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $medkoeberEmail;
 
@@ -232,6 +289,8 @@ class Salgshistorik {
    * @var string
    *
    * @ORM\Column(name="koeberNotat", type="text", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $koeberNotat;
 
@@ -243,6 +302,8 @@ class Salgshistorik {
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="grundId", referencedColumnName="id")
    * })
+   *
+   * @Gedmo\Versioned
    */
   private $grund;
 
@@ -254,6 +315,8 @@ class Salgshistorik {
    *   @ORM\JoinColumn(name="koeberPostById", referencedColumnName="id")
    * })
    * @ORM\OrderBy({"postalcode" = "ASC"})
+   *
+   * @Gedmo\Versioned
    */
   private $koeberPostby;
 
@@ -265,6 +328,8 @@ class Salgshistorik {
    *   @ORM\JoinColumn(name="medKoeberPostById", referencedColumnName="id")
    * })
    * @ORM\OrderBy({"postalcode" = "ASC"})
+   *
+   * @Gedmo\Versioned
    */
   private $medkoeberPostby;
 

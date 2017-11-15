@@ -18,6 +18,8 @@ use AppBundle\DBAL\Types\GrundSalgStatus;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 use Psr\Log\NullLogger;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 
 /**
  * Grund
@@ -42,6 +44,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @DiscriminatorColumn(name="discr", type="string")
  *
  * @DiscriminatorMap({"GRUND" = "Grund", "COLL" = "GrundCollection"})
+ *
+ * @Gedmo\Loggable
  */
 class Grund {
   use BlameableEntity;
@@ -62,6 +66,8 @@ class Grund {
    * @ORM\Column(name="status", type="GrundStatus", nullable=true)
    *
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GrundStatus")
+   *
+   * @Gedmo\Versioned
    */
   private $status;
 
@@ -71,6 +77,8 @@ class Grund {
    * @ORM\Column(name="salgStatus", type="GrundSalgStatus", nullable=true)
    *
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GrundSalgStatus")
+   *
+   * @Gedmo\Versioned
    */
   private $salgstatus;
 
@@ -80,6 +88,8 @@ class Grund {
    * @ORM\Column(name="publicStatus", type="GrundPublicStatus", nullable=true)
    *
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GrundPublicStatus")
+   *
+   * @Gedmo\Versioned
    */
   private $publicstatus;
 
@@ -87,6 +97,8 @@ class Grund {
    * @var string
    *
    * @ORM\Column(name="gid", type="string", length=50, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $gid;
 
@@ -96,6 +108,8 @@ class Grund {
    * @ORM\Column(name="type", type="GrundType", nullable=false)
    *
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GrundType")
+   *
+   * @Gedmo\Versioned
    */
   private $type;
 
@@ -103,6 +117,8 @@ class Grund {
    * @var string
    *
    * @ORM\Column(name="mnr", type="string", length=20, nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $mnr;
 
@@ -110,6 +126,8 @@ class Grund {
    * @var string
    *
    * @ORM\Column(name="mnr2", type="string", length=20, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $mnr2;
 
@@ -117,6 +135,8 @@ class Grund {
    * @var string
    *
    * @ORM\Column(name="delAreal", type="string", length=60, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $delareal;
 
@@ -124,6 +144,8 @@ class Grund {
    * @var string
    *
    * @ORM\Column(name="ejerlav", type="string", length=60, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $ejerlav;
 
@@ -131,6 +153,8 @@ class Grund {
    * @var string
    *
    * @ORM\Column(name="vej", type="string", length=60, nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $vej;
 
@@ -138,6 +162,8 @@ class Grund {
    * @var int
    *
    * @ORM\Column(name="husNummer", type="integer", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $husnummer;
 
@@ -145,6 +171,8 @@ class Grund {
    * @var string
    *
    * @ORM\Column(name="bogstav", type="string", length=30, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $bogstav;
 
@@ -156,6 +184,8 @@ class Grund {
    *   @ORM\JoinColumn(name="postbyId", referencedColumnName="id")
    * })
    * @ORM\OrderBy({"postalcode" = "ASC"})
+   *
+   * @Gedmo\Versioned
    */
   protected $postby;
 
@@ -165,6 +195,8 @@ class Grund {
    * @ORM\Column(name="salgsType", type="SalgsType", nullable=false)
    *
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\SalgsType")
+   *
+   * @Gedmo\Versioned
    */
   private $salgstype;
 
@@ -172,6 +204,8 @@ class Grund {
    * @var \DateTime
    *
    * @ORM\Column(name="auktionStartDato", type="date", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $auktionstartdato;
 
@@ -179,6 +213,8 @@ class Grund {
    * @var \DateTime
    *
    * @ORM\Column(name="auktionSlutDato", type="date", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $auktionslutdato;
 
@@ -186,6 +222,8 @@ class Grund {
    * @var bool
    *
    * @ORM\Column(name="annonceres", type="boolean", nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $annonceres;
 
@@ -193,6 +231,8 @@ class Grund {
    * @var \DateTime
    *
    * @ORM\Column(name="datoAnnonce", type="date", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $datoannonce;
 
@@ -200,6 +240,8 @@ class Grund {
    * @var \DateTime
    *
    * @ORM\Column(name="datoAnnonce1", type="date", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $datoannonce1;
 
@@ -207,6 +249,8 @@ class Grund {
    * @var array
    *
    * @ORM\Column(name="tilsluttet", type="array", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $tilsluttet;
 
@@ -214,6 +258,8 @@ class Grund {
    * @var decimal
    *
    * @ORM\Column(name="maxEtageM2", type="decimal", precision=12, scale=2, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $maxetagem2;
 
@@ -221,6 +267,8 @@ class Grund {
    * @var decimal
    *
    * @ORM\Column(name="areal", type="decimal", precision=12, scale=2, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $areal;
 
@@ -228,6 +276,8 @@ class Grund {
    * @var decimal
    *
    * @ORM\Column(name="arealVej", type="decimal", precision=12, scale=2, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $arealvej;
 
@@ -235,6 +285,8 @@ class Grund {
    * @var decimal
    *
    * @ORM\Column(name="arealKotelet", type="decimal", precision=12, scale=2, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $arealkotelet;
 
@@ -242,6 +294,8 @@ class Grund {
    * @var decimal
    *
    * @ORM\Column(name="bruttoAreal", type="decimal", precision=12, scale=2, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $bruttoareal;
 
@@ -249,6 +303,8 @@ class Grund {
    * @var decimal
    *
    * @ORM\Column(name="prisM2", type="decimal", precision=12, scale=2, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $prism2;
 
@@ -256,6 +312,8 @@ class Grund {
    * @var decimal
    *
    * @ORM\Column(name="prisFoerKorrektion", type="decimal", precision=12, scale=2, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $prisfoerkorrektion;
 
@@ -265,6 +323,8 @@ class Grund {
    * @ORM\Column(name="prisKorrektion1", type="Priskorrektion", nullable=true)
    *
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\Priskorrektion")
+   *
+   * @Gedmo\Versioned
    */
   private $priskorrektion1;
 
@@ -272,6 +332,8 @@ class Grund {
    * @var int
    *
    * @ORM\Column(name="antalKorr1", type="integer", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $antalkorr1;
 
@@ -279,6 +341,8 @@ class Grund {
    * @var decimal
    *
    * @ORM\Column(name="aKrKorr1", type="decimal", precision=12, scale=2, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $akrkorr1;
 
@@ -286,6 +350,8 @@ class Grund {
    * @var decimal
    *
    * @ORM\Column(name="prisKoor1", type="decimal", precision=12, scale=2, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $priskoor1;
 
@@ -295,6 +361,8 @@ class Grund {
    * @ORM\Column(name="prisKorrektion2", type="Priskorrektion", nullable=true)
    *
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\Priskorrektion")
+   *
+   * @Gedmo\Versioned
    */
   private $priskorrektion2;
 
@@ -302,6 +370,8 @@ class Grund {
    * @var int
    *
    * @ORM\Column(name="antalKorr2", type="integer", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $antalkorr2;
 
@@ -309,6 +379,8 @@ class Grund {
    * @var decimal
    *
    * @ORM\Column(name="aKrKorr2", type="decimal", precision=12, scale=2, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $akrkorr2;
 
@@ -316,6 +388,8 @@ class Grund {
    * @var decimal
    *
    * @ORM\Column(name="prisKoor2", type="decimal", precision=12, scale=2, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $priskoor2;
 
@@ -325,6 +399,8 @@ class Grund {
    * @ORM\Column(name="prisKorrektion3", type="Priskorrektion", nullable=true)
    *
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\Priskorrektion")
+   *
+   * @Gedmo\Versioned
    */
   private $priskorrektion3;
 
@@ -332,6 +408,8 @@ class Grund {
    * @var int
    *
    * @ORM\Column(name="antalKorr3", type="integer", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $antalkorr3;
 
@@ -339,6 +417,8 @@ class Grund {
    * @var decimal
    *
    * @ORM\Column(name="aKrKorr3", type="decimal", precision=12, scale=2, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $akrkorr3;
 
@@ -346,6 +426,8 @@ class Grund {
    * @var decimal
    *
    * @ORM\Column(name="prisKoor3", type="decimal", precision=12, scale=2, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $priskoor3;
 
@@ -353,6 +435,8 @@ class Grund {
    * @var decimal
    *
    * @ORM\Column(name="pris", type="decimal", precision=12, scale=2, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $pris;
 
@@ -360,6 +444,8 @@ class Grund {
    * @var decimal
    *
    * @ORM\Column(name="fastPris", type="decimal", precision=12, scale=2, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $fastpris;
 
@@ -367,6 +453,8 @@ class Grund {
    * @var decimal
    *
    * @ORM\Column(name="minBud", type="decimal", precision=12, scale=2, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $minbud;
 
@@ -374,6 +462,8 @@ class Grund {
    * @var string
    *
    * @ORM\Column(name="note", type="text", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $note;
 
@@ -384,6 +474,8 @@ class Grund {
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="landInspektoerId", referencedColumnName="id", nullable=true)
    * })
+   *
+   * @Gedmo\Versioned
    */
   private $landinspektoer;
 
@@ -391,6 +483,8 @@ class Grund {
    * @var \DateTime
    *
    * @ORM\Column(name="resStart", type="date", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $resstart;
 
@@ -398,6 +492,8 @@ class Grund {
    * @var \DateTime
    *
    * @ORM\Column(name="tilbudStart", type="date", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $tilbudstart;
 
@@ -405,6 +501,8 @@ class Grund {
    * @var \DateTime
    *
    * @ORM\Column(name="accept", type="date", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $accept;
 
@@ -412,6 +510,8 @@ class Grund {
    * @var \DateTime
    *
    * @ORM\Column(name="skoedeRekv", type="date", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $skoederekv;
 
@@ -419,6 +519,8 @@ class Grund {
    * @var \DateTime
    *
    * @ORM\Column(name="beloebAnvist", type="date", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $beloebanvist;
 
@@ -426,6 +528,8 @@ class Grund {
    * @var \DateTime
    *
    * @ORM\Column(name="resSlut", type="date", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $resslut;
 
@@ -433,6 +537,8 @@ class Grund {
    * @var \DateTime
    *
    * @ORM\Column(name="tilbudSlut", type="date", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $tilbudslut;
 
@@ -440,6 +546,8 @@ class Grund {
    * @var \DateTime
    *
    * @ORM\Column(name="overtagelse", type="date", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $overtagelse;
 
@@ -447,6 +555,8 @@ class Grund {
    * @var decimal
    *
    * @ORM\Column(name="antagetBud", type="decimal", precision=12, scale=2, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $antagetbud;
 
@@ -454,6 +564,8 @@ class Grund {
    * @var decimal
    *
    * @ORM\Column(name="salgsPrisUMoms", type="decimal", precision=12, scale=2, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $salgsprisumoms;
 
@@ -461,6 +573,8 @@ class Grund {
    * @var string
    *
    * @ORM\Column(name="koeberNavn", type="string", length=255, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $koeberNavn;
 
@@ -468,6 +582,8 @@ class Grund {
    * @var string
    *
    * @ORM\Column(name="koeberAdresse", type="string", length=120, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $koeberAdresse;
 
@@ -475,6 +591,8 @@ class Grund {
    * @var string
    *
    * @ORM\Column(name="koeberLand", type="string", length=50, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $koeberLand;
 
@@ -482,6 +600,8 @@ class Grund {
    * @var string
    *
    * @ORM\Column(name="koeberTelefon", type="string", length=50, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $koeberTelefon;
 
@@ -489,6 +609,8 @@ class Grund {
    * @var string
    *
    * @ORM\Column(name="koeberMobil", type="string", length=50, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $koeberMobil;
 
@@ -496,6 +618,8 @@ class Grund {
    * @var string
    *
    * @ORM\Column(name="koeberEmail", type="string", length=120, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $koeberEmail;
 
@@ -503,6 +627,8 @@ class Grund {
    * @var string
    *
    * @ORM\Column(name="medkoeberNavn", type="string", length=255, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $medkoeberNavn;
 
@@ -510,6 +636,8 @@ class Grund {
    * @var string
    *
    * @ORM\Column(name="medkoeberAdresse", type="string", length=120, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $medkoeberAdresse;
 
@@ -517,6 +645,8 @@ class Grund {
    * @var string
    *
    * @ORM\Column(name="medkoeberLand", type="string", length=50, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $medkoeberLand;
 
@@ -524,6 +654,8 @@ class Grund {
    * @var string
    *
    * @ORM\Column(name="medkoeberTelefon", type="string", length=50, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $medkoeberTelefon;
 
@@ -531,6 +663,8 @@ class Grund {
    * @var string
    *
    * @ORM\Column(name="medkoeberMobil", type="string", length=50, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $medkoeberMobil;
 
@@ -538,6 +672,8 @@ class Grund {
    * @var string
    *
    * @ORM\Column(name="medkoeberEmail", type="string", length=120, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $medkoeberEmail;
 
@@ -545,6 +681,8 @@ class Grund {
    * @var string
    *
    * @ORM\Column(name="koeberNotat", type="text", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $koeberNotat;
 
@@ -556,6 +694,8 @@ class Grund {
    *   @ORM\JoinColumn(name="medKoeberPostById", referencedColumnName="id")
    * })
    * @ORM\OrderBy({"postalcode" = "ASC"})
+   *
+   * @Gedmo\Versioned
    */
   private $medkoeberPostby;
 
@@ -567,6 +707,8 @@ class Grund {
    *   @ORM\JoinColumn(name="koeberPostById", referencedColumnName="id")
    * })
    * @ORM\OrderBy({"postalcode" = "ASC"})
+   *
+   * @Gedmo\Versioned
    */
   private $koeberPostby;
 
@@ -591,6 +733,8 @@ class Grund {
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="lokalsamfundId", referencedColumnName="id", nullable=false)
    * })
+   *
+   * @Gedmo\Versioned
    */
   private $lokalsamfund;
 
@@ -601,6 +745,8 @@ class Grund {
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="salgsomraadeId", referencedColumnName="id", nullable=false)
    * })
+   *
+   * @Gedmo\Versioned
    */
   private $salgsomraade;
 
@@ -608,6 +754,8 @@ class Grund {
    * @var \CrEOF\Spatial\DBAL\Types\Geography
    *
    * @ORM\Column(name="SP_GEOMETRY", type="geometry", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $spGeometry;
 
@@ -615,6 +763,8 @@ class Grund {
    * @var int
    *
    * @ORM\Column(name="srid", type="integer", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $srid;
 
@@ -622,6 +772,8 @@ class Grund {
    * @var string
    *
    * @ORM\Column(name="MI_STYLE", type="string", length=255, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $miStyle;
 
@@ -629,6 +781,8 @@ class Grund {
    * @var string
    *
    * @ORM\Column(name="pdflink", type="string", length=255, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $pdfLink;
 
