@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Lokalsamfund
@@ -15,6 +16,8 @@ use Doctrine\ORM\Mapping as ORM;
  *   @ORM\Index(name="search_Lokalsamfund_name", columns={"name"})
  * })
  * @ORM\Entity
+ *
+ * @Gedmo\Loggable
  */
 class Lokalsamfund
 {
@@ -35,6 +38,8 @@ class Lokalsamfund
    * @var string
    *
    * @ORM\Column(name="number", type="string", length=50, nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $number;
 
@@ -42,6 +47,8 @@ class Lokalsamfund
    * @var string
    *
    * @ORM\Column(name="name", type="string", length=50, nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $name;
 
@@ -49,6 +56,8 @@ class Lokalsamfund
    * @var integer
    *
    * @ORM\Column(name="active", type="boolean", nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $active;
 

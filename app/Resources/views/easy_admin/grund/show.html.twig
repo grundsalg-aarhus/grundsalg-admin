@@ -107,6 +107,22 @@
 
                       {{ grundsalg.entity_row('app.grund.postby', entity.postby ) }}
                       {{ grundsalg.entity_row('app.grund.lokalsamfund', entity.lokalsamfund ) }}
+                      {{ grundsalg.entity_row('app.grund.lokalsamfund', entity.lokalsamfund ) }}
+                      <div class="form-group field-entity">
+                        <label class="col-sm-2 control-label">{{ 'app.grund.pdfLink' | trans }}</label>
+                        <div class="col-sm-10">
+                          <div class="form-control" id="{{ 'app.grund.pdfLink' | replace({'.': '_'}) }}">
+                            <a href="{{ entity.pdfLink | raw }}" target="_blank">{{ entity.pdfLink }}</a>
+                          </div>
+                        </div>
+                      </div>
+                      {%if entity.spGeometry is null %}
+                        {% set spGeometry = false %}
+                      {% else %}
+                        {% set spGeometry = true %}
+                      {%endif%}
+                      {{ grundsalg.entity_row('app.grund.spGeometry', spGeometry ) }}
+
                     </div>
                     <div class="col-md-6">
                       {{ grundsalg.entity_row('app.grund.salgstatus', entity.visStatus ) }}

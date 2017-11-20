@@ -178,19 +178,26 @@ class GrundCalculator implements EventSubscriber {
 	 * @param Grund $grund
 	 * @param bool $isNew
 	 * @param array $changeset
+     * @param int $iteration
+     *
+     * @throws \Exception
 	 */
-	private function calculateStatus( Grund $grund, bool $isNew, array $changeset = [] ) {
+	private function calculateStatus( Grund $grund, bool $isNew, array $changeset = [], int $iteration = 0) {
 
 		$changeKeys = [ 'annonceres', 'salgstype', 'auktionstartdato', 'auktionslutdato', 'datoannonce' ];
+
+		$initialStatus = $grund->getStatus();
 
 		if ( $isNew || $this->arrayKeyExist( $changeKeys, $changeset ) ) {
 
 			$today = new \DateTime();
-			$today->setTime( 12, 0 );
+			$noonToday = clone $today;
+			$today->setTime(23, 59, 59);
+			$noonToday->setTime( 12, 0 );
 
 			if ( $grund->getSalgstype() === SalgsType::AUKTION ) {
 				// Auktion slut dato i fortid: Auktion slut
-				if ( $grund->getAuktionslutdato() && $grund->getAuktionslutdato() < $today ) {
+				if ( $grund->getAuktionslutdato() && $grund->getAuktionslutdato() < $noonToday ) {
 					$grund->setStatus( GrundStatus::AUKTION_SLUT );
 				} // Ny ell. 'Fremtidig'/'Annonceret' grund - annonce dato i fortiden: Annonceret
 				else if ( ( $isNew || $grund->getStatus() === GrundStatus::FREMTIDIG || $grund->getStatus() === GrundStatus::ANNONCERET ) && $grund->getDatoannonce() && $grund->getDatoannonce() <= $today ) {
@@ -221,9 +228,20 @@ class GrundCalculator implements EventSubscriber {
 				} // Ny ell. 'Annonceret' grund - annoncedato i fremtiden: Fremtidig
 				else if ( ( $isNew || $grund->getStatus() === GrundStatus::ANNONCERET ) && $grund->getDatoannonce() && $grund->getDatoannonce() > $today ) {
 					$grund->setStatus( GrundStatus::FREMTIDIG );
-				}
-			}
-		}
+                }
+            }
+        }
+
+        // In the legacy system this method is called a number of times allowing the result to stabilise. We mimic this behavior by calling recursively.
+        if ( $initialStatus !== $grund->getStatus()) {
+		    if($iteration > 5) {
+		        throw new \Exception("Status change infinite loop detected");
+            } else {
+		        $iteration++;
+		        $this->calculateStatus($grund, $isNew, $changeset, $iteration);
+            }
+        }
+
 	}
 
 	/**
@@ -300,32 +318,55 @@ class GrundCalculator implements EventSubscriber {
 
 	/**
 	 * Calculate price
+     *
+     * "Copy-paste" from legacy system (GrundForm.js: calculatePris)
 	 *
 	 * @param Grund $grund
 	 */
 	private function calculatePris( Grund $grund ) {
-
 		if ( $grund->getSalgstype() == SalgsType::KVADRATMETERPRIS || $grund->getSalgstype() == SalgsType::ETGM2 ) {
-
 			$grund->setPriskoor1( $grund->getAntalkorr1() * $grund->getAkrkorr1() );
 			$grund->setPriskoor2( $grund->getAntalkorr2() * $grund->getAkrkorr2() );
 			$grund->setPriskoor3( $grund->getAntalkorr3() * $grund->getAkrkorr3() );
 
-			if ( $grund->getPrism2() > 0 ) {
-				$prisExKorr = $grund->getBruttoareal() * $grund->getPrism2();
-				$pris       = $prisExKorr + $grund->getPriskoor1() + $grund->getPriskoor2() + $grund->getPriskoor3();
+			$this->calculatePrisExKorr( $grund );
 
-				$grund->setPris( $pris );
-			}
+            $pris = $grund->getPrisfoerkorrektion() + $grund->getPriskoor1() + $grund->getPriskoor2() + $grund->getPriskoor3();
+            $pris = $pris ?? 0;
 
-		} else if ( $grund->getSalgstype() == 'Fastpris' ) {
+            $grund->setPris( $pris );
+		} else if ( $grund->getSalgstype() == SalgsType::FASTPRIS ) {
+            $pris = $grund->getFastpris() ?? 0;
+		    $grund->setPris($pris);
+		} else if ( $grund->getSalgstype() == SalgsType::AUKTION ) {
+		    $pris = $grund->getAntagetbud() ?? 0;
+		    $grund->setPris($pris);
+        }
 
-			if ( $grund->getFastpris() && $grund->getAccept() ) {
-				$grund->setSalgsprisumoms( 0.8 * $grund->getFastpris() );
-			}
+        $date = \DateTime::createFromFormat('Y-m-d', '2011-01-01');
 
-		}
+        if($grund->getAccept()) {
+            if($grund->getAccept() < $date) {
+                $grund->setSalgsprisumoms(0);
+            } else {
+                $grund->setSalgsprisumoms($grund->getPris() * 0.8);
+            }
+        } else {
+            $grund->setSalgsprisumoms(0);
+        }
 	}
+
+	private function calculatePrisExKorr( Grund $grund ) {
+	    $prism2 = $grund->getPrism2() ? $grund->getPrism2() : 0;
+	    $maxetm2 = $grund->getMaxetagem2() ? $grund->getMaxetagem2() : 0;
+	    $bareal = $grund->getBruttoareal() ? $grund->getBruttoareal() : 0;
+
+	    if($grund->getType() === GrundType::STORPARCEL) {
+	        $grund->setPrisfoerkorrektion($prism2 * $maxetm2);
+        } else {
+	        $grund->setPrisfoerkorrektion($prism2 * $bareal);
+        }
+    }
 
 	/**
 	 * Check if at least one value in $needles exists as a key in $haystack

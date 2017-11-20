@@ -89,6 +89,7 @@ app:
       note: Note
       oplysninger: Grundoplysninger
       overtagelse: Overtagelse
+      pdfLink: PDF Link
       postby: Postnr/By
       pris: Pris
       priser: Priser
@@ -104,6 +105,7 @@ app:
       salgstatus: Status
       salgstype: Salgstype
       skoederekv: Skøde rekv.
+      spGeometry: Geometri/Kort
       status: Status
       tilbudslut: til og med
       tilbudstart: Tilbud

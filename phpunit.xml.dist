@@ -13,8 +13,11 @@
     </php>
 
     <testsuites>
-        <testsuite name="Project Test Suite">
-            <directory>tests</directory>
+        <testsuite name="AppBundle Test Suite">
+            <directory>src/AppBundle/Tests</directory>
+        </testsuite>
+        <testsuite name="AppBundle Test Suite">
+            <directory>src/Itk/DoctrineIntegrityBundle/Tests</directory>
         </testsuite>
     </testsuites>
 

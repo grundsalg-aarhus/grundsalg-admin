@@ -34,10 +34,6 @@ Feature: Public API
     When I send a "GET" request to "public/api/udstykning/2/grunde"
     Then the JSON node "grunde" should have 2 elements
 
-  Scenario: Grunde are filtered by DatoAnnonce
-    When I send a "GET" request to "public/api/udstykning/3/grunde"
-    Then the JSON node "grunde" should have 1 elements
-
   Scenario: Grunde are sorted correctly by address
     When I send a "GET" request to "public/api/udstykning/1/grunde"
     Then the JSON node "grunde[0].address" should be equal to "Andenvej 171A"

@@ -68,6 +68,7 @@ class FakerContext extends BaseContext implements Context, KernelAwareContext
     $populator->addEntity('AppBundle\Entity\Lokalsamfund', 10);
     $populator->addEntity('AppBundle\Entity\Lokalplan', 10, array(
       'nr' => function() use ($generator) { return $generator->nr(); },
+      'forbrugsandel' => function() use ($generator) { return $generator->forbrugsandel(); },
     ));
     $populator->addEntity('AppBundle\Entity\Landinspektoer', 10);
     $populator->addEntity('AppBundle\Entity\Delomraade', 10, array(
@@ -75,10 +76,28 @@ class FakerContext extends BaseContext implements Context, KernelAwareContext
     ));
     $populator->addEntity('AppBundle\Entity\Salgsomraade', 10, array(
       'type' => function() use ($generator) { return $generator->type(); },
+      'srid' => null
     ));
     $populator->addEntity('AppBundle\Entity\Grund', $numberOfEntities, array(
       'type' => function() use ($generator) { return $generator->type(); },
       'salgsType' => function() use ($generator) { return $generator->salgsType(); },
+      'maxetagem2' => function() use ($generator) { return $generator->maxetagem2(); },
+      'areal' => function() use ($generator) { return $generator->areal(); },
+      'arealvej' => function() use ($generator) { return $generator->arealvej(); },
+      'arealkotelet' => function() use ($generator) { return $generator->arealkotelet(); },
+      'bruttoareal' => function() use ($generator) { return $generator->bruttoareal(); },
+      'prism2' => function() use ($generator) { return $generator->prism2(); },
+      'prisfoerkorrektion' => function() use ($generator) { return $generator->prisfoerkorrektion(); },
+      'akrkorr1' => function() use ($generator) { return $generator->korr1(); },
+      'akrkorr2' => function() use ($generator) { return $generator->korr1(); },
+      'akrkorr3' => function() use ($generator) { return $generator->korr1(); },
+      'priskoor1' => function() use ($generator) { return $generator->korr1(); },
+      'priskoor2' => function() use ($generator) { return $generator->korr1(); },
+      'priskoor3' => function() use ($generator) { return $generator->korr1(); },
+      'pris' => function() use ($generator) { return $generator->pris(); },
+      'fastpris' => function() use ($generator) { return $generator->pris(); },
+      'minbud' => function() use ($generator) { return $generator->pris(); },
+      'salgsprisumoms' => function() use ($generator) { return $generator->pris(); },
       'accept' => null,
       'antagetbud' => null,
       'auktionslutdato' => null,

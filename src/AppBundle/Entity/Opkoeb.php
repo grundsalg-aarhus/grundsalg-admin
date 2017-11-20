@@ -6,6 +6,7 @@ use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OrderBy;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Opkoeb
@@ -20,6 +21,8 @@ use Doctrine\ORM\Mapping\OrderBy;
  *   @ORM\Index(name="search_Opkoeb_procentAfLP", columns={"procentAfLP"})
  * })
  * @ORM\Entity
+ *
+ * @Gedmo\Loggable
  */
 class Opkoeb
 {
@@ -40,6 +43,8 @@ class Opkoeb
    * @var string
    *
    * @ORM\Column(name="matrik1", type="string", length=50, nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $matrik1;
 
@@ -47,6 +52,8 @@ class Opkoeb
    * @var string
    *
    * @ORM\Column(name="matrik2", type="string", length=50, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $matrik2;
 
@@ -54,6 +61,8 @@ class Opkoeb
    * @var string
    *
    * @ORM\Column(name="ejerlav", type="string", length=60, nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $ejerlav;
 
@@ -61,6 +70,8 @@ class Opkoeb
    * @var integer
    *
    * @ORM\Column(name="m2", type="integer", nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $m2;
 
@@ -68,6 +79,8 @@ class Opkoeb
    * @var string
    *
    * @ORM\Column(name="bemaerkning", type="text", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $bemaerkning;
 
@@ -75,20 +88,26 @@ class Opkoeb
    * @var \DateTime
    *
    * @ORM\Column(name="opkoebDato", type="date", nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $opkoebdato;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="pris", type="float", precision=16, scale=2, nullable=false)
+   * @ORM\Column(name="pris", type="decimal", precision=16, scale=2, nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $pris;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="procentAfLP", type="float", precision=12, scale=2, nullable=true)
+   * @ORM\Column(name="procentAfLP", type="decimal", precision=12, scale=2, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $procentaflp;
 
@@ -100,6 +119,8 @@ class Opkoeb
    *   @ORM\JoinColumn(name="lokalplanId", referencedColumnName="id")
    * })
    * @OrderBy({"nr" = "ASC"})
+   *
+   * @Gedmo\Versioned
    */
   private $lokalplan;
 

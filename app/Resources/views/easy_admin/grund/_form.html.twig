@@ -110,6 +110,13 @@
 
                   {{ form_row(form.postby) }}
                   {{ form_row(form.lokalsamfund) }}
+                  {{ form_row(form.pdfLink) }}
+                  {%if entity.spGeometry is null %}
+                    {% set spGeometry = false %}
+                  {% else %}
+                    {% set spGeometry = true %}
+                  {%endif%}
+                  {{ grundsalg.entity_value('app.grund.spGeometry', spGeometry ) }}
                 </div>
                 <div class="col-md-6">
                   {{ grundsalg.entity_value('app.grund.salgstatus', entity.visStatus ) }}
@@ -286,6 +293,11 @@
                 <div class="col-md-6">
                   {% if entity.salgsomraade %}
                     {{ grundsalg.entity_value('app.salgsomraade.annonceres', entity.salgsomraade.annonceres ) }}
+                    {%if entity.salgsomraade.spGeometry is null %}
+                      {% set spGeometry = false %}
+                    {% else %}
+                      {% set spGeometry = true %}
+                    {%endif%}
                   {% else %}
                     {{ grundsalg.entity_value('app.salgsomraade.annonceres' ) }}
                   {% endif %}
@@ -295,6 +307,18 @@
                     {{ grundsalg.entity_value('app.salgsomraade.titel', entity.salgsomraade.titel ) }}
                   {% else %}
                     {{ grundsalg.entity_value('app.salgsomraade.titel' ) }}
+                  {% endif %}
+                </div>
+                <div class="col-md-6">
+                  {% if entity.salgsomraade %}
+                    {%if entity.salgsomraade.spGeometry is null %}
+                      {% set spGeometry = false %}
+                    {% else %}
+                      {% set spGeometry = true %}
+                    {%endif%}
+                    {{ grundsalg.entity_value('app.grund.spGeometry', spGeometry ) }}
+                  {% else %}
+                    {{ grundsalg.entity_value('app.salgsomraade.spGeometry' ) }}
                   {% endif %}
                 </div>
                 <div class="col-md-6">

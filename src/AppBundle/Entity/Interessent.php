@@ -7,6 +7,7 @@ use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToMany;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Interessent
@@ -20,6 +21,8 @@ use Doctrine\ORM\Mapping\OneToMany;
  *   @ORM\Index(name="search_Interessent_koeberLand", columns={"koeberLand"})
  * })
  * @ORM\Entity
+ *
+ * @Gedmo\Loggable
  */
 class Interessent
 {
@@ -40,6 +43,8 @@ class Interessent
    * @var string
    *
    * @ORM\Column(name="koeberNavn", type="string", length=255, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $koeberNavn;
 
@@ -47,6 +52,8 @@ class Interessent
    * @var string
    *
    * @ORM\Column(name="koeberAdresse", type="string", length=120, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $koeberAdresse;
 
@@ -54,6 +61,8 @@ class Interessent
    * @var string
    *
    * @ORM\Column(name="koeberLand", type="string", length=50, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $koeberLand;
 
@@ -61,6 +70,8 @@ class Interessent
    * @var string
    *
    * @ORM\Column(name="koeberTelefon", type="string", length=50, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $koeberTelefon;
 
@@ -68,6 +79,8 @@ class Interessent
    * @var string
    *
    * @ORM\Column(name="koeberMobil", type="string", length=50, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $koeberMobil;
 
@@ -75,6 +88,8 @@ class Interessent
    * @var string
    *
    * @ORM\Column(name="koeberEmail", type="string", length=120, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $koeberEmail;
 
@@ -82,6 +97,8 @@ class Interessent
    * @var string
    *
    * @ORM\Column(name="medkoeberNavn", type="string", length=255, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $medkoeberNavn;
 
@@ -89,6 +106,8 @@ class Interessent
    * @var string
    *
    * @ORM\Column(name="medkoeberAdresse", type="string", length=120, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $medkoeberAdresse;
 
@@ -96,6 +115,8 @@ class Interessent
    * @var string
    *
    * @ORM\Column(name="medkoeberLand", type="string", length=50, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $medkoeberLand;
 
@@ -103,6 +124,8 @@ class Interessent
    * @var string
    *
    * @ORM\Column(name="medkoeberTelefon", type="string", length=50, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $medkoeberTelefon;
 
@@ -110,6 +133,8 @@ class Interessent
    * @var string
    *
    * @ORM\Column(name="medkoeberMobil", type="string", length=50, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $medkoeberMobil;
 
@@ -117,6 +142,8 @@ class Interessent
    * @var string
    *
    * @ORM\Column(name="medkoeberEmail", type="string", length=120, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $medkoeberEmail;
 
@@ -124,6 +151,8 @@ class Interessent
    * @var string
    *
    * @ORM\Column(name="koeberNotat", type="text", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $koeberNotat;
 
@@ -135,6 +164,8 @@ class Interessent
    *   @ORM\JoinColumn(name="medKoeberPostById", referencedColumnName="id")
    * })
    * @ORM\OrderBy({"postalcode" = "ASC"})
+   *
+   * @Gedmo\Versioned
    */
   private $medkoeberPostby;
 
@@ -146,6 +177,8 @@ class Interessent
    *   @ORM\JoinColumn(name="koeberPostById", referencedColumnName="id")
    * })
    * @ORM\OrderBy({"postalcode" = "ASC"})
+   *
+   * @Gedmo\Versioned
    */
   private $koeberPostby;
 

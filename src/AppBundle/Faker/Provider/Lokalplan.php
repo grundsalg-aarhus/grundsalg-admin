@@ -17,4 +17,9 @@ class Lokalplan extends Base {
   {
     return $this->generator->numberBetween($min = 100, $max = 900);
   }
+
+  public function forbrugsandel()
+  {
+      return $this->generator->randomFloat($min = 0, $max = 900);
+  }
 }

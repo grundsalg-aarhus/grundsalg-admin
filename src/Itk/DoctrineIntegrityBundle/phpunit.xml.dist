@@ -11,7 +11,7 @@
          bootstrap="vendor/autoload.php"
 >
     <testsuites>
-        <testsuite name="ITKDoctrineIntegrityExtension Test Suite">
+        <testsuite name="ItkDoctrineIntegrityExtension Test Suite">
             <directory suffix="Test.php">./tests/</directory>
         </testsuite>
     </testsuites>

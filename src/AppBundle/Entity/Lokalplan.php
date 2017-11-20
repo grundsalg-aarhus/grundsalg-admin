@@ -6,6 +6,7 @@ use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToMany;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Lokalplan
@@ -18,6 +19,8 @@ use Doctrine\ORM\Mapping\OneToMany;
  *   @ORM\Index(name="search_Lokalplan_forbrugsAndel", columns={"forbrugsAndel"})
  * })
  * @ORM\Entity
+ *
+ * @Gedmo\Loggable
  */
 class Lokalplan
 {
@@ -47,6 +50,8 @@ class Lokalplan
    * @var string
    *
    * @ORM\Column(name="nr", type="string", length=50, nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $nr;
 
@@ -57,6 +62,8 @@ class Lokalplan
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="lokalsamfundId", referencedColumnName="id", nullable=false)
    * })
+   *
+   * @Gedmo\Versioned
    */
   private $lokalsamfund;
 
@@ -71,6 +78,8 @@ class Lokalplan
    * @var string
    *
    * @ORM\Column(name="titel", type="string", length=255, nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $titel;
 
@@ -78,6 +87,8 @@ class Lokalplan
    * @var string
    *
    * @ORM\Column(name="projektLeder", type="string", length=50, nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $projektleder;
 
@@ -85,6 +96,8 @@ class Lokalplan
    * @var string
    *
    * @ORM\Column(name="telefon", type="string", length=20, nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $telefon;
 
@@ -92,6 +105,8 @@ class Lokalplan
    * @var string
    *
    * @ORM\Column(name="lokalPlanLink", type="string", length=255, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $lokalplanlink;
 
@@ -99,6 +114,8 @@ class Lokalplan
    * @var integer
    *
    * @ORM\Column(name="samletAreal", type="integer", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $samletareal;
 
@@ -106,13 +123,17 @@ class Lokalplan
    * @var integer
    *
    * @ORM\Column(name="salgbartAreal", type="integer", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $salgbartareal;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="forbrugsAndel", type="float", precision=18, scale=12, nullable=true)
+   * @ORM\Column(name="forbrugsAndel", type="decimal", precision=18, scale=12, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $forbrugsandel;
 

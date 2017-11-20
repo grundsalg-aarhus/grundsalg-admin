@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Landinspektoer
@@ -16,6 +17,8 @@ use Doctrine\ORM\Mapping as ORM;
  *   @ORM\Index(name="search_Landinspektoer_telefon", columns={"telefon"})
  * })
  * @ORM\Entity
+ *
+ * @Gedmo\Loggable
  */
 class Landinspektoer
 {
@@ -36,6 +39,8 @@ class Landinspektoer
    * @var string
    *
    * @ORM\Column(name="adresse", type="string", length=50, nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $adresse;
 
@@ -43,6 +48,8 @@ class Landinspektoer
    * @var string
    *
    * @ORM\Column(name="email", type="string", length=50, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $email;
 
@@ -50,6 +57,8 @@ class Landinspektoer
    * @var string
    *
    * @ORM\Column(name="mobil", type="string", length=20, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $mobil;
 
@@ -57,6 +66,8 @@ class Landinspektoer
    * @var string
    *
    * @ORM\Column(name="navn", type="string", length=100, nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $navn;
 
@@ -64,6 +75,8 @@ class Landinspektoer
    * @var string
    *
    * @ORM\Column(name="notat", type="text", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $notat;
 
@@ -71,6 +84,8 @@ class Landinspektoer
    * @var string
    *
    * @ORM\Column(name="telefon", type="string", length=20, nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $telefon;
 
@@ -82,6 +97,8 @@ class Landinspektoer
    *   @ORM\JoinColumn(name="postbyId", referencedColumnName="id")
    * })
    * @ORM\OrderBy({"postalcode" = "ASC"})
+   *
+   * @Gedmo\Versioned
    */
   private $postby;
 
@@ -89,6 +106,8 @@ class Landinspektoer
    * @var integer
    *
    * @ORM\Column(name="active", type="boolean", nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $active;
 
