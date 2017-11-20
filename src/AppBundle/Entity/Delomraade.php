@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use AppBundle\DBAL\Types\Anvendelse;
 use AppBundle\DBAL\Types\Kpl4;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Delomraade
@@ -18,6 +19,8 @@ use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
  *   @ORM\Index(name="search_Delomraade_anvendelse", columns={"anvendelse"}),
  * })
  * @ORM\Entity
+ *
+ * @Gedmo\Loggable
  */
 class Delomraade
 {
@@ -37,6 +40,8 @@ class Delomraade
    * @var string
    *
    * @ORM\Column(name="kpl1", type="string", length=50, nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $kpl1;
 
@@ -44,6 +49,8 @@ class Delomraade
    * @var string
    *
    * @ORM\Column(name="kpl2", type="string", length=50, nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $kpl2;
 
@@ -51,6 +58,8 @@ class Delomraade
    * @var string
    *
    * @ORM\Column(name="kpl3", type="string", length=50, nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $kpl3;
 
@@ -59,6 +68,8 @@ class Delomraade
    *
    * @ORM\Column(name="kpl4", type="Kpl4", nullable=true)
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\Kpl4")
+   *
+   * @Gedmo\Versioned
    */
   private $kpl4;
 
@@ -66,6 +77,8 @@ class Delomraade
    * @var string
    *
    * @ORM\Column(name="o1", type="string", length=50, nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $o1;
 
@@ -73,6 +86,8 @@ class Delomraade
    * @var string
    *
    * @ORM\Column(name="o2", type="string", length=50, nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $o2;
 
@@ -80,6 +95,8 @@ class Delomraade
    * @var string
    *
    * @ORM\Column(name="o3", type="string", length=50, nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $o3;
 
@@ -88,6 +105,8 @@ class Delomraade
    *
    * @ORM\Column(name="anvendelse", type="Anvendelse", nullable=true)
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\Anvendelse")
+   *
+   * @Gedmo\Versioned
    */
   private $anvendelse;
 
@@ -95,6 +114,8 @@ class Delomraade
    * @var array
    *
    * @ORM\Column(name="mulighedFor", type="array", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $mulighedfor;
 
@@ -105,6 +126,8 @@ class Delomraade
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="lokalplanId", referencedColumnName="id")
    * })
+   *
+   * @Gedmo\Versioned
    */
   private $lokalplan;
 

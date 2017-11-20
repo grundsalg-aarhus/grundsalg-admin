@@ -28,7 +28,7 @@ class AppKernel extends Kernel
         $bundles = array(
             // ...
 
-            new ITK\DoctrineIntegrityBundle\ITKDoctrineIntegrityBundle(),
+            new Itk\DoctrineIntegrityBundle\ItkDoctrineIntegrityBundle(),
         );
 
         // ...

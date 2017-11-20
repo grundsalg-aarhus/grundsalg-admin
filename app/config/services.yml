@@ -8,6 +8,13 @@ services:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
 
+  grundsalg.bank_holiday:
+    class: AppBundle\Service\GrundsalgBankHolidayService
+
+  grundsalg.public_properties:
+    class: AppBundle\Service\GrundsalgPublicPropertiesService
+    arguments: ['@grundsalg.bank_holiday']
+
   grundsalg.communication:
     class: AppBundle\Service\GrundsalgCommunicationService
     arguments: ['%grundsalg_web%', '%grundsalg_web_username%', '%grundsalg_web_password%']

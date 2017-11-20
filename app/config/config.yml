@@ -111,6 +111,13 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+        mappings:
+            gedmo_loggable:
+                type: annotation
+                prefix: Gedmo\Loggable\Entity
+                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Loggable/Entity"
+                alias: GedmoLoggable # (optional) it will default to the name set for the mappingmapping
+                is_bundle: false
         dql:
             datetime_functions:
                 year: DoctrineExtensions\Query\Mysql\Year
@@ -126,10 +133,12 @@ doctrine:
                 point: CrEOF\Spatial\ORM\Query\AST\Functions\MySql\Point
 
 stof_doctrine_extensions:
+    default_locale: en
     orm:
         default:
             timestampable: true
             blameable: true
+            loggable: true
     class:
         blameable: AppBundle\EventSubscriber\BlameableListener
 
@@ -175,3 +184,12 @@ knp_paginator:
         sort_field_name: sort          # sort field query parameter name
         sort_direction_name: direction # sort direction query parameter name
         distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+
+nelmio_cors:
+    paths:
+        '^/public/api/':
+            allow_credentials: false
+            allow_origin: ['*']
+            allow_headers: ['*']
+            allow_methods: ['GET', 'OPTIONS']
+            max_age: 3600

@@ -74,6 +74,7 @@ easy_admin:
                     - { property: 'bogstav', label: 'app.grund.bogstav' }
                     - { property: 'postby', label: 'app.grund.postby' }
                     - { property: 'lokalsamfund', label: 'app.grund.lokalsamfund' }
+                    - { property: 'pdfLink', label: 'app.grund.pdfLink' }
 
                     - { property: 'status', label: 'app.grund.status', type: 'AppBundle\Form\Field\GrundStatus' }
                     - { property: 'publicstatus', label: 'app.grund.publicstatus', type: 'AppBundle\Form\Field\GrundPublicStatus' }
@@ -205,7 +206,7 @@ easy_admin:
 
             list:
                 title: 'Annoncerede Storparceller'
-                dql_filter: entity.type = 'Storparcel' AND (entity.status='Annoncerede')
+                dql_filter: entity.type = 'Storparcel' AND (entity.status='Annonceret')
 
                 # Import default values
                 <<: *storparcel_default_list

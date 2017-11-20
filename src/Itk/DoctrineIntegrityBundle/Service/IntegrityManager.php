@@ -1,6 +1,6 @@
 <?php
 
-namespace ITK\DoctrineIntegrityBundle\Service;
+namespace Itk\DoctrineIntegrityBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;

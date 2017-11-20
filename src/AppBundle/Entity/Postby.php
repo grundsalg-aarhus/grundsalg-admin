@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Postby
@@ -14,6 +15,8 @@ use Doctrine\ORM\Mapping as ORM;
  *   @ORM\Index(name="search_PostBy_city", columns={"city"}),
  * })
  * @ORM\Entity
+ *
+ * @Gedmo\Loggable
  */
 class Postby
 {
@@ -34,6 +37,8 @@ class Postby
    * @var integer
    *
    * @ORM\Column(name="postalCode", type="integer", nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $postalcode;
 
@@ -41,6 +46,8 @@ class Postby
    * @var string
    *
    * @ORM\Column(name="city", type="string", length=100, nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $city;
 

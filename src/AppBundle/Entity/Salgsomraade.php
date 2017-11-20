@@ -7,6 +7,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\DBAL\Types\GrundType;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Salgsomraade
@@ -22,6 +23,8 @@ use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
  *   @ORM\Index(name="search_Salgsomraade_type", columns={"type"})
  * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\SalgsomraadeRepository")
+ *
+ * @Gedmo\Loggable
  */
 class Salgsomraade
 {
@@ -42,6 +45,8 @@ class Salgsomraade
    * @var string
    *
    * @ORM\Column(name="nr", type="string", length=50, nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $nr;
 
@@ -49,6 +54,8 @@ class Salgsomraade
    * @var string
    *
    * @ORM\Column(name="titel", type="string", length=255, nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $titel;
 
@@ -57,6 +64,8 @@ class Salgsomraade
    *
    * @ORM\Column(name="type", type="GrundType", nullable=false)
    * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GrundType")
+   *
+   * @Gedmo\Versioned
    */
   private $type;
 
@@ -64,6 +73,8 @@ class Salgsomraade
    * @var string
    *
    * @ORM\Column(name="matrikkel1", type="string", length=20, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $matrikkel1;
 
@@ -71,6 +82,8 @@ class Salgsomraade
    * @var string
    *
    * @ORM\Column(name="matrikkel2", type="string", length=20, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $matrikkel2;
 
@@ -78,6 +91,8 @@ class Salgsomraade
    * @var string
    *
    * @ORM\Column(name="ejerlav", type="string", length=60, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $ejerlav;
 
@@ -85,6 +100,8 @@ class Salgsomraade
    * @var string
    *
    * @ORM\Column(name="vej", type="string", length=60, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $vej;
 
@@ -92,6 +109,8 @@ class Salgsomraade
    * @var array
    *
    * @ORM\Column(name="tilsluttet", type="array", nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $tilsluttet;
 
@@ -99,6 +118,8 @@ class Salgsomraade
    * @var string
    *
    * @ORM\Column(name="sagsNr", type="string", length=50, nullable=true)
+   *
+   * @Gedmo\Versioned
    */
   private $sagsnr;
 
@@ -106,6 +127,8 @@ class Salgsomraade
    * @var integer
    *
    * @ORM\Column(name="lpLoebeNummer", type="bigint", nullable=false)
+   *
+   * @Gedmo\Versioned
    */
   private $lploebenummer;
 
@@ -116,6 +139,8 @@ class Salgsomraade
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="landinspektorId", referencedColumnName="id")
    * })
+   *
+   * @Gedmo\Versioned
    */
   private $landinspektoer;
 
@@ -126,6 +151,8 @@ class Salgsomraade
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="delomraadeId", referencedColumnName="id", nullable=true)
    * })
+   *
+   * @Gedmo\Versioned
    */
   private $delomraade;
 
@@ -136,6 +163,8 @@ class Salgsomraade
    * @ORM\JoinColumns({
    *   @ORM\JoinColumn(name="lokalplanId", referencedColumnName="id", nullable=true)
    * })
+   *
+   * @Gedmo\Versioned
    */
   private $lokalplan;
 
@@ -147,6 +176,8 @@ class Salgsomraade
    *   @ORM\JoinColumn(name="postById", referencedColumnName="id")
    * })
    * @ORM\OrderBy({"postalcode" = "ASC"})
+   *
+   * @Gedmo\Versioned
    */
   private $postby;
 
@@ -154,6 +185,8 @@ class Salgsomraade
    * @var boolean
    *
    * @ORM\Column(name="annonceres", type="boolean", options={"default" = 0})
+   *
+   * @Gedmo\Versioned
    */
   private $annonceres = false;
 
@@ -162,7 +195,7 @@ class Salgsomraade
    *
    * @ORM\Column(name="SP_GEOMETRY", type="geometry", nullable=true)
    */
-  private $sp_geometry;
+  private $spGeometry;
 
   /**
    * @var integer
@@ -532,21 +565,28 @@ class Salgsomraade
     $this->annonceres = $annonceres;
   }
 
-
   /**
    * @return \CrEOF\Spatial\DBAL\Types\Geography
    */
   public function getSpGeometry()
   {
-    return $this->sp_geometry;
+    return $this->spGeometry;
   }
 
   /**
-   * @param \CrEOF\Spatial\DBAL\Types\Geography $sp_geometry
+   * @return \CrEOF\Spatial\DBAL\Types\Geography
    */
-  public function setSpGeometry($sp_geometry)
+  public function hasSpGeometry()
   {
-    $this->sp_geometry = $sp_geometry;
+    return !empty($this->spGeometry);
+  }
+
+  /**
+   * @param \CrEOF\Spatial\DBAL\Types\Geography $spGeometry
+   */
+  public function setSpGeometry($spGeometry)
+  {
+    $this->spGeometry = $spGeometry;
   }
 
   /**

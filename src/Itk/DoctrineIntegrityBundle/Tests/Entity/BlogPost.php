@@ -1,11 +1,11 @@
 <?php
 
-namespace ITK\DoctrineIntegrityBundle\Tests\Entity;
+namespace Itk\DoctrineIntegrityBundle\Tests\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToMany;
-use ITK\DoctrineIntegrityBundle\Tests\Entity\Author;
+use Itk\DoctrineIntegrityBundle\Tests\Entity\Author;
 
 /**
  * BlogPost
