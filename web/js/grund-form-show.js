@@ -27,14 +27,6 @@
         } else {
             $('.js-antagetbud-wrapper').hide();
         }
-
-        if ((status === 'Ledig') || (status === 'Tilbud') || (status === 'Auktion slut')) {
-            $('.js-salgsdatoer-wrapper').show();
-            $('.js-koeber-wrapper').show();
-        } else {
-            $('.js-salgsdatoer-wrapper').hide();
-            $('.js-koeber-wrapper').hide();
-        }
     };
 
     var grundShowHideAnnoceres = function () {
