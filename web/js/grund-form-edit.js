@@ -80,11 +80,13 @@
         }
 
         if ((status === 'Ledig') || (status === 'Tilbud') || (status === 'Auktion slut')) {
-            $('.js-salgsdatoer-wrapper').show();
-            $('.js-koeber-wrapper').show();
+            $('.js-salgsdatoer-wrapper .form-control').prop("disabled", false);
+            $('.js-salgsdatoer-wrapper button').prop("disabled", false);
+            $('.js-koeber-wrapper .form-control').prop("disabled", false);
         } else {
-            $('.js-salgsdatoer-wrapper').hide();
-            $('.js-koeber-wrapper').hide();
+            $('.js-salgsdatoer-wrapper .form-control').prop("disabled", true);
+            $('.js-salgsdatoer-wrapper button').prop("disabled", true);
+            $('.js-koeber-wrapper .form-control').prop("disabled", true);
         }
     };
 
