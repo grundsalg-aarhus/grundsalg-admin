@@ -45,9 +45,9 @@ easy_admin:
                 title: 'Rediger Storparcel'
                 actions:
                     - { name: delete, roles: [ROLE_ADMIN] }
-                    - { name: interessent_create, type: 'route', icon: 'plus-square', css_class: 'btn btn_default', label: 'Opret Interessent', roles: [ROLE_ADMIN] }
-                    - { name: interessent_fetch, type: 'route', icon: 'caret-square-o-right', css_class: 'btn btn_default', label: 'Hent fra venteliste', roles: [ROLE_ADMIN] }
-                    - { name: sale_cancel, type: 'route', icon: 'minus-square', css_class: 'btn btn_default', label: 'Annuller salg', roles: [ROLE_ADMIN] }
+                    - { name: interessent_create, type: 'route', icon: 'plus-square', css_class: 'btn btn_default', label: 'Opret Interessent', roles: [ROLE_EDITOR] }
+                    - { name: interessent_fetch, type: 'route', icon: 'caret-square-o-right', css_class: 'btn btn_default', label: 'Hent fra venteliste', roles: [ROLE_EDITOR] }
+                    - { name: sale_cancel, type: 'route', icon: 'minus-square', css_class: 'btn btn_default', label: 'Annuller salg', roles: [ROLE_EDITOR] }
 
             show: &storparcel_default_show
                 title: 'Storparcel'
