@@ -73,7 +73,12 @@ easy_admin:
                 - { entity: 'delomraade', label: 'Delområder' }
                 - { entity: 'salgsomraade', label: 'Salgsområder' }
                 - { entity: 'opkoeb', label: 'Opkøb' }
+            - label: 'Købere m.v.'
+              icon: 'user'
+              children:
                 - { entity: 'interessent', label: 'Interessenter' }
+                - { entity: 'koeber', label: 'Købere' }
+                - { entity: 'medkoeber', label: 'Medkøbere' }
             - label: 'Admin'
               roles: [ROLE_ADMIN]
               icon: 'wrench'

@@ -8,16 +8,37 @@ easy_admin:
                 sort: [koeberNavn, 'ASC']
                 actions:
                     - { name: -new }
+                dql_filter: (entity.koeberNavn IS NOT NULL AND entity.koeberNavn != '')
+                            OR (entity.koeberAdresse IS NOT NULL AND entity.koeberAdresse != '')
+                            OR (entity.koeberLand IS NOT NULL AND entity.koeberLand != '')
+                            OR (entity.koeberTelefon IS NOT NULL AND entity.koeberTelefon != '')
+                            OR (entity.koeberMobil IS NOT NULL AND entity.koeberMobil != '')
+                            OR (entity.koeberEmail IS NOT NULL AND entity.koeberEmail != '')
+                            OR (entity.koeberNotat IS NOT NULL AND entity.koeberNotat != '')
                 fields:
-                    - { property: koeberNavn, label: 'app.grund.koeberNavn' }
-                    - { property: koeberEmail, label: 'app.grund.koeberEmail' }
+                    - { property: koeberNavn, label: 'app.grund.koeber' }
+                    - { property: koeberAdresse, label: 'app.grund.koeberAdresse' }
                     - { property: koeberLand, label: 'app.grund.koeberLand' }
+                    - { property: koeberTelefon, label: 'app.grund.koeberTelefon' }
+                    - { property: koeberMobil, label: 'app.grund.koeberMobil' }
+                    - { property: koeberEmail, label: 'app.grund.koeberEmail' }
 
             search:
                 fields:
                     - koeberNavn
-                    - koeberEmail
+                    - koeberAdresse
                     - koeberLand
+                    - koeberTelefon
+                    - koeberMobil
+                    - koeberEmail
+                    - koeberNotat
+                    - note
+                    - medkoeberNavn
+                    - medkoeberAdresse
+                    - medkoeberLand
+                    - medkoeberTelefon
+                    - medkoeberMobil
+                    - medkoeberEmail
 
             form:
                 fields: &interessent_form_fields
