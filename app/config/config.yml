@@ -17,6 +17,8 @@ imports:
     - { resource: easyadmin/admin/landinspektoer.yml }
     - { resource: easyadmin/admin/lokalsamfund.yml }
     - { resource: easyadmin/admin/user.yml }
+    - { resource: easyadmin/reservation/koebere.yml }
+    - { resource: easyadmin/reservation/medkoebere.yml }
     - { resource: easyadmin/reservation/interessent.yml }
     - { resource: easyadmin/reservation/salgshistorik.yml }
     - { resource: easyadmin/services.yml }
