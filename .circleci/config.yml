@@ -7,14 +7,14 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/php:7.0.22-apache-browsers
+      - image: circleci/php:7.0.30-apache-browsers
         environment:
           APP_ENV: circleci
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
-      - image: circleci/mysql:latest
+      - image: circleci/mariadb:10.1.33
         environment:
           - MYSQL_ROOT_PASSWORD=circleci
           - MYSQL_USER=circleci
