@@ -1,6 +1,9 @@
 imports:
     - { resource: config_test.yml }
 
+parameters:
+    api_platform.metadata_cache: true
+
 # Doctrine Configuration
 doctrine:
     dbal:
