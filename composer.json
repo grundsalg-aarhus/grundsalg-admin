@@ -47,7 +47,7 @@
         "rollerworks/password-strength-bundle": "^2.0"
     },
     "require-dev": {
-        "behatch/contexts": "^2.6",
+        "ciaranmcnulty/behat-stepthroughextension" : "dev-master",
         "symfony/phpunit-bridge": "^3.0",
         "behat/behat": "^3.1",
         "fzaninotto/faker": "^1.6",
@@ -57,7 +57,8 @@
         "behat/mink-browserkit-driver": "^1.3.1",
         "sebastian/diff": "^1.4",
         "escapestudios/symfony2-coding-standard": "3.x-dev",
-        "phpunit/phpunit": "^6.2"
+        "phpunit/phpunit": "^6.2",
+        "behatch/contexts": "~2.7.1"
     },
     "scripts": {
         "post-install-cmd": [
