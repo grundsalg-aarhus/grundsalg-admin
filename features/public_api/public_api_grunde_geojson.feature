@@ -14,7 +14,7 @@ Feature: Public API
 
 
   Scenario: GeoJSON is returned correctly
-    When I send a "GET" request to "public/api/udstykning/1/grunde/geojson"
+    When I send a "GET" request to "/public/api/udstykning/1/grunde/geojson"
     Then the response status code should be 200
     Then the response should be in JSON
     Then the JSON node "type" should be equal to "FeatureCollection"

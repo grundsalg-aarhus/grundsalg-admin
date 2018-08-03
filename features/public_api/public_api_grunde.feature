@@ -22,20 +22,20 @@ Feature: Public API
       | Zebravej  | 1         |         | 4            | 1          | -1 day      | Parcelhusgrund |
 
   Scenario: Response is OK and JSON
-    When I send a "GET" request to "public/api/udstykning/1/grunde"
+    When I send a "GET" request to "/public/api/udstykning/1/grunde"
     Then the response status code should be 200
     And the response should be in JSON
 
   Scenario: Grunde are filtered by Salgsomraade
-    When I send a "GET" request to "public/api/udstykning/1/grunde"
+    When I send a "GET" request to "/public/api/udstykning/1/grunde"
     Then the JSON node "grunde" should have 5 elements
 
   Scenario: Grunde are filtered by AnnonceresEj
-    When I send a "GET" request to "public/api/udstykning/2/grunde"
+    When I send a "GET" request to "/public/api/udstykning/2/grunde"
     Then the JSON node "grunde" should have 2 elements
 
   Scenario: Grunde are sorted correctly by address
-    When I send a "GET" request to "public/api/udstykning/1/grunde"
+    When I send a "GET" request to "/public/api/udstykning/1/grunde"
     Then the JSON node "grunde[0].address" should be equal to "Andenvej 171A"
     Then the JSON node "grunde[1].address" should be equal to "Andenvej 171B"
     Then the JSON node "grunde[2].address" should be equal to "Andenvej 171C"
@@ -43,7 +43,7 @@ Feature: Public API
     Then the JSON node "grunde[4].address" should be equal to "Førstevej 13"
 
   Scenario: Grunde with danish characters/names are sorted correctly by address
-    When I send a "GET" request to "public/api/udstykning/4/grunde"
+    When I send a "GET" request to "/public/api/udstykning/4/grunde"
     Then the JSON node "grunde[0].address" should be equal to "Zebravej 1"
     Then the JSON node "grunde[1].address" should be equal to "Ældstevej 3"
     Then the JSON node "grunde[2].address" should be equal to "Østervej 5"

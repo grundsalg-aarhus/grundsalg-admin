@@ -12,18 +12,18 @@ Feature: Public API
   @createSchema
 
   Scenario: Response is OK and JSON
-    When I send a "GET" request to "public/api/udstykning/1"
+    When I send a "GET" request to "/public/api/udstykning/1"
     Then the response status code should be 200
     And the response should be in JSON
 
   Scenario: Data is correct
-    When I send a "GET" request to "public/api/udstykning/1"
+    When I send a "GET" request to "/public/api/udstykning/1"
     Then the response status code should be 200
     And the JSON node "type" should be equal to "Parcelhusgrund"
     And the JSON node "vej" should be equal to "Ølhaven"
 
   Scenario: "Annonceres ikke" kan ikke tilgåes
-    When I send a "GET" request to "public/api/udstykning/2"
+    When I send a "GET" request to "/public/api/udstykning/2"
     Then the response status code should be 200
     And the JSON should be equal to:
     """
@@ -32,7 +32,7 @@ Feature: Public API
     And print last JSON response
 
   Scenario: GeoJSON is returned correctly
-    When I send a "GET" request to "public/api/udstykning/1"
+    When I send a "GET" request to "/public/api/udstykning/1"
     Then the response status code should be 200
     And the response should be in JSON
     And the JSON node "geometry.type" should be equal to "Point"

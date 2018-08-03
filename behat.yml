@@ -28,7 +28,7 @@ default:
         env: "test"
         debug: "true"
     Behat\MinkExtension:
-      base_url: "grundsalg.vm/"
+      base_url: "http://grundsalg.vm/"
       sessions:
         default:
           symfony2: ~

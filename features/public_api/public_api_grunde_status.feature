@@ -19,12 +19,12 @@ Feature: Public API
 
   @createSchema
   Scenario: Response is OK and JSON
-    When I send a "GET" request to "public/api/udstykning/1/grunde"
+    When I send a "GET" request to "/public/api/udstykning/1/grunde"
     Then the response status code should be 200
     And the response should be in JSON
 
   Scenario: Grunde are filtered by Salgsomraade
-    When I send a "GET" request to "public/api/udstykning/1/grunde"
+    When I send a "GET" request to "/public/api/udstykning/1/grunde"
     Then the JSON node "grunde" should have 10 elements
 
   @dropSchema
