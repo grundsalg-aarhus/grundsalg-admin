@@ -42,7 +42,7 @@ abstract class Report {
       'startdate' => [
         'type' => DateType::class,
         'type_options' => [
-          'data' => new \DateTime(date('Y').'-01-01'),
+          'data' => new \DateTime('first day of January'),
           'label' => 'Start date',
           'widget' => 'single_text',
         ],
@@ -50,7 +50,7 @@ abstract class Report {
       'enddate' => [
         'type' => DateType::class,
         'type_options' => [
-          'data' => new \DateTime(date('Y').'-12-31'),
+          'data' => new \DateTime('last day of December'),
           'label' => 'End date',
           'widget' => 'single_text',
         ],
