@@ -71,8 +71,8 @@ class ReportOekonomi extends Report {
       'Udb.',
       'Solgt',
       'Indtægt kr.',
-      'Tilb.',
-      'Usolgt',
+      'Tilbage i alt',
+      'Disponibel',
       'Salgsværdi usolgt kr.',
     ]);
 
