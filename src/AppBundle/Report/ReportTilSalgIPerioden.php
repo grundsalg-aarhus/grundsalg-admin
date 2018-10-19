@@ -449,14 +449,8 @@ SQL;
     $this->writeHeader([
       'Lokalsamfund vej',
       'Kr./m2',
-      'Kloak',
-      'El',
-      'Vand',
-      'Fjv',
       'Solgt 1)',
       'Accept.',
-      'Res. /Tilb 2)',
-      'Disp',
     ]);
 
     $sql = <<<'SQL'
@@ -499,8 +493,6 @@ SQL;
     $dispTotal = 0;
     $solgtCountTotal = 0;
     $acceptCountTotal = 0;
-    $resCountTotal = 0;
-    $dispCountTotal = 0;
 
     while ($row = $stmt->fetch()) {
       $totalAreal = $row['totalAreal'];
@@ -511,8 +503,6 @@ SQL;
       $disp = $totalAreal - $solgt - $accept - $res;
       $solgtCount = $row['solgtCount'];
       $acceptCount = $row['acceptCount'];
-      $resCount = $row['resCount'];
-      $dispCount = $totalCount - $solgtCount - $acceptCount - $resCount;
 
       $solgtTotal += $solgt;
       $acceptTotal += $accept;
@@ -521,20 +511,12 @@ SQL;
 
       $solgtCountTotal += $solgtCount;
       $acceptCountTotal += $acceptCount;
-      $resCountTotal += $resCount;
-      $dispCountTotal += $dispCount;
 
       $this->writeGroupHeader([
         $row['name'],
         NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
         ($solgtCount > 0 ? $solgtCount . '/' . $solgt : ''),
         ($acceptCount > 0 ? $acceptCount . '/' . $accept : ''),
-        ($resCount > 0 ? $resCount . '/' . $res : ''),
-        ($dispCount > 0 ? $dispCount . '/' . $disp : ''),
       ]);
 
     $sql = <<<'SQL'
@@ -543,10 +525,6 @@ SELECT
  g.areal,
  g.prism2,
  g.tilsluttet,
- CASE WHEN g.tilsluttet like '%Kloak%' THEN 1 ELSE 0 END as kloak,
- CASE WHEN g.tilsluttet like '%El%' THEN 1 ELSE 0 END as el,
- CASE WHEN g.tilsluttet like '%Vand%' THEN 1 ELSE 0 END as vand,
- CASE WHEN g.tilsluttet like '%Fjernvarme%' THEN 1 ELSE 0 END as fv,
  CASE
   WHEN beloebAnvist IS NOT NULL AND beloebAnvist <= :toDate THEN 'Solgt'
   WHEN Accept IS NOT NULL AND Accept <= :toDate THEN 'Accepteret'
@@ -585,8 +563,7 @@ SQL;
 
       while ($item = $itemStmt->fetch()) {
         $vej = trim($item['vej']);
-
-        $cols = isset($lines[$vej]) ? $lines[$vej] : (array_fill(0, 3, NULL) + array_fill(3, 4, '-') + array_fill(7, 4, '0/0'));
+        $cols = isset($lines[$vej]) ? $lines[$vej] : array_merge(array_fill(0, 3, NULL), array_fill(0, 2, '0/0'));
         $cols[1] = $vej;
 
         $newM2Value = $item['prism2'];
@@ -630,67 +607,29 @@ SQL;
           }
         }
 
-        if ($item['kloak'] == 1) {
-          $cols[3] = '+';
-        }
-
-        if ($item['el'] == 1) {
-          $cols[4] = '+';
-        }
-
-        if ($item['vand'] == 1) {
-          $cols[5] = '+';
-        }
-
-        if ($item['fv'] == 1) {
-          $cols[6] = '+';
-        }
-
         if ($item['gsalgsstatus'] === 'Solgt') {
-          $tmp = explode('/', $cols[7]);
+          $tmp = explode('/', $cols[3]);
           $tmp[0] = intval($tmp[0]) + 1;
           $tmp[1] = floatval($tmp[1]) + $item['areal'];
-          $cols[7] = $tmp[0] . '/' . $tmp[1];
+          $cols[3] = $tmp[0] . '/' . $tmp[1];
         }
 
         if ($item['gsalgsstatus'] === 'Accepteret') {
-          $tmp = explode('/', $cols[8]);
+          $tmp = explode('/', $cols[4]);
           $tmp[0] = intval($tmp[0]) + 1;
           $tmp[1] = floatval($tmp[1]) + $item['areal'];
-          $cols[8] = $tmp[0] . '/' . $tmp[1];
-        }
-
-        if ($item['gsalgsstatus'] === 'Reserveret') {
-          $tmp = explode('/', $cols[9]);
-          $tmp[0] = intval($tmp[0]) + 1;
-          $tmp[1] = floatval($tmp[1]) + $item['areal'];
-          $cols[9] = $tmp[0] . '/' . $tmp[1];
-        }
-
-        if ($item['gsalgsstatus'] === 'Disponibel') {
-          $tmp = explode('/', $cols[10]);
-          $tmp[0] = intval($tmp[0]) + 1;
-          $tmp[1] = floatval($tmp[1]) + $item['areal'];
-          $cols[10] = $tmp[0] . '/' . $tmp[1];
+          $cols[4] = $tmp[0] . '/' . $tmp[1];
         }
 
         $lines[$vej] = $cols;
       }
 
       foreach ($lines as $vej => $cols) {
-        $d=1;
-
         $this->writeRow([
           $cols[1],
           $cols[2],
-          $cols[3],
-          $cols[4],
-          $cols[5],
-          $cols[6],
-          $cols[7] !== '0/0' ? $cols[7] : '',
-          $cols[8] !== '0/0' ? $cols[8] : '',
-          $cols[9] !== '0/0' ? $cols[9] : '',
-          $cols[10] !== '0/0' ? $cols[10] : '',
+          $cols[3] !== '0/0' ? $cols[3] : '',
+          $cols[4] !== '0/0' ? $cols[4] : '',
         ]);
       }
     }
@@ -698,14 +637,8 @@ SQL;
     $this->writeFooter([
       'I alt',
       NULL,
-      NULL,
-      NULL,
-      NULL,
-      NULL,
       ($solgtCountTotal > 0 ? $solgtCountTotal . '/' . $solgtTotal : ''),
       ($acceptCountTotal > 0 ? $acceptCountTotal . '/' . $acceptTotal : ''),
-      ($resCountTotal > 0 ? $resCountTotal . '/' . $resTotal : ''),
-      ($dispCountTotal > 0 ? $dispCountTotal . '/' . $dispTotal : ''),
     ]);
 
   }
