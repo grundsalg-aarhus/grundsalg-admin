@@ -151,10 +151,24 @@ abstract class Report {
   }
 
   /**
-   *
+   * Format a date.
    */
-  protected function formatNumber($number, $decimals = 4) {
+  protected function formatDate(\DateTime $date) {
+    return $date->format('d-m-Y');
+  }
+
+  /**
+   * Format a decimal number.
+   */
+  protected function formatNumber($number, $decimals = 2) {
     return number_format($number, $decimals, ',', '');
+  }
+
+  /**
+   * Format an amount.
+   */
+  protected function formatAmount($number, $decimals = 2) {
+    return $this->formatNumber($number, $decimals);
   }
 
 }

@@ -58,7 +58,7 @@ class ReportTilSalgIPerioden extends Report {
     $grundtype = $this->getParameterValue('grundtype');
     $startdate = $this->getParameterValue('startdate');
     $enddate = $this->getParameterValue('enddate');
-    $title = $grundtype . ' til salg i perioden ' . $startdate->format('d-m-Y') . '-' . $enddate->format('d-m-Y');
+    $title = $grundtype . ' til salg i perioden ' . $this->formatDate($startdate) . '–' . $this->formatDate($enddate);
     $this->writeTitle($title, 8);
 
     $this->writeHeader([
@@ -214,7 +214,7 @@ SQL;
     $grundtype = $this->getParameterValue('grundtype');
     $startdate = $this->getParameterValue('startdate');
     $enddate = $this->getParameterValue('enddate');
-    $title = 'Storparceller til salg i perioden ' . $startdate->format('d-m-Y') . '-' . $enddate->format('d-m-Y');
+    $title = 'Storparceller til salg i perioden ' . $this->formatDate($startdate) . '–' . $this->formatDate($enddate);
     $this->writeTitle($title, 8);
 
     $this->writeHeader([
@@ -351,7 +351,7 @@ SQL;
         $omr = '';
 
         if ($o1) {
-          $omr = $o1 . '-';
+          $omr = $o1 . '–';
         }
 
         if ($o2) {
@@ -443,7 +443,7 @@ SQL;
     $grundtype = $this->getParameterValue('grundtype');
     $startdate = $this->getParameterValue('startdate');
     $enddate = $this->getParameterValue('enddate');
-    $title = 'Erhvervsgrunde til salg i perioden ' . $startdate->format('d-m-Y') . '-' . $enddate->format('d-m-Y');
+    $title = 'Erhvervsgrunde til salg i perioden ' . $this->formatDate($startdate) . '–' . $this->formatDate($enddate);
     $this->writeTitle($title, 8);
 
     $this->writeHeader([
@@ -515,8 +515,8 @@ SQL;
       $this->writeGroupHeader([
         $row['name'],
         NULL,
-        ($solgtCount > 0 ? $solgtCount . '/' . $solgt : ''),
-        ($acceptCount > 0 ? $acceptCount . '/' . $accept : ''),
+        ($solgtCount > 0 ? $solgtCount . '/' . intval($solgt) : ''),
+        ($acceptCount > 0 ? $acceptCount . '/' . intval($accept) : ''),
       ]);
 
     $sql = <<<'SQL'
@@ -569,14 +569,14 @@ SQL;
         $newM2Value = $item['prism2'];
 
         if ($cols[2] === NULL) {
-          $cols[2] = $newM2Value;
+          $cols[2] = $this->formatAmount($newM2Value);
         }
         else {
           $valMin = 0;
           $valMax = 0;
 
-          if (strpos($cols[2], '-') !== FALSE) {
-            $vals = explode('-', $cols[2]);
+          if (strpos($cols[2], '–') !== FALSE) {
+            $vals = explode('–', $cols[2]);
 
             $valMin = floatval($vals[0]);
             $valMax = floatval($vals[1]);
@@ -588,7 +588,7 @@ SQL;
               $valMin = $newM2Value;
             }
 
-            $cols[2] = number_format($valMin, 3) . '-' . number_format($valMax, 3);
+            $cols[2] = $this->formatAmount($valMin) . '–' . $this->formatAmount($valMax);
           }
           else {
             $val = floatval($cols[2]);
@@ -602,7 +602,7 @@ SQL;
                 $valMax = $val;
               }
 
-              $cols[2] = number_format($valMin, 3) . '-' . number_format($valMax, 3);
+              $cols[2] = $this->formatAmount($valMin) . '–' . $this->formatAmount($valMax);
             }
           }
         }
@@ -610,14 +610,14 @@ SQL;
         if ($item['gsalgsstatus'] === 'Solgt') {
           $tmp = explode('/', $cols[3]);
           $tmp[0] = intval($tmp[0]) + 1;
-          $tmp[1] = floatval($tmp[1]) + $item['areal'];
+          $tmp[1] = intval($tmp[1]) + $item['areal'];
           $cols[3] = $tmp[0] . '/' . $tmp[1];
         }
 
         if ($item['gsalgsstatus'] === 'Accepteret') {
           $tmp = explode('/', $cols[4]);
           $tmp[0] = intval($tmp[0]) + 1;
-          $tmp[1] = floatval($tmp[1]) + $item['areal'];
+          $tmp[1] = intval($tmp[1]) + $item['areal'];
           $cols[4] = $tmp[0] . '/' . $tmp[1];
         }
 

@@ -18,7 +18,7 @@ class ReportOpkoebOgForbrug extends Report {
     $startdate = $this->getParameterValue('startdate');
     $enddate = $this->getParameterValue('enddate');
 
-    $this->writeRow(['Opkøb og forbrug i perioden ' . $startdate->format('d-m-Y') . '–' . $enddate->format('d-m-Y')]);
+    $this->writeRow(['Opkøb og forbrug i perioden ' . $this->formatDate($startdate) . '–' . $this->formatDate($enddate)]);
     $this->writeRow([]);
     $this->writeRow([NULL, NULL, 'Opkøb', NULL, 'Forbrugt i perioden', NULL, 'Forbrugt i alt']);
     $this->writeRow([
@@ -104,7 +104,7 @@ class ReportOpkoebOgForbrug extends Report {
 
       $this->writeRow([
         $matr,
-        $date->format('Y-m-d'),
+        $this->formatDate($date),
         (int) $areal,
         (int) $beloeb,
         (int) $forbrugPeriodeAreal,

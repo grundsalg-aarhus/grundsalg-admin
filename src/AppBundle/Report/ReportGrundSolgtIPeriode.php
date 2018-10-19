@@ -32,8 +32,7 @@ class ReportGrundSolgtIPeriode extends Report {
     $grundtype = $this->getParameterValue('grundtype');
     $startdate = $this->getParameterValue('startdate');
     $enddate = $this->getParameterValue('enddate');
-    $title = sprintf('%s solgt i perioden %s-%s', $grundtype, $startdate->format('d/m/Y'), $enddate->format('d/m/Y'));
-
+    $title = sprintf('%s solgt i perioden %s-%s', $grundtype, $this->formatDate($startdate), $this->formatDate($enddate));
     $this->writeTitle($title, 8);
     $this->writeRow(['Priserne er ekskl. moms']);
   }

@@ -33,9 +33,9 @@ class ReportGrundTilSalgIPeriode extends Report {
     $startdate = $this->getParameterValue('startdate') ?? $this->getParameterValue('date') ;
     $enddate = $this->getParameterValue('enddate') ?? $startdate;
     if ($startdate == $enddate) {
-      $title = sprintf('%s til salg pr. %s', $grundtype, $startdate->format('d/m/Y'));
+      $title = sprintf('%s til salg pr. %s', $grundtype, $this->formatDate($startdate));
     } else {
-      $title = sprintf('%s til salg i perioden %s-%s', $grundtype, $startdate->format('d/m/Y'), $enddate->format('d/m/Y'));
+      $title = sprintf('%s til salg i perioden %s-%s', $grundtype, $this->formatDate($startdate), $this->formatDate($enddate));
     }
 
     $this->writeTitle($title, 8);

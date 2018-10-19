@@ -39,7 +39,7 @@ class ReportOekonomi extends Report {
     $grundtype = $this->getParameterValue('grundtype');
     $startdate = $this->getParameterValue('startdate');
     $enddate = $this->getParameterValue('enddate');
-    $title = 'Udbudte ' . $grundtype . ', BM Aktuelle i perioden ' . $startdate->format('d-m-Y') . '-' . $enddate->format('d-m-Y');
+    $title = 'Udbudte ' . $grundtype . ', BM Aktuelle i perioden ' . $this->formatDate($startdate) . '-' . $this->formatDate($enddate);
     $this->writeTitle($title, 8);
 
     $headline = 'I periode';
@@ -52,13 +52,13 @@ class ReportOekonomi extends Report {
 
     $this->writeRow([
       '',
-      'I alt '.$enddate->format('d-m-Y'),
+      'I alt '.$this->formatDate($enddate),
       '',
       '',
       $headline,
       '',
       '',
-      $enddate->format('d-m-Y'),
+      $this->formatDate($enddate),
       '',
       '',
     ]);
