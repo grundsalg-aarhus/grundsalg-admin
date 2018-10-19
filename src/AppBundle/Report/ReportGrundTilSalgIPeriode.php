@@ -66,7 +66,7 @@ SQL;
     $this->writeRow([
       'Lokalsamfund',
       'LP-nr.',
-      'Udb.',
+      'Udbud',
       'Solgt',
       'Indtægt kr. i alt',
     ]);

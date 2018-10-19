@@ -65,10 +65,10 @@ class ReportOekonomi extends Report {
 
     $this->writeRow([
       'Lokalsamfund',
-      'Udb.',
+      'Udbud',
       'Solgt',
       'Indtægt kr.',
-      'Udb.',
+      'Udbud',
       'Solgt',
       'Indtægt kr.',
       'Tilbage i alt',
