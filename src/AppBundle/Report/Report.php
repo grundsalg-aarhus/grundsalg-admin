@@ -2,6 +2,8 @@
 
 namespace AppBundle\Report;
 
+use AppBundle\CalculationService\GrundCalculator;
+use AppBundle\Entity\Grund;
 use Box\Spout\Writer\Style\Color;
 use Box\Spout\Writer\Style\StyleBuilder;
 use Box\Spout\Writer\WriterInterface;
@@ -14,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 abstract class Report {
   protected $title;
   protected $entityManager;
+  protected $grundCalculator;
   protected $parameters;
   protected $writer;
 
@@ -25,6 +28,10 @@ abstract class Report {
     if (empty($this->title)) {
       throw new \Exception('Report title not defined.');
     }
+  }
+
+  public function setGrundCalculator(GrundCalculator $grundCalculator) {
+    $this->grundCalculator = $grundCalculator;
   }
 
   /**
@@ -169,6 +176,22 @@ abstract class Report {
    */
   protected function formatAmount($number, $decimals = 2) {
     return $this->formatNumber($number, $decimals);
+  }
+
+  protected function getGrundSalgstatuses(\DateTime $time = null, array $ids = null) {
+    if (null === $time) {
+      $time = new \DateTime();
+    }
+    $grunde = null === $ids
+      ? $this->entityManager->getRepository(Grund::class)->findAll()
+      : $this->entityManager->getRepository(Grund::class)->findBy(['id' => $ids]);
+
+    $statusses = [];
+    foreach ($grunde as $grund) {
+      $statusses[$grund->getId()] = $this->grundCalculator->computeSalgstatusAt($grund, $time);
+    }
+
+    return $statusses;
   }
 
 }

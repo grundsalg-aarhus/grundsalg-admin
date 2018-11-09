@@ -281,6 +281,47 @@ class GrundCalculator implements EventSubscriber {
 	}
 
 	/**
+	 * Compute salgstatus for a Grund at a point in time (in the past).
+	 *
+	 * @see self::calculateSalgstatus
+	 *
+	 * We don't have historical data in the database, so in order to compute the
+	 * status, we assume that a Grund goes though these steps and in this order:
+	 *
+	 *	1. LEDIG
+	 *	2. RESERVERET
+	 *	3. TILBUD_SENDT
+	 *	4. AUKTION_SLUT
+	 *	5. ACCEPTERET
+	 *	6. SKOEDE_REKVIRERET
+	 *	7. SOLGT
+	 *
+	 * If a Grund goes from RESERVERET to LEDIG, we're screewed!
+	 */
+	public function computeSalgstatusAt( Grund $grund, \DateTime $time) {
+		$thatDay = clone $time;
+		$thatDay->setTime( 12, 0 );
+
+		// Check possible states in reverse, to match the latest possible state
+		// first.
+		if ( $grund->getBeloebanvist() && $grund->getBeloebanvist() <= $time ) {
+			return GrundSalgStatus::SOLGT;
+		} else if ( $grund->getSkoederekv() && $grund->getSkoederekv() <= $time ) {
+			return GrundSalgStatus::SKOEDE_REKVIRERET;
+		} else if ( $grund->getAccept() && $grund->getAccept() <= $time ) {
+			return GrundSalgStatus::ACCEPTERET;
+		} else if ( $grund->getAuktionstartdato() && $grund->getAuktionslutdato() && $grund->getAuktionslutdato() < $thatDay ) {
+			return GrundSalgStatus::AUKTION_SLUT;
+		} else if ( $grund->getTilbudstart() && $grund->getTilbudstart() <= $time ) {
+			return GrundSalgStatus::TILBUD_SENDT;
+		} else if ( $grund->getResstart() && $grund->getResstart() <= $time ) {
+			return GrundSalgStatus::RESERVERET;
+		} else {
+			return GrundSalgStatus::LEDIG;
+		}
+	}
+
+	/**
 	 * If the are not set, update 'til og med' dates base on their respective 'fra' dates
 	 *
 	 * "Copy-paste" from legacy system

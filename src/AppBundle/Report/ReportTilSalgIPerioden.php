@@ -2,6 +2,7 @@
 
 namespace AppBundle\Report;
 
+use AppBundle\DBAL\Types\GrundSalgStatus;
 use AppBundle\DBAL\Types\GrundType;
 use Doctrine\DBAL\Types\Type;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -51,6 +52,10 @@ class ReportTilSalgIPerioden extends Report {
     }
   }
 
+  private function getGrundSalgstatusesAtEndOfPeriod(array $ids) {
+    return $this->getGrundSalgstatuses($this->getParameterValue('enddate'), $ids);
+  }
+
   /**
    * Write report data.
    */
@@ -72,31 +77,36 @@ class ReportTilSalgIPerioden extends Report {
       'Disp',
     ]);
 
+
     $sql = <<<'SQL'
 SELECT
- g.lokalSamfundId,
  s.name,
- COUNT(g.vej) AS aktuelle,
- SUM(CASE WHEN SalgStatus = 'Solgt' THEN 1 ELSE 0 END) as solgt,
- SUM(CASE WHEN SalgStatus = 'Accepteret' OR SalgStatus = 'Skøde rekvireret' THEN 1 ELSE 0 END) AS accept,
- SUM(CASE WHEN SalgStatus = 'Reserveret' THEN 1 ELSE 0 END) AS res
+ g.vej,
+ IFNULL(lp.nr, '') AS nr,
+ g.salgsType,
+ '' status,
+ g.id grund_id
 FROM
  Grund AS g
   JOIN Lokalsamfund AS s ON s.id = g.lokalSamfundId
+  JOIN Salgsomraade AS so ON g.salgsomraadeId = so.id
+  JOIN Lokalplan AS lp ON lp.id = so.lokalPlanId
 WHERE
  g.type = :grundtype
   AND NOT(
-   (beloebAnvist IS NOT NULL AND beloebAnvist < :fromDate)
-    OR (datoAnnonce1 IS NOT NULL AND datoAnnonce1 > :toDate)
-    OR (datoAnnonce1 IS NULL AND (datoAnnonce IS NOT NULL AND datoAnnonce > :toDate))
-    OR ((auktionStartDato IS NOT NULL AND auktionStartDato > :toDate) AND ( datoAnnonce1 IS NULL OR datoAnnonce1 > :toDate))
-    OR (status = 'Fremtidig' AND g.annonceres = 1)
+   (
+    beloebAnvist IS NOT NULL AND beloebAnvist < :fromDate)
+     OR (datoAnnonce1 IS NOT NULL AND datoAnnonce1 > :toDate)
+     OR (datoAnnonce1 IS NULL AND (datoAnnonce IS NOT NULL AND datoAnnonce > :toDate))
+     OR ((auktionStartDato IS NOT NULL AND auktionStartDato > :toDate) AND ( datoAnnonce1 IS NULL OR datoAnnonce1 > :toDate))
+     OR (status = 'Fremtidig' AND g.annonceres = 1
+   )
   )
-GROUP BY
- g.lokalSamfundId,
- s.name
 ORDER BY
- s.name
+ s.name,
+ g.vej,
+ lp.nr,
+ g.salgsType
 SQL;
 
     $stmt = $this->entityManager->getConnection()->prepare($sql);
@@ -113,12 +123,77 @@ SQL;
       'disp' => 0,
     ];
 
+    $rows = [];
     while ($row = $stmt->fetch()) {
-      $row['disp'] = $row['aktuelle'] - $row['solgt'] - $row['accept'] - $row['res'];
-      foreach ($totals as $col => &$value) {
-        $value += $row[$col];
+      $rows[$row['grund_id']] = $row;
+    }
+
+    $salgstatuses = $this->getGrundSalgstatusesAtEndOfPeriod(array_keys($rows));
+
+    // Collect all rows and group by
+    //   1. Lokalsamfund.name.
+    //   2. Grund.vej, Lokalplan.nr, Grund.salgsType (compounded)
+
+    $groups = [];
+    foreach ($rows as $grundId => $row) {
+      $salgstatus = $salgstatuses[$grundId];
+      $row['solgt'] = GrundSalgStatus::SOLGT === $salgstatus ? 1 : 0;
+      $row['accept'] = GrundSalgStatus::ACCEPTERET === $salgstatus ? 1 : 0;
+      $row['res'] = GrundSalgStatus::RESERVERET === $salgstatus ? 1 : 0;
+
+      $key1 = $row['name'];
+      $key2 = json_encode([$row['vej'], $row['nr'], $row['salgsType']]);
+      $groups[$key1]['name'] = $row['name'];
+      $groups[$key1]['children'][$key2]['vej'] = $row['vej'];
+      $groups[$key1]['children'][$key2]['nr'] = $row['nr'];
+      $groups[$key1]['children'][$key2]['salgsType'] = $row['salgsType'];
+      $groups[$key1]['children'][$key2]['children'][] = $row;
+    }
+
+    // Accumulate values from children to parents.
+    foreach ($groups as &$group) {
+      $group += [
+        'aktuelle' => 0,
+        'solgt' => 0,
+        'accept' => 0,
+        'res' => 0,
+        'disp' => 0,
+      ];
+
+      foreach ($group['children'] as $key => &$group1) {
+        $group1 += [
+          'aktuelle' => 0,
+          'solgt' => 0,
+          'accept' => 0,
+          'res' => 0,
+          'disp' => 0,
+        ];
+
+        foreach ($group1['children'] as $child) {
+          $group1['aktuelle'] += 1;
+          $group1['solgt'] += $child['solgt'];
+          $group1['accept'] += $child['accept'];
+          $group1['res'] += $child['res'];
+        }
+        $group1['disp'] = $group1['aktuelle'] - $group1['solgt'] - $group1['accept'] - $group1['res'];
+
+
+        $group['aktuelle'] += $group1['aktuelle'];
+        $group['solgt'] += $group1['solgt'];
+        $group['accept'] += $group1['accept'];
+        $group['res'] += $group1['res'];
+        $group['disp'] += $group1['disp'];
       }
 
+      $totals['aktuelle'] += $group['aktuelle'];
+      $totals['solgt'] += $group['solgt'];
+      $totals['accept'] += $group['accept'];
+      $totals['res'] += $group['res'];
+      $totals['disp'] += $group['disp'];
+    }
+
+    // Write groups.
+    foreach ($groups as $row) {
       $this->writeGroupHeader([
         $row['name'], NULL, NULL,
         (int) $row['aktuelle'],
@@ -128,46 +203,7 @@ SQL;
         (int) $row['disp'],
       ]);
 
-      $sql = <<<'SQL'
-SELECT
- g.vej,
- IFNULL(lp.nr, '') AS nr,
- g.salgsType,
- COUNT(g.vej) AS aktuelle,
- SUM(CASE WHEN g.salgStatus = 'Solgt' THEN 1 ELSE 0 END) AS solgt,
- SUM(CASE WHEN g.salgStatus = 'Skøde rekvireret' OR g.salgStatus = 'Accepteret' THEN 1 ELSE 0 END) AS accept,
- SUM(CASE WHEN g.salgStatus = 'Reserveret' THEN 1 ELSE 0 END) AS res
-FROM
- Grund AS g
-  JOIN Salgsomraade AS so ON g.salgsomraadeId = so.id
-  JOIN Lokalplan AS lp ON lp.id = so.lokalPlanId
-WHERE
- g.type = :grundtype
-  AND g.lokalSamfundId = :lokalSamfundId
-  AND NOT(
-   (
-    beloebAnvist IS NOT NULL AND beloebAnvist < :fromDate)
-     OR (datoAnnonce1 IS NOT NULL AND datoAnnonce1 > :toDate)
-     OR (datoAnnonce1 IS NULL AND (datoAnnonce IS NOT NULL AND datoAnnonce > :toDate))
-     OR ((auktionStartDato IS NOT NULL AND auktionStartDato > :toDate) AND ( datoAnnonce1 IS NULL OR datoAnnonce1 > :toDate))
-     OR (status = 'Fremtidig' AND g.annonceres = 1
-   )
-  )
-GROUP BY
- g.vej,
- lp.nr,
- g.salgsType
-SQL;
-
-      $itemStmt = $this->entityManager->getConnection()->prepare($sql);
-      $itemStmt->bindValue(':grundtype', $grundtype);
-      $itemStmt->bindValue(':lokalSamfundId', $row['lokalSamfundId']);
-      $itemStmt->bindValue(':fromDate', $startdate, Type::DATE);
-      $itemStmt->bindValue(':toDate', $enddate, Type::DATE);
-      $itemStmt->execute();
-
-      while ($item = $itemStmt->fetch()) {
-        $item['disp'] = $item['aktuelle'] - $item['solgt'] - $item['accept'] - $item['res'];
+      foreach ($row['children'] as $item) {
         $this->writeRow([
           $item['vej'],
           $item['nr'],
