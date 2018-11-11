@@ -282,6 +282,13 @@ class GrundCalculator implements EventSubscriber {
 
 	/**
 	 * Compute salgstatus for a Grund at a point in time (in the past).
+	 */
+	public function computeSalgstatusAt( Grund $grund, \DateTime $time) {
+		return $this->computeSalgstatusAtLatest($grund, $time);
+	}
+
+	/**
+	 * Compute salgstatus for a Grund at a point in time (in the past).
 	 *
 	 * @see self::calculateSalgstatus
 	 *
@@ -298,7 +305,7 @@ class GrundCalculator implements EventSubscriber {
 	 *
 	 * If a Grund goes from RESERVERET to LEDIG, we're screewed!
 	 */
-	public function computeSalgstatusAt( Grund $grund, \DateTime $time) {
+	private function computeSalgstatusAtFlow( Grund $grund, \DateTime $time) {
 		$thatDay = clone $time;
 		$thatDay->setTime( 12, 0 );
 
@@ -322,6 +329,37 @@ class GrundCalculator implements EventSubscriber {
 	}
 
 	/**
+	 * Compute salgstatus for a Grund at a point in time (in the past).
+	 *
+	 * @see self::calculateSalgstatus
+	 *
+	 * We don't have historical data in the database, so in order to compute the
+	 * status, we use the date closest to (but not after) the specified time to get the status.
+	 */
+	private function computeSalgstatusAtLatest( Grund $grund, \DateTime $time) {
+		$stateDates = [
+			GrundSalgStatus::RESERVERET => $grund->getResstart(),
+			GrundSalgStatus::TILBUD_SENDT => $grund->getTilbudstart(),
+			GrundSalgStatus::AUKTION_SLUT => $grund->getAuktionstartdato(),
+			GrundSalgStatus::ACCEPTERET => $grund->getAccept(),
+			GrundSalgStatus::SKOEDE_REKVIRERET => $grund->getSkoederekv(),
+			GrundSalgStatus::SOLGT => $grund->getBeloebanvist(),
+		];
+
+		$status = GrundSalgStatus::LEDIG;
+		$latestDate = (new \DateTime())->setTimestamp(0);
+
+		foreach ($stateDates as $state => $date) {
+			if ($date && $date <= $time && $date > $latestDate) {
+				$latestDate = $date;
+				$status = $state;
+			}
+		}
+
+		return $status;
+	}
+
+  /**
 	 * If the are not set, update 'til og med' dates base on their respective 'fra' dates
 	 *
 	 * "Copy-paste" from legacy system
