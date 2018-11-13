@@ -55,9 +55,9 @@ services:
           - class: AppBundle\Report\ReportTilSalgIPerioden
           - class: AppBundle\Report\ReportOekonomi
           - class: AppBundle\Report\ReportOpkoebOgForbrug
-          - class: AppBundle\Report\ReportGrundSolgtIPeriode
-          - class: AppBundle\Report\ReportGrundTilSalgIPeriode
-          - class: AppBundle\Report\ReportGrundTilSalgPrDato
+          # - class: AppBundle\Report\ReportGrundSolgtIPeriode
+          # - class: AppBundle\Report\ReportGrundTilSalgIPeriode
+          # - class: AppBundle\Report\ReportGrundTilSalgPrDato
 
   app.calculation.delomraade:
     class: AppBundle\CalculationService\DelomraadeCalculator
