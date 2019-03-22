@@ -473,12 +473,113 @@ SQL;
   }
 
   /**
+   * Get data erhverv.
+   */
+  private function getDataErhverv($grundtype, $startdate, $enddate) {
+    // Include stuff that happened ON "enddate".
+    $enddate->modify('+1 day');
+
+    $sql = <<<'SQL'
+SELECT
+ g.lokalSamfundId,
+ s.name,
+ g.vej,
+ g.areal,
+ g.prism2,
+ g.tilsluttet,
+ CASE
+  WHEN beloebAnvist IS NOT NULL AND beloebAnvist <= :toDate THEN 'Solgt'
+  WHEN Accept IS NOT NULL AND Accept <= :toDate THEN 'Accepteret'
+  WHEN (TilbudStart IS NOT NULL AND TilbudStart <= :toDate)
+   OR (ResStart IS NOT NULL AND ResStart <= :toDate)
+   OR (auktionSlutDato IS NOT NULL AND auktionSlutDato <= :toDate) THEN 'Reserveret'
+ ELSE 'Disponibel'
+ END as gsalgsstatus
+FROM
+ Grund as g
+  JOIN Lokalsamfund as s on s.id=g.lokalSamfundId
+WHERE
+ type = :grundtype
+  AND NOT(
+   (beloebAnvist IS NOT NULL AND beloebAnvist < :fromDate)
+    OR (datoAnnonce1 IS NOT NULL AND datoAnnonce1 > :toDate)
+    OR (datoAnnonce1 is null AND (datoAnnonce IS NOT NULL AND datoAnnonce > :toDate))
+   OR
+   (( auktionStartDato IS NOT NULL AND auktionStartDato > :toDate) AND ( datoAnnonce1 is null Or datoAnnonce1 > :toDate))
+   OR (status = 'Fremtidig' AND annonceres = 1)
+  )
+ORDER BY
+ s.name,
+ g.lokalSamfundId,
+ g.vej
+SQL;
+
+    $stmt = $this->entityManager->getConnection()->prepare($sql);
+    $stmt->bindValue(':grundtype', $grundtype);
+    $stmt->bindValue(':fromDate', $startdate, Type::DATE);
+    $stmt->bindValue(':toDate', $enddate, Type::DATE);
+    $stmt->execute();
+
+    // Group data by lokalsamfund.
+    $groups = [];
+    $lastLokalSamfundId = null;
+    $group = null;
+    while ($row = $stmt->fetch()) {
+      if ($lastLokalSamfundId !== $row['lokalSamfundId']) {
+        $groups[$row['lokalSamfundId']] = [
+          'data' => $row,
+        ];
+        $group = &$groups[$row['lokalSamfundId']];
+        $lastLokalSamfundId = $row['lokalSamfundId'];
+      }
+
+      $group['lines'][] = $row;
+    }
+
+    // Calculate totals within groups.
+    foreach ($groups as &$group) {
+      $data = &$group['data'];
+      $data['totalAreal'] = 0;
+      $data['totalCount'] = 0;
+      $data['solgtCount'] = 0;
+      $data['acceptCount'] = 0;
+      $data['solgt'] = 0;
+      $data['accept'] = 0;
+      $data['res'] = 0;
+
+      foreach ($group['lines'] as $line) {
+        $data['totalAreal'] += $line['areal'];
+        $data['totalCount'] += 1;
+        switch ($line['gsalgsstatus']) {
+          case 'Accepteret':
+            $data['acceptCount'] += 1;
+            $data['accept'] += $line['areal'];
+            break;
+
+          case 'Solgt':
+            $data['solgtCount'] += 1;
+            $data['solgt'] += $line['areal'];
+            break;
+
+          case 'Reserveret':
+            $data['res'] += $line['areal'];
+            break;
+        }
+      }
+    }
+
+    return $groups;
+  }
+
+  /**
    * Write report data.
    */
   private function writeDataErhverv() {
     $grundtype = $this->getParameterValue('grundtype');
     $startdate = $this->getParameterValue('startdate');
     $enddate = $this->getParameterValue('enddate');
+    $data = $this->getDataErhverv($grundtype, $startdate, $enddate);
+
     $title = 'Erhvervsgrunde til salg i perioden ' . $this->formatDate($startdate) . '–' . $this->formatDate($enddate);
     $this->writeTitle($title, 8);
 
@@ -489,40 +590,6 @@ SQL;
       'Accept.',
     ]);
 
-    $sql = <<<'SQL'
-SELECT
- g.lokalSamfundId,
- s.name,
- count(g.vej) as totalCount,
- SUM(g.areal) as totalAreal,
- SUM(CASE WHEN SalgStatus='Solgt' THEN g.areal ELSE 0 END) as solgt,
- SUM(CASE WHEN SalgStatus='Solgt' THEN 1 ELSE 0 END) as solgtCount,
- SUM(CASE WHEN SalgStatus='Accepteret' OR SalgStatus='Skøde rekvireret' THEN g.areal ELSE 0 END) as accept,
- SUM(CASE WHEN SalgStatus='Accepteret' OR SalgStatus='Skøde rekvireret' THEN 1 ELSE 0 END) as acceptCount,
- SUM(CASE WHEN SalgStatus='Reserveret' THEN g.areal ELSE 0 END) as res,
- SUM(CASE WHEN SalgStatus='Reserveret' THEN 1 ELSE 0 END) as resCount
-FROM
- Grund as g
-  JOIN Lokalsamfund as s ON s.id = g.lokalSamfundId
-WHERE
- type='Erhvervsgrund'
-  AND NOT(
-   (beloebAnvist IS NOT NULL AND beloebAnvist < :fromDate)
-OR (datoAnnonce1 IS NOT NULL AND datoAnnonce1 > :toDate)
-OR (datoAnnonce1 is null AND (datoAnnonce IS NOT NULL AND datoAnnonce > :toDate))
-OR
- (( auktionStartDato IS NOT NULL AND auktionStartDato > :toDate) AND ( datoAnnonce1 is null Or datoAnnonce1 > :toDate))
- OR (status = 'Fremtidig' AND annonceres = 1)
- )
-GROUP BY
- g.lokalSamfundId,s.name order by s.name
-SQL;
-
-    $stmt = $this->entityManager->getConnection()->prepare($sql);
-    $stmt->bindValue(':fromDate', $startdate, Type::DATE);
-    $stmt->bindValue(':toDate', $enddate, Type::DATE);
-    $stmt->execute();
-
     $solgtTotal = 0;
     $acceptTotal = 0;
     $resTotal = 0;
@@ -530,7 +597,8 @@ SQL;
     $solgtCountTotal = 0;
     $acceptCountTotal = 0;
 
-    while ($row = $stmt->fetch()) {
+    foreach ($data as $group) {
+      $row = $group['data'];
       $totalAreal = $row['totalAreal'];
       $totalCount = $row['totalCount'];
       $solgt = $row['solgt'];
@@ -555,49 +623,9 @@ SQL;
         ($acceptCount > 0 ? $acceptCount . '/' . intval($accept) : ''),
       ]);
 
-    $sql = <<<'SQL'
-SELECT
- vej,
- g.areal,
- g.prism2,
- g.tilsluttet,
- CASE
-  WHEN beloebAnvist IS NOT NULL AND beloebAnvist <= :toDate THEN 'Solgt'
-  WHEN Accept IS NOT NULL AND Accept <= :toDate THEN 'Accepteret'
-  WHEN TilbudStart IS NOT NULL AND TilbudStart <= :toDate THEN 'Reserveret'
-  WHEN ResStart IS NOT NULL AND ResStart <= :toDate THEN 'Reserveret'
-  WHEN auktionSlutDato IS NOT NULL AND auktionSlutDato <= :toDate THEN 'Reserveret'
- ELSE 'Disponibel'
- END as gsalgsstatus
-FROM
- Grund as g
-  JOIN Lokalsamfund as s on s.id=g.lokalSamfundId
-WHERE
- type = 'Erhvervsgrund'
- AND g.lokalSamfundId = :lokalSamfundId
- AND NOT(
-   (beloebAnvist IS NOT NULL AND beloebAnvist < :fromDate)
-   OR (datoAnnonce1 IS NOT NULL AND datoAnnonce1 > :toDate)
-   OR (datoAnnonce1 is null AND (datoAnnonce IS NOT NULL AND datoAnnonce > :toDate))
-   OR (
-    (auktionStartDato IS NOT NULL AND auktionStartDato > :toDate)
-    AND (datoAnnonce1 is null Or datoAnnonce1 > :toDate)
-   )
-   OR (status = 'Fremtidig' AND annonceres = 1)
- )
-ORDER BY
- g.vej
-SQL;
-
-      $itemStmt = $this->entityManager->getConnection()->prepare($sql);
-      $itemStmt->bindValue(':lokalSamfundId', $row['lokalSamfundId']);
-      $itemStmt->bindValue(':fromDate', $startdate, Type::DATE);
-      $itemStmt->bindValue(':toDate', $enddate, Type::DATE);
-      $itemStmt->execute();
-
       $lines = [];
 
-      while ($item = $itemStmt->fetch()) {
+      foreach ($group['lines'] as $item) {
         $vej = trim($item['vej']);
         $cols = isset($lines[$vej]) ? $lines[$vej] : array_merge(array_fill(0, 3, NULL), array_fill(0, 2, '0/0'));
         $cols[1] = $vej;
@@ -676,7 +704,5 @@ SQL;
       ($solgtCountTotal > 0 ? $solgtCountTotal . '/' . $solgtTotal : ''),
       ($acceptCountTotal > 0 ? $acceptCountTotal . '/' . $acceptTotal : ''),
     ]);
-
   }
-
 }
