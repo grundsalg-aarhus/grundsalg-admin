@@ -234,11 +234,11 @@ class GrundCalculator implements EventSubscriber {
 
         // In the legacy system this method is called a number of times allowing the result to stabilise. We mimic this behavior by calling recursively.
         if ( $initialStatus !== $grund->getStatus()) {
-		    if($iteration > 5) {
-		        throw new \Exception("Status change infinite loop detected");
+        if($iteration > 5) {
+            throw new \Exception("Status change infinite loop detected");
             } else {
-		        $iteration++;
-		        $this->calculateStatus($grund, $isNew, $changeset, $iteration);
+            $iteration++;
+            $this->calculateStatus($grund, $isNew, $changeset, $iteration);
             }
         }
 
@@ -284,6 +284,7 @@ class GrundCalculator implements EventSubscriber {
 	 * Compute salgstatus for a Grund at a point in time (in the past).
 	 */
 	public function computeSalgstatusAt( Grund $grund, \DateTime $time) {
+		return $this->computeSalgstatusAtFlow($grund, $time);
 		return $this->computeSalgstatusAtLatest($grund, $time);
 	}
 
@@ -416,10 +417,10 @@ class GrundCalculator implements EventSubscriber {
             $grund->setPris( $pris );
 		} else if ( $grund->getSalgstype() == SalgsType::FASTPRIS ) {
             $pris = $grund->getFastpris() ?? 0;
-		    $grund->setPris($pris);
+        $grund->setPris($pris);
 		} else if ( $grund->getSalgstype() == SalgsType::AUKTION ) {
-		    $pris = $grund->getAntagetbud() ?? 0;
-		    $grund->setPris($pris);
+        $pris = $grund->getAntagetbud() ?? 0;
+        $grund->setPris($pris);
         }
 
         $date = \DateTime::createFromFormat('Y-m-d', '2011-01-01');
@@ -436,14 +437,14 @@ class GrundCalculator implements EventSubscriber {
 	}
 
 	private function calculatePrisExKorr( Grund $grund ) {
-	    $prism2 = $grund->getPrism2() ? $grund->getPrism2() : 0;
-	    $maxetm2 = $grund->getMaxetagem2() ? $grund->getMaxetagem2() : 0;
-	    $bareal = $grund->getBruttoareal() ? $grund->getBruttoareal() : 0;
+      $prism2 = $grund->getPrism2() ? $grund->getPrism2() : 0;
+      $maxetm2 = $grund->getMaxetagem2() ? $grund->getMaxetagem2() : 0;
+      $bareal = $grund->getBruttoareal() ? $grund->getBruttoareal() : 0;
 
-	    if($grund->getType() === GrundType::STORPARCEL) {
-	        $grund->setPrisfoerkorrektion($prism2 * $maxetm2);
+      if($grund->getType() === GrundType::STORPARCEL) {
+          $grund->setPrisfoerkorrektion($prism2 * $maxetm2);
         } else {
-	        $grund->setPrisfoerkorrektion($prism2 * $bareal);
+          $grund->setPrisfoerkorrektion($prism2 * $bareal);
         }
     }
 

@@ -41,7 +41,7 @@ class ReportGrundTilSalgIPeriode extends Report {
     $this->writeTitle($title, 8);
     $this->writeRow(['Priserne er ekskl. moms']);
 
-      $sql = <<<SQL
+    $sql = <<<SQL
 SELECT
  grund.id, grund.SalgStatus, grund.beloebAnvist
 FROM
