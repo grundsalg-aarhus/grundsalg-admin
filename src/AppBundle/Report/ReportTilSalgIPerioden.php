@@ -77,6 +77,13 @@ class ReportTilSalgIPerioden extends Report {
       'Disp',
     ]);
 
+/*
+ * "Grunde til salg i periode" er grunde som
+ *   er "annonceret", "ledig", "tilbud" eller "auktion" før perioden slutter
+ *  og som
+ *   ikke er solgt ("accept" eller "betalt") før perioden starter.
+ *
+ */
 
     $sql = <<<'SQL'
 SELECT
@@ -93,15 +100,28 @@ FROM
   JOIN Lokalplan AS lp ON lp.id = so.lokalPlanId
 WHERE
  g.type = :grundtype
-  AND NOT(
-   (
-    beloebAnvist IS NOT NULL AND beloebAnvist < :fromDate)
-     OR (datoAnnonce1 IS NOT NULL AND datoAnnonce1 > :toDate)
-     OR (datoAnnonce1 IS NULL AND (datoAnnonce IS NOT NULL AND datoAnnonce > :toDate))
-     OR ((auktionStartDato IS NOT NULL AND auktionStartDato > :toDate) AND ( datoAnnonce1 IS NULL OR datoAnnonce1 > :toDate))
-     OR (status = 'Fremtidig' AND g.annonceres = 1
+
+  AND
+   /* "Til salg" før ("annonceret", "ledig", "tilbud" eller "auktion") før perioden slutter */
+   (1=0
+    /* "annonceret" før perioden slutter. */
+    OR (g.datoAnnonce1 IS NOT NULL AND g.datoAnnonce1 <= :toDate)
+    OR (g.datoAnnonce1 IS NULL AND (g.datoAnnonce IS NOT NULL AND g.datoAnnonce <= :toDate))
+    /* "tilbud" før perioden slutter. */
+    OR (g.tilbudStart IS NOT NULL AND g.tilbudStart <= :toDate AND (g.tilbudSlut IS NULL OR g.tilbudSlut > :toDate))
+    /* "auktion" før perioden slutter. */
+    OR (g.auktionStartDato IS NOT NULL AND g.auktionStartDato <= :toDate AND (g.auktionSlutDato IS NULL OR g.auktionSlutDato > :toDate))
    )
-  )
+
+  AND
+   /* ikke "solgt" ("accept" eller "betalt") før perioden starter. */
+   NOT (1=0
+    /* "accept" før perioden starter. */
+    OR (g.accept IS NOT NULL AND g.accept < :fromDate)
+    /* "betalt" før perioden starter. */
+    OR (g.beloebAnvist IS NOT NULL AND g.beloebAnvist < :fromDate)
+   )
+
 ORDER BY
  s.name,
  g.vej,
@@ -476,9 +496,6 @@ SQL;
    * Get data erhverv.
    */
   private function getDataErhverv($grundtype, $startdate, $enddate) {
-    // Include stuff that happened ON "enddate".
-    $enddate->modify('+1 day');
-
     $sql = <<<'SQL'
 SELECT
  g.lokalSamfundId,
