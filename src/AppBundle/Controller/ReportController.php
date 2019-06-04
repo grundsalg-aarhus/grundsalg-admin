@@ -66,6 +66,7 @@ class ReportController extends Controller {
 
     /** @var Report $report */
     $report = new $reportClass($this->getDoctrine()->getManager());
+    $report->setGrundCalculator($this->container->get('app.calculation.grund'));
     $form = $this->buildParameterForm($report);
     $form->submit($request->get($form->getName()));
     $parameters = $form->getData();

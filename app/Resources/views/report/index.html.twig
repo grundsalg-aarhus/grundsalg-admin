@@ -19,24 +19,28 @@
       {% form_theme form with 'bootstrap_3_horizontal_layout.html.twig' %}
       <div class="report-parameters" id="report-parameters-{{ name }}">
         {% for key, field in form %}
-          {% if not (key matches '{^(start|end)date$}') %}
+          {% if not (key matches '{^(start|end)?date$}') %}
             {{ (form_row(field)) }}
           {% endif %}
         {% endfor %}
 
-        <div class="form-group">
-          <label class="col-sm-2 control-label required">{{ 'Periode' | trans }}</label>
-          <div class="col-sm-10">
-            <div class="row">
-              <div class="col-md-6">
-                {{ (form_widget(form.startdate)) }}
-              </div>
-              <div class="col-md-6">
-                {{ (form_widget(form.enddate)) }}
+        {% if 'startdate' in form|keys and 'enddate' in form|keys %}
+          <div class="form-group">
+            <label class="col-sm-2 control-label required">{{ 'Periode' | trans }}</label>
+            <div class="col-sm-10">
+              <div class="row">
+                <div class="col-md-6">
+                  {{ (form_widget(form.startdate)) }}
+                </div>
+                <div class="col-md-6">
+                  {{ (form_widget(form.enddate)) }}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        {% elseif 'date' in form|keys %}
+          {{ (form_row(form.date)) }}
+        {% endif %}
       </div>
     {% endfor %}
 
