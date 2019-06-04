@@ -234,11 +234,11 @@ class GrundCalculator implements EventSubscriber {
 
         // In the legacy system this method is called a number of times allowing the result to stabilise. We mimic this behavior by calling recursively.
         if ( $initialStatus !== $grund->getStatus()) {
-		    if($iteration > 5) {
-		        throw new \Exception("Status change infinite loop detected");
+        if($iteration > 5) {
+            throw new \Exception("Status change infinite loop detected");
             } else {
-		        $iteration++;
-		        $this->calculateStatus($grund, $isNew, $changeset, $iteration);
+            $iteration++;
+            $this->calculateStatus($grund, $isNew, $changeset, $iteration);
             }
         }
 
@@ -281,6 +281,86 @@ class GrundCalculator implements EventSubscriber {
 	}
 
 	/**
+	 * Compute salgstatus for a Grund at a point in time (in the past).
+	 */
+	public function computeSalgstatusAt( Grund $grund, \DateTime $time) {
+		return $this->computeSalgstatusAtFlow($grund, $time);
+		return $this->computeSalgstatusAtLatest($grund, $time);
+	}
+
+	/**
+	 * Compute salgstatus for a Grund at a point in time (in the past).
+	 *
+	 * @see self::calculateSalgstatus
+	 *
+	 * We don't have historical data in the database, so in order to compute the
+	 * status, we assume that a Grund goes though these steps and in this order:
+	 *
+	 *	1. LEDIG
+	 *	2. RESERVERET
+	 *	3. TILBUD_SENDT
+	 *	4. AUKTION_SLUT
+	 *	5. ACCEPTERET
+	 *	6. SKOEDE_REKVIRERET
+	 *	7. SOLGT
+	 *
+	 * If a Grund goes from RESERVERET to LEDIG, we're screewed!
+	 */
+	private function computeSalgstatusAtFlow( Grund $grund, \DateTime $time) {
+		$thatDay = clone $time;
+		$thatDay->setTime( 12, 0 );
+
+		// Check possible states in reverse, to match the latest possible state
+		// first.
+		if ( $grund->getBeloebanvist() && $grund->getBeloebanvist() <= $time ) {
+			return GrundSalgStatus::SOLGT;
+		} else if ( $grund->getSkoederekv() && $grund->getSkoederekv() <= $time ) {
+			return GrundSalgStatus::SKOEDE_REKVIRERET;
+		} else if ( $grund->getAccept() && $grund->getAccept() <= $time ) {
+			return GrundSalgStatus::ACCEPTERET;
+		} else if ( $grund->getAuktionstartdato() && $grund->getAuktionslutdato() && $grund->getAuktionslutdato() < $thatDay ) {
+			return GrundSalgStatus::AUKTION_SLUT;
+		} else if ( $grund->getTilbudstart() && $grund->getTilbudstart() <= $time ) {
+			return GrundSalgStatus::TILBUD_SENDT;
+		} else if ( $grund->getResstart() && $grund->getResstart() <= $time ) {
+			return GrundSalgStatus::RESERVERET;
+		} else {
+			return GrundSalgStatus::LEDIG;
+		}
+	}
+
+	/**
+	 * Compute salgstatus for a Grund at a point in time (in the past).
+	 *
+	 * @see self::calculateSalgstatus
+	 *
+	 * We don't have historical data in the database, so in order to compute the
+	 * status, we use the date closest to (but not after) the specified time to get the status.
+	 */
+	private function computeSalgstatusAtLatest( Grund $grund, \DateTime $time) {
+		$stateDates = [
+			GrundSalgStatus::RESERVERET => $grund->getResstart(),
+			GrundSalgStatus::TILBUD_SENDT => $grund->getTilbudstart(),
+			GrundSalgStatus::AUKTION_SLUT => $grund->getAuktionstartdato(),
+			GrundSalgStatus::ACCEPTERET => $grund->getAccept(),
+			GrundSalgStatus::SKOEDE_REKVIRERET => $grund->getSkoederekv(),
+			GrundSalgStatus::SOLGT => $grund->getBeloebanvist(),
+		];
+
+		$status = GrundSalgStatus::LEDIG;
+		$latestDate = (new \DateTime())->setTimestamp(0);
+
+		foreach ($stateDates as $state => $date) {
+			if ($date && $date <= $time && $date > $latestDate) {
+				$latestDate = $date;
+				$status = $state;
+			}
+		}
+
+		return $status;
+	}
+
+  /**
 	 * If the are not set, update 'til og med' dates base on their respective 'fra' dates
 	 *
 	 * "Copy-paste" from legacy system
@@ -337,10 +417,10 @@ class GrundCalculator implements EventSubscriber {
             $grund->setPris( $pris );
 		} else if ( $grund->getSalgstype() == SalgsType::FASTPRIS ) {
             $pris = $grund->getFastpris() ?? 0;
-		    $grund->setPris($pris);
+        $grund->setPris($pris);
 		} else if ( $grund->getSalgstype() == SalgsType::AUKTION ) {
-		    $pris = $grund->getAntagetbud() ?? 0;
-		    $grund->setPris($pris);
+        $pris = $grund->getAntagetbud() ?? 0;
+        $grund->setPris($pris);
         }
 
         $date = \DateTime::createFromFormat('Y-m-d', '2011-01-01');
@@ -357,14 +437,14 @@ class GrundCalculator implements EventSubscriber {
 	}
 
 	private function calculatePrisExKorr( Grund $grund ) {
-	    $prism2 = $grund->getPrism2() ? $grund->getPrism2() : 0;
-	    $maxetm2 = $grund->getMaxetagem2() ? $grund->getMaxetagem2() : 0;
-	    $bareal = $grund->getBruttoareal() ? $grund->getBruttoareal() : 0;
+      $prism2 = $grund->getPrism2() ? $grund->getPrism2() : 0;
+      $maxetm2 = $grund->getMaxetagem2() ? $grund->getMaxetagem2() : 0;
+      $bareal = $grund->getBruttoareal() ? $grund->getBruttoareal() : 0;
 
-	    if($grund->getType() === GrundType::STORPARCEL) {
-	        $grund->setPrisfoerkorrektion($prism2 * $maxetm2);
+      if($grund->getType() === GrundType::STORPARCEL) {
+          $grund->setPrisfoerkorrektion($prism2 * $maxetm2);
         } else {
-	        $grund->setPrisfoerkorrektion($prism2 * $bareal);
+          $grund->setPrisfoerkorrektion($prism2 * $bareal);
         }
     }
 
