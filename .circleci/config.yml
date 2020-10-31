@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/php:7.2-buster-jessie-browsers-legacy
+      - image: circleci/php:7.2-apache-buster-browsers-legacy
         environment:
           APP_ENV: circleci
 
