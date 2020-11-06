@@ -52,7 +52,7 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-composer
 
-      - run: sudo composer self-update
+      - run: sudo composer self-update --1
 
       - run: composer install --no-interaction
 
