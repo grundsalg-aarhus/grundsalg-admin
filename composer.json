@@ -44,7 +44,8 @@
         "box/spout": "^2.7",
         "nelmio/cors-bundle": "^1.5",
         "rollerworks/password-strength-bundle": "^2.0",
-        "fresh/doctrine-enum-bundle": "~5.0"
+        "fresh/doctrine-enum-bundle": "~5.0",
+        "creof/geo-parser": "^2.2"
     },
     "require-dev": {
         "ciaranmcnulty/behat-stepthroughextension" : "dev-master",
