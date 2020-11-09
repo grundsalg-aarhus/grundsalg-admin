@@ -39,12 +39,12 @@
         "knplabs/knp-paginator-bundle": "~2.5",
         "stof/doctrine-extensions-bundle": "~1.2",
         "guzzlehttp/guzzle": "^6.2",
-        "javiereguiluz/easyadmin-bundle": "1.16.10",
-        "fresh/doctrine-enum-bundle": "~5.0",
+        "easycorp/easyadmin-bundle": "1.16.13",
         "beberlei/doctrineextensions": "^1.0",
         "box/spout": "^2.7",
         "nelmio/cors-bundle": "^1.5",
-        "rollerworks/password-strength-bundle": "^2.0"
+        "rollerworks/password-strength-bundle": "^2.0",
+        "fresh/doctrine-enum-bundle": "~5.0"
     },
     "require-dev": {
         "ciaranmcnulty/behat-stepthroughextension" : "dev-master",

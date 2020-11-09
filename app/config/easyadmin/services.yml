@@ -10,7 +10,13 @@ services:
     # Inject our custom config manager (overwrite the original one)
     easyadmin.config.manager:
         class: AppBundle\Configuration\EasyAdminConfigManager
-        arguments: ['@service_container', '@security.authorization_checker']
+        arguments:
+            - '@easyadmin.cache.manager'
+            - '@property_accessor'
+            - '%easyadmin.config%'
+            - '%kernel.debug%'
+            - '@security.authorization_checker'
+            - '@security.token_storage'
 
     # Note: Decorating the EasyAdmin config manager
     # (cf. http://symfony.com/doc/current/service_container/service_decoration.html)
