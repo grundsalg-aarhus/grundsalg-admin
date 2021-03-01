@@ -30,4 +30,4 @@ swiftmailer:
 # Doctrine Configuration
 doctrine:
     dbal:
-        dbname:   %database_name%_test
+        host: '%database_host%_test'

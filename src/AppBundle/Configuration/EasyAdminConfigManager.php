@@ -2,25 +2,37 @@
 
 namespace AppBundle\Configuration;
 
+use JavierEguiluz\Bundle\EasyAdminBundle\Cache\CacheManager;
 use JavierEguiluz\Bundle\EasyAdminBundle\Configuration\ConfigManager;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class EasyAdminConfigManager extends ConfigManager {
   /**
-   * @var \AppBundle\Configuration\AuthorizationCheckerInterface
+   * @var AuthorizationCheckerInterface
    */
   protected $authorizationChecker;
 
   /**
-   * @var \Symfony\Component\DependencyInjection\ContainerInterface
+   * @var TokenStorageInterface
    */
-  protected $container;
+  private $tokenStorage;
 
-  public function __construct(ContainerInterface $container, AuthorizationCheckerInterface $authorizationChecker) {
-    parent::__construct($container);
+    /**
+     * EasyAdminConfigManager constructor.
+     *
+     * @param CacheManager $cacheManager
+     * @param PropertyAccessorInterface $propertyAccessor
+     * @param array $originalBackendConfig
+     * @param $debug
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param TokenStorageInterface $tokenStorage
+     */
+  public function __construct(CacheManager $cacheManager, PropertyAccessorInterface $propertyAccessor, array $originalBackendConfig, $debug, AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage) {
+    parent::__construct($cacheManager, $propertyAccessor, $originalBackendConfig, $debug);
     $this->authorizationChecker = $authorizationChecker;
-    $this->container = $container;
+    $this->tokenStorage = $tokenStorage;
   }
 
   private $cache = [];
@@ -33,7 +45,7 @@ class EasyAdminConfigManager extends ConfigManager {
 
     $config = parent::getBackendConfig($propertyPath);
 
-    $token = $this->container->get('security.token_storage')->getToken();
+    $token = $this->tokenStorage->getToken();
     if ($token) {
       if (is_array($config)) {
         // Filter config by roles.
