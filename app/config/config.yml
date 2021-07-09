@@ -154,8 +154,8 @@ swiftmailer:
 
 fos_user:
     from_email:
-        address:        noreply@example.com
-        sender_name:    Demo App
+        address:        "%fos_from_email_address%"
+        sender_name:    "%fos_from_email_sender_name%"
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: AppBundle\Entity\User

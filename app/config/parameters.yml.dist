@@ -28,3 +28,7 @@ parameters:
 
     # First year with sales, used for building selects in statistics UI
     grundsalg_first_year: 2006
+
+    # FOS user sender options
+    fos_from_email_address: noreply@example.com
+    fos_from_email_sender_name: Grundsalg Fagsystem - Aarhus Kommune
