@@ -26,7 +26,7 @@ jobs:
     steps:
       - run:
           name: Apt-get update
-          command: sudo apt-get update && sudo apt-get install -y zlib* wget --allow-releaseinfo-change
+          command: sudo apt-get update --allow-releaseinfo-change && sudo apt-get install -y zlib* wget
 
       - run:
           name: Install PHP extensions - zip
