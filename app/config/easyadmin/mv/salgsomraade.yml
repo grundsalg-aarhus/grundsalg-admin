@@ -11,6 +11,7 @@ easy_admin:
                     - {property: kpl1234Combined, label: 'KPL'}
                     - {property: o123Combined, label: 'LP-område'}
                     - {property: nr, label: 'SONr'}
+                    - postby
                     - type
                     - { property: annonceres, label: 'app.salgsomraade.annonceres' }
                     - titel
@@ -41,7 +42,7 @@ easy_admin:
                     - { property: titel, label: 'Titel', css_class: 'col-sm-6' }
                     - { property: ejerlav, css_class: 'col-sm-6' }
                     - { property: type, css_class: 'col-sm-6', type: 'AppBundle\Form\Field\GrundType' }
-                    - { property: postby, css_class: 'col-sm-6' }
+                    - { property: postby, css_class: 'col-sm-6', type_options: { required: true  }}
                     - { property: sagsnr, label: 'PSP', css_class: 'col-sm-6' }
                     - { property: vej, css_class: 'col-sm-6' }
                     - { property: landinspektoer, label: 'Landinsp.', css_class: 'col-sm-6' }

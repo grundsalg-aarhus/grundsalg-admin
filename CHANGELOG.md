@@ -1,5 +1,17 @@
 # Grundsalg Fagsystem
 
+## 1.0.8
+* Made "postnrBy" required on "Salgsområde" to ensure data integrity in the drupal import
+* Locked friendsofsymfony/user-bundle": ">=2.1 <2.2.0 (2.2.0 removes support for Symfony 3)
+* Updated symfony/phpunit-bridge (CVE-2019-10912)
+* Updated symfony/symfony (CVE-2019-10912, CVE-2021-21424)
+
+## 1.0.7
+
+## 1.0.6
+
+## 1.0.5
+
 ## 1.0.4
 * Symfony CVE-2018-14773 and CVE-2018-14774
 
