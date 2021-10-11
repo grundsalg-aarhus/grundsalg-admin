@@ -32,7 +32,7 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "braincrafted/bootstrap-bundle": "~2",
         "yavin/symfony-init-controller": "~0.4",
-        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "friendsofsymfony/user-bundle": ">=2.1 <2.2.0",
         "whiteoctober/breadcrumbs-bundle": "~1.2",
         "knplabs/knp-paginator-bundle": "~2.5",
         "stof/doctrine-extensions-bundle": "~1.2",
