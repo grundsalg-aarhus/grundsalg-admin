@@ -15,15 +15,15 @@ services:
     class: AppBundle\Service\GrundsalgPublicPropertiesService
     arguments: ['@grundsalg.bank_holiday']
 
-  grundsalg.communication:
-    class: AppBundle\Service\GrundsalgCommunicationService
-    arguments: ['%grundsalg_web%', '%grundsalg_web_username%', '%grundsalg_web_password%']
+  app.website_communication_service:
+    class: AppBundle\Service\WebsiteCommunicationService
+    arguments: ['@doctrine.orm.entity_manager','@grundsalg.public_properties', '%grundsalg_web%', '%grundsalg_web_username%', '%grundsalg_web_password%']
 
-  app.salgsomraade_subscriber:
-    class: AppBundle\EventSubscriber\SalgsomraadeCommunicationSubscriber
+  app.entity_change_subscriber:
+    class: AppBundle\EventSubscriber\EntityChangeSubscriber
     tags:
       - { name: doctrine.event_subscriber }
-    arguments: [ '@grundsalg.communication' ]
+    arguments: [ '@app.website_communication_service' ]
 
   app.twig_extension:
     class: AppBundle\Twig\AppExtension

@@ -34,7 +34,7 @@ class SalgsomraadeSyncCommand extends ContainerAwareCommand
   {
     $this->output = $output;
 
-    $communicationService = $this->getContainer()->get('grundsalg.communication');
+    $communicationService = $this->getContainer()->get('app.website_communication_service');
 
     $em = $this->getContainer()->get('doctrine')->getManager();
     $salgsomraader = $em->getRepository('AppBundle:Salgsomraade')->findAll();
@@ -44,7 +44,7 @@ class SalgsomraadeSyncCommand extends ContainerAwareCommand
       'error' => 0,
     ];
     foreach ($salgsomraader as $area) {
-      $content = $communicationService->saveSalgsomraade($area);
+      $content = $communicationService->syncDataToWebsite($area);
       $output->writeln('Synced id: ' . $area->getId() . ' Title: "' . $area->getTitel() . '" Message: "' . $content['message'] . '"');
 
       if (isset($content['error']) && $content['error']) {

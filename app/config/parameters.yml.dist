@@ -20,7 +20,7 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
 
     # Address to sync communicate with Web
-    grundsalg_web_address:
+    grundsalg_web_address: http://grundsalg-admin.local.itkdev.dk
     grundsalg_web_address_username:
     grundsalg_web_address_password:
     crs_properties_href: http://spatialreference.org/ref/epsg/25832/proj4/
