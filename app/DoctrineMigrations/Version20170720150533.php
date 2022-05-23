@@ -20,15 +20,15 @@ class Version20170720150533 extends AbstractMigration {
     );
 
     //Cleanup foreign keys missing
-      $this->addSql('
-        INSERT INTO Salgsomraade (delomraadeId, annonceres, nr, titel, tilsluttet, type, lpLoebeNummer, lokalplanId, created_by, updated_by)
-        VALUES
-	    (177,0,\'S-5000-002\',\'UKENDT (Import v. overgang til nyt system 2017)\',\'a:0:{}\',\'Andre\',2,95,\'IMPORT SCRIPT\',\'IMPORT SCRIPT\')
-	  ');
-
-      $this->addSql('
-        UPDATE Grund SET salgsomraadeId = (SELECT id FROM Salgsomraade WHERE titel = \'UKENDT (Import v. overgang til nyt system 2017)\') WHERE salgsomraadeId IS NULL
-      ');
+//      $this->addSql('
+//        INSERT INTO Salgsomraade (delomraadeId, annonceres, nr, titel, tilsluttet, type, lpLoebeNummer, lokalplanId, created_by, updated_by, created_at, updated_at)
+//        VALUES
+//	    (177,0,\'S-5000-002\',\'UKENDT (Import v. overgang til nyt system 2017)\',\'a:0:{}\',\'Andre\',2,95,\'IMPORT SCRIPT\',\'IMPORT SCRIPT\', NOW(), NOW())
+//	  ');
+//
+//      $this->addSql('
+//        UPDATE Grund SET salgsomraadeId = (SELECT id FROM Salgsomraade WHERE titel = \'UKENDT (Import v. overgang til nyt system 2017)\') WHERE salgsomraadeId IS NULL
+//      ');
 
     // Drop key/index required before rename allowed
     $this->addSql('ALTER TABLE Grund DROP FOREIGN KEY fk_Grund_lokalsamfundId');
