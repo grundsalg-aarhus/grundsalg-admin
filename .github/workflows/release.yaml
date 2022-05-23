@@ -25,9 +25,10 @@ jobs:
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php }}
-          extensions: apcu, calendar, ctype, iconv, imagick, json, redis, soap, xmlreader, zip
+          php-version: ${{ matrix.php}}
+          extensions: apcu, calendar, ctype, iconv, json, redis, xmlreader, zip
           coverage: none
+          tools: composer:v1
 
       - name: Validate composer files
         run: composer validate composer.json
