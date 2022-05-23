@@ -1,5 +1,6 @@
 {
-    "name": "vagrant/htdocs",
+    "name": "grundsalg-aarhus/grundsalg-admin",
+    "description": "Internal administrative system for managing municipal land sale",
     "license": "proprietary",
     "type": "project",
     "autoload": {
