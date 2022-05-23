@@ -4,9 +4,9 @@
 parameters:
     database_host:     mariadb
     database_port:     ~
-    database_name:     symfony
-    database_user:     root
-    database_password: ~
+    database_name:     db
+    database_user:     db
+    database_password: db
     server_version:    "5.5"
     # You should uncomment this if you want use pdo_sqlite
     # database_path: "%kernel.root_dir%/data.db3"
