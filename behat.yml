@@ -43,6 +43,7 @@ circleci:
 github:
   extensions:
     Behat\Symfony2Extension:
-      base_url: 'http://127.0.0.1/'
       kernel:
         env: "github"
+    Behat\MinkExtension:
+      base_url: 'http://127.0.0.1/'
