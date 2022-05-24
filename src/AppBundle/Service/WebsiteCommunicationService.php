@@ -4,6 +4,7 @@
  * Contains the GrundsalgCommunicationService which handles synchronizations from
  * this system to the Grundsalg presentations web page.
  */
+
 namespace AppBundle\Service;
 
 use AppBundle\Entity\Salgsomraade;
@@ -16,7 +17,8 @@ use GuzzleHttp\Exception\GuzzleException;
  *
  * @package AppBundle
  */
-class WebsiteCommunicationService {
+class WebsiteCommunicationService
+{
   private $endpoint;
   private $username;
   private $password;
@@ -33,7 +35,8 @@ class WebsiteCommunicationService {
   /**
    * Constructor
    */
-  public function __construct(EntityManager $entityManager, GrundsalgPublicPropertiesService $publicPropertiesService, $endpoint, $username, $password) {
+  public function __construct(EntityManager $entityManager, GrundsalgPublicPropertiesService $publicPropertiesService, $endpoint, $username, $password)
+  {
     $this->entityManager = $entityManager;
     $this->publicPropertiesService = $publicPropertiesService;
     $this->endpoint = $endpoint;
@@ -51,8 +54,9 @@ class WebsiteCommunicationService {
    *
    * @throws GuzzleException
    */
-  public function syncDataToWebsite(Salgsomraade $salgsomraade) {
-    if($salgsomraade->isAnnonceres()) {
+  public function syncDataToWebsite(Salgsomraade $salgsomraade)
+  {
+    if ($salgsomraade->isAnnonceres()) {
       $client = new Client();
 
       // @TODO update/implement endpoints on the drupal side.
@@ -60,12 +64,12 @@ class WebsiteCommunicationService {
       // @TODO update output from SalgsomraadeSyncCommand
 
       $response = $client->request(
-          'POST',
-          $this->endpoint . "/api/udstykning/" . $salgsomraade->getId() . "/updated",
-          [
-            'auth' => [$this->username, $this->password],
-            'json' => $this->getSalgsomraadePublicFields($salgsomraade)
-          ]
+        'POST',
+        $this->endpoint . "/api/udstykning/" . $salgsomraade->getId() . "/updated",
+        [
+          'auth' => [$this->username, $this->password],
+          'json' => $this->getSalgsomraadePublicFields($salgsomraade)
+        ]
       );
 
       $response = $client->request(
@@ -89,13 +93,14 @@ class WebsiteCommunicationService {
       $body = $response->getBody()->getContents();
       $content = \GuzzleHttp\json_decode($body);
 
-      return (array) $content;
+      return (array)$content;
     } else {
       return FALSE;
     }
   }
 
-  public function getSalgsomraadePublicFields(Salgsomraade $salgsomraade): array {
+  public function getSalgsomraadePublicFields(Salgsomraade $salgsomraade): array
+  {
     return [
       'id' => $salgsomraade->getId(),
       'type' => $salgsomraade->getType(),
@@ -109,38 +114,40 @@ class WebsiteCommunicationService {
     ];
   }
 
-  public function getGrundeGeoJsonFields(int $salgsomraadeId): array {
+  public function getGrundeGeoJsonFields(int $salgsomraadeId): array
+  {
     $grunde = $this->entityManager->getRepository('AppBundle:Grund')->getGrundeForSalgsOmraade($salgsomraadeId);
 
     $list = [];
     $list['type'] = 'FeatureCollection';
 
-    $crs                       = [];
-    $crs['type']               = 'link';
-    $crs['properties']['href'] = 'http://spatialreference.org/ref/epsg/25832/proj4/';
+    $crs = [];
+    $crs['type'] = 'link';
     $crs['properties']['href'] = $this->getParameter('crs_properties_href');
     $crs['properties']['type'] = $this->getParameter('crs_properties_type');
-    $list['crs']               = $crs;
+    $list['crs'] = $crs;
 
     $list['features'] = [];
 
     foreach ($grunde as $grund) {
       $data = [];
 
-      $data['type']     = 'Feature';
+      $data['type'] = 'Feature';
       $data['geometry'] = $grund->getSpGeometryArray();
 
-      $properties['id']      = $grund->getId();
-      $properties['address'] = trim($grund->getVej().' '.$grund->getHusnummer().$grund->getBogstav());
-      $properties['status']  = $this->publicPropertiesService->getPublicStatus($grund);
-      $properties['area_m2'] = intval($grund->getAreal());
-      // @TODO which fields to map for prices?
-      $properties['minimum_price'] = $this->publicPropertiesService->getPublicMinPris($grund);
-      $properties['sale_price']    = $this->publicPropertiesService->getPublicPris($grund);
-      $properties['pdf_link']      = $grund->getPdfLink();
+      $properties = [
+        'id' => $grund->getId(),
+        'address' => trim($grund->getVej() . ' ' . $grund->getHusnummer() . $grund->getBogstav()),
+        'status' => $this->publicPropertiesService->getPublicStatus($grund),
+        'area_m2' => intval($grund->getAreal()),
+        // @TODO which fields to map for prices?
+        'minimum_price' => $this->publicPropertiesService->getPublicMinPris($grund),
+        'sale_price' => $this->publicPropertiesService->getPublicPris($grund),
+        'pdf_link' => $grund->getPdfLink(),
 
-      // Needed in the frontend/weblayer. If true popup will be enabled for the feature.
-      $properties['markers'] = true;
+        // Needed in the frontend/weblayer. If true popup will be enabled for the feature.
+        'markers' => true,
+      ];
 
       $data['properties'] = $properties;
 
@@ -150,23 +157,25 @@ class WebsiteCommunicationService {
     return $list;
   }
 
-  public function getGrundePublicFields(int $salgsomraadeId): array {
+  public function getGrundePublicFields(int $salgsomraadeId): array
+  {
     $grunde = $this->grundRepository->getGrundeForSalgsOmraade($salgsomraadeId);
 
     $list = [];
 
-    $list['count']  = count($grunde);
+    $list['count'] = count($grunde);
     $list['grunde'] = [];
 
     foreach ($grunde as $grund) {
-      $data            = [];
-      $data['id']      = $grund->getId();
-      $data['address'] = trim($grund->getVej().' '.$grund->getHusnummer().$grund->getBogstav());
-      $data['status']  = $this->publicPropertiesService->getPublicStatus($grund);
-      $data['area_m2'] = intval($grund->getAreal());
-      $data['minimum_price'] = $this->publicPropertiesService->getPublicMinPris($grund);
-      $data['sale_price']    = $this->publicPropertiesService->getPublicPris($grund);
-      $data['pdf_link']      = $grund->getPdfLink();
+      $data = [
+        'id' => $grund->getId(),
+        'address' => trim($grund->getVej() . ' ' . $grund->getHusnummer() . $grund->getBogstav()),
+        'status' => $this->publicPropertiesService->getPublicStatus($grund),
+        'area_m2' => intval($grund->getAreal()),
+        'minimum_price' => $this->publicPropertiesService->getPublicMinPris($grund),
+        'sale_price' => $this->publicPropertiesService->getPublicPris($grund),
+        'pdf_link' => $grund->getPdfLink(),
+      ];
 
       $list['grunde'][] = $data;
     }
