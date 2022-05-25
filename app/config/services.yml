@@ -17,7 +17,7 @@ services:
 
   app.website_communication_service:
     class: AppBundle\Service\WebsiteCommunicationService
-    arguments: ['@doctrine.orm.entity_manager','@grundsalg.public_properties', '%grundsalg_web%', '%grundsalg_web_username%', '%grundsalg_web_password%']
+    arguments: ['@doctrine.orm.entity_manager','@grundsalg.public_properties', '%grundsalg_web%', '%grundsalg_web_api_key%']
 
   app.entity_change_subscriber:
     class: AppBundle\EventSubscriber\EntityChangeSubscriber

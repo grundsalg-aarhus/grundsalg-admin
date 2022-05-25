@@ -20,7 +20,7 @@ use GuzzleHttp\Exception\GuzzleException;
 class WebsiteCommunicationService
 {
   private $endpoint;
-  private $username;
+  private $apikey;
   private $password;
 
   /**
@@ -35,13 +35,12 @@ class WebsiteCommunicationService
   /**
    * Constructor
    */
-  public function __construct(EntityManager $entityManager, GrundsalgPublicPropertiesService $publicPropertiesService, $endpoint, $username, $password)
+  public function __construct(EntityManager $entityManager, GrundsalgPublicPropertiesService $publicPropertiesService, $endpoint, $apikey)
   {
     $this->entityManager = $entityManager;
     $this->publicPropertiesService = $publicPropertiesService;
     $this->endpoint = $endpoint;
-    $this->username = $username;
-    $this->password = $password;
+    $this->apikey = $apikey;
   }
 
   /**
@@ -67,7 +66,9 @@ class WebsiteCommunicationService
         'POST',
         $this->endpoint . "/api/udstykning/" . $salgsomraade->getId() . "/updated",
         [
-          'auth' => [$this->username, $this->password],
+          'headers'=> [
+            'Authorization' => 'Token '.$this->apikey,
+          ],
           'json' => $this->getSalgsomraadePublicFields($salgsomraade)
         ]
       );
@@ -76,7 +77,9 @@ class WebsiteCommunicationService
         'POST',
         $this->endpoint . "/api/udstykning/" . $salgsomraade->getId() . "/grunde",
         [
-          'auth' => [$this->username, $this->password],
+          'headers'=> [
+            'Authorization' => 'Token '.$this->apikey,
+          ],
           'json' => $this->getSalgsomraadePublicFields($salgsomraade)
         ]
       );
@@ -85,7 +88,9 @@ class WebsiteCommunicationService
         'POST',
         $this->endpoint . "/api/udstykning/" . $salgsomraade->getId() . "/grunde/geojson",
         [
-          'auth' => [$this->username, $this->password],
+          'headers'=> [
+            'Authorization' => 'Token '.$this->apikey,
+          ],
           'json' => $this->getSalgsomraadePublicFields($salgsomraade)
         ]
       );
