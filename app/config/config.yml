@@ -28,8 +28,6 @@ imports:
 parameters:
     locale: da
     grundsalg_web: "%grundsalg_web_address%"
-    grundsalg_web_username: "%grundsalg_web_address_username%"
-    grundsalg_web_password: "%grundsalg_web_address_password%"
 
 framework:
     #esi:             ~
