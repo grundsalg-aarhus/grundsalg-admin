@@ -32,7 +32,7 @@ class AppKernel extends Kernel
             new Itk\DoctrineIntegrityBundle\ItkDoctrineIntegrityBundle(),
         ];
 
-        if (in_array($this->getEnvironment(), ['dev', 'test', 'circleci'], true)) {
+        if (in_array($this->getEnvironment(), ['dev', 'test', 'circleci', 'github'], true)) {
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
         }

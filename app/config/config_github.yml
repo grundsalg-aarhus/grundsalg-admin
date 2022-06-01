@@ -1,0 +1,13 @@
+imports:
+    - { resource: config_test.yml }
+
+parameters:
+    api_platform.metadata_cache: true
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        host:     "127.0.0.1"
+        dbname:   "db"
+        user:     "db"
+        password: "db"
