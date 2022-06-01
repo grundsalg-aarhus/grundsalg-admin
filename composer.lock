@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "63172fb82f044bb6ce379831cc999b1c",
+    "content-hash": "b2570326b55b57ecf485512d4673a931",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -747,6 +747,10 @@
                 "persistence",
                 "spl"
             ],
+            "support": {
+                "issues": "https://github.com/doctrine/common/issues",
+                "source": "https://github.com/doctrine/common/tree/v2.8.1"
+            },
             "time": "2017-08-31T08:43:38+00:00"
         },
         {
@@ -820,6 +824,10 @@
                 "persistence",
                 "queryobject"
             ],
+            "support": {
+                "issues": "https://github.com/doctrine/dbal/issues",
+                "source": "https://github.com/doctrine/dbal/tree/v2.6.3"
+            },
             "time": "2017-11-19T13:38:54+00:00"
         },
         {
@@ -905,6 +913,10 @@
                 "orm",
                 "persistence"
             ],
+            "support": {
+                "issues": "https://github.com/doctrine/DoctrineBundle/issues",
+                "source": "https://github.com/doctrine/DoctrineBundle/tree/1.10.x"
+            },
             "time": "2019-04-04T08:03:53+00:00"
         },
         {
@@ -1430,6 +1442,10 @@
                 "database",
                 "orm"
             ],
+            "support": {
+                "issues": "https://github.com/doctrine/orm/issues",
+                "source": "https://github.com/doctrine/orm/tree/v2.5.14"
+            },
             "time": "2017-12-17T02:57:51+00:00"
         },
         {
@@ -3272,6 +3288,7 @@
                 "mail",
                 "mailer"
             ],
+            "abandoned": "symfony/mailer",
             "time": "2019-11-12T09:31:26+00:00"
         },
         {
@@ -4167,6 +4184,7 @@
             ],
             "description": "Symfony SwiftmailerBundle",
             "homepage": "http://symfony.com",
+            "abandoned": "symfony/mailer",
             "time": "2017-10-23T15:15:11+00:00"
         },
         {
@@ -4601,6 +4619,14 @@
                 "code",
                 "zf"
             ],
+            "support": {
+                "chat": "https://zendframework-slack.herokuapp.com",
+                "docs": "https://docs.zendframework.com/zend-code/",
+                "forum": "https://discourse.zendframework.com/c/questions/components",
+                "issues": "https://github.com/zendframework/zend-code/issues",
+                "rss": "https://github.com/zendframework/zend-code/releases.atom",
+                "source": "https://github.com/zendframework/zend-code"
+            },
             "abandoned": "laminas/laminas-code",
             "time": "2019-10-05T23:18:22+00:00"
         },
