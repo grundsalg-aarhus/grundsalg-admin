@@ -21,7 +21,7 @@
         "php": ">=7.2 <7.3.0",
         "ext-calendar": "*",
         "symfony/symfony": "~3.2",
-        "twig/twig":  "~2.10.0",
+        "twig/twig":  "~2.14.11",
         "doctrine/orm": ">=2.5 <2.6",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-cache-bundle": "^1.3",
