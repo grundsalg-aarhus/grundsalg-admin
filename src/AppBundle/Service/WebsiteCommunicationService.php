@@ -21,12 +21,15 @@ class WebsiteCommunicationService
 {
   private $endpoint;
   private $apikey;
-  private $password;
+
+  private $crsPropertiesHref;
+  private $crsPropertiesType;
 
   /**
    * @var GrundsalgPublicPropertiesService
    */
   private $publicPropertiesService;
+
   /**
    * @var EntityManager
    */
@@ -35,12 +38,14 @@ class WebsiteCommunicationService
   /**
    * Constructor
    */
-  public function __construct(EntityManager $entityManager, GrundsalgPublicPropertiesService $publicPropertiesService, $endpoint, $apikey)
+  public function __construct(EntityManager $entityManager, GrundsalgPublicPropertiesService $publicPropertiesService, $endpoint, $apikey, $crsPropertiesHref, $crsPropertiesType)
   {
     $this->entityManager = $entityManager;
     $this->publicPropertiesService = $publicPropertiesService;
     $this->endpoint = $endpoint;
     $this->apikey = $apikey;
+    $this->crsPropertiesHref = $crsPropertiesHref;
+    $this->crsPropertiesType = $crsPropertiesType;
   }
 
   /**
@@ -80,7 +85,7 @@ class WebsiteCommunicationService
           'headers'=> [
             'Authorization' => 'Token '.$this->apikey,
           ],
-          'json' => $this->getSalgsomraadePublicFields($salgsomraade)
+          'json' => $this->getGrundePublicFields($salgsomraade->getId())
         ]
       );
 
@@ -91,7 +96,7 @@ class WebsiteCommunicationService
           'headers'=> [
             'Authorization' => 'Token '.$this->apikey,
           ],
-          'json' => $this->getSalgsomraadePublicFields($salgsomraade)
+          'json' => $this->getGrundeGeoJsonFields($salgsomraade->getId())
         ]
       );
 
@@ -128,8 +133,8 @@ class WebsiteCommunicationService
 
     $crs = [];
     $crs['type'] = 'link';
-    $crs['properties']['href'] = $this->getParameter('crs_properties_href');
-    $crs['properties']['type'] = $this->getParameter('crs_properties_type');
+    $crs['properties']['href'] = $this->crsPropertiesHref;
+    $crs['properties']['type'] = $this->crsPropertiesType;
     $list['crs'] = $crs;
 
     $list['features'] = [];
@@ -164,7 +169,7 @@ class WebsiteCommunicationService
 
   public function getGrundePublicFields(int $salgsomraadeId): array
   {
-    $grunde = $this->grundRepository->getGrundeForSalgsOmraade($salgsomraadeId);
+    $grunde = $this->entityManager->getRepository('AppBundle:Grund')->getGrundeForSalgsOmraade($salgsomraadeId);
 
     $list = [];
 
