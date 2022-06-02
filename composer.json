@@ -19,6 +19,7 @@
     },
     "require": {
         "php": ">=7.2 <7.3.0",
+        "ext-calendar": "*",
         "symfony/symfony": "~3.2",
         "twig/twig":  "~2.10.0",
         "doctrine/orm": ">=2.5 <2.6",
