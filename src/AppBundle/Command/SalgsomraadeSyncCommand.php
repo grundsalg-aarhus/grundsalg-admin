@@ -45,12 +45,13 @@ class SalgsomraadeSyncCommand extends ContainerAwareCommand
     ];
     foreach ($salgsomraader as $area) {
       $content = $communicationService->syncDataToWebsite($area);
-      $output->writeln('Synced id: ' . $area->getId() . ' Title: "' . $area->getTitel() . '" Message: "' . $content['message'] . '"');
+      $message = $content['message'] ?? '';
+      $output->writeln('Synced id: ' . $area->getId() . ' Title: "' . $area->getTitel() . '" Message: "' . $message . '"');
 
       if (isset($content['error']) && $content['error']) {
         $count['error']++;
       }
-      else if ($content['message'] == 'updated') {
+      else if ($message == 'updated') {
         $count['updated']++;
       }
       else {
