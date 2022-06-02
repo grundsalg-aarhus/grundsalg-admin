@@ -143,7 +143,7 @@ class GrundsalgBankHolidayService
 
         $easter = new \DateTime();
         $easter->setDate($year, 3, 21);
-        $easterOffset = easter_days($year);
+        $easterOffset = \easter_days($year);
         $easter->add(new \DateInterval('P'.$easterOffset.'D'));
 
         $palmSunday = clone $easter;
