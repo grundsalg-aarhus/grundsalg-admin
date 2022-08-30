@@ -19,6 +19,7 @@ services:
     environment:
       - PHP_MAX_EXECUTION_TIME=30
       - PHP_MEMORY_LIMIT=128M
+      # We are locked to composer 1 because off dependencies that cannot be updated
       - COMPOSER_VERSION=1
     volumes:
       - .:/app:delegated
