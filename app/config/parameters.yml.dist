@@ -7,7 +7,7 @@ parameters:
     database_name:     db
     database_user:     db
     database_password: db
-    server_version:    "5.5"
+    server_version:    "10.6.9-mariadb"
     # You should uncomment this if you want use pdo_sqlite
     # database_path: "%kernel.root_dir%/data.db3"
 
