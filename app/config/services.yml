@@ -24,6 +24,8 @@ services:
       - '%grundsalg_web_api_key%'
       - '%crs_properties_href%'
       - '%crs_properties_type%'
+      - '%grundsalg_web_basic_auth_user%'
+      - '%grundsalg_web_basic_auth_password%'
 
   app.entity_change_subscriber:
     class: AppBundle\EventSubscriber\EntityChangeSubscriber

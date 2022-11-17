@@ -21,6 +21,8 @@ class WebsiteCommunicationService
 {
   private $endpoint;
   private $apikey;
+  private $basicAuthUser;
+  private $basicAuthPassword;
 
   private $crsPropertiesHref;
   private $crsPropertiesType;
@@ -38,7 +40,7 @@ class WebsiteCommunicationService
   /**
    * Constructor
    */
-  public function __construct(EntityManager $entityManager, GrundsalgPublicPropertiesService $publicPropertiesService, $endpoint, $apikey, $crsPropertiesHref, $crsPropertiesType)
+  public function __construct(EntityManager $entityManager, GrundsalgPublicPropertiesService $publicPropertiesService, $endpoint, $apikey, $crsPropertiesHref, $crsPropertiesType, $basicAuthUser = '', $basicAuthPassword = '')
   {
     $this->entityManager = $entityManager;
     $this->publicPropertiesService = $publicPropertiesService;
@@ -46,6 +48,8 @@ class WebsiteCommunicationService
     $this->apikey = $apikey;
     $this->crsPropertiesHref = $crsPropertiesHref;
     $this->crsPropertiesType = $crsPropertiesType;
+    $this->basicAuthUser = $basicAuthUser;
+    $this->basicAuthPassword = $basicAuthPassword;
   }
 
   /**
@@ -70,6 +74,7 @@ class WebsiteCommunicationService
       'POST',
       $this->endpoint . "/api/udstykning/" . $salgsomraade->getId() . "/updated",
       [
+        'auth' => [$this->basicAuthUser, $this->basicAuthPassword],
         'headers'=> [
           'Authorization' => 'Token '.$this->apikey,
         ],
@@ -84,6 +89,7 @@ class WebsiteCommunicationService
       'POST',
       $this->endpoint . "/api/udstykning/" . $salgsomraade->getId() . "/grunde",
       [
+        'auth' => [$this->basicAuthUser, $this->basicAuthPassword],
         'headers'=> [
           'Authorization' => 'Token '.$this->apikey,
         ],
@@ -98,6 +104,7 @@ class WebsiteCommunicationService
       'POST',
       $this->endpoint . "/api/udstykning/" . $salgsomraade->getId() . "/grunde/geojson",
       [
+        'auth' => [$this->basicAuthUser, $this->basicAuthPassword],
         'headers'=> [
           'Authorization' => 'Token '.$this->apikey,
         ],
