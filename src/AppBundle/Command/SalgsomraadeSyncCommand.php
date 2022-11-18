@@ -52,6 +52,8 @@ class SalgsomraadeSyncCommand extends ContainerAwareCommand
     $count = [
       'created' => 0,
       'updated' => 0,
+      'ignored' => 0,
+      'unknown' => 0,
       'error' => 0,
     ];
     $total = count($salgsomraader);
@@ -68,10 +70,15 @@ class SalgsomraadeSyncCommand extends ContainerAwareCommand
       } else if ($message == 'updated') {
         $count['updated']++;
         $actionLabel = 'Updated';
-      }
-      else {
+      } else if ($message == 'ignored') {
+        $count['ignored']++;
+        $actionLabel = 'Ignored';
+      } else if ($message == 'created') {
         $count['created']++;
         $actionLabel = 'Created';
+      } else {
+        $count['unknown']++;
+        $actionLabel = 'Unknown';
       }
 
       $output->writeln('('.$pointer.'/'.$total.') '.$actionLabel.' id: ' . $area->getId() . ' Title: "' . $area->getTitel() . '" Message: "' . $message . '"');
