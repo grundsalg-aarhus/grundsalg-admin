@@ -117,10 +117,6 @@ class GrundsalgBankHolidayService
             case '12-31': // Nytårsaften
                 return true;
 
-            //------- TESTING FAKE 2017-10-20 -------//
-            case '10-20': // Test Fake
-                return true;
-
             default:
                 return false;
         }

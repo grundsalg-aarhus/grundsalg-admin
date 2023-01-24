@@ -60,53 +60,58 @@ class WebsiteCommunicationService
    */
   public function syncDataToWebsite(Salgsomraade $salgsomraade)
   {
-    if ($salgsomraade->isAnnonceres()) {
-      $client = new Client();
+    $client = new Client();
 
-      // @TODO update/implement endpoints on the drupal side.
-      // @TODO pool calls in one?
-      // @TODO update output from SalgsomraadeSyncCommand
+    // @TODO update/implement endpoints on the drupal side.
+    // @TODO pool calls in one?
+    // @TODO update output from SalgsomraadeSyncCommand
 
-      $response = $client->request(
-        'POST',
-        $this->endpoint . "/api/udstykning/" . $salgsomraade->getId() . "/updated",
-        [
-          'headers'=> [
-            'Authorization' => 'Token '.$this->apikey,
-          ],
-          'json' => $this->getSalgsomraadePublicFields($salgsomraade)
-        ]
-      );
+    $response1 = $client->request(
+      'POST',
+      $this->endpoint . "/api/udstykning/" . $salgsomraade->getId() . "/updated",
+      [
+        'headers'=> [
+          'Authorization' => 'Token '.$this->apikey,
+        ],
+        'json' => $this->getSalgsomraadePublicFields($salgsomraade)
+      ]
+    );
 
-      $response = $client->request(
-        'POST',
-        $this->endpoint . "/api/udstykning/" . $salgsomraade->getId() . "/grunde",
-        [
-          'headers'=> [
-            'Authorization' => 'Token '.$this->apikey,
-          ],
-          'json' => $this->getGrundePublicFields($salgsomraade->getId())
-        ]
-      );
+    // Wait 0.3 sec to give drupal process time
+    \usleep(300000);
 
-      $response = $client->request(
-        'POST',
-        $this->endpoint . "/api/udstykning/" . $salgsomraade->getId() . "/grunde/geojson",
-        [
-          'headers'=> [
-            'Authorization' => 'Token '.$this->apikey,
-          ],
-          'json' => $this->getGrundeGeoJsonFields($salgsomraade->getId())
-        ]
-      );
+    $response2 = $client->request(
+      'POST',
+      $this->endpoint . "/api/udstykning/" . $salgsomraade->getId() . "/grunde",
+      [
+        'headers'=> [
+          'Authorization' => 'Token '.$this->apikey,
+        ],
+        'json' => $this->getGrundePublicFields($salgsomraade->getId())
+      ]
+    );
 
-      $body = $response->getBody()->getContents();
-      $content = \GuzzleHttp\json_decode($body);
+    // Wait 0.3 sec to give drupal process time
+    \usleep(300000);
 
-      return (array)$content;
-    } else {
-      return FALSE;
-    }
+    $response3 = $client->request(
+      'POST',
+      $this->endpoint . "/api/udstykning/" . $salgsomraade->getId() . "/grunde/geojson",
+      [
+        'headers'=> [
+          'Authorization' => 'Token '.$this->apikey,
+        ],
+        'json' => $this->getGrundeGeoJsonFields($salgsomraade->getId())
+      ]
+    );
+
+    // Wait 0.3 sec to give drupal process time
+    \usleep(300000);
+
+    $body = $response1->getBody()->getContents();
+    $content = \GuzzleHttp\json_decode($body);
+
+    return (array)$content;
   }
 
   public function getSalgsomraadePublicFields(Salgsomraade $salgsomraade): array
