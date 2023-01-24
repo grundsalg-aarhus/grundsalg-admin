@@ -19,6 +19,7 @@ services:
     environment:
       - PHP_MAX_EXECUTION_TIME=30
       - PHP_MEMORY_LIMIT=128M
+      # We are locked to composer 1 because off dependencies that cannot be updated
       - COMPOSER_VERSION=1
     volumes:
       - .:/app:delegated
@@ -45,18 +46,3 @@ services:
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${COMPOSE_SERVER_DOMAIN}`)"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.entrypoints=websecure"
-
-  mariadb:
-    image: mariadb:10.1
-    networks:
-      - app
-      - frontend
-    ports:
-      - '3306'
-    volumes:
-      - ./datadir:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_USER=db
-      - MYSQL_PASSWORD=db
-      - MYSQL_DATABASE=db
