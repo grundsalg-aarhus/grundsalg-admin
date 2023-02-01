@@ -1,5 +1,28 @@
 # Grundsalg Fagsystem
 
+## 1.2.1
+- Fixed logging in nginx conf
+
+## 1.2.0
+- Updated docker setup for hosting
+- Updated sync command to sync all areas
+
+## 1.1.6
+
+## 1.1.5
+
+## 1.1.4
+
+## 1.1.3
+
+## 1.1.2
+
+## 1.1.1
+
+## 1.1.0
+- Update website communication to push content
+- Prepared project for "hibernation"
+
 ## 1.0.8
 * Made "postnrBy" required on "Salgsområde" to ensure data integrity in the drupal import
 * Locked friendsofsymfony/user-bundle": ">=2.1 <2.2.0 (2.2.0 removes support for Symfony 3)
